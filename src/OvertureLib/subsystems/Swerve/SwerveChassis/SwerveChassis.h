@@ -11,6 +11,7 @@
 #include <frc/kinematics/SwerveDriveOdometry.h>
 #include <frc/kinematics/SwerveModulePosition.h>
 #include <frc/estimator/SwerveDrivePoseEstimator.h>
+#include <frc/DriverStation.h>
 #include <frc2/command/SubsystemBase.h>
 #include <pathplanner/lib/auto/AutoBuilder.h>
 #include <pathplanner/lib/util/HolonomicPathFollowerConfig.h>
