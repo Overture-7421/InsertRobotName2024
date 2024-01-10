@@ -9,6 +9,7 @@
 #include <frc/kinematics/SwerveModulePosition.h>
 #include <frc/controller/SimpleMotorFeedforward.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <memory.h>
 
 #include "OvertureLib/MotorControllers/OverTalonFX/OverTalonFX.h"
 #include "OvertureLib/Sensors/OverCANCoder/OverCANCoder.h"
@@ -44,7 +45,7 @@ private:
 	OverCANCoder* m_canCoder;
 
 	//FeedForward
-	frc::SimpleMotorFeedforward<units::meters> m_feedForward;
+	std::shared_ptr<frc::SimpleMotorFeedforward<units::meters>> m_feedForward;
 
 	//State
 	frc::SwerveModuleState m_state;

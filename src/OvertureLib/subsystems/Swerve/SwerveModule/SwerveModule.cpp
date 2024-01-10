@@ -18,7 +18,6 @@ SwerveModule::SwerveModule(int rotatorID, int wheelID, int canCoderID, double of
 	m_driveMotor = new OverTalonFX(wheelID, ControllerNeutralMode::Brake, true, canBus);
 	m_turningMotor = new OverTalonFX(rotatorID, ControllerNeutralMode::Coast, true, canBus);
 	m_canCoder = new OverCANCoder(canCoderID, offset, canBus);
-
 	m_turningMotor->setContinuousWrap();
 	m_turningMotor->setFusedCANCoder(canCoderID);
 	m_turningMotor->setClosedLoopVoltageRamp(0.1);
@@ -30,6 +29,8 @@ SwerveModule::SwerveModule(int rotatorID, int wheelID, int canCoderID, double of
 	// m_driveMotor->setTorqueCurrentLimit(40, -40, 0.1);
 	m_driveMotor->setClosedLoopVoltageRamp(0.1);
 	m_driveMotor->setSupplyCurrentLimit(true, 20, 30, 0.5);
+
+	setFFConstants(0_V,0_V,0_V);
 }
 
 /**
@@ -62,7 +63,7 @@ void SwerveModule::setDrivePIDValues(double kP, double kI, double kD) {
  * @param kA - Acceleration Value
  */
 void SwerveModule::setFFConstants(units::volt_t ks, units::volt_t kv, units::volt_t ka) {
-	m_feedForward = frc::SimpleMotorFeedforward<units::meters>(ks, kv / 1_mps, ka / 1_mps_sq);
+	m_feedForward = std::make_shared<frc::SimpleMotorFeedforward<units::meters>>(ks, kv / 1_mps, ka / 1_mps_sq);
 }
 
 /**
