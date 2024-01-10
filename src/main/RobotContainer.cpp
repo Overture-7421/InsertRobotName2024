@@ -10,7 +10,13 @@ RobotContainer::RobotContainer() {
   ConfigureBindings();
 }
 
-void RobotContainer::ConfigureBindings() {}
+void RobotContainer::ConfigureBindings() {
+  chassis.SetDefaultCommand(Drive(&chassis, &driver));
+
+  // Configure the button bindings
+  resetAngleButton.OnTrue(frc2::InstantCommand{[this](){chassis.resetAngle();}}.ToPtr());
+  
+}
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
   return frc2::cmd::Print("No autonomous command configured");
