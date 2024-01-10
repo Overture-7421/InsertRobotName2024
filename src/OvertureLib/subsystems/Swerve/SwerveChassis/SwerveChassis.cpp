@@ -8,8 +8,6 @@
 * @brief Builds an object of swerve chassis
 */
 SwerveChassis::SwerveChassis() {
-	pigeon->Reset();
-
 	AutoBuilder::configureHolonomic(
 		[this]() { return getOdometry(); },
 		[this](frc::Pose2d pose) { resetOdometry(pose); },
@@ -22,19 +20,19 @@ SwerveChassis::SwerveChassis() {
 			0.3732276_m,
 			ReplanningConfig()
 		),
-        []() {
-            // Boolean supplier that controls when the path will be mirrored for the red alliance
-            // This will flip the path being followed to the red side of the field.
-            // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+		[]() {
+		// Boolean supplier that controls when the path will be mirrored for the red alliance
+		// This will flip the path being followed to the red side of the field.
+		// THE ORIGIN WILL REMAIN ON THE BLUE SIDE
 
-            auto alliance = frc::DriverStation::GetAlliance();
-            if (alliance) {
-                return alliance.value() == frc::DriverStation::Alliance::kRed;
-            }
-            return false;
-        },
-        this // Reference to this subsystem to set requirements
-    );
+		auto alliance = frc::DriverStation::GetAlliance();
+		if (alliance) {
+			return alliance.value() == frc::DriverStation::Alliance::kRed;
+		}
+		return false;
+	},
+		this // Reference to this subsystem to set requirements
+	);
 }
 
 /**
@@ -44,6 +42,7 @@ SwerveChassis::SwerveChassis() {
  */
 void SwerveChassis::setModulePositions(std::array<frc::Translation2d, 4>* positions) {
 	kinematics = new frc::SwerveDriveKinematics<4>{ *positions };
+	pigeon->SetYaw(0_deg);
 };
 
 /**
@@ -189,7 +188,7 @@ frc::Pose2d SwerveChassis::getOdometry() {
  * @param initPose Pose2d object
  */
 void SwerveChassis::resetOdometry(frc::Pose2d initPose) {
-	odometry->ResetPosition(pigeon->GetRotation2d(), getModulePosition(), initPose);
+	odometry->ResetPosition(-pigeon->GetRotation2d(), getModulePosition(), initPose);
 }
 
 /**
@@ -297,7 +296,7 @@ double SwerveChassis::getRoll() {
  * @brief Updates the robot odometry
  */
 void SwerveChassis::updateOdometry() {
-	odometry->Update(pigeon->GetRotation2d(), getModulePosition());
+	odometry->Update(-pigeon->GetRotation2d(), getModulePosition());
 }
 
 void SwerveChassis::shuffleboardPeriodic() {
@@ -310,5 +309,5 @@ void SwerveChassis::shuffleboardPeriodic() {
 
 	// frc::SmartDashboard::PutNumber("OdometryX", estimatedPos.X().value());
 	// frc::SmartDashboard::PutNumber("OdometryY", estimatedPos.Y().value());
-	// frc::SmartDashboard::PutNumber("AnglenaveX", estimatedPos.Rotation().Degrees().value());
+	// frc::SmartDashboard::PutNumber("AnglePigeon", estimatedPos.Rotation().Degrees().value());
 }
