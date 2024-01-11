@@ -8,7 +8,7 @@
 #include <frc2/command/button/Trigger.h>
 #include <frc/XboxController.h>
 
-#include "subsystems/Chassis/Chassis.h"
+#include "Subsystems/Chassis/Chassis.h"
 
 #include "OvertureLib/Commands/Drive/Drive.h"
 

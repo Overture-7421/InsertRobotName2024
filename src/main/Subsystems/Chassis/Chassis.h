@@ -6,8 +6,8 @@
 
 #include <frc/smartdashboard/SmartDashboard.h>
 
-#include <OvertureLib/subsystems/Swerve/SwerveChassis/SwerveChassis.h>
-#include <OvertureLib/subsystems/Swerve/SwerveModule/SwerveModule.h>
+#include <OvertureLib/Subsystems/Swerve/SwerveChassis/SwerveChassis.h>
+#include <OvertureLib/Subsystems/Swerve/SwerveModule/SwerveModule.h>
 
 class Chassis : public SwerveChassis {
 public:

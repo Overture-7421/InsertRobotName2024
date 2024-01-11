@@ -19,7 +19,7 @@
 #include <pathplanner/lib/util/ReplanningConfig.h>
 #include <ctre/phoenix6/Pigeon2.hpp>
 
-#include "OvertureLib/subsystems/Swerve/SwerveModule/SwerveModule.h"
+#include "OvertureLib/Subsystems/Swerve/SwerveModule/SwerveModule.h"
 
 using namespace pathplanner;
 

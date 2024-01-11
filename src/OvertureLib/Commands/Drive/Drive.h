@@ -12,8 +12,8 @@
 #include <units/angular_acceleration.h>
 #include <units/angular_velocity.h>
 
-#include "OvertureLib/subsystems/Swerve/SwerveChassis/SwerveChassis.h"
-#include "OvertureLib/math/Utils.h"
+#include "OvertureLib/Subsystems/Swerve/SwerveChassis/SwerveChassis.h"
+#include "OvertureLib/Math/Utils.h"
 
 class Drive
 	: public frc2::CommandHelper<frc2::Command, Drive> {
