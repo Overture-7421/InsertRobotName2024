@@ -42,7 +42,6 @@ SwerveChassis::SwerveChassis() {
  */
 void SwerveChassis::setModulePositions(std::array<frc::Translation2d, 4>* positions) {
 	kinematics = new frc::SwerveDriveKinematics<4>{ *positions };
-	pigeon->SetYaw(0_deg);
 };
 
 /**
@@ -77,6 +76,8 @@ void SwerveChassis::setModules(SwerveModule* frontLeft, SwerveModule* frontRight
 	this->frontRightModule = frontRight;
 	this->backLeftModule = backLeft;
 	this->backRightModule = backRight;
+
+	pigeon->SetYaw(0_deg);
 
 	odometryPos = new std::array<frc::SwerveModulePosition, 4>{
 		frontLeftModule->getPosition(),
@@ -148,7 +149,7 @@ void SwerveChassis::driveRobotRelative(frc::ChassisSpeeds speeds) {
 
 	wpi::array<frc::SwerveModuleState, 4> desiredStates = kinematics->ToSwerveModuleStates(speeds);
 
-	kinematics->DesaturateWheelSpeeds(&desiredStates, 5_mps);
+	kinematics->DesaturateWheelSpeeds(&desiredStates, 5.75_mps);
 
 	setModuleStates(desiredStates);
 }
@@ -188,7 +189,7 @@ frc::Pose2d SwerveChassis::getOdometry() {
  * @param initPose Pose2d object
  */
 void SwerveChassis::resetOdometry(frc::Pose2d initPose) {
-	odometry->ResetPosition(-pigeon->GetRotation2d(), getModulePosition(), initPose);
+	odometry->ResetPositionpigeon->GetRotation2d(), getModulePosition(), initPose);
 }
 
 /**
@@ -296,18 +297,18 @@ double SwerveChassis::getRoll() {
  * @brief Updates the robot odometry
  */
 void SwerveChassis::updateOdometry() {
-	odometry->Update(-pigeon->GetRotation2d(), getModulePosition());
+	odometry->Update(pigeon->GetRotation2d(), getModulePosition());
 }
 
 void SwerveChassis::shuffleboardPeriodic() {
-	// frc::SmartDashboard::PutNumber("LinearX", linearX);
-	// frc::SmartDashboard::PutNumber("LinearY", linearY);
-	// frc::SmartDashboard::PutNumber("Angular", angular);
+	// frc::SmartDashboard::PutNumber("Odometry/LinearX", linearX);
+	// frc::SmartDashboard::PutNumber("Odometry/LinearY", linearY);
+	// frc::SmartDashboard::PutNumber("Odometry/Angular", angular);
 
 	// auto estimatedPos = getOdometry();
 	// frc::SmartDashboard::PutNumber("Roll", getRoll());
 
-	// frc::SmartDashboard::PutNumber("OdometryX", estimatedPos.X().value());
-	// frc::SmartDashboard::PutNumber("OdometryY", estimatedPos.Y().value());
-	// frc::SmartDashboard::PutNumber("AnglePigeon", estimatedPos.Rotation().Degrees().value());
+	// frc::SmartDashboard::PutNumber("Odometry/X", estimatedPos.X().value());
+	// frc::SmartDashboard::PutNumber("Odometry/Y", estimatedPos.Y().value());
+	// frc::SmartDashboard::PutNumber("Odometry/Pigeon", estimatedPos.Rotation().Degrees().value());
 }
