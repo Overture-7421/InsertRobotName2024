@@ -27,11 +27,13 @@ public:
 	double setSpeed(double speed);
 	double getDistance();
 	double getAngle();
+	double getVoltage();
 
 	frc::SwerveModuleState getState();
 	void setState(frc::SwerveModuleState state);
 	frc::SwerveModulePosition getPosition();
 
+	void setRawVoltageSpeed(units::volt_t volts);
 	void setVoltages();
 
 	void Periodic() override;

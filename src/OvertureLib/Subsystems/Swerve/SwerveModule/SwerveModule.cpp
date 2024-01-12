@@ -122,6 +122,15 @@ double SwerveModule::getAngle() {
 }
 
 /**
+ * @brief Gets the voltage of the module
+ *
+ * @return - Voltage of the module
+*/
+double SwerveModule::getVoltage() {
+	return m_driveMotor->GetMotorVoltage().GetValueAsDouble();
+}
+
+/**
  * @brief Gets the state of the module
  *
  * @return - State of the module
@@ -153,6 +162,16 @@ frc::SwerveModulePosition SwerveModule::getPosition() {
 	return { units::meter_t{getDistance()}, units::degree_t{getAngle()} };
 }
 
+/**
+ * @brief Sets the raw voltage speed
+ *
+ * @param volts - Voltage
+*/
+void SwerveModule::setRawVoltageSpeed(units::volt_t volts) {
+	m_driveMotor->setVoltage(volts, false);
+
+	m_turningMotor->setPositionVoltage(0, false);
+}
 
 /**
  * @brief Sets the voltage of the module

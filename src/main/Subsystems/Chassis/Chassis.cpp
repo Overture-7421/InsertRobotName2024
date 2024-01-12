@@ -10,8 +10,11 @@ Chassis::Chassis() {
 	setModules(&frontLeft, &frontRight, &backLeft, &backRight);
 	setModulesRatios(turnRatio, driveRatio, wheelDiameter);
 	setRotatorPID(53, 0, 0);
-	// setDrivePID(5, 0, 0);
-	setFeedForward(0.74656_V, 2.1143_V, 0.80794_V);
+
+	frontLeft.setFFConstants(0.74656_V, 2.1143_V, 0.80794_V);
+	frontRight.setFFConstants(0.74656_V, 2.1143_V, 0.80794_V);
+	backLeft.setFFConstants(0.74656_V, 2.1143_V, 0.80794_V);
+	frontRight.setFFConstants(0.74656_V, 2.1143_V, 0.80794_V);
 }
 
 //This method will be called once per schedule run

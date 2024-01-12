@@ -9,6 +9,8 @@
 #include <frc2/command/CommandPtr.h>
 
 #include "OvertureLib/Robots/OverRobot/OverRobot.h"
+#include "Characterization/SysIDRoutineBot.h"
+
 #include "RobotContainer.h"
 
 
@@ -33,4 +35,5 @@ class Robot : public OverRobot {
   std::optional<frc2::CommandPtr> m_autonomousCommand;
 
   RobotContainer m_container;
+  // SysIDRoutineBot m_container;
 };
