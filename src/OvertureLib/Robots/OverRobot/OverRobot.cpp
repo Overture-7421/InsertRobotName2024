@@ -4,15 +4,18 @@
 
 #include "OverRobot.h"
 
-#ifdef SIMULATION
+#ifndef __FRC_ROBORIO__
 
 #include <hal/DriverStation.h>
 #include <hal/FRCUsageReporting.h>
 #include <hal/Notifier.h>
 
 #include <networktables/NetworkTableInstance.h>
+#include <iostream>
 
 OverRobot::OverRobot(units::second_t period): frc::IterativeRobotBase(period) {
+  std::cout << "Simulation OverRobot Started!!!!" << std::endl;
+  
   const auto ntable = nt::NetworkTableInstance::GetDefault().GetTable("nt_simworld");
   simTimeEntry = ntable->GetEntry("sim_time");
 

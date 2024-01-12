@@ -15,10 +15,16 @@
         },
         "open": true
       },
+      "SmartDashboard": {
+        "open": true
+      },
       "SwerveChassisSimple": {
         "link_0_JOINT_0": {
           "open": true
         },
+        "open": true
+      },
+      "nt_simworld": {
         "open": true
       },
       "nt_simworld_default": {

@@ -55,9 +55,7 @@ model {
             }
 
             binaries.all {
-                if(targetPlatform.name === wpi.platforms.desktop) {
-                    cppCompiler.define("SIMULATION")
-                }
+
             }
 
             sources.cpp {

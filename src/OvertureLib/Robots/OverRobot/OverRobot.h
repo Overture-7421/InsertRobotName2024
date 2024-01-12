@@ -9,7 +9,7 @@
  * Implementation of TimedRobot that allows to seamlessly change between simulation (using Gazebo) and a real robot.
 */
 
-#ifndef SIMULATION
+#ifdef __FRC_ROBORIO__
 class OverRobot : public frc::TimedRobot {
 public:
     OverRobot(units::second_t period = kDefaultPeriod) : frc::TimedRobot(period) {
