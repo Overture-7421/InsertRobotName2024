@@ -15,7 +15,7 @@ Chassis::Chassis() {
 	frontRight.setFFConstants(0.74656_V, 2.1143_V, 0.80794_V);
 	backLeft.setFFConstants(0.74656_V, 2.1143_V, 0.80794_V);
 	frontRight.setFFConstants(0.74656_V, 2.1143_V, 0.80794_V);
-	}
+}
 
 //This method will be called once per schedule run
 void Chassis::Periodic() {

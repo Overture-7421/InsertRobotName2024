@@ -123,10 +123,10 @@ double SwerveModule::getAngle() {
 
 /**
  * @brief Gets the voltage of the module
- * 
+ *
  * @return - Voltage of the module
 */
-double SwerveModule::getVoltage(){
+double SwerveModule::getVoltage() {
 	return m_driveMotor->GetMotorVoltage().GetValueAsDouble();
 }
 
@@ -164,7 +164,7 @@ frc::SwerveModulePosition SwerveModule::getPosition() {
 
 /**
  * @brief Sets the raw voltage speed
- * 
+ *
  * @param volts - Voltage
 */
 void SwerveModule::setRawVoltageSpeed(units::volt_t volts) {
