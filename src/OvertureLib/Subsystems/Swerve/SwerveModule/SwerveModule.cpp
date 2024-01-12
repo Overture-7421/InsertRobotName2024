@@ -15,7 +15,7 @@
  * @param canBus     - Can Bus of the module
  */
 SwerveModule::SwerveModule(int rotatorID, int wheelID, int canCoderID, double offset, std::string moduleName, std::string canBus) : m_name(moduleName) {
-	m_driveMotor = new OverTalonFX(wheelID, ControllerNeutralMode::Brake, true, canBus);
+	m_driveMotor = new OverTalonFX(wheelID, ControllerNeutralMode::Brake, false, canBus);
 	m_turningMotor = new OverTalonFX(rotatorID, ControllerNeutralMode::Coast, true, canBus);
 	m_canCoder = new OverCANCoder(canCoderID, offset, canBus);
 	m_turningMotor->setContinuousWrap();
@@ -30,7 +30,7 @@ SwerveModule::SwerveModule(int rotatorID, int wheelID, int canCoderID, double of
 	m_driveMotor->setClosedLoopVoltageRamp(0.1);
 	m_driveMotor->setSupplyCurrentLimit(true, 20, 30, 0.5);
 
-	setFFConstants(0_V,0_V,0_V);
+	setFFConstants(0_V, 0_V, 0_V);
 }
 
 /**
@@ -165,7 +165,7 @@ void SwerveModule::setVoltages() {
 }
 
 void SwerveModule::Periodic() {
-	// frc::SmartDashboard::PutNumber(m_name + "/Speed", getSpeed());
+	frc::SmartDashboard::PutNumber(m_name + "/Speed", getSpeed());
 	// frc::SmartDashboard::PutNumber(m_name + "/Target", m_state.angle.Degrees().value());
 	// frc::SmartDashboard::PutNumber(m_name + "/Angle", getAngle());
 }
