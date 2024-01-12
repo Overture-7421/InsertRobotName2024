@@ -41,6 +41,7 @@ def includeDesktopSupport = true
 // Set to true to run simulation in debug mode
 wpi.cpp.debugSimulation = true
 
+
 // Default enable simgui
 wpi.sim.addGui().defaultEnabled = true
 // Enable DS but not by default
@@ -52,6 +53,12 @@ model {
             targetPlatform wpi.platforms.roborio
             if (includeDesktopSupport) {
                 targetPlatform wpi.platforms.desktop
+            }
+
+            binaries.all {
+                if(targetPlatform.name === wpi.platforms.desktop) {
+                    cppCompiler.define("SIMULATION")
+                }
             }
 
             sources.cpp {
