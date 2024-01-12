@@ -6,12 +6,13 @@
 
 #include <optional>
 
-#include <frc/TimedRobot.h>
 #include <frc2/command/CommandPtr.h>
 
+#include "OvertureLib/Robots/OverRobot/OverRobot.h"
 #include "RobotContainer.h"
 
-class Robot : public frc::TimedRobot {
+
+class Robot : public OverRobot {
  public:
   void RobotInit() override;
   void RobotPeriodic() override;
