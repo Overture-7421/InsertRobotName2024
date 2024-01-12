@@ -5,10 +5,6 @@
 #pragma once
 #include <frc/TimedRobot.h>
 
-/// TODO: REMOVE THIS DEFINE!!!! Otherwise all code is simulation code
-#define SIMULATION
-
-
 /**
  * Implementation of TimedRobot that allows to seamlessly change between simulation (using Gazebo) and a real robot.
 */
