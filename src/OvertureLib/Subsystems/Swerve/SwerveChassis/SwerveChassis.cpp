@@ -16,7 +16,7 @@ SwerveChassis::SwerveChassis() {
 		HolonomicPathFollowerConfig(
 			PIDConstants(1.0, 0.0, 0.0),
 			PIDConstants(5.0, 0.0, 0.0),
-			5_mps,
+			5.75_mps,
 			0.3732276_m,
 			ReplanningConfig()
 		),
