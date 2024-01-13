@@ -14,8 +14,8 @@
 #include <iostream>
 
 OverRobot::OverRobot(units::second_t period): frc::IterativeRobotBase(period) {
-  std::cout << "Simulation OverRobot Started!!!!" << std::endl;
-  
+  std::puts("\nSimulation OverRobot Started!!!!");
+
   const auto ntable = nt::NetworkTableInstance::GetDefault().GetTable("nt_simworld");
   simTimeEntry = ntable->GetEntry("sim_time");
 
@@ -27,8 +27,6 @@ OverRobot::OverRobot(units::second_t period): frc::IterativeRobotBase(period) {
 
   HAL_Report(HALUsageReporting::kResourceType_Framework,
              HALUsageReporting::kFramework_Timed);
-
-
 }
 
 void OverRobot::StartCompetition(){
@@ -82,10 +80,10 @@ void OverRobot::StartCompetition(){
 void OverRobot::EndCompetition(){
 
 }
+
 units::second_t OverRobot::GetSimulationTime() {
     return units::second_t(simTimeEntry.GetDouble(0));
-};
-
+}
 
 void OverRobot::AddPeriodic(std::function<void()> callback,
                              units::second_t period, units::second_t offset) {
