@@ -19,8 +19,8 @@
 #include <pathplanner/lib/util/HolonomicPathFollowerConfig.h>
 #include <pathplanner/lib/util/PIDConstants.h>
 #include <pathplanner/lib/util/ReplanningConfig.h>
-#include <ctre/phoenix6/Pigeon2.hpp>
 
+#include "OvertureLib/Sensors/OverPigeon/OverPigeon.h"
 #include "OvertureLib/Subsystems/Swerve/SwerveModule/SwerveModule.h"
 
 using namespace pathplanner;
@@ -65,7 +65,7 @@ protected:
 	double linearY;
 	double angular;
 
-	Pigeon2* pigeon;
+	OverPigeon* pigeon;
 
 	SwerveModule* frontLeftModule;
 	SwerveModule* frontRightModule;

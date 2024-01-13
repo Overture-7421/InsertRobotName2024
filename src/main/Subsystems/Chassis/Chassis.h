@@ -32,5 +32,5 @@ private:
 	double driveRatio = 5.9027777;
 	double wheelDiameter = 0.1016;
 
-	Pigeon2 chassisPigeon{ 13, "OverCANivore" };
+	OverPigeon chassisPigeon{ 13, "OverCANivore" };
 };
