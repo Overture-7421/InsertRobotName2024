@@ -179,8 +179,8 @@ void SwerveModule::setRawVoltageSpeed(units::volt_t volts) {
 void SwerveModule::setVoltages() {
 	m_turningMotor->setPositionVoltage(m_state.angle.Degrees().value() / 360.0, false);
 
-	// m_driveMotor->setVoltage(m_feedForward.Calculate(m_state.speed), false);
-	m_driveMotor->setVoltage(units::volt_t{ setSpeed(m_state.speed.value()) }, false);
+	m_driveMotor->setVoltage(m_feedForward->Calculate(m_state.speed), false);
+	//m_driveMotor->setVoltage(units::volt_t{ setSpeed(m_state.speed.value()) }, false);
 }
 
 void SwerveModule::Periodic() {

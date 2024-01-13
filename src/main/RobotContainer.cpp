@@ -7,17 +7,17 @@
 #include <frc2/command/Commands.h>
 
 RobotContainer::RobotContainer() {
-  ConfigureBindings();
+	ConfigureBindings();
 }
 
 void RobotContainer::ConfigureBindings() {
-  chassis.SetDefaultCommand(Drive(&chassis, &driver));
+	chassis.SetDefaultCommand(Drive(&chassis, &driver));
 
-  // Configure the button bindings
-  resetAngleButton.OnTrue(frc2::InstantCommand{[this](){chassis.resetAngle();}}.ToPtr());
-  
+	// Configure the button bindings
+	resetAngleButton.OnTrue(frc2::InstantCommand{ [this]() {chassis.resetAngle();} }.ToPtr());
+
 }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
-  return frc2::cmd::Print("No autonomous command configured");
+	return frc2::cmd::Print("No autonomous command configured");
 }

@@ -13,20 +13,20 @@
 #include "OvertureLib/Commands/Drive/Drive.h"
 
 class RobotContainer {
- public:
-  RobotContainer();
+public:
+	RobotContainer();
 
-  frc2::CommandPtr GetAutonomousCommand();
+	frc2::CommandPtr GetAutonomousCommand();
 
- private:
-  void ConfigureBindings();
+private:
+	void ConfigureBindings();
 
-  // Subsystems
-  Chassis chassis;
+	// Subsystems
+	Chassis chassis;
 
-  // Controllers
-  frc::XboxController driver { 0 };
+	// Controllers
+	frc::XboxController driver{ 0 };
 
-  // Driver Commands
-  frc2::Trigger resetAngleButton { [this] {return driver.GetBackButton();} };
+	// Driver Commands
+	frc2::Trigger resetAngleButton{ [this] {return driver.GetBackButton();} };
 };
