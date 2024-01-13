@@ -29,7 +29,6 @@ OverRobot::OverRobot(units::second_t period): frc::IterativeRobotBase(period) {
   HAL_Report(HALUsageReporting::kResourceType_Framework,
              HALUsageReporting::kFramework_Timed);
 
-  simMotorManager->Init("GLIP", {{0, "chassis_to_arm_joint"}, {1, "arm_to_shooter_intake_joint"}});
   frc::DriverStation::SilenceJoystickConnectionWarning(true);
 }
 

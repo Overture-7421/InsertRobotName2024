@@ -15,7 +15,14 @@ SimMotorManager::SimMotorManager(){
 void SimMotorManager::Init(std::string robotName, const std::map<unsigned int, NTMotorName> CANIDToMotorNameMap){
     this->robotName = robotName;
     this->CANIDToMotorNameMap = CANIDToMotorNameMap;
+
+    std::for_each(motorsToRegister.begin(), motorsToRegister.end(), std::bind(&SimMotorManager::RegisterSimMotor, this, std::placeholders::_1));
 }
+
+void SimMotorManager::AddSimMotorCandidate(OverTalonFX* motor){
+    motorsToRegister.emplace_back(motor);
+}
+
 
 void SimMotorManager::RegisterSimMotor(OverTalonFX* motor){
     if(motor == NULL || motor == 0){
@@ -24,7 +31,7 @@ void SimMotorManager::RegisterSimMotor(OverTalonFX* motor){
 
 
     if(!this->CANIDToMotorNameMap.contains(motor->GetDeviceID())){
-        std::cout << "SimMotorManager Warning: Tried to register a motor for simulation(" << motor->GetDeviceID() << ")that is not in the given map" << std::endl;
+        std::cout << "SimMotorManager Warning: Tried to register a motor for simulation(" << motor->GetDeviceID() << ") that is not in the given map" << std::endl;
         return;
     }
 

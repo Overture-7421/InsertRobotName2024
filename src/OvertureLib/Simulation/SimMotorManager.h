@@ -16,11 +16,10 @@ class SimMotorManager {
  public:
   SimMotorManager(const SimMotorManager& obj) = delete; 
   void Init(std::string robotName, const std::map<unsigned int, NTMotorName> CANIDToMotorNameMap);
-  void RegisterSimMotor(OverTalonFX* motor);
   void Update();
+  void AddSimMotorCandidate(OverTalonFX* motor);
 
-
-    static SimMotorManager* GetInstance(){
+  static SimMotorManager* GetInstance(){
     // If there is no instance of class
     // then we can create an instance.
     if (instancePtr == NULL) {
@@ -41,6 +40,8 @@ class SimMotorManager {
 
 private:
   SimMotorManager();
+  void RegisterSimMotor(OverTalonFX* motor);
+
   struct MotorNTPair {
     std::shared_ptr<nt::NetworkTable> ntable;
     OverTalonFX* motor;
@@ -50,6 +51,7 @@ private:
 
   std::map<unsigned int, NTMotorName> CANIDToMotorNameMap;
   std::map<NTMotorName, MotorNTPair> registeredMotors;
+  std::vector<OverTalonFX*> motorsToRegister;
   std::string robotName;
 
   static SimMotorManager* instancePtr; 

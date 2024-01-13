@@ -35,7 +35,7 @@ OverTalonFX::OverTalonFX(int id, ControllerNeutralMode neutralMode, bool inverte
 	#include "OvertureLib/Simulation/SimMotorManager.h"
     
 	SimMotorManager* simMotorManager = SimMotorManager::GetInstance();
-    simMotorManager->RegisterSimMotor(this);
+    simMotorManager->AddSimMotorCandidate(this);
 #endif
 }
 

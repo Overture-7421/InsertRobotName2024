@@ -7,7 +7,10 @@
 #include <frc2/command/CommandScheduler.h>
 
 void Robot::RobotInit() {
-
+#ifndef __FRC_ROBORIO__
+  SimMotorManager* simMotorManager = SimMotorManager::GetInstance();
+  simMotorManager->Init("GLIP", {{0, "chassis_to_arm_joint"}, {1, "arm_to_shooter_intake_joint"}});
+#endif
 }
 
 void Robot::RobotPeriodic() {
@@ -15,6 +18,7 @@ void Robot::RobotPeriodic() {
 }
 
 void Robot::DisabledInit() {
+  armMotor.SetVoltage(0_V);
 }
 
 void Robot::DisabledPeriodic() {
@@ -44,6 +48,7 @@ void Robot::TeleopInit() {
 }
 
 void Robot::TeleopPeriodic() {
+  armMotor.SetVoltage(-1_V);
 }
 
 void Robot::TeleopExit() {
