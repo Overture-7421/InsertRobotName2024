@@ -6,6 +6,15 @@
   },
   "NetworkTables": {
     "transitory": {
+      "GLIP": {
+        "arm_to_shooter_intake_joint": {
+          "open": true
+        },
+        "chassis_to_arm_joint": {
+          "open": true
+        },
+        "open": true
+      },
       "Ri3D": {
         "arm_joint": {
           "open": true
@@ -66,14 +75,11 @@
                 0.6901960968971252,
                 1.0
               ],
-              "id": "NT:/SwerveChassisSimple/link_0_JOINT_0/current"
+              "id": "NT:/GLIP/chassis_to_arm_joint/encoder_speed"
             }
           ]
         }
-      ],
-      "window": {
-        "visible": false
-      }
+      ]
     },
     "Plot <1>": {
       "plots": [
@@ -93,14 +99,11 @@
                 0.6901960968971252,
                 1.0
               ],
-              "id": "NT:/SwerveChassisSimple/link_0_JOINT_0/encoder_speed"
+              "id": "NT:/GLIP/chassis_to_arm_joint/encoder_position"
             }
           ]
         }
-      ],
-      "window": {
-        "visible": false
-      }
+      ]
     }
   }
 }

@@ -12,6 +12,7 @@
 
 #include <networktables/NetworkTableInstance.h>
 #include <iostream>
+#include <frc/DriverStation.h>
 
 OverRobot::OverRobot(units::second_t period): frc::IterativeRobotBase(period) {
   std::puts("\nSimulation OverRobot Started!!!!");
@@ -27,6 +28,9 @@ OverRobot::OverRobot(units::second_t period): frc::IterativeRobotBase(period) {
 
   HAL_Report(HALUsageReporting::kResourceType_Framework,
              HALUsageReporting::kFramework_Timed);
+
+  simMotorManager->Init("GLIP", {{0, "chassis_to_arm_joint"}, {1, "arm_to_shooter_intake_joint"}});
+  frc::DriverStation::SilenceJoystickConnectionWarning(true);
 }
 
 void OverRobot::StartCompetition(){
@@ -59,6 +63,8 @@ void OverRobot::StartCompetition(){
     double curTime = simTime.value();
 
     m_lastTime = simTime;
+    
+    simMotorManager->Update();
     callback.func();
 
     callback.expirationTime += callback.period;

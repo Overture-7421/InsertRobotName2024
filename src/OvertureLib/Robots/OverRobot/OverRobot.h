@@ -25,6 +25,8 @@ public:
 #include <units/time.h>
 #include <wpi/priority_queue.h>
 #include <networktables/NetworkTableEntry.h>
+#include "OvertureLib/Simulation/SimMotorManager.h"
+
 
 using namespace frc;
 
@@ -70,6 +72,8 @@ private:
     units::second_t m_startTime, m_lastTime;
     nt::NetworkTableEntry simTimeEntry;
     wpi::priority_queue<Callback, std::vector<Callback>, std::greater<Callback>> m_callbacks;
+
+    SimMotorManager* simMotorManager = SimMotorManager::GetInstance();
 };
 
 #endif
