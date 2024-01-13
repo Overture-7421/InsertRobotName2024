@@ -11,7 +11,11 @@ Drive::Drive(SwerveChassis* swerveChassis, frc::XboxController* controller) :
 }
 
 // Called when the command is initially scheduled.
-void Drive::Initialize() {}
+void Drive::Initialize() {
+	if (frc::DriverStation::GetAlliance() == frc::DriverStation::Alliance::kRed){
+		alliance = -1;
+	}
+}
 
 // Called repeatedly when this Command is scheduled to run
 void Drive::Execute() {
@@ -24,9 +28,9 @@ void Drive::Execute() {
 		kMaxAngularSpeed = 7.0;
 	}
 
-	units::meters_per_second_t xInput{ Utils::ApplyAxisFilter(-joystick->GetLeftY()) * kMaxSpeed };
-	units::meters_per_second_t yInput{ Utils::ApplyAxisFilter(-joystick->GetLeftX()) * kMaxSpeed };
-	units::radians_per_second_t rInput{ Utils::ApplyAxisFilter(-joystick->GetRightX()) * kMaxAngularSpeed };
+	units::meters_per_second_t xInput{ Utils::ApplyAxisFilter(-joystick->GetLeftY()) * kMaxSpeed * alliance};
+	units::meters_per_second_t yInput{ Utils::ApplyAxisFilter(-joystick->GetLeftX()) * kMaxSpeed * alliance};
+	units::radians_per_second_t rInput{ Utils::ApplyAxisFilter(-joystick->GetRightX()) * kMaxAngularSpeed};
 
 	m_swerveChassis->driveFieldRelative({
 		xLimiter.Calculate(xInput),

@@ -7,6 +7,11 @@
 #include <frc2/command/Commands.h>
 
 RobotContainer::RobotContainer() {
+
+	autoChooser.SetDefaultOption("None, null, nada", "None");
+	autoChooser.AddOption("MiddleNote", "MiddleNote");
+
+	frc::SmartDashboard::PutData("Auto Chooser", &autoChooser);
 	ConfigureBindings();
 }
 
@@ -19,5 +24,10 @@ void RobotContainer::ConfigureBindings() {
 }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
-	return frc2::cmd::Print("No autonomous command configured");
+	std::string autoName = autoChooser.GetSelected();
+	if (autoName == "None") {
+		return  frc2::cmd::None();
+	}
+
+	return pathplanner::AutoBuilder::buildAuto(autoName);
 }

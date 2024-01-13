@@ -338,10 +338,10 @@ void SwerveChassis::shuffleboardPeriodic() {
 	// frc::SmartDashboard::PutNumber("Odometry/LinearY", linearY);
 	// frc::SmartDashboard::PutNumber("Odometry/Angular", angular);
 
-	// auto estimatedPos = getOdometry();
-	// frc::SmartDashboard::PutNumber("Roll", getRoll());
+	auto estimatedPos = getOdometry();
+	frc::SmartDashboard::PutNumber("Roll", getRoll());
 
-	// frc::SmartDashboard::PutNumber("Odometry/X", estimatedPos.X().value());
-	// frc::SmartDashboard::PutNumber("Odometry/Y", estimatedPos.Y().value());
-	// frc::SmartDashboard::PutNumber("Odometry/Pigeon", estimatedPos.Rotation().Degrees().value());
+	frc::SmartDashboard::PutNumber("Odometry/X", estimatedPos.X().value());
+	frc::SmartDashboard::PutNumber("Odometry/Y", estimatedPos.Y().value());
+	frc::SmartDashboard::PutNumber("Odometry/Pigeon", estimatedPos.Rotation().Degrees().value());
 }

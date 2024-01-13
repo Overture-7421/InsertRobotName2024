@@ -35,6 +35,8 @@ private:
 	double kMaxSpeed{ 5.75 };
 	double kMaxAngularSpeed{ 9.0 };
 
+	int alliance = 1;
+
 	/* Constant */
 	units::meters_per_second_squared_t maxAcceleration{ 12 };
 	units::radians_per_second_squared_t maxRotation{ 16 };

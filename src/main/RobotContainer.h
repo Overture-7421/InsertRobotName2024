@@ -8,6 +8,8 @@
 #include <frc2/command/button/Trigger.h>
 #include <frc/XboxController.h>
 
+#include <frc/smartdashboard/SendableChooser.h>
+
 #include "Subsystems/Chassis/Chassis.h"
 
 #include "OvertureLib/Commands/Drive/Drive.h"
@@ -29,4 +31,7 @@ private:
 
 	// Driver Commands
 	frc2::Trigger resetAngleButton{ [this] {return driver.GetBackButton();} };
+
+	//Auto Chooser
+	frc::SendableChooser<std::string> autoChooser;
 };

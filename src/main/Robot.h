@@ -33,7 +33,6 @@ public:
 private:
 	std::optional<frc2::CommandPtr> m_autonomousCommand;
 
-	OverTalonFX armMotor {0, ControllerNeutralMode::Brake, false, ""};
-	// RobotContainer m_container;
+	RobotContainer m_container;
 	// SysIDRoutineBot m_container;
 };
