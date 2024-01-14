@@ -33,8 +33,9 @@ void SimPigeonManager::Init(std::string robotName, std::string imuName){
     rollEntry = ntable->GetEntry("roll");
     pitchEntry = ntable->GetEntry("pitch");
     yawEntry = ntable->GetEntry("yaw");
-
+    
     pigeonSimState = &pigeon->GetSimState();
+    std::cout << "SimPigeonManager Info: Initialized for Pigeon with ID: " << pigeon->GetDeviceID() << std::endl;
 }
 
 void SimPigeonManager::Update(){

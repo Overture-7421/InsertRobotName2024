@@ -14,6 +14,15 @@
         "chassis_to_arm_joint": {
           "open": true
         },
+        "imu_sensor": {
+          "open": true
+        },
+        "open": true
+      },
+      "GLIP::chassis": {
+        "imu_sensor": {
+          "open": true
+        },
         "open": true
       },
       "Ri3D": {
@@ -25,16 +34,10 @@
         },
         "open": true
       },
-      "SmartDashboard": {
-        "open": true
-      },
       "SwerveChassisSimple": {
         "link_0_JOINT_0": {
           "open": true
         },
-        "open": true
-      },
-      "nt_simworld": {
         "open": true
       },
       "nt_simworld_default": {
