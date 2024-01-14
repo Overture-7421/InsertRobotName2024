@@ -36,7 +36,7 @@ class SimPigeonManager {
  private:
   SimPigeonManager();
   OverPigeon *pigeon = NULL;
-  ctre::phoenix6::sim::Pigeon2SimState* pigeonSimState;
+  ctre::phoenix6::sim::Pigeon2SimState* pigeonSimState = NULL;
 
   nt::NetworkTableInstance ntInst = nt::NetworkTableInstance::GetDefault();
   nt::NetworkTableEntry rollEntry, pitchEntry, yawEntry;

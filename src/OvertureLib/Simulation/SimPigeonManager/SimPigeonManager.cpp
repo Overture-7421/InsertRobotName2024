@@ -5,6 +5,7 @@
 #include "SimPigeonManager.h"
 #include <networktables/NetworkTable.h>
 #include <frc/RobotController.h>
+#include <iostream>
 
 SimPigeonManager* SimPigeonManager ::instancePtr = NULL; 
 
@@ -22,6 +23,12 @@ void SimPigeonManager::SetSimPigeon(OverPigeon* pigeon){
 }
 
 void SimPigeonManager::Init(std::string robotName, std::string imuName){
+
+    if(pigeon == NULL) {
+        std::cout << "SimPigeonManager Warning: No Pigeon created" << std::endl;
+        return;
+    }
+
     std::shared_ptr<nt::NetworkTable> ntable = ntInst.GetTable(robotName)->GetSubTable(imuName);
     rollEntry = ntable->GetEntry("roll");
     pitchEntry = ntable->GetEntry("pitch");
@@ -31,6 +38,9 @@ void SimPigeonManager::Init(std::string robotName, std::string imuName){
 }
 
 void SimPigeonManager::Update(){
+    if(pigeon == NULL || pigeonSimState == NULL) {
+    }
+    
     pigeonSimState->SetSupplyVoltage(frc::RobotController::GetBatteryVoltage());
 
     pigeonSimState->SetRoll(units::angle::degree_t(rollEntry.GetDouble(0)));
