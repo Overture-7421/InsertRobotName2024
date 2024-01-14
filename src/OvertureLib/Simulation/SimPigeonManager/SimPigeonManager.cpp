@@ -39,6 +39,7 @@ void SimPigeonManager::Init(std::string robotName, std::string imuName){
 
 void SimPigeonManager::Update(){
     if(pigeon == NULL || pigeonSimState == NULL) {
+        return;
     }
     
     pigeonSimState->SetSupplyVoltage(frc::RobotController::GetBatteryVoltage());
