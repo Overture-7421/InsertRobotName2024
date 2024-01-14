@@ -67,7 +67,7 @@
             0.0,
             0.8500000238418579
           ],
-          "height": 353,
+          "height": 387,
           "series": [
             {
               "color": [
@@ -100,7 +100,7 @@
                 0.6901960968971252,
                 1.0
               ],
-              "id": "NT:/GLIP/chassis_to_arm_joint/encoder_position"
+              "id": "NT:/GLIP/arm_to_shooter_intake_joint/encoder_speed"
             }
           ]
         }

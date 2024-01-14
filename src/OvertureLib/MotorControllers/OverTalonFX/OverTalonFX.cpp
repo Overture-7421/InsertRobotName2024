@@ -3,7 +3,11 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "OverTalonFX.h"
-#include "OvertureLib/Simulation/SimMotorManager.h"
+
+#ifndef __FRC_ROBORIO__
+#include "OvertureLib/Simulation/SimMotorManager/SimMotorManager.h"
+#endif
+
 
 /**
  * @brief Constructor for OverTalonFX
@@ -32,8 +36,6 @@ OverTalonFX::OverTalonFX(int id, ControllerNeutralMode neutralMode, bool inverte
 	GetConfigurator().Apply(config);
 
 #ifndef __FRC_ROBORIO__
-	#include "OvertureLib/Simulation/SimMotorManager.h"
-    
 	SimMotorManager* simMotorManager = SimMotorManager::GetInstance();
     simMotorManager->AddSimMotorCandidate(this);
 #endif

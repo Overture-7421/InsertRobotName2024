@@ -4,6 +4,10 @@
 
 #include "OverCANCoder.h"
 
+#ifndef __FRC_ROBORIO__
+#include "OvertureLib/Simulation/SimCANCoderManager/SimCANCoderManager.h"
+#endif
+
 /**
 * @brief Constructor for OverCANCoder
 *
@@ -18,6 +22,11 @@ OverCANCoder::OverCANCoder(int _id, double offset, std::string _bus) : CANcoder(
 	canCoderConfiguration.MagnetSensor.SensorDirection = SensorDirectionValue::CounterClockwise_Positive;
 	canCoderConfiguration.MagnetSensor.MagnetOffset = offset / 360;
 	GetConfigurator().Apply(canCoderConfiguration);
+
+#ifndef __FRC_ROBORIO__
+	SimCANCoderManager* simCANCoderManager = SimCANCoderManager::GetInstance();
+	simCANCoderManager->AddSimCANCoderCandidate(this);
+#endif
 }
 
 /**

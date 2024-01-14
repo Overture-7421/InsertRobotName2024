@@ -14,10 +14,9 @@ typedef std::string NTMotorName;
 
 class SimMotorManager {
  public:
-  SimMotorManager(const SimMotorManager& obj) = delete; 
+   void AddSimMotorCandidate(OverTalonFX* motor);
   void Init(std::string robotName, const std::map<unsigned int, NTMotorName> CANIDToMotorNameMap);
   void Update();
-  void AddSimMotorCandidate(OverTalonFX* motor);
 
   static SimMotorManager* GetInstance(){
     // If there is no instance of class
@@ -37,6 +36,7 @@ class SimMotorManager {
       return instancePtr;
     }
   }
+  SimMotorManager(const SimMotorManager& obj) = delete; 
 
 private:
   SimMotorManager();

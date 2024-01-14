@@ -8,8 +8,9 @@
 
 void Robot::RobotInit() {
 #ifndef __FRC_ROBORIO__
-  SimMotorManager* simMotorManager = SimMotorManager::GetInstance();
   simMotorManager->Init("GLIP", {{0, "chassis_to_arm_joint"}, {1, "arm_to_shooter_intake_joint"}});
+  simPigeonManager->Init("GLIP", "imu");
+  simCANCoderManager->Init("GLIP", {{2, "cancoder_one"}, {3, "cancoder_two"}});
 #endif
 }
 

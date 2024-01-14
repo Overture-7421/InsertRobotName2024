@@ -45,7 +45,6 @@ void SimMotorManager::RegisterSimMotor(OverTalonFX* motor){
 
     std::shared_ptr<nt::NetworkTable> ntable = ntInst.GetTable(robotName)->GetSubTable(motorName);
 
-
     MotorNTPair newMotorPair;
     newMotorPair.motor = motor;
     newMotorPair.ntable = ntable;

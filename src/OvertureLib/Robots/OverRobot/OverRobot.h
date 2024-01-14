@@ -25,7 +25,9 @@ public:
 #include <units/time.h>
 #include <wpi/priority_queue.h>
 #include <networktables/NetworkTableEntry.h>
-#include "OvertureLib/Simulation/SimMotorManager.h"
+#include "OvertureLib/Simulation/SimMotorManager/SimMotorManager.h"
+#include "OvertureLib/Simulation/SimPigeonManager/SimPigeonManager.h"
+#include "OvertureLib/Simulation/SimCANCoderManager/SimCANCoderManager.h"
 
 
 using namespace frc;
@@ -38,6 +40,10 @@ public:
     units::second_t GetSimulationTime();
     void AddPeriodic(std::function<void()> callback, units::second_t period,
                    units::second_t offset = 0_s);
+
+    SimMotorManager* simMotorManager = SimMotorManager::GetInstance();
+    SimPigeonManager* simPigeonManager = SimPigeonManager::GetInstance();
+	SimCANCoderManager* simCANCoderManager = SimCANCoderManager::GetInstance();
 
 private:
     class Callback {
@@ -72,8 +78,6 @@ private:
     units::second_t m_startTime, m_lastTime;
     nt::NetworkTableEntry simTimeEntry;
     wpi::priority_queue<Callback, std::vector<Callback>, std::greater<Callback>> m_callbacks;
-
-    SimMotorManager* simMotorManager = SimMotorManager::GetInstance();
 };
 
 #endif

@@ -4,6 +4,14 @@
 
 #include "OverPigeon.h"
 
+#ifndef __FRC_ROBORIO__
+#include "OvertureLib/Simulation/SimPigeonManager/SimPigeonManager.h"
+#endif
+
 OverPigeon::OverPigeon(int deviceId, std::string canbus) : ctre::phoenix6::hardware::Pigeon2(deviceId, canbus){
+#ifndef __FRC_ROBORIO__
+    SimPigeonManager* simPigeonManager = SimPigeonManager::GetInstance();
+    simPigeonManager->SetSimPigeon(this);
+#endif
 
 }
