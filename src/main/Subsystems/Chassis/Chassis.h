@@ -16,10 +16,18 @@ public:
 	void Periodic() override;
 
 private:
+#ifndef __FRC_ROBORIO__
+	SwerveModule backRight{ 5, 6, 11, 90, "BackRightModule", "OverCANivore" };
+	SwerveModule backLeft{ 7, 8, 12, 90, "BackLeftModule", "OverCANivore" };
+	SwerveModule frontLeft{ 1, 2, 9, 90, "FrontLeftModule", "OverCANivore" };
+	SwerveModule frontRight{ 3, 4, 10, 90, "FrontRightModule", "OverCANivore" };
+#else
 	SwerveModule backRight{ 5, 6, 11, 17.841796875, "BackRightModule", "OverCANivore" };
 	SwerveModule backLeft{ 7, 8, 12, -61.435546875, "BackLeftModule", "OverCANivore" };
 	SwerveModule frontLeft{ 1, 2, 9, -73.564453125, "FrontLeftModule", "OverCANivore" };
 	SwerveModule frontRight{ 3, 4, 10, -49.482421875, "FrontRightModule", "OverCANivore" };
+#endif
+
 
 	std::array<frc::Translation2d, 4> modulePos{
 	 frc::Translation2d(10.39_in, 10.39_in),   //Front Left

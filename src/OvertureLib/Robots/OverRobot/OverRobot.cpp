@@ -65,6 +65,7 @@ void OverRobot::StartCompetition(){
     
     simMotorManager->Update();
     simPigeonManager->Update();
+    simCANCoderManager->Update();
     callback.func();
 
     callback.expirationTime += callback.period;

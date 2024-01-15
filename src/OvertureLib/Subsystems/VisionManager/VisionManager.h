@@ -13,7 +13,7 @@
 #include <frc/apriltag/AprilTagFields.h>
 #include <frc/DriverStation.h>
 
-#include "OvertureLib/subsystems/Swerve/SwerveChassis/SwerveChassis.h"
+#include "OvertureLib/Subsystems/Swerve/SwerveChassis/SwerveChassis.h"
 
 class VisionManager : public frc2::SubsystemBase {
 public:

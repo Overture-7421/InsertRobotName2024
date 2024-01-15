@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "OvertureLib/subsystems/VisionManager/VisionManager.h"
-#include "main/subsystems/Chassis/Chassis.h"
+#include "OvertureLib/Subsystems/VisionManager/VisionManager.h"
+#include "main/Subsystems/Chassis/Chassis.h"
 
 class Vision : public VisionManager {
 public:

@@ -60,6 +60,7 @@ void SimMotorManager::Update() {
         OverTalonFX* motor = pair.motor;
 
         ctre::phoenix6::sim::TalonFXSimState& simState = motor->GetSimState();
+
         simState.SetSupplyVoltage(frc::RobotController::GetBatteryVoltage());
 
 
