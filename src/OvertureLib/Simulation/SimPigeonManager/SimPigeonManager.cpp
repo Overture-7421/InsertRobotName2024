@@ -22,19 +22,20 @@ void SimPigeonManager::SetSimPigeon(OverPigeon* pigeon){
     this->pigeon = pigeon;
 }
 
-void SimPigeonManager::Init(std::string robotName, std::string imuName){
+void SimPigeonManager::Init(std::string imuName){
 
     if(pigeon == NULL) {
         std::cout << "SimPigeonManager Warning: No Pigeon created" << std::endl;
         return;
     }
 
-    std::shared_ptr<nt::NetworkTable> ntable = ntInst.GetTable(robotName)->GetSubTable(imuName);
+    std::shared_ptr<nt::NetworkTable> ntable = ntInst.GetTable(imuName);
     rollEntry = ntable->GetEntry("roll");
     pitchEntry = ntable->GetEntry("pitch");
     yawEntry = ntable->GetEntry("yaw");
-
+    
     pigeonSimState = &pigeon->GetSimState();
+    std::cout << "SimPigeonManager Info: Initialized for Pigeon with ID: " << pigeon->GetDeviceID() << std::endl;
 }
 
 void SimPigeonManager::Update(){
