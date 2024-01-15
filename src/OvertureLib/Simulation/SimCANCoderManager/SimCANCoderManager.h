@@ -14,7 +14,7 @@ typedef std::string NTCANCoderName;
 class SimCANCoderManager {
  public:
   void AddSimCANCoderCandidate(OverCANCoder* motor);
-  void Init(std::string robotName, const std::map<unsigned int, NTCANCoderName> CANIDToCANCoderNameMap);
+  void Init(const std::map<unsigned int, NTCANCoderName> CANIDToCANCoderNameMap);
   void Update();
 
   static SimCANCoderManager* GetInstance(){

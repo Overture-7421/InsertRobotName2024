@@ -15,7 +15,7 @@ typedef std::string NTMotorName;
 class SimMotorManager {
  public:
    void AddSimMotorCandidate(OverTalonFX* motor);
-  void Init(std::string robotName, const std::map<unsigned int, NTMotorName> CANIDToMotorNameMap);
+  void Init(const std::map<unsigned int, NTMotorName> CANIDToMotorNameMap);
   void Update();
 
   static SimMotorManager* GetInstance(){

@@ -6,19 +6,13 @@
     }
   },
   "NetworkTables": {
+    "Persistent Values": {
+      "open": false
+    },
+    "Retained Values": {
+      "open": false
+    },
     "transitory": {
-      "GLIP": {
-        "arm_to_shooter_intake_joint": {
-          "open": true
-        },
-        "chassis_to_arm_joint": {
-          "open": true
-        },
-        "imu_sensor": {
-          "open": true
-        },
-        "open": true
-      },
       "GLIP::chassis": {
         "imu_sensor": {
           "open": true
@@ -34,10 +28,145 @@
         },
         "open": true
       },
+      "SDS_Chassis": {
+        "SDS_Module": {
+          "cancoders": {
+            "open": true
+          },
+          "open": true
+        },
+        "SDS_Module_BL": {
+          "cancoders": {
+            "open": true,
+            "rotation_joint": {
+              "open": true
+            }
+          },
+          "motors": {
+            "rotation_joint": {
+              "open": true
+            },
+            "wheel_joint": {
+              "open": true
+            }
+          }
+        },
+        "SDS_Module_BR": {
+          "cancoders": {
+            "open": true,
+            "rotation_joint": {
+              "open": true
+            }
+          },
+          "motors": {
+            "open": true,
+            "rotation_joint": {
+              "open": true
+            },
+            "wheel_joint": {
+              "open": true
+            }
+          }
+        },
+        "SDS_Module_FL": {
+          "cancoders": {
+            "open": true,
+            "rotation_joint": {
+              "open": true
+            }
+          }
+        },
+        "SDS_Module_FR": {
+          "motors": {
+            "open": true,
+            "rotation_joint": {
+              "open": true
+            },
+            "wheel_joint": {
+              "open": true
+            }
+          }
+        },
+        "cancoders": {
+          "SDS_Module_FL_rotation_joint": {
+            "open": true
+          },
+          "SDS_Module_FR_rotation_joint": {
+            "open": true
+          },
+          "open": true
+        }
+      },
+      "SDS_Chassis[": {
+        "]\nSDS_Module_BL": {
+          "cancoders": {
+            "open": true
+          },
+          "motors": {
+            "open": true
+          },
+          "open": true
+        },
+        "]\nSDS_Module_FR": {
+          "motors": {
+            "wheel_joint": {
+              "open": true
+            }
+          }
+        }
+      },
+      "SDS_Module": {
+        "cancoders": {
+          "rotation_joint": {
+            "open": true
+          }
+        },
+        "motors": {
+          "SDS_Module_rotation_joint": {
+            "open": true
+          },
+          "open": true
+        },
+        "plugin": {
+          "open": true
+        }
+      },
+      "SmartDashboard": {
+        "Auto Chooser": {
+          "open": true
+        },
+        "BackRightModule": {
+          "open": true
+        },
+        "Odometry": {
+          "open": true
+        }
+      },
       "SwerveChassisSimple": {
         "link_0_JOINT_0": {
           "open": true
         },
+        "open": true
+      },
+      "default[": {
+        "]\nSDS_Chassis[": {
+          "]\nSDS_Module_BL_Fixed[": {
+            "open": true
+          },
+          "]\nSDS_Module_BR_Fixed[": {
+            "open": true
+          },
+          "]\nSDS_Module_FL_Fixed[": {
+            "open": true
+          },
+          "]\nSDS_Module_FR_Fixed[": {
+            "open": true
+          },
+          "open": true
+        },
+        "open": true
+      },
+      "nt_simworld": {
         "open": true
       },
       "nt_simworld_default": {
@@ -70,7 +199,7 @@
             0.0,
             0.8500000238418579
           ],
-          "height": 387,
+          "height": 691,
           "series": [
             {
               "color": [
@@ -79,7 +208,52 @@
                 0.6901960968971252,
                 1.0
               ],
-              "id": "NT:/GLIP/chassis_to_arm_joint/encoder_speed"
+              "id": "NT:/SDS_Chassis/motors/SDS_Module_FR_rotation_joint/encoder_speed"
+            },
+            {
+              "color": [
+                0.8666667342185974,
+                0.5176470875740051,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "NT:/SDS_Chassis/motors/SDS_Module_FR_rotation_joint/encoder_position"
+            },
+            {
+              "color": [
+                0.3333333432674408,
+                0.658823549747467,
+                0.4078431725502014,
+                1.0
+              ],
+              "id": "NT:/SDS_Chassis/motors/SDS_Module_FR_rotation_joint/torque"
+            },
+            {
+              "color": [
+                0.7686275243759155,
+                0.30588236451148987,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "NT:/SDS_Chassis/motors/SDS_Module_FR_rotation_joint/voltage_applied"
+            },
+            {
+              "color": [
+                0.5058823823928833,
+                0.44705885648727417,
+                0.7019608020782471,
+                1.0
+              ],
+              "id": "NT:/SDS_Chassis/motors/SDS_Module_FR_wheel_joint/encoder_speed"
+            },
+            {
+              "color": [
+                0.5764706134796143,
+                0.4705882668495178,
+                0.3764706254005432,
+                1.0
+              ],
+              "id": "NT:/SDS_Chassis/motors/SDS_Module_FR_wheel_joint/encoder_position"
             }
           ]
         }
@@ -94,18 +268,20 @@
             0.0,
             0.8500000238418579
           ],
-          "height": 320,
-          "series": [
-            {
-              "color": [
-                0.2980392277240753,
-                0.44705885648727417,
-                0.6901960968971252,
-                1.0
-              ],
-              "id": "NT:/GLIP/arm_to_shooter_intake_joint/encoder_speed"
-            }
-          ]
+          "height": 356
+        }
+      ]
+    },
+    "Plot <2>": {
+      "plots": [
+        {
+          "backgroundColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.8500000238418579
+          ],
+          "height": 326
         }
       ]
     }

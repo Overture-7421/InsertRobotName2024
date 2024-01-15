@@ -12,7 +12,7 @@ SimMotorManager* SimMotorManager ::instancePtr = NULL;
 SimMotorManager::SimMotorManager(){
 }
 
-void SimMotorManager::Init(std::string robotName, const std::map<unsigned int, NTMotorName> CANIDToMotorNameMap){
+void SimMotorManager::Init(const std::map<unsigned int, NTMotorName> CANIDToMotorNameMap){
     this->robotName = robotName;
     this->CANIDToMotorNameMap = CANIDToMotorNameMap;
 
@@ -43,7 +43,7 @@ void SimMotorManager::RegisterSimMotor(OverTalonFX* motor){
         return;
     }
 
-    std::shared_ptr<nt::NetworkTable> ntable = ntInst.GetTable(robotName)->GetSubTable(motorName);
+    std::shared_ptr<nt::NetworkTable> ntable = ntInst.GetTable(motorName);
 
     MotorNTPair newMotorPair;
     newMotorPair.motor = motor;

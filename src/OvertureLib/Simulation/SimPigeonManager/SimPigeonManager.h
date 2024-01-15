@@ -10,7 +10,7 @@
 class SimPigeonManager {
  public:
   void SetSimPigeon(OverPigeon* pigeon);
-  void Init(std::string robotName, std::string imuName);
+  void Init(std::string imuName);
   void Update();
 
   static SimPigeonManager* GetInstance(){

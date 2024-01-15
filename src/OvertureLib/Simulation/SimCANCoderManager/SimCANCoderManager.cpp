@@ -35,7 +35,7 @@ void SimCANCoderManager::RegisterSimCANCoder(OverCANCoder* canCoder){
         return;
     }
 
-    std::shared_ptr<nt::NetworkTable> ntable = ntInst.GetTable(robotName)->GetSubTable(canCoderName);
+    std::shared_ptr<nt::NetworkTable> ntable = ntInst.GetTable(canCoderName);
 
     CANCoderNTPair newCANCoderPair;
     newCANCoderPair.canCoder = canCoder;
@@ -44,7 +44,7 @@ void SimCANCoderManager::RegisterSimCANCoder(OverCANCoder* canCoder){
     this->registeredCANCoders[canCoderName] = std::move(newCANCoderPair);
 }
 
-void SimCANCoderManager::Init(std::string robotName, const std::map<unsigned int, NTCANCoderName> CANIDToCANCoderNameMap){
+void SimCANCoderManager::Init(const std::map<unsigned int, NTCANCoderName> CANIDToCANCoderNameMap){
     this->robotName = robotName;
     this->CANIDToCANCoderNameMap = CANIDToCANCoderNameMap;
 

@@ -8,9 +8,30 @@
 
 void Robot::RobotInit() {
 #ifndef __FRC_ROBORIO__
-  simMotorManager->Init("GLIP", {{0, "chassis_to_arm_joint"}, {1, "arm_to_shooter_intake_joint"}});
-  simPigeonManager->Init("GLIP", "imu");
-  simCANCoderManager->Init("GLIP", {{2, "cancoder_one"}, {3, "cancoder_two"}});
+  simMotorManager->Init({
+    {1, "SDS_Chassis/motors/SDS_Module_FL_rotation_joint"}, 
+    {2, "SDS_Chassis/motors/SDS_Module_FL_wheel_joint"},
+    
+    {3, "SDS_Chassis/motors/SDS_Module_FR_rotation_joint"}, 
+    {4, "SDS_Chassis/motors/SDS_Module_FR_wheel_joint"},
+
+    {5, "SDS_Chassis/motors/SDS_Module_BR_rotation_joint"}, 
+    {6, "SDS_Chassis/motors/SDS_Module_BR_wheel_joint"},
+
+    {7, "SDS_Chassis/motors/SDS_Module_BL_rotation_joint"}, 
+    {8, "SDS_Chassis/motors/SDS_Module_BL_wheel_joint"}
+
+    });
+
+  simPigeonManager->Init("SDS_Chassis/Frames/imu_sensor");
+
+  simCANCoderManager->Init({
+    {9,  "SDS_Chassis/cancoders/SDS_Module_FL_rotation_joint"}, 
+    {10, "SDS_Chassis/cancoders/SDS_Module_FR_rotation_joint"},
+    {11, "SDS_Chassis/cancoders/SDS_Module_BR_rotation_joint"},
+    {12, "SDS_Chassis/cancoders/SDS_Module_BL_rotation_joint"},
+    });
+
 #endif
 }
 
