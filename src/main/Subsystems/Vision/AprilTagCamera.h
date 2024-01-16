@@ -4,12 +4,12 @@
 
 #pragma once
 
-#include "OvertureLib/Subsystems/VisionManager/VisionManager.h"
+#include "OvertureLib/Subsystems/vision/AprilTags/AprilTags.h"
 #include "main/Subsystems/Chassis/Chassis.h"
 
-class Vision : public VisionManager {
+class AprilTagCamera : public AprilTags {
 public:
-	Vision(Chassis* chassis);
+	AprilTagCamera(Chassis* chassis);
 private:
 	photon::PhotonCamera camera{ "Arducam_OV9281_USB_Camera" };
 	frc::AprilTagFieldLayout tagLayout{ frc::LoadAprilTagLayoutField(frc::AprilTagField::k2024Crescendo) };
