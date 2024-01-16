@@ -11,6 +11,7 @@
 #include <frc/smartdashboard/SendableChooser.h>
 
 #include "Subsystems/Chassis/Chassis.h"
+#include "Subsystems/Vision/AprilTagCamera.h"
 
 #include "OvertureLib/Commands/Drive/Drive.h"
 

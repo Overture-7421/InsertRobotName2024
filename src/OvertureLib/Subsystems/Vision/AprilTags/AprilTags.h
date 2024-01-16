@@ -15,9 +15,9 @@
 
 #include "OvertureLib/Subsystems/Swerve/SwerveChassis/SwerveChassis.h"
 
-class VisionManager : public frc2::SubsystemBase {
+class AprilTags : public frc2::SubsystemBase {
 public:
-	VisionManager();
+	AprilTags();
 	void setCameraAndLayout(photon::PhotonCamera* camera, frc::AprilTagFieldLayout* tagLayout, frc::Transform3d* cameraToRobot);
 	bool checkTagDistance(size_t numberOfTags, double distance);
 	void addMeasurementToChassis();
