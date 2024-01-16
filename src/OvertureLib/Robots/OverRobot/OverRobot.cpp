@@ -65,7 +65,7 @@ void OverRobot::StartCompetition(){
     
     simPigeonManager->Update();
     simCANCoderManager->Update();
-    simCDutyCycleEncoderManager->Update();
+    simDutyCycleEncoderManager->Update();
     simMotorManager->Update();
     callback.func();
 

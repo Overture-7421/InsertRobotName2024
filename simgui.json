@@ -27,6 +27,9 @@
       "open": false
     },
     "transitory": {
+      "FirstRobotConcept": {
+        "open": true
+      },
       "GLIP::chassis": {
         "imu_sensor": {
           "open": true
@@ -161,8 +164,7 @@
         },
         "Odometry": {
           "open": true
-        },
-        "open": true
+        }
       },
       "SwerveChassisSimple": {
         "link_0_JOINT_0": {

@@ -45,7 +45,7 @@ public:
     SimMotorManager* simMotorManager = SimMotorManager::GetInstance();
     SimPigeonManager* simPigeonManager = SimPigeonManager::GetInstance();
 	SimCANCoderManager* simCANCoderManager = SimCANCoderManager::GetInstance();
-	SimDutyCycleEncoderManager* simCDutyCycleEncoderManager = SimDutyCycleEncoderManager::GetInstance();
+	SimDutyCycleEncoderManager* simDutyCycleEncoderManager = SimDutyCycleEncoderManager::GetInstance();
 
 private:
     class Callback {
