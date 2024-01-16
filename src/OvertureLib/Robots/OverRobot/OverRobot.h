@@ -28,6 +28,7 @@ public:
 #include "OvertureLib/Simulation/SimMotorManager/SimMotorManager.h"
 #include "OvertureLib/Simulation/SimPigeonManager/SimPigeonManager.h"
 #include "OvertureLib/Simulation/SimCANCoderManager/SimCANCoderManager.h"
+#include "OvertureLib/Simulation/SimDutyCycleEncoderManager/SimDutyCycleEncoderManager.h"
 
 
 using namespace frc;
@@ -44,6 +45,7 @@ public:
     SimMotorManager* simMotorManager = SimMotorManager::GetInstance();
     SimPigeonManager* simPigeonManager = SimPigeonManager::GetInstance();
 	SimCANCoderManager* simCANCoderManager = SimCANCoderManager::GetInstance();
+	SimDutyCycleEncoderManager* simCDutyCycleEncoderManager = SimDutyCycleEncoderManager::GetInstance();
 
 private:
     class Callback {
