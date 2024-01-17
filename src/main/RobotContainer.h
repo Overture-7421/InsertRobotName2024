@@ -41,11 +41,8 @@ private:
 	// Driver Commands
 	frc2::Trigger resetAngleButton{ [this] {return driver.GetBackButton();} };
 
-	// Testing
-	frc2::Trigger stopintake{ [this] {return driver.GetBButton();} };
-	frc2::Trigger startintake{ [this] {return driver.GetXButton();} };
-	frc2::Trigger movestructure{ [this] {return driver.GetYButton();} };
-	frc2::Trigger movearms{ [this] {return driver.GetLeftBumper();} };
+	// Mechanism Commands
+	frc2::Trigger intakePosition{ [this] {return driver.GetRightTriggerAxis();} };
 
 
 	//Auto Chooser

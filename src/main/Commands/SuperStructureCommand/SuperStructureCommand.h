@@ -11,7 +11,5 @@
 #include "main/Subsystems/Intake/Intake.h"
 #include "main/Subsystems/SupportArms/SupportArms.h"
 
-frc2::CommandPtr StartIntake(Intake* m_Intake);
-frc2::CommandPtr StopIntake(Intake* m_Intake);
-frc2::CommandPtr MoveStructure(SuperStructure* m_SuperStructure);
-frc2::CommandPtr MoveArms(SuperStructure* m_SuperStructure);
+frc2::CommandPtr StartIntake(Intake* m_Intake, SuperStructure* m_SuperStructure);
+frc2::CommandPtr StopIntake(Intake* m_Intake, SuperStructure* m_SuperStructure);

@@ -21,11 +21,7 @@ void RobotContainer::ConfigureBindings() {
 	// Configure the button bindings
 	resetAngleButton.WhileTrue(ResetAngle(&chassis).ToPtr());
 
-	// testing
-	startintake.OnTrue(StartIntake(&intake));
-	stopintake.OnTrue(StopIntake(&intake));
-	movestructure.OnTrue(MoveStructure(&superStructure));
-	movearms.OnTrue(MoveArms(&superStructure));
+	intakePosition.OnTrue(StartIntake(&intake, &superStructure)).OnFalse(StopIntake(&intake, &superStructure));
 
 }
 
