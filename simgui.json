@@ -28,6 +28,15 @@
     },
     "transitory": {
       "FirstRobotConcept": {
+        "motors": {
+          "arm_joint": {
+            "open": true
+          },
+          "open": true,
+          "shooter_arm_joint": {
+            "open": true
+          }
+        },
         "open": true
       },
       "GLIP::chassis": {
