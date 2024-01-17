@@ -30,14 +30,14 @@ private:
 	double upperAngleFFCalculation(double angle);
 
 	//constant
-	const double LOWER_GEAR_BOX_REDUCTION = 0;
-	const double UPPER_GEAR_BOX_REDUCTION = 0;
+	const double LOWER_GEAR_BOX_REDUCTION = 230;
+	const double UPPER_GEAR_BOX_REDUCTION = 142;
 
 	//Encoders
-	OverDutyCycleEncoder lowerEncoder{0};
-	OverDutyCycleEncoder UpperEncoder{1};
-	double lowerOffset = 0;
-	double upperOffset = 0;
+	OverDutyCycleEncoder lowerEncoder{ 0 };
+	OverDutyCycleEncoder UpperEncoder{ 1 };
+	double lowerOffset = 0.25;
+	double upperOffset = 0.25;
 
 	// LowerMotors
 	OverTalonFX m_lowerRight{ 20, ControllerNeutralMode::Brake, true, "rio" };
