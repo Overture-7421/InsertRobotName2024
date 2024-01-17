@@ -15,6 +15,7 @@
 #include "Subsystems/Intake/Intake.h"
 #include "Subsystems/SuperStructure/SuperStructure.h"
 #include "Subsystems/SupportArms/SupportArms.h"
+#include "Commands/SuperStructureCommand/SuperStructureCommand.h"
 
 #include "OvertureLib/Commands/Drive/Drive.h"
 
@@ -29,7 +30,7 @@ private:
 
 	// Subsystems
 	Chassis chassis;
-	AprilTagCamera aprilTagCamera;
+	AprilTagCamera aprilTagCamera{&chassis};
 	Intake intake;
 	SuperStructure superStructure;
 	SupportArms supportArms;
@@ -39,6 +40,13 @@ private:
 
 	// Driver Commands
 	frc2::Trigger resetAngleButton{ [this] {return driver.GetBackButton();} };
+
+	// Testing
+	frc2::Trigger stopintake{ [this] {return driver.GetBButton();} };
+	frc2::Trigger startintake{ [this] {return driver.GetXButton();} };
+	frc2::Trigger movestructure{ [this] {return driver.GetYButton();} };
+	frc2::Trigger movearms{ [this] {return driver.GetLeftBumper();} };
+
 
 	//Auto Chooser
 	frc::SendableChooser<std::string> autoChooser;

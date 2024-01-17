@@ -48,7 +48,7 @@ private:
 
 	// State
 	SuperStructureState m_TargetState{ getCurrentState() };
-	SuperStructurePosition position = SuperStructurePosition::Closed;
+	SuperStructurePosition position = SuperStructurePosition::Closing;
 
 	//Motion Magic Feed Forward
 	double lowerFF = 0.0;

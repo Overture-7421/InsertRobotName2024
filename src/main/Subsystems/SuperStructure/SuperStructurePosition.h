@@ -1,4 +1,6 @@
+#pragma once
+
 enum SuperStructurePosition {
-	Closed,
+	Closing,
 	Intaking
 };

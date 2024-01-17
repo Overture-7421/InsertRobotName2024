@@ -21,6 +21,12 @@ void RobotContainer::ConfigureBindings() {
 	// Configure the button bindings
 	resetAngleButton.OnTrue(frc2::InstantCommand{ [this]() {chassis.resetAngle();} }.ToPtr());
 
+	// testing
+	startintake.OnTrue(StartIntake(&intake));
+	stopintake.OnTrue(StopIntake(&intake));
+	movestructure.OnTrue(MoveStructure(&superStructure));
+	movearms.OnTrue(MoveArms(&superStructure));
+
 }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
