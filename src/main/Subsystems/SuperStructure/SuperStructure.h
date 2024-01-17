@@ -40,8 +40,8 @@ private:
 	double upperOffset = 0.25;
 
 	// LowerMotors
-	OverTalonFX m_lowerRight{ 20, ControllerNeutralMode::Brake, true, "rio" };
-	OverTalonFX m_lowerLeft{ 21, ControllerNeutralMode::Brake, true, "rio" };
+	OverTalonFX m_lowerRight{ 20, ControllerNeutralMode::Brake, false, "rio" };
+	OverTalonFX m_lowerLeft{ 21, ControllerNeutralMode::Brake, false, "rio" };
 
 	// Upper Motors
 	OverTalonFX m_upperMotor{ 22, ControllerNeutralMode::Brake, false, "rio" };
