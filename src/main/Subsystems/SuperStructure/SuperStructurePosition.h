@@ -1,0 +1,4 @@
+enum SuperStructurePosition {
+	Closed,
+	Intaking
+};

@@ -12,6 +12,9 @@
 
 #include "Subsystems/Chassis/Chassis.h"
 #include "Subsystems/Vision/AprilTagCamera.h"
+#include "Subsystems/Intake/Intake.h"
+#include "Subsystems/SuperStructure/SuperStructure.h"
+#include "Subsystems/SupportArms/SupportArms.h"
 
 #include "OvertureLib/Commands/Drive/Drive.h"
 
@@ -26,6 +29,10 @@ private:
 
 	// Subsystems
 	Chassis chassis;
+	AprilTagCamera aprilTagCamera;
+	Intake intake;
+	SuperStructure superStructure;
+	SupportArms supportArms;
 
 	// Controllers
 	frc::XboxController driver{ 0 };

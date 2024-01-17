@@ -1,0 +1,4 @@
+enum SupportArmsPosition {
+	Closed,
+	Open
+};
