@@ -79,15 +79,17 @@ double SuperStructure::upperAngleFFCalculation(double angle) {
 
 // This method will be called once per scheduler run
 void SuperStructure::Periodic() {
+
+
 	setFalconTargetPos(m_TargetState);
 
-	// frc::SmartDashboard::PutNumber("Target /Lower Angle", m_TargetState.lowerAngle);
-	// frc::SmartDashboard::PutNumber("Target /Upper Angle", m_TargetState.upperAngle);
+	frc::SmartDashboard::PutNumber("Target /Lower Angle", m_TargetState.lowerAngle);
+	frc::SmartDashboard::PutNumber("Target /Upper Angle", m_TargetState.upperAngle);
 
-	// // Debugging
-	// SuperStructureState currentState = getCurrentState();
-	// frc::SmartDashboard::PutNumber("Current /Lower Angle", currentState.lowerAngle);
-	// frc::SmartDashboard::PutNumber("Current /Upper Angle", currentState.upperAngle);
+	// Debugging
+	SuperStructureState currentState = getCurrentState();
+	frc::SmartDashboard::PutNumber("Current /Lower Angle", currentState.lowerAngle);
+	frc::SmartDashboard::PutNumber("Current /Upper Angle", currentState.upperAngle);
 
-	// frc::SmartDashboard::PutNumber("Position", position);
+	frc::SmartDashboard::PutNumber("Position", position);
 }
