@@ -16,7 +16,7 @@
 #include "Subsystems/SuperStructure/SuperStructure.h"
 #include "Subsystems/SupportArms/SupportArms.h"
 #include "Commands/SuperStructureCommand/SuperStructureCommand.h"
-
+#include "Commands/ResetAngle/ResetAngle.h"
 #include "OvertureLib/Commands/Drive/Drive.h"
 
 class RobotContainer {
@@ -30,7 +30,7 @@ private:
 
 	// Subsystems
 	Chassis chassis;
-	AprilTagCamera aprilTagCamera{&chassis};
+	AprilTagCamera aprilTagCamera{ &chassis };
 	Intake intake;
 	SuperStructure superStructure;
 	SupportArms supportArms;

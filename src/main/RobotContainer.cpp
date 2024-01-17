@@ -19,7 +19,7 @@ void RobotContainer::ConfigureBindings() {
 	chassis.SetDefaultCommand(Drive(&chassis, &driver));
 
 	// Configure the button bindings
-	resetAngleButton.OnTrue(frc2::InstantCommand{ [this]() {chassis.resetAngle();} }.ToPtr());
+	resetAngleButton.WhileTrue(ResetAngle(&chassis).ToPtr());
 
 	// testing
 	startintake.OnTrue(StartIntake(&intake));
