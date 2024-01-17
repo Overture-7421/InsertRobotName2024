@@ -60,8 +60,8 @@ void SimDutyCycleEncoderManager::Update(){
         std::shared_ptr<nt::NetworkTable> ntable = pair.ntable;
         std::shared_ptr<frc::sim::DutyCycleEncoderSim> encoder = pair.dutyCycleEncoder;
         
-        units::turn_t position = units::turn_t(ntable->GetEntry("cancoder_position").GetDouble(0));
-        encoder->Set(position);
+        // units::turn_t position = units::turn_t();
+        encoder->SetAbsolutePosition(ntable->GetEntry("cancoder_position").GetDouble(0));
     }
 
     ntInst.Flush();
