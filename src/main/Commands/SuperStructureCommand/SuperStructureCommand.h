@@ -7,9 +7,9 @@
 #include <frc2/command/CommandPtr.h>
 #include <frc2/command/Commands.h>
 
-#include "main/subsystems/SuperStructure/SuperStructure.h"
-#include "main/subsystems/Intake/Intake.h"
-#include "main/subsystems/SupportArms/SupportArms.h"
+#include "main/Subsystems/SuperStructure/SuperStructure.h"
+#include "main/Subsystems/Intake/Intake.h"
+#include "main/Subsystems/SupportArms/SupportArms.h"
 
 frc2::CommandPtr StartIntake(Intake* m_Intake);
 frc2::CommandPtr StopIntake(Intake* m_Intake);
