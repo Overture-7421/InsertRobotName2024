@@ -30,13 +30,12 @@ private:
 	const double LOWER_GEAR_BOX_REDUCTION = 0;
 
 	//Encoders
-	OverDutyCycleEncoder lowerEncoder{2};
+	OverDutyCycleEncoder lowerEncoder{ 2 };
 	double lowerOffset = 0;
 
 
 	// LowerMotors
 	OverTalonFX m_lowerRight{ 23, ControllerNeutralMode::Brake, true, "rio" };
-	OverTalonFX m_lowerLeft{ 24, ControllerNeutralMode::Brake, true, "rio" };
 
 	// State
 	SupportArmsState m_TargetState{ getCurrentState() };

@@ -8,12 +8,8 @@
 
 SupportArms::SupportArms() {
 	// Configure Motors
-	m_lowerRight.setSupplyCurrentLimit(true, 20, 30, 0.5);	
+	m_lowerRight.setSupplyCurrentLimit(true, 20, 30, 0.5);
 	m_lowerRight.setSensorToMechanism(LOWER_GEAR_BOX_REDUCTION);
-
-	m_lowerLeft.setSupplyCurrentLimit(true, 20, 30, 0.5);
-	m_lowerLeft.setSensorToMechanism(LOWER_GEAR_BOX_REDUCTION);
-	m_lowerLeft.setFollow(m_lowerRight.GetDeviceID(), true);
 
 	// COnfigure Motion Magic and PID
 	m_lowerRight.setPIDValues(50.0, 0.0, 0.0, 0.0, 0.0);
