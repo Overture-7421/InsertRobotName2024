@@ -19,11 +19,13 @@ SuperStructure::SuperStructure() {
 	m_upperMotor.setSensorToMechanism(UPPER_GEAR_BOX_REDUCTION);
 
 	// COnfigure Motion Magic and PID
-	m_lowerRight.setPIDValues(0.0, 0.0, 0.0, 0.0, 0.0);
-	m_lowerRight.configureMotionMagic(0.0, 0.0, 0.0);
+	m_lowerRight.setPIDValues(50.0, 0.0, 0.0, 0.0, 0.0);
+	m_lowerRight.configureMotionMagic(1.0, 2.0, 3.0);
 
-	m_upperMotor.setPIDValues(0.0, 0.0, 0.0, 0.0, 0.0);
-	m_upperMotor.configureMotionMagic(0.0, 0.0, 0.0);
+	
+
+	m_upperMotor.setPIDValues(50.0, 0.0, 0.0, 0.0, 0.0);
+	m_upperMotor.configureMotionMagic(1.0, 2.0, 3.0);
 
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 	m_lowerRight.setSensorPosition(getLowerAngle());
@@ -81,13 +83,7 @@ double SuperStructure::upperAngleFFCalculation(double angle) {
 void SuperStructure::Periodic() {
 
 
-	//setFalconTargetPos(m_TargetState);
-
-	m_lowerRight.setVoltage(5_V, true);
-	m_upperMotor.setVoltage(5_V, true);
-
-
-	
+	setFalconTargetPos(m_TargetState);
 
 	frc::SmartDashboard::PutNumber("Target /Lower Angle", m_TargetState.lowerAngle);
 	frc::SmartDashboard::PutNumber("Target /Upper Angle", m_TargetState.upperAngle);
