@@ -30,7 +30,7 @@ private:
 	double upperAngleFFCalculation(double angle);
 
 	//constant
-	const double LOWER_GEAR_BOX_REDUCTION = 230;
+	const double LOWER_GEAR_BOX_REDUCTION = 251;
 	const double UPPER_GEAR_BOX_REDUCTION = 142;
 
 	//Encoders
