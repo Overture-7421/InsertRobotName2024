@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "OvertureLib/Subsystems/vision/AprilTags/AprilTags.h"
+#include "OvertureLib/Subsystems/Vision/AprilTags/AprilTags.h"
 #include "main/Subsystems/Chassis/Chassis.h"
 
 class AprilTagCamera : public AprilTags {
