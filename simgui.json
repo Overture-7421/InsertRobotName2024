@@ -28,12 +28,17 @@
     },
     "transitory": {
       "FirstRobotConcept": {
-        "motors": {
-          "arm_joint": {
+        "cancoders": {
+          "SDS_Module_BL_rotation_joint": {
             "open": true
           },
-          "open": true,
-          "shooter_arm_joint": {
+          "SDS_Module_BR_rotation_joint": {
+            "open": true
+          },
+          "open": true
+        },
+        "motors": {
+          "arm_joint": {
             "open": true
           }
         },
@@ -153,6 +158,10 @@
       },
       "SDS_Module": {
         "cancoders": {
+          "SDS_Module_rotation_joint": {
+            "open": true
+          },
+          "open": true,
           "rotation_joint": {
             "open": true
           }
@@ -163,15 +172,13 @@
           },
           "open": true
         },
+        "open": true,
         "plugin": {
           "open": true
         }
       },
       "SmartDashboard": {
-        "Current ": {
-          "open": true
-        },
-        "Odometry": {
+        "FrontLeftModule": {
           "open": true
         },
         "Target ": {
@@ -212,9 +219,6 @@
     }
   },
   "NetworkTables Info": {
-    "Clients": {
-      "open": true
-    },
     "Connections": {
       "open": true
     },
@@ -282,7 +286,10 @@
             }
           ]
         }
-      ]
+      ],
+      "window": {
+        "visible": false
+      }
     },
     "Plot <1>": {
       "plots": [
@@ -325,7 +332,45 @@
             0.0,
             0.8500000238418579
           ],
-          "height": 326
+          "height": 617,
+          "series": [
+            {
+              "color": [
+                0.2980392277240753,
+                0.44705885648727417,
+                0.6901960968971252,
+                1.0
+              ],
+              "id": "NT:/SmartDashboard/Current /Lower Angle"
+            },
+            {
+              "color": [
+                0.8666667342185974,
+                0.5176470875740051,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "NT:/SmartDashboard/Current /Upper Angle"
+            },
+            {
+              "color": [
+                0.3333333432674408,
+                0.658823549747467,
+                0.4078431725502014,
+                1.0
+              ],
+              "id": "NT:/SmartDashboard/Target /Lower Angle"
+            },
+            {
+              "color": [
+                0.7686275243759155,
+                0.30588236451148987,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "NT:/SmartDashboard/Target /Upper Angle"
+            }
+          ]
         }
       ]
     }

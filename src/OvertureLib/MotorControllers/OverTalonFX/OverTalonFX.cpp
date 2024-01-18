@@ -229,6 +229,11 @@ double OverTalonFX::getPosition() {
 	return GetPosition().GetValue().value();
 }
 
+const TalonFXConfiguration& OverTalonFX::getConfig(){
+	return config;
+}
+
+
 /**
  * @brief Sets the TalonFX voltage
  *

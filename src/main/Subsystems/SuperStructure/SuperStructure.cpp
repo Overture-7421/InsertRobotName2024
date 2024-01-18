@@ -22,13 +22,13 @@ SuperStructure::SuperStructure() {
 	m_lowerRight.setPIDValues(80.0, 0.0, 0.0, 0.0, 0.0);
 	m_lowerRight.configureMotionMagic(1.0, 2.0, 3.0);
 
-	m_upperMotor.setPIDValues(80.0, 0.0, 0.0, 0.0, 0.0);
+	m_upperMotor.setPIDValues(30.0, 0.0, 0.0, 0.0, 0.0);
 	m_upperMotor.configureMotionMagic(1.0, 2.0, 3.0);
 
 	std::this_thread::sleep_for(std::chrono::seconds(2));
-	m_lowerRight.setSensorPosition(getLowerAngle());
+	m_lowerRight.setSensorPosition(convertAngleToFalconPos(getLowerAngle()));
 	std::this_thread::sleep_for(std::chrono::seconds(2));
-	m_upperMotor.setSensorPosition(getUpperAngle());
+	m_upperMotor.setSensorPosition(convertAngleToFalconPos(getUpperAngle()));
 
 	setTargetCoord({ getLowerAngle(), getUpperAngle() });
 }
@@ -42,7 +42,7 @@ double SuperStructure::getLowerAngle() {
 }
 
 double SuperStructure::getUpperAngle() {
-	return (lowerEncoder.GetAbsolutePosition() - upperOffset) * 360;
+	return (upperEncoder.GetAbsolutePosition() - upperOffset) * 360;
 }
 
 SuperStructurePosition SuperStructure::getPosition() {
@@ -83,13 +83,11 @@ void SuperStructure::Periodic() {
 
 	setFalconTargetPos(m_TargetState);
 
-	frc::SmartDashboard::PutNumber("Target /Lower Angle", m_TargetState.lowerAngle);
-	frc::SmartDashboard::PutNumber("Target /Upper Angle", m_TargetState.upperAngle);
+	frc::SmartDashboard::PutNumber("SuperStructure/Target/Lower Angle", m_TargetState.lowerAngle);
+	frc::SmartDashboard::PutNumber("SuperStructure/Target/Upper Angle", m_TargetState.upperAngle);
 
 	// Debugging
 	SuperStructureState currentState = getCurrentState();
-	frc::SmartDashboard::PutNumber("Current /Lower Angle", currentState.lowerAngle);
-	frc::SmartDashboard::PutNumber("Current /Upper Angle", currentState.upperAngle);
-
-	frc::SmartDashboard::PutNumber("Position", position);
+	frc::SmartDashboard::PutNumber("SuperStructure/Current/Lower Angle", currentState.lowerAngle);
+	frc::SmartDashboard::PutNumber("SuperStructure/Current/Upper Angle", currentState.upperAngle);
 }

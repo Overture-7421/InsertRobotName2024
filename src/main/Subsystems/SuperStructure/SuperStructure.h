@@ -35,16 +35,16 @@ private:
 
 	//Encoders
 	OverDutyCycleEncoder lowerEncoder{ 0 };
-	OverDutyCycleEncoder UpperEncoder{ 1 };
-	double lowerOffset = 0;
+	OverDutyCycleEncoder upperEncoder{ 1 };
+	double lowerOffset = -0.25;
 	double upperOffset = 0;
 
 	// LowerMotors
-	OverTalonFX m_lowerRight{ 20, ControllerNeutralMode::Brake, false, "rio" };
-	OverTalonFX m_lowerLeft{ 21, ControllerNeutralMode::Brake, false, "rio" };
+	OverTalonFX m_lowerRight{ 20, ControllerNeutralMode::Brake, true, "rio" };
+	OverTalonFX m_lowerLeft{ 21, ControllerNeutralMode::Brake, true, "rio" };
 
 	// Upper Motors
-	OverTalonFX m_upperMotor{ 22, ControllerNeutralMode::Brake, false, "rio" };
+	OverTalonFX m_upperMotor{ 22, ControllerNeutralMode::Brake, true, "rio" };
 
 	// State
 	SuperStructureState m_TargetState{ getCurrentState() };

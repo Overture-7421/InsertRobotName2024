@@ -63,6 +63,9 @@ void SimMotorManager::Update() {
 
         simState.SetSupplyVoltage(frc::RobotController::GetBatteryVoltage());
 
+        bool inverted = motor->getConfig().MotorOutput.Inverted.value;
+
+        ntable->GetEntry("software_inverted").SetBoolean(inverted);
 
         units::volt_t motorVoltage = simState.GetMotorVoltage();
         ntable->GetEntry("voltage_applied").SetDouble(motorVoltage.value());

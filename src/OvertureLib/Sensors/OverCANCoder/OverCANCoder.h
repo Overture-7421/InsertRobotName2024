@@ -16,6 +16,7 @@ class OverCANCoder : public CANcoder {
 public:
 	OverCANCoder(int _id, double offset, std::string _bus);
 	double getSensorAbsolutePosition();
+	const CANcoderConfiguration& getConfiguration();
 
 private:
 	CANcoderConfiguration canCoderConfiguration;

@@ -40,6 +40,7 @@ public:
 	double getVelocity(double wheelDiameter, double gearRatio);
 	double getVelocity(double wheelDiameter);
 	double getPosition();
+	const TalonFXConfiguration& getConfig();
 
 	void setVoltage(units::volt_t voltage, bool enableFOC);
 	void setVelocityVoltage(double velocity, bool enableFOC);
