@@ -168,12 +168,16 @@
         }
       },
       "SmartDashboard": {
-        "FrontLeftModule": {
+        "Current ": {
           "open": true
         },
         "Odometry": {
           "open": true
-        }
+        },
+        "Target ": {
+          "open": true
+        },
+        "open": true
       },
       "SwerveChassisSimple": {
         "link_0_JOINT_0": {
@@ -218,6 +222,12 @@
       "open": true
     },
     "nt_motor_plugin_Ri3D_arm_joint@1": {
+      "open": true
+    },
+    "nt_simworld_default@1": {
+      "Publishers": {
+        "open": true
+      },
       "open": true
     },
     "visible": true
@@ -305,6 +315,19 @@
       "window": {
         "visible": false
       }
+    },
+    "Plot <3>": {
+      "plots": [
+        {
+          "backgroundColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.8500000238418579
+          ],
+          "height": 326
+        }
+      ]
     }
   }
 }

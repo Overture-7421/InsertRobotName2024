@@ -13,3 +13,5 @@
 
 frc2::CommandPtr StartIntake(Intake* m_Intake, SuperStructure* m_SuperStructure);
 frc2::CommandPtr StopIntake(Intake* m_Intake, SuperStructure* m_SuperStructure);
+frc2::CommandPtr ShootingPose(Intake* m_Intake, SuperStructure* m_SuperStructure);
+frc2::CommandPtr AngleShootingProcess(double* angleShooting);

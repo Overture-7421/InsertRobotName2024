@@ -42,9 +42,11 @@ private:
 	frc2::Trigger resetAngleButton{ [this] {return driver.GetBackButton();} };
 
 	// Mechanism Commands
-	frc2::Trigger intakePosition{ [this] {return driver.GetRightTriggerAxis();} };
-
+	frc2::Trigger intakePosition{ [this] {return driver.GetYButton();} }; // Change to right trigger
+	frc2::Trigger shootingPose{ [this] {return driver.GetBButton();} }; 
 
 	//Auto Chooser
 	frc::SendableChooser<std::string> autoChooser;
+	
+	double angleShooting;
 };

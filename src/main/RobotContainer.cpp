@@ -22,7 +22,7 @@ void RobotContainer::ConfigureBindings() {
 	resetAngleButton.WhileTrue(ResetAngle(&chassis).ToPtr());
 
 	intakePosition.OnTrue(StartIntake(&intake, &superStructure)).OnFalse(StopIntake(&intake, &superStructure));
-
+	shootingPose.OnTrue(ShootingPose(&intake, &superStructure)).OnFalse(StopIntake(&intake, &superStructure));
 }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
