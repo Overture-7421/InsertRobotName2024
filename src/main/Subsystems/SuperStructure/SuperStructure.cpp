@@ -22,8 +22,6 @@ SuperStructure::SuperStructure() {
 	m_lowerRight.setPIDValues(30.0, 0.0, 0.0, 0.0, 0.0);
 	m_lowerRight.configureMotionMagic(1.0, 2.0, 3.0);
 
-
-
 	m_upperMotor.setPIDValues(30.0, 0.0, 0.0, 0.0, 0.0);
 	m_upperMotor.configureMotionMagic(1.0, 2.0, 3.0);
 

@@ -37,7 +37,7 @@ OverTalonFX::OverTalonFX(int id, ControllerNeutralMode neutralMode, bool inverte
 
 #ifndef __FRC_ROBORIO__
 	SimMotorManager* simMotorManager = SimMotorManager::GetInstance();
-    simMotorManager->AddSimMotorCandidate(this);
+	simMotorManager->AddSimMotorCandidate(this);
 #endif
 }
 
@@ -289,6 +289,7 @@ void OverTalonFX::setMotionMagicPosition(double position, double feedForward, bo
 	motionMagicVoltage.FeedForward = units::volt_t{ feedForward };
 	motionMagicVoltage.EnableFOC = enableFOC;
 	SetControl(motionMagicVoltage.WithPosition(units::turn_t{ position }));
+	frc::SmartDashboard::PutNumber("TEST VALUEEE", position);
 }
 
 /**
