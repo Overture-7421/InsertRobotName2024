@@ -21,9 +21,11 @@ void Robot::RobotInit() {
     {7, "FirstRobotConcept/motors/SDS_Module_BL_rotation_joint"}, 
     {8, "FirstRobotConcept/motors/SDS_Module_BL_wheel_joint"},
 
-    {20, "FirstRobotConcept/motors/arm_joint"},
+    {20, "FirstRobotConcept/motors/arm_joint_right"},
+    {21, "FirstRobotConcept/motors/arm_joint_left"},
     {22, "FirstRobotConcept/motors/shooter_arm_joint"},
-    {23, "FirstRobotConcept/motors/supports_joint"},
+    {23, "FirstRobotConcept/motors/supports_joint_up"},
+    {24, "FirstRobotConcept/motors/supports_joint_down"},
     {25, "FirstRobotConcept/motors/intake_wheels_joint"},
     {26, "FirstRobotConcept/motors/shooter_roller_joint"}
 
