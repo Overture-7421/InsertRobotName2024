@@ -42,14 +42,17 @@ private:
 
 	// Controllers
 	frc::XboxController driver{ 0 };
+	frc::XboxController opertr{ 1 };
+
 
 	// Driver Commands
 	frc2::Trigger resetAngleButton{ [this] {return driver.GetBackButton();} };
 
 	// Mechanism Commands
-	frc2::Trigger intakePosition{ [this] {return driver.GetYButton();} }; // Change to right trigger
-	frc2::Trigger shootingPose{ [this] {return driver.GetBButton();} }; 
-	frc2::Trigger moveStorage{ [this] {return driver.GetAButton();} }; 
+	frc2::Trigger intakePosition{ [this] {return opertr.GetYButton();} }; // Change to right trigger
+	frc2::Trigger shootingPose{ [this] {return opertr.GetXButton();} }; 
+	frc2::Trigger moveStorage{ [this] {return opertr.GetAButton();} }; 
+	frc2::Trigger moveStorageInverted{ [this] {return opertr.GetBButton();} };
 
 	//Auto Chooser
 	frc::SendableChooser<std::string> autoChooser;

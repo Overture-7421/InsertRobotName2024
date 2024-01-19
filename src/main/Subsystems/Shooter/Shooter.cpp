@@ -6,13 +6,19 @@
 
 Shooter::Shooter() {
 	upperMotor.setSupplyCurrentLimit(true, 20, 25, 0.5);
+	upperMotor.setSensorToMechanism(UPPER_GEAR_BOX_REDUCTION);
+	upperMotor.setClosedLoopVoltageRamp(0.5);
+
 	lowerMotor.setSupplyCurrentLimit(true, 20, 25, 0.5);
+	lowerMotor.setSensorToMechanism(LOWER_GEAR_BOX_REDUCTION);
+	lowerMotor.setFollow(upperMotor.GetDeviceID(), false);
+
+	upperMotor.setPIDValues(4.0, 0.0, 0.0, 0.0, 0.0);
 
 }
 
-void Shooter::setVoltage(units::volt_t voltage) {
-	upperMotor.setVoltage(voltage, false);
-	lowerMotor.setVoltage(voltage, false);
+void Shooter::setVelocityVoltage(double velocity) {
+	upperMotor.setVelocityVoltage(velocity, false);
 
 }
 

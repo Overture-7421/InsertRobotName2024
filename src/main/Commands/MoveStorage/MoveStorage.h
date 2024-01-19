@@ -17,7 +17,7 @@
 class MoveStorage
     : public frc2::CommandHelper<frc2::Command, MoveStorage> {
  public:
-  MoveStorage(Storage* m_Storage);
+  MoveStorage(Storage* m_Storage, units::volt_t m_voltage);
 
   void Initialize() override;
 
@@ -29,4 +29,5 @@ class MoveStorage
 
 private:
   Storage* m_Storage;
+  units::volt_t m_voltage;
 };
