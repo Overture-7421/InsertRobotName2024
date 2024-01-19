@@ -25,7 +25,7 @@ void Robot::RobotInit() {
     {21, "FirstRobotConcept/motors/arm_joint_left"},
     {22, "FirstRobotConcept/motors/shooter_arm_joint"},
     {23, "FirstRobotConcept/motors/supports_joint_up"},
-    {24, "FirstRobotConcept/motors/supports_joint_down"},
+    {24, "FirstRobotConcept/motors/storage_wheels_joint"},
     {25, "FirstRobotConcept/motors/intake_wheels_joint"},
     {26, "FirstRobotConcept/motors/shooter_roller_joint"}
 

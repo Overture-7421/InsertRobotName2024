@@ -10,6 +10,9 @@
 #include "main/Subsystems/SuperStructure/SuperStructure.h"
 #include "main/Subsystems/Intake/Intake.h"
 #include "main/Subsystems/SupportArms/SupportArms.h"
+#include "main/Subsystems/Storage/Storage.h"
+#include "main/Subsystems/Shooter/Shooter.h"
+
 
 frc2::CommandPtr StartIntake(Intake* m_Intake, SuperStructure* m_SuperStructure);
 frc2::CommandPtr StopIntake(Intake* m_Intake, SuperStructure* m_SuperStructure);

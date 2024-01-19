@@ -23,6 +23,7 @@ void RobotContainer::ConfigureBindings() {
 
 	intakePosition.OnTrue(StartIntake(&intake, &superStructure)).OnFalse(StopIntake(&intake, &superStructure));
 	shootingPose.OnTrue(ShootingPose(&intake, &superStructure)).OnFalse(StopIntake(&intake, &superStructure));
+	moveStorage.OnTrue(MoveStorage(&storage).ToPtr());
 }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {

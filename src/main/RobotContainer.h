@@ -14,10 +14,13 @@
 #include "Subsystems/Vision/AprilTagCamera.h"
 #include "Subsystems/Intake/Intake.h"
 #include "Subsystems/SuperStructure/SuperStructure.h"
+#include "Subsystems/Storage/Storage.h"
 #include "Subsystems/SupportArms/SupportArms.h"
+#include "Subsystems/Shooter/Shooter.h"
 #include "Commands/SuperStructureCommand/SuperStructureCommand.h"
 #include "Commands/ResetAngle/ResetAngle.h"
 #include "OvertureLib/Commands/Drive/Drive.h"
+#include "Commands/MoveStorage/MoveStorage.h"
 
 class RobotContainer {
 public:
@@ -34,6 +37,8 @@ private:
 	Intake intake;
 	SuperStructure superStructure;
 	SupportArms supportArms;
+	Storage storage;
+	Shooter shooter;
 
 	// Controllers
 	frc::XboxController driver{ 0 };
@@ -44,6 +49,7 @@ private:
 	// Mechanism Commands
 	frc2::Trigger intakePosition{ [this] {return driver.GetYButton();} }; // Change to right trigger
 	frc2::Trigger shootingPose{ [this] {return driver.GetBButton();} }; 
+	frc2::Trigger moveStorage{ [this] {return driver.GetAButton();} }; 
 
 	//Auto Chooser
 	frc::SendableChooser<std::string> autoChooser;
