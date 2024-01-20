@@ -28,9 +28,8 @@ void Robot::RobotInit() {
 
     {24, "7421-24/motors/shooter_storage_wheel_left_joint"},
     {25, "7421-24/motors/chassis_intake_wheels_joint"},
-    {26, "7421-24/motors/shooter_roller_up_joint_up"}
-    {27, "7421-24/motors/shooter_roller_up_joint_down"}
-
+    {26, "7421-24/motors/shooter_roller_up_joint"},
+    {27, "7421-24/motors/shooter_roller_down_joint"}
     });
 
   simPigeonManager->Init("7421-24/chassis/imu_sensor");

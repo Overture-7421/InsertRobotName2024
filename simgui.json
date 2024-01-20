@@ -27,6 +27,41 @@
       "open": false
     },
     "transitory": {
+      "7421-24": {
+        "cancoders": {
+          "arm_shooter_joint": {
+            "open": true
+          },
+          "open": true
+        },
+        "motors": {
+          "arm_shooter_joint": {
+            "open": true
+          },
+          "open": true,
+          "shooter_storage_wheel_left_joint": {
+            "open": true
+          }
+        },
+        "open": true
+      },
+      "7421-24_0": {
+        "cancoders": {
+          "SDS_Module_FR_rotation_joint": {
+            "open": true
+          },
+          "arm_shooter_joint": {
+            "open": true
+          },
+          "chassis_arm_joint": {
+            "open": true
+          },
+          "chassis_supports_joint": {
+            "open": true
+          },
+          "open": true
+        }
+      },
       "FirstRobotConcept": {
         "cancoders": {
           "SDS_Module_BL_rotation_joint": {
@@ -178,7 +213,13 @@
         }
       },
       "SmartDashboard": {
-        "FrontLeftModule": {
+        "SuperStructure": {
+          "Current": {
+            "open": true
+          },
+          "Target": {
+            "open": true
+          },
           "open": true
         },
         "Target ": {
@@ -208,9 +249,6 @@
           },
           "open": true
         },
-        "open": true
-      },
-      "nt_simworld": {
         "open": true
       },
       "nt_simworld_default": {

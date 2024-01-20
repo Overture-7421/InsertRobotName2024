@@ -31,12 +31,12 @@ private:
 
 	//constant
 	const double LOWER_GEAR_BOX_REDUCTION = 251;
-	const double UPPER_GEAR_BOX_REDUCTION = 142;
+	const double UPPER_GEAR_BOX_REDUCTION = 150;
 
 	//Encoders
 	OverDutyCycleEncoder lowerEncoder{ 0 };
 	OverDutyCycleEncoder upperEncoder{ 1 };
-	double lowerOffset = -0.25;
+	double lowerOffset = 0;
 	double upperOffset = 0;
 
 	// LowerMotors
