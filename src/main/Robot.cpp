@@ -28,7 +28,7 @@ void Robot::RobotInit() {
 
     {24, "FirstRobotConcept/motors/intake_wheels_joint"}, // Testing Storage Code
 
-    {25, "FirstRobotConcept/motors/intake_wheels_joint"},
+    // {25, "FirstRobotConcept/motors/intake_wheels_joint"},
     {26, "FirstRobotConcept/motors/shooter_roller_joint"}
 
     });
