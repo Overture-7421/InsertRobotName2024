@@ -21,10 +21,11 @@ void RobotContainer::ConfigureBindings() {
 	// Configure the button bindings
 	resetAngleButton.WhileTrue(ResetAngle(&chassis).ToPtr());
 
-	intakePosition.OnTrue(StartIntake(&intake, &superStructure)).OnFalse(StopIntake(&intake, &superStructure));
-	shootingPose.OnTrue(ShootingPose(&intake, &superStructure)).OnFalse(StopIntake(&intake, &superStructure));
+	intakePosition.OnTrue(StartIntake(&intake, &superStructure, &storage)).OnFalse(StopIntake(&intake, &superStructure, &storage));
+	shootingPose.OnTrue(ShootingPose(&intake, &superStructure)).OnFalse(StopIntake(&intake, &superStructure, &storage));
 	moveStorage.WhileTrue(MoveStorage(&storage, 1_V).ToPtr());
 	moveStorageInverted.WhileTrue(MoveStorage(&storage, -1_V).ToPtr());
+	shootshooter.WhileTrue(ShootShooter(&shooter, 3.0).ToPtr());
 }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {

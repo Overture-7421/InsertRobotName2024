@@ -21,6 +21,7 @@
 #include "Commands/ResetAngle/ResetAngle.h"
 #include "OvertureLib/Commands/Drive/Drive.h"
 #include "Commands/MoveStorage/MoveStorage.h"
+#include "Commands/ShootShooter/ShootShooter.h"
 
 class RobotContainer {
 public:
@@ -53,6 +54,7 @@ private:
 	frc2::Trigger shootingPose{ [this] {return opertr.GetXButton();} }; 
 	frc2::Trigger moveStorage{ [this] {return opertr.GetAButton();} }; 
 	frc2::Trigger moveStorageInverted{ [this] {return opertr.GetBButton();} };
+	frc2::Trigger shootshooter{ [this] {return opertr.GetRightTriggerAxis();} }; 
 
 	//Auto Chooser
 	frc::SendableChooser<std::string> autoChooser;
