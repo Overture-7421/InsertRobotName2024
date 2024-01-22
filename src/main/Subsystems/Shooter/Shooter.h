@@ -15,6 +15,8 @@ public:
 	void setVelocityVoltage(double velocity);
 	void Periodic() override;
 
+	double velocity;
+
 private:
 	OverTalonFX upperMotor{ 26, ControllerNeutralMode::Brake, false, "rio" };
 	OverTalonFX lowerMotor{ 27, ControllerNeutralMode::Brake, false, "rio" };
