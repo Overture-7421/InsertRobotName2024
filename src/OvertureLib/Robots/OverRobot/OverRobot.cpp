@@ -13,6 +13,7 @@
 #include <networktables/NetworkTableInstance.h>
 #include <iostream>
 #include <frc/DriverStation.h>
+#include <photon/PhotonCamera.h>
 
 OverRobot::OverRobot(units::second_t period): frc::IterativeRobotBase(period) {
   std::puts("\nSimulation OverRobot Started!!!!");
@@ -30,6 +31,8 @@ OverRobot::OverRobot(units::second_t period): frc::IterativeRobotBase(period) {
              HALUsageReporting::kFramework_Timed);
 
   frc::DriverStation::SilenceJoystickConnectionWarning(true);
+
+  photon::PhotonCamera::SetVersionCheckEnabled(false);
 }
 
 void OverRobot::StartCompetition(){
