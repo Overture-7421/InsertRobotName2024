@@ -24,6 +24,8 @@ void ShootShooter::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void ShootShooter::Execute() {
+	frc::SmartDashboard::PutNumber("Shooter Velocity:", m_velocity);
+
 }
 
 // Called once the command ends or is interrupted.
