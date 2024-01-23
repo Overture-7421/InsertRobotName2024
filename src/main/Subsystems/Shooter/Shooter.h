@@ -13,6 +13,7 @@ class Shooter : public frc2::SubsystemBase {
 public:
 	Shooter();
 	void setVelocityVoltage(double velocity);
+	void getVelocity(double m_velocity);
 	void Periodic() override;
 
 	
@@ -25,4 +26,5 @@ private:
 	const double UPPER_GEAR_BOX_REDUCTION = 1/2.4;
 
 	double velocity;
+	double m_velocity;
 };
