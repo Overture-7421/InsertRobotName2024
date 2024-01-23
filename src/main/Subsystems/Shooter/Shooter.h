@@ -13,8 +13,9 @@ class Shooter : public frc2::SubsystemBase {
 public:
 	Shooter();
 	void setVelocityVoltage(double velocity);
-	void getVelocity(double m_velocity);
+	double getCurrentVelocity();
 	void Periodic() override;
+	
 
 	
 
@@ -27,4 +28,6 @@ private:
 
 	double velocity;
 	double m_velocity;
+
+
 };

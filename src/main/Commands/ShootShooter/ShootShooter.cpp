@@ -19,8 +19,6 @@ ShootShooter::ShootShooter(Shooter* m_Shooter, double m_velocity) {
 void ShootShooter::Initialize() {
 
   m_Shooter->setVelocityVoltage(m_velocity);
-  
-  m_Shooter->getVelocity(m_velocity);
 
 }
 
