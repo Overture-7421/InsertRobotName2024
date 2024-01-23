@@ -20,10 +20,12 @@ Shooter::Shooter() {
 
 void Shooter::setVelocityVoltage(double velocity) {
 	upperMotor.setVelocityVoltage(velocity, false);
+	this->velocity = velocity;
 
 }
 
 // This method will be called once per scheduler run
 void Shooter::Periodic() {
+	frc::SmartDashboard::PutNumber("Shooter Velocity:", velocity);
 
 }

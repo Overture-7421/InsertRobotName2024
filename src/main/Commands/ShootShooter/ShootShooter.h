@@ -19,6 +19,7 @@ class ShootShooter
  public:
   ShootShooter(Shooter* m_Shooter, double m_velocity);
 
+  
   void Initialize() override;
 
   void Execute() override;
@@ -26,6 +27,8 @@ class ShootShooter
   void End(bool interrupted) override;
 
   bool IsFinished() override;
+
+  
 
 private:
   Shooter* m_Shooter;
