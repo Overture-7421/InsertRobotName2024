@@ -49,9 +49,8 @@ void AprilTags::addMeasurementToChassis() {
 //Update odometry with vision :0
 
 void AprilTags::updateOdometry() {
-	if (checkTagDistance(1, 5.00) || checkTagDistance(2, 7.00) || checkTagDistance(3, 8.00)) {
-		addMeasurementToChassis();
-	}
+	addMeasurementToChassis();
+
 }
 
 //Get EstimatedRobotPose from PhotonVision
