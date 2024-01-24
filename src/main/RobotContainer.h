@@ -55,6 +55,7 @@ private:
 	frc2::Trigger moveStorage{ [this] {return opertr.GetAButton();} }; 
 	frc2::Trigger moveStorageInverted{ [this] {return opertr.GetBButton();} };
 	frc2::Trigger shootshooter{ [this] {return opertr.GetRightBumper();} }; 
+	frc2::Trigger shooterAngle{ [this] {return opertr.GetLeftBumper();} };
 
 	//Auto Chooser
 	frc::SendableChooser<std::string> autoChooser;

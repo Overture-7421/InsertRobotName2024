@@ -26,6 +26,7 @@ void RobotContainer::ConfigureBindings() {
 	moveStorage.WhileTrue(MoveStorage(&storage, 1_V).ToPtr());
 	moveStorageInverted.WhileTrue(MoveStorage(&storage, -1_V).ToPtr());
 	shootshooter.WhileTrue(ShootShooter(&shooter, 3.0).ToPtr());
+	shooterAngle.WhileTrue(ShooterAngle(&superStructure));
 }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
