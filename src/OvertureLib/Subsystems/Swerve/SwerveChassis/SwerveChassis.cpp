@@ -162,7 +162,7 @@ void SwerveChassis::driveRobotRelative(frc::ChassisSpeeds speeds) {
  * @param speeds ChassisSpeeds object
  */
 void SwerveChassis::driveFieldRelative(frc::ChassisSpeeds speeds) {
-	frc::ChassisSpeeds chassisSpeeds = frc::ChassisSpeeds::Discretize(frc::ChassisSpeeds::FromFieldRelativeSpeeds(speeds, getOdometry().Rotation()), 0.2_s);
+	frc::ChassisSpeeds chassisSpeeds = frc::ChassisSpeeds::Discretize(frc::ChassisSpeeds::FromFieldRelativeSpeeds(speeds, getOdometry().Rotation()), 0.02_s);
 
 	driveRobotRelative(chassisSpeeds);
 }
