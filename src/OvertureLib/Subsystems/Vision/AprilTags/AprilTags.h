@@ -15,6 +15,12 @@
 
 #include "OvertureLib/Subsystems/Swerve/SwerveChassis/SwerveChassis.h"
 
+#ifndef __FRC_ROBORIO__
+	#define APRILTAGS_CAMERA_NAME "NetworkCamera"
+#else
+	#define APRILTAGS_CAMERA_NAME "Arducam_OV9281_USB_Camera"
+#endif
+
 class AprilTags : public frc2::SubsystemBase {
 public:
 	AprilTags();

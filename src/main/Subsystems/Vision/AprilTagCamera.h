@@ -7,11 +7,14 @@
 #include "OvertureLib/Subsystems/Vision/AprilTags/AprilTags.h"
 #include "main/Subsystems/Chassis/Chassis.h"
 
+
+
 class AprilTagCamera : public AprilTags {
 public:
 	AprilTagCamera(Chassis* chassis);
 private:
-	photon::PhotonCamera camera{ "Arducam_OV9281_USB_Camera" };
+
+	photon::PhotonCamera camera{ APRILTAGS_CAMERA_NAME };
 	frc::AprilTagFieldLayout tagLayout{ frc::LoadAprilTagLayoutField(frc::AprilTagField::k2024Crescendo) };
 	frc::Transform3d cameraToRobot{ {0_in, 0_in, 0_in}, {0_deg, 0_deg, 0_deg} };
 };
