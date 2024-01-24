@@ -65,6 +65,7 @@ void Robot::DisabledExit() {
 
 void Robot::AutonomousInit() {
   m_autonomousCommand = m_container.GetAutonomousCommand();
+  m_container.ConfigureDefaultCommands();
 
   if (m_autonomousCommand) {
      m_autonomousCommand->Schedule();
@@ -78,6 +79,8 @@ void Robot::AutonomousExit() {
 }
 
 void Robot::TeleopInit() {
+  m_container.ConfigureDefaultCommands();
+
   if (m_autonomousCommand) {
     m_autonomousCommand->Cancel();
   }
