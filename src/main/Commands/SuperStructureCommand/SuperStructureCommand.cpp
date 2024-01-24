@@ -35,5 +35,5 @@ frc2::CommandPtr ShootingPose(Intake* m_Intake, SuperStructure* m_SuperStructure
 // }
 
 frc2::CommandPtr ShooterAngle(SuperStructure* m_SuperStructure) {
-	frc2::InstantCommand([m_SuperStructure] {m_SuperStructure->setTargetCoord({105, 40});}, { m_SuperStructure }).ToPtr();
+	frc2::InstantCommand([m_SuperStructure] {m_SuperStructure->setTargetCoord({40, 40});}, { m_SuperStructure }).ToPtr();
 }
