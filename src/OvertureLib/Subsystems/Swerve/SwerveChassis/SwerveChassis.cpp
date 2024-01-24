@@ -14,8 +14,8 @@ SwerveChassis::SwerveChassis() {
 		[this]() { return getRobotRelativeSpeeds(); },
 		[this](frc::ChassisSpeeds speeds) { driveRobotRelative(speeds); },
 		HolonomicPathFollowerConfig(
+			PIDConstants(1.0, 0.0, 0.0),
 			PIDConstants(5.0, 0.0, 0.0),
-			PIDConstants(7.0, 0.0, 0.0),
 			5.75_mps,
 			0.3732276_m,
 			ReplanningConfig()
@@ -336,15 +336,15 @@ void SwerveChassis::updateOdometry() {
 }
 
 void SwerveChassis::shuffleboardPeriodic() {
-	// frc::SmartDashboard::PutNumber("Odometry/LinearX", linearX);
-	// frc::SmartDashboard::PutNumber("Odometry/LinearY", linearY);
-	// frc::SmartDashboard::PutNumber("Odometry/Angular", angular);
+	frc::SmartDashboard::PutNumber("Odometry/LinearX", linearX);
+	frc::SmartDashboard::PutNumber("Odometry/LinearY", linearY);
+	frc::SmartDashboard::PutNumber("Odometry/Angular", angular);
 
 	auto estimatedPos = getOdometry();
 
 	field2d.SetRobotPose(estimatedPos);
 
-	// frc::SmartDashboard::PutNumber("Odometry/X", estimatedPos.X().value());
-	// frc::SmartDashboard::PutNumber("Odometry/Y", estimatedPos.Y().value());
-	// frc::SmartDashboard::PutNumber("Odometry/Pigeon", estimatedPos.Rotation().Degrees().value());
+	frc::SmartDashboard::PutNumber("Odometry/X", estimatedPos.X().value());
+	frc::SmartDashboard::PutNumber("Odometry/Y", estimatedPos.Y().value());
+	frc::SmartDashboard::PutNumber("Odometry/Pigeon", estimatedPos.Rotation().Degrees().value());
 }
