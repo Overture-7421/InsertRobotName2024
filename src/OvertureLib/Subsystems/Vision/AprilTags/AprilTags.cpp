@@ -16,7 +16,7 @@ void AprilTags::setCameraAndLayout(photon::PhotonCamera* camera, frc::AprilTagFi
 	poseEstimator = new photon::PhotonPoseEstimator{
 		*m_TagLayout,
 		photon::PoseStrategy::MULTI_TAG_PNP_ON_COPROCESSOR,
-		std::move(photon::PhotonCamera{ "Arducam_OV9281_USB_Camera" }),
+		std::move(photon::PhotonCamera{ APRILTAGS_CAMERA_NAME }),
 		*m_CameraToRobot
 	};
 }
