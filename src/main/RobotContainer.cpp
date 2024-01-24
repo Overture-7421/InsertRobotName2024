@@ -18,6 +18,23 @@ RobotContainer::RobotContainer() {
 void RobotContainer::ConfigureBindings() {
 	chassis.SetDefaultCommand(Drive(&chassis, &driver));
 
+	SuperStructureState startingState;
+	startingState.lowerAngle = 0;
+	startingState.upperAngle = 0;
+
+
+	SuperStructureState targetState;
+	startingState.lowerAngle = 40;
+	startingState.upperAngle = 40;
+
+	SuperStructureMoveByDistance::Profile profile;
+	profile.profileActivationDistance = 1_m;
+	profile.startingState = startingState;
+	profile.targetState = targetState;
+	profile.targetCoord = frc::Translation2d(3.3_m, 1.5_m);
+
+	superStructure.SetDefaultCommand(SuperStructureMoveByDistance(&chassis, &superStructure, profile));
+
 	// Configure the button bindings
 	resetAngleButton.WhileTrue(ResetAngle(&chassis).ToPtr());
 

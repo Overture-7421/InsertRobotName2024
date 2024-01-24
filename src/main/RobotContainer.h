@@ -22,6 +22,7 @@
 #include "OvertureLib/Commands/Drive/Drive.h"
 #include "Commands/MoveStorage/MoveStorage.h"
 #include "Commands/ShootShooter/ShootShooter.h"
+#include "Commands/SuperStructureMoveByDistance/SuperStructureMoveByDistance.h"
 
 class RobotContainer {
 public:
