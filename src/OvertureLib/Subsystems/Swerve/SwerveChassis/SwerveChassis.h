@@ -13,6 +13,9 @@
 #include <frc/estimator/SwerveDrivePoseEstimator.h>
 #include <frc/DriverStation.h>
 #include <frc/RobotController.h>
+
+#include <frc/smartdashboard/Field2d.h>
+
 #include <frc2/command/sysid/SysIdRoutine.h>
 #include <frc2/command/SubsystemBase.h>
 #include <pathplanner/lib/auto/AutoBuilder.h>
@@ -105,4 +108,6 @@ private:
 					.velocity(units::meters_per_second_t{backLeftModule->getSpeed()});
 			  },
 			  this} };
+
+	frc::Field2d field2d;
 };

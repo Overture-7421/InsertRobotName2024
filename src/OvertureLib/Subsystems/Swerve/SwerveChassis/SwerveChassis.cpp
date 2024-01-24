@@ -33,6 +33,8 @@ SwerveChassis::SwerveChassis() {
 	},
 		this // Reference to this subsystem to set requirements
 	);
+
+	frc::SmartDashboard::PutData("Odometry", &field2d);
 }
 
 /**
@@ -339,9 +341,10 @@ void SwerveChassis::shuffleboardPeriodic() {
 	// frc::SmartDashboard::PutNumber("Odometry/Angular", angular);
 
 	auto estimatedPos = getOdometry();
-	frc::SmartDashboard::PutNumber("Roll", getRoll());
 
-	frc::SmartDashboard::PutNumber("Odometry/X", estimatedPos.X().value());
-	frc::SmartDashboard::PutNumber("Odometry/Y", estimatedPos.Y().value());
-	frc::SmartDashboard::PutNumber("Odometry/Pigeon", estimatedPos.Rotation().Degrees().value());
+	field2d.SetRobotPose(estimatedPos);
+
+	// frc::SmartDashboard::PutNumber("Odometry/X", estimatedPos.X().value());
+	// frc::SmartDashboard::PutNumber("Odometry/Y", estimatedPos.Y().value());
+	// frc::SmartDashboard::PutNumber("Odometry/Pigeon", estimatedPos.Rotation().Degrees().value());
 }

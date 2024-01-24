@@ -49,7 +49,7 @@ void AprilTags::addMeasurementToChassis() {
 //Update odometry with vision :0
 
 void AprilTags::updateOdometry() {
-	if (checkTagDistance(1, 16.00) || checkTagDistance(2, 16.00) || checkTagDistance(3, 6.00)) {
+	if (checkTagDistance(1, 5.00) || checkTagDistance(2, 6.00) || checkTagDistance(3, 7.00)) {
 		addMeasurementToChassis();
 	}
 }
