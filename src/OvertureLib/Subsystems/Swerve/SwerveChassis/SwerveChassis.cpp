@@ -33,6 +33,8 @@ SwerveChassis::SwerveChassis() {
 	},
 		this // Reference to this subsystem to set requirements
 	);
+
+	frc::SmartDashboard::PutData("Odometry", &field2d);
 }
 
 /**
@@ -160,7 +162,7 @@ void SwerveChassis::driveRobotRelative(frc::ChassisSpeeds speeds) {
  * @param speeds ChassisSpeeds object
  */
 void SwerveChassis::driveFieldRelative(frc::ChassisSpeeds speeds) {
-	frc::ChassisSpeeds chassisSpeeds = frc::ChassisSpeeds::Discretize(frc::ChassisSpeeds::FromFieldRelativeSpeeds(speeds, getOdometry().Rotation()), 0.2_s);
+	frc::ChassisSpeeds chassisSpeeds = frc::ChassisSpeeds::Discretize(frc::ChassisSpeeds::FromFieldRelativeSpeeds(speeds, getOdometry().Rotation()), 0.02_s);
 
 	driveRobotRelative(chassisSpeeds);
 }
@@ -334,12 +336,13 @@ void SwerveChassis::updateOdometry() {
 }
 
 void SwerveChassis::shuffleboardPeriodic() {
-	// frc::SmartDashboard::PutNumber("Odometry/LinearX", linearX);
-	// frc::SmartDashboard::PutNumber("Odometry/LinearY", linearY);
-	// frc::SmartDashboard::PutNumber("Odometry/Angular", angular);
+	frc::SmartDashboard::PutNumber("Odometry/LinearX", linearX);
+	frc::SmartDashboard::PutNumber("Odometry/LinearY", linearY);
+	frc::SmartDashboard::PutNumber("Odometry/Angular", angular);
 
 	auto estimatedPos = getOdometry();
-	frc::SmartDashboard::PutNumber("Roll", getRoll());
+
+	field2d.SetRobotPose(estimatedPos);
 
 	frc::SmartDashboard::PutNumber("Odometry/X", estimatedPos.X().value());
 	frc::SmartDashboard::PutNumber("Odometry/Y", estimatedPos.Y().value());

@@ -12,6 +12,7 @@
 #include "main/Subsystems/SupportArms/SupportArms.h"
 #include "main/Subsystems/Storage/Storage.h"
 #include "main/Subsystems/Shooter/Shooter.h"
+#include "main/Subsystems/Chassis/Chassis.h"
 
 
 frc2::CommandPtr StartIntake(Intake* m_Intake, SuperStructure* m_SuperStructure, Storage* m_Storage);
