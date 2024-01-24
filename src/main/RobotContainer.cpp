@@ -7,6 +7,16 @@
 #include <frc2/command/Commands.h>
 
 RobotContainer::RobotContainer() {
+	SuperStructureState startingState{ 0,0 };
+	SuperStructureState targetState{ 40, 40 };
+
+	SuperStructureMoveByDistance::Profile profile;
+	profile.profileActivationDistance = 1_m;
+	profile.startingState = startingState;
+	profile.targetState = targetState;
+	profile.targetCoord = frc::Translation2d(4.3_m, 5.0_m);
+
+	pathplanner::NamedCommands::registerCommand("Climb", std::move(SuperStructureMoveByDistance(&chassis, &superStructure, profile).ToPtr()));
 
 	autoChooser.SetDefaultOption("None, null, nada", "None");
 	autoChooser.AddOption("MiddleNote", "MiddleNote");
@@ -18,25 +28,9 @@ RobotContainer::RobotContainer() {
 void RobotContainer::ConfigureBindings() {
 	chassis.SetDefaultCommand(Drive(&chassis, &driver));
 
-	SuperStructureState startingState;
-	startingState.lowerAngle = 0;
-	startingState.upperAngle = 0;
-
-
-	SuperStructureState targetState;
-	startingState.lowerAngle = 40;
-	startingState.upperAngle = 40;
-
-	SuperStructureMoveByDistance::Profile profile;
-	profile.profileActivationDistance = 1_m;
-	profile.startingState = startingState;
-	profile.targetState = targetState;
-	profile.targetCoord = frc::Translation2d(3.3_m, 1.5_m);
-
-	superStructure.SetDefaultCommand(SuperStructureMoveByDistance(&chassis, &superStructure, profile));
-
 	// Configure the button bindings
 	resetAngleButton.WhileTrue(ResetAngle(&chassis).ToPtr());
+	climbButton.WhileTrue(Climb());
 
 	intakePosition.OnTrue(StartIntake(&intake, &superStructure, &storage)).OnFalse(StopIntake(&intake, &superStructure, &storage));
 	shootingPose.OnTrue(ShootingPose(&intake, &superStructure)).OnFalse(StopIntake(&intake, &superStructure, &storage));
