@@ -22,11 +22,11 @@ void SuperStructureMoveByDistance::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void SuperStructureMoveByDistance::Execute() {
   const auto &currentPose = chassis->getOdometry();
-  distanceToTarget = profile.targetCoord.Distance(currentPose.Translation());
+  distanceToTarget = units::math::abs(profile.targetCoord.Distance(currentPose.Translation()));
 
   SuperStructureState targetState = profile.targetState;
 
-  if(units::math::abs(distanceToTarget) < profile.profileActivationDistance) {
+  if(distanceToTarget < profile.profileActivationDistance) {
 
 
     double inverseNormalizedDistance = (distanceToTarget / profile.profileActivationDistance).value();
