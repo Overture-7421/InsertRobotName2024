@@ -22,41 +22,45 @@ void AprilTags::setCameraAndLayout(photon::PhotonCamera* camera, frc::AprilTagFi
 }
 
 //Check if distance between robot and tag is less than a certain value ;)
-bool AprilTags::checkTagDistance(size_t numberOfTags, double distance) {
-	std::optional<photon::PhotonPipelineResult> result = getCameraResult();
+bool AprilTags::checkTagDistance(const photon::PhotonPipelineResult& result, size_t numberOfTags, double distance) {
 
-	if (result.has_value()) {
-		photon::PhotonPipelineResult resultValue = result.value();
-		if (resultValue.GetTargets().size() == numberOfTags) {
-			if (resultValue.GetBestTarget().GetBestCameraToTarget().X().value() < distance) {
-				return true;
-			}
+	if (result.GetTargets().size() == numberOfTags) {
+		if (result.GetBestTarget().GetBestCameraToTarget().X().value() < distance) {
+			return true;
 		}
 	}
 
 	return false;
 }
 
-void AprilTags::addMeasurementToChassis() {
-	std::optional<photon::EstimatedRobotPose> poseResult = update(swerveChassis->getOdometry());
+void AprilTags::addMeasurementToChassis(const photon::PhotonPipelineResult& result) {
+
+	std::optional<photon::EstimatedRobotPose> poseResult = update(result);
 
 	if (poseResult.has_value()) {
 		frc::Pose2d poseTo2d = poseResult.value().estimatedPose.ToPose2d();
-		swerveChassis->addVisionMeasurement({ poseTo2d.X(), poseTo2d.Y(), swerveChassis->getOdometry().Rotation() }, poseResult.value().timestamp);
+		swerveChassis->addVisionMeasurement(poseTo2d, poseResult.value().timestamp);
 	}
 }
 
 //Update odometry with vision :0
 
 void AprilTags::updateOdometry() {
-	if (checkTagDistance(1, 5.00) || checkTagDistance(2, 6.00) || checkTagDistance(3, 7.00)) {
-		addMeasurementToChassis();
+	std::optional<photon::PhotonPipelineResult> result = getCameraResult();
+	if(!result.has_value()) {
+		return;
+	}
+	photon::PhotonPipelineResult pipelineResult = result.value();
+	
+
+	if (checkTagDistance(pipelineResult, 1, 5.00) || checkTagDistance(pipelineResult, 2, 6.00) || checkTagDistance(pipelineResult, 3, 7.00)) {
+		addMeasurementToChassis(pipelineResult);
 	}
 }
 
 //Get EstimatedRobotPose from PhotonVision
-std::optional<photon::EstimatedRobotPose> AprilTags::update(frc::Pose2d estimatedPose) {
-	return poseEstimator->Update();
+std::optional<photon::EstimatedRobotPose> AprilTags::update(const photon::PhotonPipelineResult& result) {
+	return poseEstimator->Update(result);
 }
 
 //Get PhotonPipeResult from PhotonVision

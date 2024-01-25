@@ -25,10 +25,10 @@ class AprilTags : public frc2::SubsystemBase {
 public:
 	AprilTags();
 	void setCameraAndLayout(photon::PhotonCamera* camera, frc::AprilTagFieldLayout* tagLayout, frc::Transform3d* cameraToRobot);
-	bool checkTagDistance(size_t numberOfTags, double distance);
-	void addMeasurementToChassis();
+	bool checkTagDistance(const photon::PhotonPipelineResult& result, size_t numberOfTags, double distance);
+	void addMeasurementToChassis(const photon::PhotonPipelineResult& result);
 	void updateOdometry();
-	std::optional<photon::EstimatedRobotPose> update(frc::Pose2d estimatedPose);
+	std::optional<photon::EstimatedRobotPose> update(const photon::PhotonPipelineResult& result);
 	std::optional<photon::PhotonPipelineResult> getCameraResult();
 	bool isPoseEstimatorSet();
 	void setPoseEstimator(bool set);

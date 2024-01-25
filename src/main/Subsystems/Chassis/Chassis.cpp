@@ -11,10 +11,18 @@ Chassis::Chassis() {
 	setModulesRatios(turnRatio, driveRatio, wheelDiameter);
 	setRotatorPID(53, 0, 0);
 
+#ifndef __FRC_ROBORIO__
+	frontLeft.setFFConstants(0.15117_V, 1.9912_V, 0.032941_V);
+	frontRight.setFFConstants(0.15117_V, 1.9912_V, 0.032941_V);
+	backLeft.setFFConstants(0.15117_V, 1.9912_V, 0.032941_V);
+	backRight.setFFConstants(0.15117_V, 1.9912_V, 0.032941_V);
+#else
 	frontLeft.setFFConstants(0.15117_V, 1.9912_V, 0.032941_V);
 	frontRight.setFFConstants(0.11106_V, 2.0075_V, 0.08823_V);
 	backLeft.setFFConstants(0.030111_V, 2.0732_V, 0.16158_V);
 	backRight.setFFConstants(0.09324_V, 2.0492_V, 0.077588_V);
+#endif
+
 }
 
 //This method will be called once per schedule run
