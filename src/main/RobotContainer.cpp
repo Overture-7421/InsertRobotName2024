@@ -8,7 +8,7 @@
 
 RobotContainer::RobotContainer() {
 	SuperStructureState startingState{ 0, 0 };
-	SuperStructureState targetState{ 70, 0 };
+	SuperStructureState targetState{ 60, 0 };
 
 	SuperStructureMoveByDistance::Profile profile;
 	profile.profileActivationDistance = 1_m;
