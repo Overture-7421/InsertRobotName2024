@@ -16,10 +16,12 @@ RobotContainer::RobotContainer() {
 
 void RobotContainer::ConfigureBindings() {
 	superStructure.SetDefaultCommand(frc2::cmd::RunOnce([=]() {superStructure.setTargetCoord({-30, 0});}, {&superStructure}));
+	
 	chassis.SetDefaultCommand(Drive(&chassis, &driver));
 
 	// Configure the button bindings
 	resetAngleButton.WhileTrue(ResetAngle(&chassis).ToPtr());
+
 	climbButton.WhileTrue(Climb(&chassis, &superStructure));
 
 	intakePosition.OnTrue(StartIntake(&intake, &superStructure, &storage)).OnFalse(StopIntake(&intake, &superStructure, &storage));

@@ -4,6 +4,7 @@
 
 #include "main/Commands/SuperStructureMoveByDistance/SuperStructureMoveByDistance.h"
 
+#include <iostream>
 
 frc::Pose2d flipPoseIfNeeded(frc::Pose2d pose) {
 	auto alliance = frc::DriverStation::GetAlliance();
@@ -34,11 +35,11 @@ ClimbingLocation findClosestClimbingLocation(Chassis* chassis) {
 
 frc2::CommandPtr Climb(Chassis* chassis, SuperStructure* superStructure) {
 
-	SuperStructureState startingState{0, -90 };
+	SuperStructureState startingState{-2, -100 };
 	SuperStructureState targetState{ 90, -90 };
 
 	SuperStructureMoveByDistance::Profile profile;
-	profile.profileActivationDistance = 1.5_m;
+	profile.profileActivationDistance = 1_m;
 	profile.startingState = startingState;
 	profile.targetState = targetState;
 
