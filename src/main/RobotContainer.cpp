@@ -14,7 +14,7 @@ RobotContainer::RobotContainer() {
 	profile.profileActivationDistance = 1_m;
 	profile.startingState = startingState;
 	profile.targetState = targetState;
-	profile.targetCoord = frc::Translation2d(4.3_m, 5.0_m);
+	profile.targetCoord = frc::Translation2d(4.73_m, 4.33_m);
 
 	pathplanner::NamedCommands::registerCommand("Climb", std::move(SuperStructureMoveByDistance(&chassis, &superStructure, profile).ToPtr()));
 
