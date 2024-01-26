@@ -34,7 +34,7 @@ void SuperStructureMoveByDistance::Execute() {
 		targetState.lowerAngle = profile.startingState.lowerAngle + lowerAngleTravel * inverseNormalizedDistance;
 	}
 
-	superStructure->setTargetCoord(targetState, 80, 80);
+	superStructure->setTargetCoord(targetState, 160, 160);
 }
 
 // Called once the command ends or is interrupted.
