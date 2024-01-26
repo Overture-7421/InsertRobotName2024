@@ -7,6 +7,8 @@
 #include <vector>
 #include <utility>
 
+units::length::meter_t getDistanceToChassis(Chassis* chassis, frc::Translation2d targetTranslation);
+
 enum class ClimbingLocation { 
     Left,
     Right,

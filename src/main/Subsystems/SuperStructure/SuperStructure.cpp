@@ -20,10 +20,10 @@ SuperStructure::SuperStructure() {
 
 	// COnfigure Motion Magic and PID
 	m_lowerRight.setPIDValues(80.0, 0.0, 0.0, 0.0, 0.0);
-	m_lowerRight.configureMotionMagic(80.0, 20.0, 0.0);
+	m_lowerRight.configureMotionMagic(30.0, 10.0, 0.0);
 
 	m_upperMotor.setPIDValues(30.0, 0.0, 0.0, 0.0, 0.0);
-	m_upperMotor.configureMotionMagic(80.0, 20.0, 0.0);
+	m_upperMotor.configureMotionMagic(30.0, 10.0, 0.0);
 
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 	m_lowerRight.setSensorPosition(convertAngleToFalconPos(getLowerAngle()));
