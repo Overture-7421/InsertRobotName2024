@@ -19,7 +19,6 @@ ClimbingLocation findClosestClimbingLocation(Chassis* chassis) {
 	}
 
 	std::sort(distancesToClimbingLocations.begin(), distancesToClimbingLocations.end(), [](auto a, auto b) { return a.second < b.second;});
-
 	return distancesToClimbingLocations.front().first;
 }
 
