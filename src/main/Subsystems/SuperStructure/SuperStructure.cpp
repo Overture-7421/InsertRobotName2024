@@ -33,7 +33,9 @@ SuperStructure::SuperStructure() {
 	setTargetCoord({ getLowerAngle(), getUpperAngle() });
 }
 
-void SuperStructure::setTargetCoord(SuperStructureState targetCoord) {
+void SuperStructure::setTargetCoord(SuperStructureState targetCoord, double velocity = 1.0, double acceleration = 1.0) {
+	m_upperMotor.configureMotionMagic(velocity, acceleration, 3.0); // Add multiplier for simplifying movement
+	m_lowerRight.configureMotionMagic(velocity, acceleration, 3.0);
 	m_TargetState = targetCoord;
 }
 
