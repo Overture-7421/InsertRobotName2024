@@ -4,15 +4,19 @@
 
 #include "main/Commands/SuperStructureMoveByDistance/SuperStructureMoveByDistance.h"
 
-units::length::meter_t getDistanceToChassis(Chassis* chassis, frc::Translation2d targetTranslation){
+
+frc::Pose2d flipPoseIfNeeded(frc::Pose2d pose) {
 	auto alliance = frc::DriverStation::GetAlliance();
 
 	auto shouldFlip = alliance.has_value() && (alliance.value() == frc::DriverStation::Alliance::kRed);
 	if (shouldFlip) {
-		targetTranslation = pathplanner::GeometryUtil::flipFieldPosition(targetTranslation);
+		pose = pathplanner::GeometryUtil::flipFieldPose(pose);
 	}
+	return pose;
+}
 
-	return chassis->getOdometry().Translation().Distance(targetTranslation);
+units::length::meter_t getDistanceToChassis(Chassis* chassis, frc::Pose2d targetPose){
+	return chassis->getOdometry().Translation().Distance(flipPoseIfNeeded(targetPose).Translation());
 }
 
 ClimbingLocation findClosestClimbingLocation(Chassis* chassis) {
@@ -29,16 +33,33 @@ ClimbingLocation findClosestClimbingLocation(Chassis* chassis) {
 }
 
 frc2::CommandPtr Climb(Chassis* chassis, SuperStructure* superStructure) {
+
+	SuperStructureState startingState{0, -90 };
+	SuperStructureState targetState{ 90, -90 };
+
+	SuperStructureMoveByDistance::Profile profile;
+	profile.profileActivationDistance = 1.5_m;
+	profile.startingState = startingState;
+	profile.targetState = targetState;
+
 	std::shared_ptr<pathplanner::PathPlannerPath> climbPathLeft = pathplanner::PathPlannerPath::fromPathFile("AMP Climb Left");
 	std::shared_ptr<pathplanner::PathPlannerPath> climbPathRight = pathplanner::PathPlannerPath::fromPathFile("AMP Climb Right");
 	std::shared_ptr<pathplanner::PathPlannerPath> climbPathBack = pathplanner::PathPlannerPath::fromPathFile("AMP Climb Back");
 
 	pathplanner::PathConstraints constraints = pathplanner::PathConstraints(
-		4.0_mps, 1.0_mps_sq,
+		2.0_mps, 1.0_mps_sq,
 		560_deg_per_s, 720_deg_per_s_sq);
 
 	return frc2::cmd::Select<ClimbingLocation>([chassis]() {return findClosestClimbingLocation(chassis);},
-		std::pair{ ClimbingLocation::Left, pathplanner::AutoBuilder::pathfindThenFollowPath(climbPathLeft, constraints) },
+		std::pair{ ClimbingLocation::Left, frc2::cmd::Sequence(
+			pathplanner::AutoBuilder::pathfindToPose(flipPoseIfNeeded(climbPathLeft->getStartingDifferentialPose()), constraints),
+			frc2::cmd::RunOnce([=]() {superStructure->setTargetCoord(startingState);}, {superStructure}),
+			frc2::cmd::Wait(3_s),
+			frc2::cmd::Parallel(
+				pathplanner::AutoBuilder::followPath(climbPathLeft),
+				SuperStructureMoveByDistance(superStructure, profile, [=]() {return getDistanceToChassis(chassis, climbingLocations[0].second);}).ToPtr()
+			)
+		) },
 		std::pair{ ClimbingLocation::Right, pathplanner::AutoBuilder::pathfindThenFollowPath(climbPathRight, constraints) },
 		std::pair{ ClimbingLocation::Back, pathplanner::AutoBuilder::pathfindThenFollowPath(climbPathBack, constraints) }
 	);

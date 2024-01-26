@@ -14,9 +14,9 @@ SwerveChassis::SwerveChassis() {
 		[this]() { return getRobotRelativeSpeeds(); },
 		[this](frc::ChassisSpeeds speeds) { driveRobotRelative(speeds); },
 		HolonomicPathFollowerConfig(
+			PIDConstants(2.0, 0.0, 0.0),
 			PIDConstants(5.0, 0.0, 0.0),
-			PIDConstants(5.0, 0.0, 0.0),
-			5.75_mps,
+			5.0_mps,
 			0.3732276_m,
 			ReplanningConfig()
 		),

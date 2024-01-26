@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.733583903687064,
-        "y": 4.333009521939157
+        "x": 4.876446497103373,
+        "y": 4.073810140679712
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.493583903687065,
-        "y": 4.748701715755687
+        "x": 4.636446497103373,
+        "y": 4.4895023344962475
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.46423466313409,
-        "y": 4.789732147224637
+        "x": 4.51,
+        "y": 4.68
       },
       "prevControl": {
-        "x": 4.634041793047921,
-        "y": 4.485250397034318
+        "x": 4.68431551678532,
+        "y": 4.3780766683802
       },
       "nextControl": null,
       "isLocked": false,
@@ -36,27 +36,9 @@
     }
   ],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "New Event Marker",
-      "waypointRelativePos": 0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Left Climb Superstructure"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
+    "maxVelocity": 0.25,
     "maxAcceleration": 1.0,
     "maxAngularVelocity": 180.0,
     "maxAngularAcceleration": 180.0

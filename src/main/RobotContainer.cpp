@@ -15,19 +15,7 @@ RobotContainer::RobotContainer() {
 }
 
 void RobotContainer::ConfigureBindings() {
-	SuperStructureState startingState{ 0, 0 };
-	SuperStructureState targetState{ 60, 0 };
-
-	SuperStructureMoveByDistance::Profile profile;
-	profile.profileActivationDistance = 1_m;
-	profile.startingState = startingState;
-	profile.targetState = targetState;
-
-	pathplanner::NamedCommands::registerCommand("Left Climb Superstructure", std::move(SuperStructureMoveByDistance(&superStructure, profile, [=]() {return getDistanceToChassis(&chassis, climbingLocations[0].second);}).ToPtr()));
-	pathplanner::NamedCommands::registerCommand("Right Climb Superstructure", std::move(SuperStructureMoveByDistance(&superStructure, profile, [=]() {return getDistanceToChassis(&chassis, climbingLocations[1].second);}).ToPtr()));
-	pathplanner::NamedCommands::registerCommand("Back Climb Superstructure", std::move(SuperStructureMoveByDistance(&superStructure, profile, [=]() {return getDistanceToChassis(&chassis, climbingLocations[2].second);}).ToPtr()));;
-
-
+	superStructure.SetDefaultCommand(frc2::cmd::RunOnce([=]() {superStructure.setTargetCoord({-30, 0});}, {&superStructure}));
 	chassis.SetDefaultCommand(Drive(&chassis, &driver));
 
 	// Configure the button bindings

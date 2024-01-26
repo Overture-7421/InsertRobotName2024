@@ -7,8 +7,6 @@
 #include <vector>
 #include <utility>
 
-units::length::meter_t getDistanceToChassis(Chassis* chassis, frc::Translation2d targetTranslation);
-
 enum class ClimbingLocation { 
     Left,
     Right,
@@ -17,10 +15,10 @@ enum class ClimbingLocation {
 
 std::ostream& operator<< (std::ostream& os, ClimbingLocation location);
 
-const std::vector<std::pair<ClimbingLocation, frc::Translation2d>> climbingLocations {
-    {ClimbingLocation::Left, {4.46_m, 4.79_m}},
-    {ClimbingLocation::Right,{4.46_m, 3.43_m}},
-    {ClimbingLocation::Back, {5.68_m, 4.10_m}}
+const std::vector<std::pair<ClimbingLocation, frc::Pose2d>> climbingLocations {
+    {ClimbingLocation::Left, {{4.51_m, 4.68_m}, {120_deg}}},
+    {ClimbingLocation::Right,{{4.51_m, 3.43_m}, {-120_deg}}},
+    {ClimbingLocation::Back, {{5.68_m, 4.10_m}, {0_deg}}}
 };
 
 frc2::CommandPtr Climb(Chassis* chassis, SuperStructure* superStructure);
