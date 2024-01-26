@@ -17,12 +17,10 @@ class SuperStructureMoveByDistance
    struct Profile {
     SuperStructureState startingState;
     SuperStructureState targetState;
-
-    frc::Translation2d targetCoord;
     units::meter_t profileActivationDistance;
   };
 
-  SuperStructureMoveByDistance(Chassis* chassis, SuperStructure* superStructure, Profile profile);
+  SuperStructureMoveByDistance(SuperStructure* superStructure, Profile profile, std::function<units::meter_t()> distanceToTargetProvider);
 
   void Initialize() override;
 
@@ -33,9 +31,9 @@ class SuperStructureMoveByDistance
   bool IsFinished() override;
 
 private:
-  Chassis* chassis;
   SuperStructure* superStructure;
 
+  std::function<units::meter_t()> distanceToTargetProvider;
   units::meter_t distanceToTarget;
 
   double upperAngleTravel = 0;

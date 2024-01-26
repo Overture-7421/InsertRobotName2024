@@ -16,7 +16,9 @@
 class SuperStructure : public frc2::SubsystemBase {
 public:
 	SuperStructure();
-	void setTargetCoord(SuperStructureState TargetCoord, double velocity = 1.0, double acceleration = 1.0);
+	void setTargetCoord(SuperStructureState TargetCoord);
+	void setLowerAngleConstraints(double velocity, double acceleration);
+	void setUpperAngleConstraints(double velocity, double acceleration);
 	double getLowerAngle();
 	double getUpperAngle();
 	SuperStructurePosition getPosition();

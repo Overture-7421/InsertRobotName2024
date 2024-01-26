@@ -7,17 +7,6 @@
 #include <frc2/command/Commands.h>
 
 RobotContainer::RobotContainer() {
-	SuperStructureState startingState{ 0, 0 };
-	SuperStructureState targetState{ 60, 0 };
-
-	SuperStructureMoveByDistance::Profile profile;
-	profile.profileActivationDistance = 1_m;
-	profile.startingState = startingState;
-	profile.targetState = targetState;
-	profile.targetCoord = frc::Translation2d(4.73_m, 4.33_m);
-
-	pathplanner::NamedCommands::registerCommand("Climb", std::move(SuperStructureMoveByDistance(&chassis, &superStructure, profile).ToPtr()));
-
 	autoChooser.SetDefaultOption("None, null, nada", "None");
 	autoChooser.AddOption("MiddleNote", "MiddleNote");
 
@@ -27,11 +16,10 @@ RobotContainer::RobotContainer() {
 
 void RobotContainer::ConfigureBindings() {
 	chassis.SetDefaultCommand(Drive(&chassis, &driver));
-	superStructure.SetDefaultCommand(ShooterAngle(&superStructure));
-
+	superStructure.SetDefaultCommand(frc2::InstantCommand([superStructure = &superStructure]() {superStructure->setTargetCoord({ -30, 0 });}, {&superStructure}).ToPtr());
 	// Configure the button bindings
 	resetAngleButton.WhileTrue(ResetAngle(&chassis).ToPtr());
-	climbButton.WhileTrue(Climb(&chassis));
+	climbButton.WhileTrue(Climb(&chassis, &superStructure));
 
 	intakePosition.OnTrue(StartIntake(&intake, &superStructure, &storage)).OnFalse(StopIntake(&intake, &superStructure, &storage));
 	shootingPose.OnTrue(ShootingPose(&intake, &superStructure)).OnFalse(StopIntake(&intake, &superStructure, &storage));

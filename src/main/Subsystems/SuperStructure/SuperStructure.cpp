@@ -20,10 +20,10 @@ SuperStructure::SuperStructure() {
 
 	// COnfigure Motion Magic and PID
 	m_lowerRight.setPIDValues(80.0, 0.0, 0.0, 0.0, 0.0);
-	m_lowerRight.configureMotionMagic(1.0, 2.0, 3.0);
+	m_lowerRight.configureMotionMagic(80.0, 20.0, 0.0);
 
 	m_upperMotor.setPIDValues(30.0, 0.0, 0.0, 0.0, 0.0);
-	m_upperMotor.configureMotionMagic(1.0, 2.0, 3.0);
+	m_upperMotor.configureMotionMagic(80.0, 20.0, 0.0);
 
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 	m_lowerRight.setSensorPosition(convertAngleToFalconPos(getLowerAngle()));
@@ -33,10 +33,16 @@ SuperStructure::SuperStructure() {
 	setTargetCoord({ getLowerAngle(), getUpperAngle() });
 }
 
-void SuperStructure::setTargetCoord(SuperStructureState targetCoord, double velocity, double acceleration) {
-	m_upperMotor.configureMotionMagic(velocity, acceleration, 0); // Add multiplier for simplifying movement
-	m_lowerRight.configureMotionMagic(velocity, acceleration, 0);
+void SuperStructure::setTargetCoord(SuperStructureState targetCoord) {
 	m_TargetState = targetCoord;
+}
+
+void SuperStructure::setLowerAngleConstraints(double velocity, double acceleration){
+	m_lowerRight.configureMotionMagic(velocity, acceleration, 0.0);
+}
+
+void SuperStructure::setUpperAngleConstraints(double velocity, double acceleration){
+	m_upperMotor.configureMotionMagic(velocity, acceleration, 0.0);
 }
 
 double SuperStructure::getLowerAngle() {

@@ -1,35 +1,55 @@
 #include "Climbing.h"
 #include <exception>
+#include <pathplanner/lib/auto/NamedCommands.h>
 
-#include <iostream>
+#include "main/Commands/SuperStructureMoveByDistance/SuperStructureMoveByDistance.h"
+
+units::length::meter_t getDistanceToChassis(Chassis* chassis, frc::Translation2d targetTranslation){
+	auto alliance = frc::DriverStation::GetAlliance();
+
+	auto shouldFlip = alliance.has_value() && (alliance.value() == frc::DriverStation::Alliance::kRed);
+	if (shouldFlip) {
+		targetTranslation = pathplanner::GeometryUtil::flipFieldPosition(targetTranslation);
+	}
+
+	return chassis->getOdometry().Translation().Distance(targetTranslation);
+}
 
 ClimbingLocation findClosestClimbingLocation(Chassis* chassis) {
 	std::vector<std::pair<ClimbingLocation, units::meter_t>> distancesToClimbingLocations;
 	distancesToClimbingLocations.reserve(3);
 
-	auto alliance = frc::DriverStation::GetAlliance();
-	auto shouldFlip = alliance.has_value() && (alliance.value() == frc::DriverStation::Alliance::kRed);
 
 	for (auto location : climbingLocations) {
-		if (shouldFlip) {
-			distancesToClimbingLocations.push_back(std::pair{ location.first, chassis->getOdometry().Translation().Distance(pathplanner::GeometryUtil::flipFieldPosition(location.second)) });
-		} else {
-			distancesToClimbingLocations.push_back(std::pair{ location.first, chassis->getOdometry().Translation().Distance(location.second) });
-		}
+		distancesToClimbingLocations.push_back(std::pair{ location.first, getDistanceToChassis(chassis, location.second)});
 	}
 
 	std::sort(distancesToClimbingLocations.begin(), distancesToClimbingLocations.end(), [](auto a, auto b) { return a.second < b.second;});
 	return distancesToClimbingLocations.front().first;
 }
 
-frc2::CommandPtr Climb(Chassis* chassis) {
+frc2::CommandPtr Climb(Chassis* chassis, SuperStructure* superStructure) {
 	std::shared_ptr<pathplanner::PathPlannerPath> climbPathLeft = pathplanner::PathPlannerPath::fromPathFile("AMP Climb Left");
 	std::shared_ptr<pathplanner::PathPlannerPath> climbPathRight = pathplanner::PathPlannerPath::fromPathFile("AMP Climb Right");
 	std::shared_ptr<pathplanner::PathPlannerPath> climbPathBack = pathplanner::PathPlannerPath::fromPathFile("AMP Climb Back");
 
 	pathplanner::PathConstraints constraints = pathplanner::PathConstraints(
-		2.0_mps, 1.0_mps_sq,
+		4.0_mps, 1.0_mps_sq,
 		560_deg_per_s, 720_deg_per_s_sq);
+
+
+	SuperStructureState startingState{ 0, 0 };
+	SuperStructureState targetState{ 60, 0 };
+
+	SuperStructureMoveByDistance::Profile profile;
+	profile.profileActivationDistance = 1_m;
+	profile.startingState = startingState;
+	profile.targetState = targetState;
+
+	pathplanner::NamedCommands::registerCommand("Left Climb Superstructure", std::move(SuperStructureMoveByDistance(superStructure, profile, [chassis]() {return getDistanceToChassis(chassis, climbingLocations[0].second);}).ToPtr()));
+	pathplanner::NamedCommands::registerCommand("Right Climb Superstructure", std::move(SuperStructureMoveByDistance(superStructure, profile, [chassis]() {return getDistanceToChassis(chassis, climbingLocations[1].second);}).ToPtr()));
+	pathplanner::NamedCommands::registerCommand("Back Climb Superstructure", std::move(SuperStructureMoveByDistance(superStructure, profile, [chassis]() {return getDistanceToChassis(chassis, climbingLocations[2].second);}).ToPtr()));;
+
 
 	return frc2::cmd::Select<ClimbingLocation>([chassis]() {return findClosestClimbingLocation(chassis);},
 		std::pair{ ClimbingLocation::Left, pathplanner::AutoBuilder::pathfindThenFollowPath(climbPathLeft, constraints) },
