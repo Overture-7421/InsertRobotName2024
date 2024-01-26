@@ -27,6 +27,7 @@ RobotContainer::RobotContainer() {
 
 void RobotContainer::ConfigureBindings() {
 	chassis.SetDefaultCommand(Drive(&chassis, &driver));
+	superStructure.SetDefaultCommand(ShooterAngle(&superStructure));
 
 	// Configure the button bindings
 	resetAngleButton.WhileTrue(ResetAngle(&chassis).ToPtr());
