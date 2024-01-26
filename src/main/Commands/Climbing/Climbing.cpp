@@ -35,7 +35,7 @@ ClimbingLocation findClosestClimbingLocation(Chassis* chassis) {
 
 frc2::CommandPtr Climb(Chassis* chassis, SuperStructure* superStructure) {
 
-	SuperStructureState startingState{-2, -100 };
+	SuperStructureState startingState{-4, -100 };
 	SuperStructureState targetState{ 90, -90 };
 
 	SuperStructureMoveByDistance::Profile profile;
@@ -61,8 +61,24 @@ frc2::CommandPtr Climb(Chassis* chassis, SuperStructure* superStructure) {
 				SuperStructureMoveByDistance(superStructure, profile, [=]() {return getDistanceToChassis(chassis, climbingLocations[0].second);}).ToPtr()
 			)
 		) },
-		std::pair{ ClimbingLocation::Right, pathplanner::AutoBuilder::pathfindThenFollowPath(climbPathRight, constraints) },
-		std::pair{ ClimbingLocation::Back, pathplanner::AutoBuilder::pathfindThenFollowPath(climbPathBack, constraints) }
+		std::pair{ ClimbingLocation::Right, frc2::cmd::Sequence(
+			pathplanner::AutoBuilder::pathfindToPose(flipPoseIfNeeded(climbPathRight->getStartingDifferentialPose()), constraints),
+			frc2::cmd::RunOnce([=]() {superStructure->setTargetCoord(startingState);}, {superStructure}),
+			frc2::cmd::Wait(3_s),
+			frc2::cmd::Parallel(
+				pathplanner::AutoBuilder::followPath(climbPathRight),
+				SuperStructureMoveByDistance(superStructure, profile, [=]() {return getDistanceToChassis(chassis, climbingLocations[1].second);}).ToPtr()
+			)
+		)  },
+		std::pair{ ClimbingLocation::Back, frc2::cmd::Sequence(
+			pathplanner::AutoBuilder::pathfindToPose(flipPoseIfNeeded(climbPathBack->getStartingDifferentialPose()), constraints),
+			frc2::cmd::RunOnce([=]() {superStructure->setTargetCoord(startingState);}, {superStructure}),
+			frc2::cmd::Wait(3_s),
+			frc2::cmd::Parallel(
+				pathplanner::AutoBuilder::followPath(climbPathBack),
+				SuperStructureMoveByDistance(superStructure, profile, [=]() {return getDistanceToChassis(chassis, climbingLocations[2].second);}).ToPtr()
+			)
+		) }
 	);
 };
 
