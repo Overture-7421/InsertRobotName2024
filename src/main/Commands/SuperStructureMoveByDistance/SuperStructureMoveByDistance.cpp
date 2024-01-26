@@ -16,7 +16,7 @@ SuperStructureMoveByDistance::SuperStructureMoveByDistance(Chassis* chassis, Sup
 
 // Called when the command is initially scheduled.
 void SuperStructureMoveByDistance::Initialize() {
-	superStructure->setTargetCoord(profile.startingState, 4, 3);
+	superStructure->setTargetCoord(profile.startingState);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -34,7 +34,7 @@ void SuperStructureMoveByDistance::Execute() {
 		targetState.lowerAngle = profile.startingState.lowerAngle + lowerAngleTravel * inverseNormalizedDistance;
 	}
 
-	superStructure->setTargetCoord(targetState);
+	superStructure->setTargetCoord(targetState, 4, 3);
 }
 
 // Called once the command ends or is interrupted.
