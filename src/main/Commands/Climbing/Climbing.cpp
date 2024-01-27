@@ -39,11 +39,11 @@ frc2::CommandPtr WaitForCheckpointButton(frc::XboxController* controller){
 }
 
 frc2::CommandPtr GoToClimbingLocationAndSetupJoints(Chassis* chassis, SuperStructure* superStructure, SupportArms* supportArms, ClimbingLocation location){
-	SuperStructureState startingState{ -4, -100 };
-	SuperStructureState targetState{ 90, -90 };
+	SuperStructureState startingState{ -3, -100 };
+	SuperStructureState targetState{ 85, -90 };
 
 	SuperStructureMoveByDistance::Profile profile;
-	profile.profileActivationDistance = 1_m;
+	profile.profileActivationDistance = 1.25_m;
 	profile.startingState = startingState;
 	profile.targetState = targetState;
 
@@ -61,24 +61,23 @@ frc2::CommandPtr GoToClimbingLocationAndSetupJoints(Chassis* chassis, SuperStruc
 	static std::shared_ptr<pathplanner::PathPlannerPath> climbPathBack = pathplanner::PathPlannerPath::fromPathFile("AMP Climb Back");
 
 	std::shared_ptr<pathplanner::PathPlannerPath> pathToFollow;
-	frc::Pose2d targetPos;
 
 	switch (location) {
 		case ClimbingLocation::Left:
 			pathToFollow = climbPathLeft;
-			targetPos = climbingLocations[0].second;
 			break;
 		case ClimbingLocation::Right:
 			pathToFollow = climbPathRight;
-			targetPos = climbingLocations[1].second;
 			break;
 		case ClimbingLocation::Back:
 			pathToFollow = climbPathBack;
-			targetPos = climbingLocations[2].second;
 			break;
 		default:
 			throw std::logic_error("Tried to go to climbing location that is not implemented");
 	}
+
+	auto lastPoint = pathToFollow->getAllPathPoints().at(pathToFollow->getAllPathPoints().size() - 1);
+	frc::Pose2d targetPos {lastPoint.position, pathToFollow->getGoalEndState().getRotation()};
 
 	pathplanner::PathConstraints constraints = pathplanner::PathConstraints(
 	2.0_mps, 1.0_mps_sq,
