@@ -71,7 +71,7 @@ frc2::CommandPtr Climb(Chassis* chassis, SuperStructure* superStructure, Support
 				SuperStructureMoveByDistance(superStructure, profile, [=]() {return getDistanceToChassis(chassis, climbingLocations[0].second);}).ToPtr(),
 				SupportArmsMoveByDistance(supportArms, profile2, [=]() {return getDistanceToChassis(chassis, climbingLocations[0].second);}).ToPtr()
 			),
-			frc2::cmd::WaitUntil([=]() {return controller->GetAButtonReleased();}),
+			frc2::cmd::WaitUntil([=]() {return controller->GetAButton();}),
 			frc2::cmd::RunOnce([=]() {superStructure->setTargetCoord({-30 , 90});}, {superStructure}),
 			frc2::cmd::Wait(3_s),
 			frc2::cmd::RunOnce([=]() {superStructure->setTargetCoord({90, 90});}, {superStructure}),
@@ -86,7 +86,7 @@ frc2::CommandPtr Climb(Chassis* chassis, SuperStructure* superStructure, Support
 				SuperStructureMoveByDistance(superStructure, profile, [=]() {return getDistanceToChassis(chassis, climbingLocations[1].second);}).ToPtr(),
 				SupportArmsMoveByDistance(supportArms, profile2, [=]() {return getDistanceToChassis(chassis, climbingLocations[1].second);}).ToPtr()
 			),
-			frc2::cmd::WaitUntil([=]() {return controller->GetAButtonReleased();}),
+			frc2::cmd::WaitUntil([=]() {return controller->GetAButton();}),
 			frc2::cmd::RunOnce([=]() {superStructure->setTargetCoord({-30 , 90});}, {superStructure}),
 			frc2::cmd::Wait(3_s),
 			frc2::cmd::RunOnce([=]() {superStructure->setTargetCoord({90, 90});}, {superStructure}),
@@ -101,7 +101,7 @@ frc2::CommandPtr Climb(Chassis* chassis, SuperStructure* superStructure, Support
 				SuperStructureMoveByDistance(superStructure, profile, [=]() {return getDistanceToChassis(chassis, climbingLocations[2].second);}).ToPtr(),
 				SupportArmsMoveByDistance(supportArms, profile2, [=]() {return getDistanceToChassis(chassis, climbingLocations[2].second);}).ToPtr()
 			),
-			frc2::cmd::WaitUntil([=]() {return controller->GetAButtonReleased();}),
+			frc2::cmd::WaitUntil([=]() {return controller->GetAButton();}),
 			frc2::cmd::RunOnce([=]() {superStructure->setTargetCoord({-30 , 90});}, {superStructure}),
 			frc2::cmd::Wait(3_s),
 			frc2::cmd::RunOnce([=]() {superStructure->setTargetCoord({90, 90});}, {superStructure}),
