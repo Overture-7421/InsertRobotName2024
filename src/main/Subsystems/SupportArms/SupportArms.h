@@ -23,7 +23,7 @@ public:
 	void Periodic() override;
 
 private:
-	void setFalconTargetPos(SupportArmsState targetState);
+	void setFalconTargetPos(SupportArmsState targetState, SupportArmsState currentState);
 	double convertAngleToFalconPos(double angle);
 
 	//constant

@@ -53,6 +53,10 @@ private:
 	frc2::Trigger resetAngleButton{ [this] {return driver.GetBackButton();} };
 	frc2::Trigger climbButton{ [this] {return driver.GetStartButton();} };
 
+
+	frc2::Trigger superStructureTest{ [this] {return driver.GetAButton();} };
+
+
 	// Mechanism Commands
 	frc2::Trigger intakePosition{ [this] {return opertr.GetYButton();} }; // Change to right trigger
 	frc2::Trigger shootingPose{ [this] {return opertr.GetXButton();} };

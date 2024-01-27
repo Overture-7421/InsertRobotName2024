@@ -12,8 +12,8 @@ SupportArms::SupportArms() {
 	m_lowerRight.setSensorToMechanism(LOWER_GEAR_BOX_REDUCTION);
 
 	// COnfigure Motion Magic and PID
-	m_lowerRight.setPIDValues(30.0, 0.0, 0.0, 0.0, 0.0);
-	m_lowerRight.configureMotionMagic(30.0, 70.0, 0.0);
+	m_lowerRight.setPIDValues(75.0, 0.0, 0.0, 0.0, 0.0);
+	m_lowerRight.configureMotionMagic(5.0, 1.0, 0.0);
 
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 	m_lowerRight.setSensorPosition(getLowerAngle());
@@ -43,8 +43,8 @@ SupportArmsState SupportArms::getCurrentState() {
 	return state;
 }
 
-void SupportArms::setFalconTargetPos(SupportArmsState targetState) {
-	m_lowerRight.setMotionMagicPosition(convertAngleToFalconPos(targetState.lowerAngle), lowerFF * cos(targetState.lowerAngle), false);
+void SupportArms::setFalconTargetPos(SupportArmsState targetState, SupportArmsState currentState) {
+	m_lowerRight.setMotionMagicPosition(convertAngleToFalconPos(targetState.lowerAngle), lowerFF * cos(currentState.lowerAngle), false);
 }
 
 double SupportArms::convertAngleToFalconPos(double angle) {
@@ -53,7 +53,8 @@ double SupportArms::convertAngleToFalconPos(double angle) {
 
 // This method will be called once per scheduler run
 void SupportArms::Periodic() {
-	setFalconTargetPos(m_TargetState);
+	SupportArmsState currentState = getCurrentState();
+	setFalconTargetPos(m_TargetState, currentState);
 
 	// frc::SmartDashboard::PutNumber("Target /Lower Angle", m_TargetState.lowerAngle);
 

@@ -25,7 +25,7 @@ RobotContainer::RobotContainer() {
 }
 
 void RobotContainer::ConfigureBindings() {
-	superStructure.SetDefaultCommand(frc2::cmd::RunOnce([this]() {superStructure.setTargetCoord({ -30, 0 });}, { &superStructure }));
+	superStructure.SetDefaultCommand(frc2::cmd::RunOnce([this]() {superStructure.setTargetCoord({ -15, 0 });}, { &superStructure }));
 
 	chassis.SetDefaultCommand(Drive(&chassis, &driver));
 

@@ -39,11 +39,11 @@ frc2::CommandPtr WaitForCheckpointButton(frc::XboxController* controller){
 }
 
 frc2::CommandPtr GoToClimbingLocationAndSetupJoints(Chassis* chassis, SuperStructure* superStructure, SupportArms* supportArms, ClimbingLocation location){
-	SuperStructureState startingState{ -3, -100 };
+	SuperStructureState startingState{ -14, -60 };
 	SuperStructureState targetState{ 85, -90 };
 
 	SuperStructureMoveByDistance::Profile profile;
-	profile.profileActivationDistance = 1.25_m;
+	profile.profileActivationDistance = 1.5_m;
 	profile.startingState = startingState;
 	profile.targetState = targetState;
 
@@ -88,8 +88,9 @@ frc2::CommandPtr GoToClimbingLocationAndSetupJoints(Chassis* chassis, SuperStruc
 	return frc2::cmd::Sequence(
 		pathplanner::AutoBuilder::pathfindToPose(flipPoseIfNeeded(pathToFollow->getStartingDifferentialPose()), constraints),
 		frc2::cmd::RunOnce([=]() {superStructure->setTargetCoord(startingState);}, {superStructure}),
+		frc2::cmd::RunOnce([=]() {supportArms->setTargetCoord(startingState2);}, {supportArms}),
 		frc2::cmd::Wait(3_s),
-		frc2::cmd::Parallel(
+		frc2::cmd::Deadline(
 			pathplanner::AutoBuilder::followPath(pathToFollow),
 			SuperStructureMoveByDistance(superStructure, profile, distanceFunction).ToPtr(),
 			SupportArmsMoveByDistance(supportArms, profile2, distanceFunction).ToPtr()
