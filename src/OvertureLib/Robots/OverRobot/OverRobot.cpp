@@ -89,7 +89,10 @@ void OverRobot::StartCompetition(){
 }
 
 void OverRobot::EndCompetition(){
+}
 
+OverRobot::~OverRobot(){
+  
 }
 
 units::second_t OverRobot::GetSimulationTime() {
