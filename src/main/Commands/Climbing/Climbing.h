@@ -3,6 +3,7 @@
 #include <pathplanner/lib/auto/AutoBuilder.h>
 #include "main/Subsystems/Chassis/Chassis.h"
 #include "main/Subsystems/SuperStructure/SuperStructure.h"
+#include "main/Subsystems/SupportArms/SupportArms.h"
 
 #include <vector>
 #include <utility>
