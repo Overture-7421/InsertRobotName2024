@@ -15,8 +15,6 @@ enum class ClimbingLocation {
 	Back
 };
 
-std::ostream& operator<< (std::ostream& os, ClimbingLocation location);
-
 const std::vector<std::pair<ClimbingLocation, frc::Pose2d>> climbingLocations{
 	{ClimbingLocation::Left, {{4.52_m, 4.67_m}, {120_deg}}},
 	{ClimbingLocation::Right,{{4.57_m, 3.51_m}, {-120_deg}}},
