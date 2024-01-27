@@ -45,7 +45,7 @@ frc2::CommandPtr Climb(Chassis* chassis, SuperStructure* superStructure, Support
 	profile.targetState = targetState;
 
 	SupportArmsState startingState2{ 0 };
-	SupportArmsState targetState2{ 90 };
+	SupportArmsState targetState2{ 123 };
 
 	SupportArmsMoveByDistance::Profile profile2;
 	profile2.profileActivationDistance = 1_m;
