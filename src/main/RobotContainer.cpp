@@ -11,7 +11,7 @@ RobotContainer::RobotContainer() {
 	auto alliance = frc::DriverStation::GetAlliance();
 
 	// TODO: Delete if not needed in 2025, it just waits until there is an alliance assigned so pose flipping is done correctly.
-	while(!alliance.has_value()){
+	while (!alliance.has_value()) {
 		alliance = frc::DriverStation::GetAlliance();
 		std::cout << "Warning: Waiting for alliance color before starting robot..." << std::endl;
 		std::this_thread::sleep_for(std::chrono::milliseconds(500));
@@ -25,14 +25,14 @@ RobotContainer::RobotContainer() {
 }
 
 void RobotContainer::ConfigureBindings() {
-	superStructure.SetDefaultCommand(frc2::cmd::RunOnce([=]() {superStructure.setTargetCoord({-30, 0});}, {&superStructure}));
-	
+	superStructure.SetDefaultCommand(frc2::cmd::RunOnce([this]() {superStructure.setTargetCoord({ -30, 0 });}, { &superStructure }));
+
 	chassis.SetDefaultCommand(Drive(&chassis, &driver));
 
 	// Configure the button bindings
 	resetAngleButton.WhileTrue(ResetAngle(&chassis).ToPtr());
 
-	climbButton.WhileTrue(Climb(&chassis, &superStructure));
+	climbButton.WhileTrue(Climb(&chassis, &superStructure, &supportArms));
 
 	intakePosition.OnTrue(StartIntake(&intake, &superStructure, &storage)).OnFalse(StopIntake(&intake, &superStructure, &storage));
 	shootingPose.OnTrue(ShootingPose(&intake, &superStructure)).OnFalse(StopIntake(&intake, &superStructure, &storage));
