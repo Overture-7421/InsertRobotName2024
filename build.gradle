@@ -49,24 +49,24 @@ wpi.sim.addDriverstation()
 model {
     components {
 
-        pathplanner(NativeLibrarySpec){
-            targetPlatform wpi.platforms.roborio
-            if (includeDesktopSupport) {
-                targetPlatform wpi.platforms.desktop
-            }
+        // pathplanner(NativeLibrarySpec){
+        //     targetPlatform wpi.platforms.roborio
+        //     if (includeDesktopSupport) {
+        //         targetPlatform wpi.platforms.desktop
+        //     }
 
-            sources.cpp {
-                source {
-                    srcDir "libs/pathplanner/cpp/"
-                    include "**/*.cpp"
-                }
-                exportedHeaders {
-                    srcDir "libs/pathplanner/include/"
-                }
-            }
-            wpi.cpp.vendor.cpp(it)
-            wpi.cpp.deps.wpilib(it)
-        }
+        //     sources.cpp {
+        //         source {
+        //             srcDir "libs/pathplanner/cpp/"
+        //             include "**/*.cpp"
+        //         }
+        //         exportedHeaders {
+        //             srcDir "libs/pathplanner/include/"
+        //         }
+        //     }
+        //     wpi.cpp.vendor.cpp(it)
+        //     wpi.cpp.deps.wpilib(it)
+        // }
 
         frcUserProgram(NativeExecutableSpec) {
             targetPlatform wpi.platforms.roborio
@@ -74,9 +74,9 @@ model {
                 targetPlatform wpi.platforms.desktop
             }
 
-            binaries.all {
-                lib library: 'pathplanner', linkage: 'shared'
-            }
+            // binaries.all {
+            //     lib library: 'pathplanner', linkage: 'shared'
+            // }
 
             sources.cpp {
                 source {
