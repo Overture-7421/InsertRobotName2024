@@ -6,6 +6,7 @@
 
 #include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
+#include <frc/XboxController.h>
 
 /**
  * An example command.
@@ -26,4 +27,8 @@ class SupportArmCommand
   void End(bool interrupted) override;
 
   bool IsFinished() override;
+
+  private:
+  frc::XboxController* m_joystick;
+
 };
