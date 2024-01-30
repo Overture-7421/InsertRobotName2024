@@ -24,6 +24,7 @@
 #include "Commands/ShootShooter/ShootShooter.h"
 #include "Commands/SuperStructureMoveByDistance/SuperStructureMoveByDistance.h"
 #include "Commands/Climbing/Climbing.h"
+#include "Commands/TrapShoot/TrapShoot.h"
 
 #include "OvertureLib/Commands/Drive/Drive.h"
 
@@ -52,6 +53,7 @@ private:
 	// Driver Commands
 	frc2::Trigger resetAngleButton{ [this] {return driver.GetBackButton();} };
 	frc2::Trigger climbButton{ [this] {return driver.GetStartButton();} };
+	frc2::Trigger shootTrap{ [this] {return driver.GetLeftBumper();} };
 
 
 	frc2::Trigger superStructureTest{ [this] {return driver.GetAButton();} };

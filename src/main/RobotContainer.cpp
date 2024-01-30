@@ -33,6 +33,7 @@ void RobotContainer::ConfigureBindings() {
 	resetAngleButton.WhileTrue(ResetAngle(&chassis).ToPtr());
 
 	climbButton.WhileTrue(Climb(&chassis, &superStructure, &supportArms, &driver));
+	shootTrap.WhileTrue(TrapShoot(&chassis, &superStructure, &supportArms, &shooter, &storage));
 
 	intakePosition.OnTrue(StartIntake(&intake, &superStructure, &storage)).OnFalse(StopIntake(&intake, &superStructure, &storage));
 	shootingPose.OnTrue(ShootingPose(&intake, &superStructure)).OnFalse(StopIntake(&intake, &superStructure, &storage));

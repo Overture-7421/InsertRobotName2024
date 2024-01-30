@@ -1,44 +1,11 @@
 #include "Climbing.h"
 #include <exception>
-#include <pathplanner/lib/auto/NamedCommands.h>
 
 #include "main/Commands/SuperStructureMoveByDistance/SuperStructureMoveByDistance.h"
 #include "main/Commands/SupportArmsMoveByDistance/SupportArmsMoveByDistance.h"
 
 // TODO: Update superstructure and support arm commands to not wait 3s for them to end, use real commands when they are completed.
-
-frc::Pose2d flipPoseIfNeeded(frc::Pose2d pose) {
-	auto alliance = frc::DriverStation::GetAlliance();
-
-	auto shouldFlip = alliance.has_value() && (alliance.value() == frc::DriverStation::Alliance::kRed);
-	if (shouldFlip) {
-		pose = pathplanner::GeometryUtil::flipFieldPose(pose);
-	}
-	return pose;
-}
-
-units::length::meter_t getDistanceToChassis(Chassis* chassis, frc::Pose2d targetPose) {
-	return chassis->getOdometry().Translation().Distance(flipPoseIfNeeded(targetPose).Translation());
-}
-
-ClimbingLocation findClosestClimbingLocation(Chassis* chassis) {
-	std::vector<std::pair<ClimbingLocation, units::meter_t>> distancesToClimbingLocations;
-	distancesToClimbingLocations.reserve(3);
-
-
-	for (auto location : climbingLocations) {
-		distancesToClimbingLocations.push_back(std::pair{ location.first, getDistanceToChassis(chassis, location.second) });
-	}
-
-	std::sort(distancesToClimbingLocations.begin(), distancesToClimbingLocations.end(), [](auto a, auto b) { return a.second < b.second;});
-	return distancesToClimbingLocations.front().first;
-}
-
-frc2::CommandPtr WaitForCheckpointButton(frc::XboxController* controller){
-	return frc2::cmd::WaitUntil([=]() {return controller->GetAButton();});
-}
-
-frc2::CommandPtr GoToClimbingLocationAndSetupJoints(Chassis* chassis, SuperStructure* superStructure, SupportArms* supportArms, ClimbingLocation location){
+frc2::CommandPtr GoToClimbingLocationAndSetupJoints(Chassis* chassis, SuperStructure* superStructure, SupportArms* supportArms, StageLocation location) {
 	SuperStructureState startingState{ -14, -60 };
 	SuperStructureState targetState{ 85, -90 };
 
@@ -63,32 +30,32 @@ frc2::CommandPtr GoToClimbingLocationAndSetupJoints(Chassis* chassis, SuperStruc
 	std::shared_ptr<pathplanner::PathPlannerPath> pathToFollow;
 
 	switch (location) {
-		case ClimbingLocation::Left:
-			pathToFollow = climbPathLeft;
-			break;
-		case ClimbingLocation::Right:
-			pathToFollow = climbPathRight;
-			break;
-		case ClimbingLocation::Back:
-			pathToFollow = climbPathBack;
-			break;
-		default:
-			throw std::logic_error("Tried to go to climbing location that is not implemented");
+	case StageLocation::Left:
+		pathToFollow = climbPathLeft;
+		break;
+	case StageLocation::Right:
+		pathToFollow = climbPathRight;
+		break;
+	case StageLocation::Back:
+		pathToFollow = climbPathBack;
+		break;
+	default:
+		throw std::logic_error("Tried to go to climbing location that is not implemented");
 	}
 
 	auto lastPoint = pathToFollow->getAllPathPoints().at(pathToFollow->getAllPathPoints().size() - 1);
-	frc::Pose2d targetPos {lastPoint.position, pathToFollow->getGoalEndState().getRotation()};
+	frc::Pose2d targetPos{ lastPoint.position, pathToFollow->getGoalEndState().getRotation() };
 
 	pathplanner::PathConstraints constraints = pathplanner::PathConstraints(
-	2.0_mps, 1.0_mps_sq,
-	560_deg_per_s, 720_deg_per_s_sq);
+		2.0_mps, 1.0_mps_sq,
+		560_deg_per_s, 720_deg_per_s_sq);
 
 	std::function<units::meter_t()> distanceFunction = [=]() {return getDistanceToChassis(chassis, targetPos);};
 
 	return frc2::cmd::Sequence(
 		pathplanner::AutoBuilder::pathfindToPose(flipPoseIfNeeded(pathToFollow->getStartingDifferentialPose()), constraints),
-		frc2::cmd::RunOnce([=]() {superStructure->setTargetCoord(startingState);}, {superStructure}),
-		frc2::cmd::RunOnce([=]() {supportArms->setTargetCoord(startingState2);}, {supportArms}),
+		frc2::cmd::RunOnce([=]() {superStructure->setTargetCoord(startingState);}, { superStructure }),
+		frc2::cmd::RunOnce([=]() {supportArms->setTargetCoord(startingState2);}, { supportArms }),
 		frc2::cmd::Wait(3_s),
 		frc2::cmd::Deadline(
 			pathplanner::AutoBuilder::followPath(pathToFollow),
@@ -100,30 +67,30 @@ frc2::CommandPtr GoToClimbingLocationAndSetupJoints(Chassis* chassis, SuperStruc
 
 frc2::CommandPtr ClimbAtLocation(SuperStructure* superStructure, frc::XboxController* controller) {
 	return frc2::cmd::Sequence(
-		frc2::cmd::RunOnce([=]() {superStructure->setTargetCoord({-30 , 0});}, {superStructure}),
+		frc2::cmd::RunOnce([=]() {superStructure->setTargetCoord({ -30 , 0 });}, { superStructure }),
 		frc2::cmd::Wait(3_s),
-		WaitForCheckpointButton(controller),
-		frc2::cmd::RunOnce([=]() {superStructure->setTargetCoord({85, -90});}, {superStructure}),
+		WaitForAButton(controller, frc::XboxController::Button::kA),
+		frc2::cmd::RunOnce([=]() {superStructure->setTargetCoord({ 85, -90 });}, { superStructure }),
 		frc2::cmd::Wait(3_s)
 	);
 }
 
 frc2::CommandPtr Climb(Chassis* chassis, SuperStructure* superStructure, SupportArms* supportArms, frc::XboxController* controller) {
 
-	return frc2::cmd::Select<ClimbingLocation>([chassis]() {return findClosestClimbingLocation(chassis);},
-		std::pair{ ClimbingLocation::Left, frc2::cmd::Sequence(
-			GoToClimbingLocationAndSetupJoints(chassis, superStructure, supportArms, ClimbingLocation::Left),
-			WaitForCheckpointButton(controller),
+	return frc2::cmd::Select<StageLocation>([chassis]() {return findClosestStageLocation(chassis);},
+		std::pair{ StageLocation::Left, frc2::cmd::Sequence(
+			GoToClimbingLocationAndSetupJoints(chassis, superStructure, supportArms, StageLocation::Left),
+			WaitForAButton(controller, frc::XboxController::Button::kA),
 			ClimbAtLocation(superStructure, controller)
 		) },
-		std::pair{ ClimbingLocation::Right, frc2::cmd::Sequence(
-			GoToClimbingLocationAndSetupJoints(chassis, superStructure, supportArms, ClimbingLocation::Right),
-			WaitForCheckpointButton(controller),
+		std::pair{ StageLocation::Right, frc2::cmd::Sequence(
+			GoToClimbingLocationAndSetupJoints(chassis, superStructure, supportArms, StageLocation::Right),
+			WaitForAButton(controller, frc::XboxController::Button::kA),
 			ClimbAtLocation(superStructure, controller)
 		) },
-		std::pair{ ClimbingLocation::Back, frc2::cmd::Sequence(
-			GoToClimbingLocationAndSetupJoints(chassis, superStructure, supportArms, ClimbingLocation::Back),
-			WaitForCheckpointButton(controller),
+		std::pair{ StageLocation::Back, frc2::cmd::Sequence(
+			GoToClimbingLocationAndSetupJoints(chassis, superStructure, supportArms, StageLocation::Back),
+			WaitForAButton(controller, frc::XboxController::Button::kA),
 			ClimbAtLocation(superStructure, controller)
 		) }
 	);
