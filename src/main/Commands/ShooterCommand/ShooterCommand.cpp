@@ -4,9 +4,6 @@
 
 #include "ShooterCommand.h"
 
-#include <frc2/command/button/Trigger.h>
-#include <frc/XboxController.h>
-
 ShooterCommand::ShooterCommand(Shooter* m_Shooter, double m_velocity) {
   // Use addRequirements() here to declare subsystem dependencies.
 

@@ -18,7 +18,6 @@
 #include "Subsystems/Storage/Storage.h"
 #include "Subsystems/SupportArms/SupportArms.h"
 #include "Subsystems/Shooter/Shooter.h"
-#include "Commands/SuperStructureCommand/SuperStructureCommand.h"
 #include "Commands/ResetAngle/ResetAngle.h"
 
 #include "Commands/SuperStructureMoveByDistance/SuperStructureMoveByDistance.h"
@@ -58,14 +57,12 @@ private:
 
 	// Mechanism Commands
 
-	frc2::Trigger intakeTrue{ [this] {return opertr.GetLeftTriggerAxis();} };
-	frc2::Trigger intakeFalse{ [this] {return opertr.GetRightTriggerAxis();} };
+	frc2::Trigger intakeTrue{ [this] {return opertr.GetLeftTriggerAxis() > 0.5;} };
 	frc2::Trigger storageTrue{ [this] {return opertr.GetLeftBumper();} };
 	frc2::Trigger storageFalse{ [this] {return opertr.GetRightBumper();} };
 	frc2::Trigger superStructurePos1{ [this] {return opertr.GetXButton();} };
 	frc2::Trigger superStructurePos2{ [this] {return opertr.GetBButton();} };
 	frc2::Trigger supportArmOpen{ [this] {return opertr.GetAButton();} };
-	frc2::Trigger supportArmClosed{ [this] {return opertr.GetAButton();} };
 
 	//Auto Chooser
 	frc::SendableChooser<std::string> autoChooser;

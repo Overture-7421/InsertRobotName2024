@@ -12,7 +12,7 @@ SuperStructureCommand::SuperStructureCommand(SuperStructure* superStructure, Sup
 
 // Called when the command is initially scheduled.
 void SuperStructureCommand::Initialize() {
-	m_SuperStructure -> setTargetCoord(m_targetState);
+	m_SuperStructure->setTargetCoord(m_targetState);
 }
 
 // Called repeatedly when this Command is scheduled to run
