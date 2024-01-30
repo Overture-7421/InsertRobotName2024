@@ -37,7 +37,7 @@ frc2::CommandPtr GoToShootingLocation(Chassis* chassis, SuperStructure* superStr
 		frc2::cmd::Sequence(
 			frc2::cmd::Wait(2_s),
 			frc2::cmd::RunOnce([=]() {storage->setVoltage(4.0_V);}, { storage }),
-			frc2::cmd::Wait(5_s),
+			frc2::cmd::Wait(1_s),
 			frc2::cmd::Parallel(
 				frc2::cmd::RunOnce([=]() {storage->setVoltage(0_V);}, { storage }),
 				frc2::cmd::RunOnce([=]() {shooter->setVelocityVoltage({ 0 });}, { shooter })
