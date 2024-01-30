@@ -30,12 +30,14 @@ frc2::CommandPtr GoToShootingLocation(Chassis* chassis, SuperStructure* superStr
 		560_deg_per_s, 720_deg_per_s_sq);
 
 	return frc2::cmd::Sequence(
-		frc2::cmd::Parallel(pathplanner::AutoBuilder::pathfindToPose(flipPoseIfNeeded(pathToFollow), constraints),
+		frc2::cmd::Parallel(
+			pathplanner::AutoBuilder::pathfindToPose(flipPoseIfNeeded(pathToFollow), constraints),
 			frc2::cmd::RunOnce([=]() {superStructure->setTargetCoord({ 0, 0 });}, { superStructure }),
 			frc2::cmd::RunOnce([=]() {shooter->setVelocityVoltage({ 20 });}, { shooter })),
 		frc2::cmd::Sequence(
+			frc2::cmd::Wait(2_s),
 			frc2::cmd::RunOnce([=]() {storage->setVoltage(4.0_V);}, { storage }),
-			frc2::cmd::Wait(1.5_s),
+			frc2::cmd::Wait(5_s),
 			frc2::cmd::Parallel(
 				frc2::cmd::RunOnce([=]() {storage->setVoltage(0_V);}, { storage }),
 				frc2::cmd::RunOnce([=]() {shooter->setVelocityVoltage({ 0 });}, { shooter })
