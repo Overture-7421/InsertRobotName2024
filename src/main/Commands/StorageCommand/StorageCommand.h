@@ -7,6 +7,7 @@
 #include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
 #include "main/Subsystems/Storage/Storage.h"
+
 /**
  * An example command.
  *
@@ -14,10 +15,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class MoveStorage
-    : public frc2::CommandHelper<frc2::Command, MoveStorage> {
+class StorageCommand
+    : public frc2::CommandHelper<frc2::Command, StorageCommand> {
  public:
-  MoveStorage(Storage* m_Storage, units::volt_t m_voltage);
+  StorageCommand(Storage* m_Storage, units::volt_t m_voltage);
 
   void Initialize() override;
 

@@ -3,38 +3,27 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "IntakeCommand.h"
+
 #include "main/Commands/IntakeCommand/IntakeCommand.h"
 
-IntakeCommand::IntakeCommand(Intake* intake, frc::XboxController* joystick): m_intake(intake), m_joystick(joystick) {
+IntakeCommand::IntakeCommand(Intake* m_Intake, units::volt_t m_voltage) {
   // Use addRequirements() here to declare subsystem dependencies.
-  AddRequirements(intake);
-    this->m_intake = m_intake;
-
+    this->m_Intake = m_Intake;
+    this->m_voltage = m_voltage;
+    AddRequirements({m_Intake});
 }
 
 // Called when the command is initially scheduled.
-void IntakeCommand::Initialize() {}
+void IntakeCommand::Initialize() {
+    m_Intake->setVoltage(m_voltage);
+}
 
 // Called repeatedly when this Command is scheduled to run
-void IntakeCommand::Execute() {
-  double reverse = Utils::ApplyAxisFilter(m_joystick->GetLeftTriggerAxis(),0.3);
-  double take = Utils::ApplyAxisFilter(m_joystick->GetRightTriggerAxis(),0.3);
-
-  if (take > reverse) {
-    m_intake->setVoltage(-1.0_V);
-  } else if (take < reverse) {
-    m_intake->setVoltage(1.0_V);
-  } else {
-    m_intake->setVoltage(0.0_V);
-  }
-
-}
+void IntakeCommand::Execute() {}
 
 
 // Called once the command ends or is interrupted.
-void IntakeCommand::End(bool interrupted) {
-  m_intake->setVoltage(0_V);
-}
+void IntakeCommand::End(bool interrupted) {}
 
 
 // Returns true when the command should end.

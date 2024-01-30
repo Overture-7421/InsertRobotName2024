@@ -4,13 +4,9 @@
 
 #pragma once
 
+#include "main/Subsystems/Shooter/Shooter.h"
 #include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
-#include <frc/XboxController.h>
-
-#include "OvertureLib/Math/Utils.h"
-#include "main/Subsystems/Shooter/Shooter.h"
-
 
 /**
  * An example command.
@@ -22,8 +18,9 @@
 class ShooterCommand
     : public frc2::CommandHelper<frc2::Command, ShooterCommand> {
  public:
-  ShooterCommand(Shooter* shooter, frc::XboxController* joystick);
+  ShooterCommand(Shooter* m_Shooter, double m_velocity);
 
+  
   void Initialize() override;
 
   void Execute() override;
@@ -32,7 +29,9 @@ class ShooterCommand
 
   bool IsFinished() override;
 
-  private:
-  Shooter* m_shooter;
-  frc::XboxController* m_joystick;
+  
+
+private:
+  Shooter* m_Shooter;
+  double m_velocity;
 };

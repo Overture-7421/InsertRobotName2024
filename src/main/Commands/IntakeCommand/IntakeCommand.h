@@ -22,7 +22,7 @@
 class IntakeCommand
     : public frc2::CommandHelper<frc2::Command, IntakeCommand> {
  public:
-  IntakeCommand(Intake* Intake, frc::XboxController* joystick);
+  IntakeCommand(Intake* m_Intake, units::volt_t m_voltage);
 
   void Initialize() override;
 
@@ -33,7 +33,6 @@ class IntakeCommand
   bool IsFinished() override;
 
   private:
-  Intake* m_intake;
-  frc::XboxController* m_joystick;
-
+  Intake* m_Intake;
+  units::volt_t m_voltage;
 };

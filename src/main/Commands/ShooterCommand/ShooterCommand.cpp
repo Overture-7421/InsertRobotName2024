@@ -4,37 +4,34 @@
 
 #include "ShooterCommand.h"
 
-ShooterCommand::ShooterCommand(Shooter* shooter, frc::XboxController* joystick): m_shooter(shooter), m_joystick(joystick) {
-  // Use addRequirements() here to declare subsystem dependencies.
-  AddRequirements(shooter);
-  this->m_shooter = m_shooter;
+#include <frc2/command/button/Trigger.h>
+#include <frc/XboxController.h>
 
+ShooterCommand::ShooterCommand(Shooter* m_Shooter, double m_velocity) {
+  // Use addRequirements() here to declare subsystem dependencies.
+
+  this->m_velocity = m_velocity;
+  this->m_Shooter = m_Shooter;
+  AddRequirements({ m_Shooter });
 }
 
 // Called when the command is initially scheduled.
-void ShooterCommand::Initialize() {}
+void ShooterCommand::Initialize() {
+    m_Shooter->setVelocityVoltage(m_velocity);
+}
 
 // Called repeatedly when this Command is scheduled to run
-void ShooterCommand::Execute() {
-  double reverse = Utils::ApplyAxisFilter(m_joystick->GetLeftTriggerAxis(),0.3);
-  double take = Utils::ApplyAxisFilter(m_joystick->GetRightTriggerAxis(),0.3);
-
-  if (take > reverse) {
-    m_shooter->setVoltage(1.0_V);
-  } else if (take < reverse) {
-    m_shooter->setVoltage(1.0_V);
-  } else {
-    m_shooter->setVoltage(0_V);
-  }
-
-}
+void ShooterCommand::Execute() {}
 
 // Called once the command ends or is interrupted.
-void ShooterCommand::End(bool interrupted) {
-  m_shooter->setVoltage(0_V);
-}
+void ShooterCommand::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool ShooterCommand::IsFinished() {
-  return false;
+  if(m_Shooter->getCurrentVelocity() == m_velocity){
+    return true;
+  }
+  else{
+    return false;
+  }
 }
