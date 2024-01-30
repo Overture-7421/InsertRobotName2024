@@ -69,7 +69,7 @@ frc2::CommandPtr ClimbAtLocation(SuperStructure* superStructure, frc::XboxContro
 	return frc2::cmd::Sequence(
 		frc2::cmd::RunOnce([=]() {superStructure->setTargetCoord({ -30 , 0 });}, { superStructure }),
 		frc2::cmd::Wait(3_s),
-		WaitForAButton(controller, frc::XboxController::Button::kA),
+		WaitForButton(controller, frc::XboxController::Button::kA),
 		frc2::cmd::RunOnce([=]() {superStructure->setTargetCoord({ 85, -90 });}, { superStructure }),
 		frc2::cmd::Wait(3_s)
 	);
@@ -80,17 +80,17 @@ frc2::CommandPtr Climb(Chassis* chassis, SuperStructure* superStructure, Support
 	return frc2::cmd::Select<StageLocation>([chassis]() {return findClosestStageLocation(chassis);},
 		std::pair{ StageLocation::Left, frc2::cmd::Sequence(
 			GoToClimbingLocationAndSetupJoints(chassis, superStructure, supportArms, StageLocation::Left),
-			WaitForAButton(controller, frc::XboxController::Button::kA),
+			WaitForButton(controller, frc::XboxController::Button::kA),
 			ClimbAtLocation(superStructure, controller)
 		) },
 		std::pair{ StageLocation::Right, frc2::cmd::Sequence(
 			GoToClimbingLocationAndSetupJoints(chassis, superStructure, supportArms, StageLocation::Right),
-			WaitForAButton(controller, frc::XboxController::Button::kA),
+			WaitForButton(controller, frc::XboxController::Button::kA),
 			ClimbAtLocation(superStructure, controller)
 		) },
 		std::pair{ StageLocation::Back, frc2::cmd::Sequence(
 			GoToClimbingLocationAndSetupJoints(chassis, superStructure, supportArms, StageLocation::Back),
-			WaitForAButton(controller, frc::XboxController::Button::kA),
+			WaitForButton(controller, frc::XboxController::Button::kA),
 			ClimbAtLocation(superStructure, controller)
 		) }
 	);

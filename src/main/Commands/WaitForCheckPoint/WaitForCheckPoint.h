@@ -7,6 +7,6 @@
 #include <frc/XboxController.h>
 #include <frc2/command/Commands.h>
 
-static frc2::CommandPtr WaitForAButton(frc::XboxController* controller, int buttonNumber) {
+static frc2::CommandPtr WaitForButton(frc::XboxController* controller, int buttonNumber) {
 	return frc2::cmd::WaitUntil([=]() {return controller->GetRawButton(buttonNumber);});
 }
