@@ -8,10 +8,12 @@
 #include <frc2/command/SequentialCommandGroup.h>
 
 #include "main/Commands/SuperStructureCommand/SuperStructureCommand.h"
+#include "main/Commands/IntakeCommand/IntakeCommand.h"
+#include "main/Commands/StorageCommand/StorageCommand.h"
 
 class ClosedCommand
     : public frc2::CommandHelper<frc2::SequentialCommandGroup,
                                  ClosedCommand> {
  public:
-  ClosedCommand(SuperStructure* superStructure);
+  ClosedCommand(SuperStructure* superStructure, Intake* intake, Storage* storage);
 };

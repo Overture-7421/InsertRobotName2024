@@ -33,7 +33,10 @@ void RobotContainer::ConfigureBindings() {
 
 
 	GroundGrab.WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake).ToPtr());
+	GroundGrab.OnFalse(ClosedCommand(&superStructure, &intake, &storage).ToPtr());
+
 	SourceGrab.WhileTrue(SourceGrabCommand(&superStructure, &storage).ToPtr());
+	SourceGrab.OnFalse(ClosedCommand(&superStructure, &intake, &storage).ToPtr());
 
 }
 

@@ -10,7 +10,7 @@
 SourceGrabCommand::SourceGrabCommand(SuperStructure* superStructure, Storage* storage) {
 
   AddCommands(
-    SuperStructureCommand(superStructure, {30.0, 30.0}),
+    SuperStructureCommand(superStructure, {30.0, -60.0}),
     StorageCommand(storage, 3_V)
   );
 }

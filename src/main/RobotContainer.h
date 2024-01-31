@@ -25,6 +25,7 @@
 #include "Commands/GroundGrabCommand/GroundGrabCommand.h"
 #include "Commands/SourceGrabCommand/SourceGrabCommand.h"
 #include "Commands/AmpCommand/AmpCommand.h"
+#include "Commands/ClosedCommand/ClosedCommand.h"
 
 #include "OvertureLib/Commands/Drive/Drive.h"
 
