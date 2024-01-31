@@ -18,12 +18,14 @@
 #include "Subsystems/Storage/Storage.h"
 #include "Subsystems/SupportArms/SupportArms.h"
 #include "Subsystems/Shooter/Shooter.h"
-#include "Commands/SuperStructureCommand/SuperStructureCommand.h"
 #include "Commands/ResetAngle/ResetAngle.h"
-#include "Commands/MoveStorage/MoveStorage.h"
-#include "Commands/ShootShooter/ShootShooter.h"
+
 #include "Commands/SuperStructureMoveByDistance/SuperStructureMoveByDistance.h"
-#include "Commands/Climbing/Climbing.h"
+
+#include "Commands/GroundGrabCommand/GroundGrabCommand.h"
+#include "Commands/SourceGrabCommand/SourceGrabCommand.h"
+#include "Commands/AmpCommand/AmpCommand.h"
+#include "Commands/ClosedCommand/ClosedCommand.h"
 
 #include "OvertureLib/Commands/Drive/Drive.h"
 
@@ -54,12 +56,10 @@ private:
 	frc2::Trigger climbButton{ [this] {return driver.GetStartButton();} };
 
 	// Mechanism Commands
-	frc2::Trigger intakePosition{ [this] {return opertr.GetYButton();} }; // Change to right trigger
-	frc2::Trigger shootingPose{ [this] {return opertr.GetXButton();} };
-	frc2::Trigger moveStorage{ [this] {return opertr.GetAButton();} };
-	frc2::Trigger moveStorageInverted{ [this] {return opertr.GetBButton();} };
-	frc2::Trigger shootshooter{ [this] {return opertr.GetRightBumper();} };
-	frc2::Trigger shooterAngle{ [this] {return opertr.GetLeftBumper();} };
+
+	frc2::Trigger GroundGrab{ [this] {return opertr.GetLeftTriggerAxis() > 0.3;} };
+	frc2::Trigger SourceGrab{ [this] {return opertr.GetLeftBumper();} };
+
 
 	//Auto Chooser
 	frc::SendableChooser<std::string> autoChooser;

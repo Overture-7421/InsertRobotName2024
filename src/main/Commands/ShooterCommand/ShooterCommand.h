@@ -4,9 +4,10 @@
 
 #pragma once
 
+#include "main/Subsystems/Shooter/Shooter.h"
 #include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
-#include "main/Subsystems/Storage/Storage.h"
+
 /**
  * An example command.
  *
@@ -14,11 +15,12 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class MoveStorage
-    : public frc2::CommandHelper<frc2::Command, MoveStorage> {
+class ShooterCommand
+    : public frc2::CommandHelper<frc2::Command, ShooterCommand> {
  public:
-  MoveStorage(Storage* m_Storage, units::volt_t m_voltage);
+  ShooterCommand(Shooter* shooter, double velocity);
 
+  
   void Initialize() override;
 
   void Execute() override;
@@ -27,7 +29,8 @@ class MoveStorage
 
   bool IsFinished() override;
 
+
 private:
-  Storage* m_Storage;
-  units::volt_t m_voltage;
+  Shooter* shooter;
+  double velocity;
 };

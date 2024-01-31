@@ -6,9 +6,7 @@
 
 #include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
-#include <frc/DriverStation.h>
-
-#include "OvertureLib/Subsystems/Swerve/SwerveChassis/SwerveChassis.h"
+#include "main/Subsystems/Storage/Storage.h"
 
 /**
  * An example command.
@@ -17,20 +15,20 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class ResetAngle
-	: public frc2::CommandHelper<frc2::Command, ResetAngle> {
-public:
-	ResetAngle(SwerveChassis* swerveChassis);
+class StorageCommand
+    : public frc2::CommandHelper<frc2::Command, StorageCommand> {
+ public:
+  StorageCommand(Storage* storage, units::volt_t voltage);
 
-	void Initialize() override;
+  void Initialize() override;
 
-	void Execute() override;
+  void Execute() override;
 
-	void End(bool interrupted) override;
+  void End(bool interrupted) override;
 
-	bool IsFinished() override;
+  bool IsFinished() override;
 
 private:
-	SwerveChassis* swerveChassis;
-	double angle;
+  Storage* storage;
+  units::volt_t voltage;
 };

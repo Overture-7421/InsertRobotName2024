@@ -6,7 +6,8 @@
 
 #include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
-#include "main/Subsystems/Shooter/Shooter.h"
+#include "main/Subsystems/SupportArms/SupportArms.h"
+
 /**
  * An example command.
  *
@@ -14,12 +15,11 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class ShootShooter
-    : public frc2::CommandHelper<frc2::Command, ShootShooter> {
+class SupportArmCommand
+    : public frc2::CommandHelper<frc2::Command, SupportArmCommand> {
  public:
-  ShootShooter(Shooter* m_Shooter, double m_velocity);
+  SupportArmCommand(SupportArms* supportArms, SupportArmsState targetState);
 
-  
   void Initialize() override;
 
   void Execute() override;
@@ -27,10 +27,10 @@ class ShootShooter
   void End(bool interrupted) override;
 
   bool IsFinished() override;
-
+    
   
-
-private:
-  Shooter* m_Shooter;
-  double m_velocity;
+  private:
+    SupportArms* supportArms;
+  
+    SupportArmsState targetState;
 };

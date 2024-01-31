@@ -27,18 +27,17 @@ RobotContainer::RobotContainer() {
 
 void RobotContainer::ConfigureBindings() {
 	chassis.SetDefaultCommand(Drive(&chassis, &driver));
-	superStructure.SetDefaultCommand(IdleSuperStructure(&intake, &superStructure));
 
 	// Configure the button bindings
 	resetAngleButton.WhileTrue(ResetAngle(&chassis).ToPtr());
-	climbButton.WhileTrue(Climb());
 
-	intakePosition.OnTrue(StartIntake(&intake, &superStructure, &storage)).OnFalse(StopIntake(&intake, &superStructure, &storage));
-	shootingPose.OnTrue(ShootingPose(&intake, &superStructure)).OnFalse(StopIntake(&intake, &superStructure, &storage));
-	moveStorage.WhileTrue(MoveStorage(&storage, 1_V).ToPtr());
-	moveStorageInverted.WhileTrue(MoveStorage(&storage, -1_V).ToPtr());
-	shootshooter.WhileTrue(ShootShooter(&shooter, 3.0).ToPtr());
-	shooterAngle.WhileTrue(ShooterAngle(&superStructure));
+
+	GroundGrab.WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake).ToPtr());
+	GroundGrab.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+
+	SourceGrab.WhileTrue(SourceGrabCommand(&superStructure, &shooter).ToPtr());
+	SourceGrab.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+
 }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
