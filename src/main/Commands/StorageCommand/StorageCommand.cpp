@@ -7,17 +7,17 @@
 #include <frc2/command/button/Trigger.h>
 #include <frc/XboxController.h>
 
-StorageCommand::StorageCommand(Storage* m_Storage, units::volt_t m_voltage) {
+StorageCommand::StorageCommand(Storage* storage, units::volt_t voltage) {
   // Use addRequirements() here to declare subsystem dependencies.
 
-  this->m_voltage = m_voltage;
-  this->m_Storage = m_Storage;
-  AddRequirements({ m_Storage });
+  this->voltage = voltage;
+  this->storage = storage;
+  AddRequirements({ storage });
 }
 
 // Called when the command is initially scheduled.
 void StorageCommand::Initialize() {
-  m_Storage->setVoltage(m_voltage);
+  storage->setVoltage(voltage);
 }
 
 // Called repeatedly when this Command is scheduled to run

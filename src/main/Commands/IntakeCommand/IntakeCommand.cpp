@@ -6,16 +6,15 @@
 
 #include "main/Commands/IntakeCommand/IntakeCommand.h"
 
-IntakeCommand::IntakeCommand(Intake* m_Intake, units::volt_t m_voltage) {
-  // Use addRequirements() here to declare subsystem dependencies.
-    this->m_Intake = m_Intake;
-    this->m_voltage = m_voltage;
-    AddRequirements({m_Intake});
+IntakeCommand::IntakeCommand(Intake* intake, units::volt_t voltage) {
+    this->intake = intake;
+    this->voltage = voltage;
+    AddRequirements({intake});
 }
 
 // Called when the command is initially scheduled.
 void IntakeCommand::Initialize() {
-    m_Intake->setVoltage(m_voltage);
+    intake->setVoltage(voltage);
 }
 
 // Called repeatedly when this Command is scheduled to run

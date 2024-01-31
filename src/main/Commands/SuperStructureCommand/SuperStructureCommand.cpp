@@ -5,14 +5,14 @@
 #include "SuperStructureCommand.h"
 
 SuperStructureCommand::SuperStructureCommand(SuperStructure* superStructure, SuperStructureState targetState) {
-	this->m_SuperStructure = superStructure;
-	this->m_targetState = targetState;
-	AddRequirements(m_SuperStructure);
+	this->superStructure = superStructure;
+	this->targetState = targetState;
+	AddRequirements(superStructure);
 }
 
 // Called when the command is initially scheduled.
 void SuperStructureCommand::Initialize() {
-	m_SuperStructure->setTargetCoord(m_targetState);
+	superStructure->setTargetCoord(targetState);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -23,8 +23,8 @@ void SuperStructureCommand::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool SuperStructureCommand::IsFinished() {
-	double lowError = abs(m_targetState.lowerAngle - m_SuperStructure->getLowerAngle());
-	double upperError = abs(m_targetState.upperAngle - m_SuperStructure->getUpperAngle());
+	double lowError = abs(targetState.lowerAngle - superStructure->getLowerAngle());
+	double upperError = abs(targetState.upperAngle - superStructure->getUpperAngle());
 
 	if (lowError <= 2 && upperError <= 2){
 	return true;

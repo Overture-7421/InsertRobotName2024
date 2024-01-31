@@ -4,32 +4,26 @@
 
 #include "SupportArmCommand.h"
 
-SupportArmCommand2::SupportArmCommand2(SupportArms* supportarms, SupportArmsState targetstate) {
-  // Use addRequirements() here to declare subsystem dependencies.
-  this->m_supportarms = supportarms;
-  this->m_targetState = targetstate;
-  AddRequirements(m_supportarms);
+SupportArmCommand::SupportArmCommand(SupportArms* supportArms, SupportArmsState targetState) {
+  this->supportArms = supportArms;
+  this->targetState = targetState;
+  AddRequirements(supportArms);
 }
 
-// Called when the command is initially scheduled.
-void SupportArmCommand2::Initialize() {
-  	m_supportarms->setTargetCoord(m_targetState);
+void SupportArmCommand::Initialize() {
+  	supportArms->setTargetCoord(targetState);
 }
 
-// Called repeatedly when this Command is scheduled to run
-void SupportArmCommand2::Execute() {}
+void SupportArmCommand::Execute() {}
 
-// Called once the command ends or is interrupted.
-void SupportArmCommand2::End(bool interrupted) {}
+void SupportArmCommand::End(bool interrupted) {}
 
-// Returns true when the command should end.
-bool SupportArmCommand2::IsFinished() {
-  double error = abs(m_targetState.lowerAngle - m_supportarms->getLowerAngle());
+bool SupportArmCommand::IsFinished() {
+  double error = abs(targetState.lowerAngle - supportArms->getLowerAngle());
 
   if (error <= 2 ) {
-	return true;
-	}
-	else{
-  return false;
+	  return true;
+	} else {
+    return false;
   }
 }
