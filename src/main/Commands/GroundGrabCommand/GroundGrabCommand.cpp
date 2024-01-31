@@ -10,7 +10,7 @@
 GroundGrabCommand::GroundGrabCommand(SuperStructure* superStructure, Storage* storage, Intake* intake) {
    
    AddCommands(
-    SuperStructureCommand (superStructure, {30.0,-30.0}), 
+    SuperStructureCommand (superStructure, {-35.0,-5.0}), 
     frc2::ParallelCommandGroup(
       IntakeCommand(intake, 3_V),
       StorageCommand(storage, 3_V)

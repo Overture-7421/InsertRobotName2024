@@ -7,10 +7,11 @@
 // NOTE:  Consider using this command inline, rather than writing a subclass.
 // For more information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-ClosedCommand::ClosedCommand(SuperStructure* superStructure, Intake* intake, Storage* storage) {
+ClosedCommand::ClosedCommand(SuperStructure* superStructure, Intake* intake, Storage* storage, Shooter* shooter) {
   AddCommands(
+    ShooterCommand(shooter, 0.00),
     IntakeCommand(intake, 0_V),
     StorageCommand(storage, 0_V),
-    SuperStructureCommand(superStructure, {-10.0, 0.0})
+    SuperStructureCommand(superStructure, {-30.0, 0.0})
     );
 }

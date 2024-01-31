@@ -10,10 +10,11 @@
 #include "main/Commands/SuperStructureCommand/SuperStructureCommand.h"
 #include "main/Commands/IntakeCommand/IntakeCommand.h"
 #include "main/Commands/StorageCommand/StorageCommand.h"
+#include "main/Commands/ShooterCommand/ShooterCommand.h"
 
 class ClosedCommand
     : public frc2::CommandHelper<frc2::SequentialCommandGroup,
                                  ClosedCommand> {
  public:
-  ClosedCommand(SuperStructure* superStructure, Intake* intake, Storage* storage);
+  ClosedCommand(SuperStructure* superStructure, Intake* intake, Storage* storage, Shooter* shooter);
 };
