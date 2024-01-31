@@ -24,11 +24,11 @@ void ShooterCommand::End(bool interrupted) {}
 // Returns true when the command should end.
 bool ShooterCommand::IsFinished() {
   
-double error = abs(velocity - shooter->getCurrentVelocity());
-  if(error <= 10){
+double upperError = abs(velocity - shooter->getUpperMotorCurrentVelocity());
+double lowerError = abs(velocity - shooter->getLowerMotorCurrentVelocity());
+  if(upperError <= 10 && lowerError  <= 10){
     return true;
-  }
-  else{
+  } else {
     return false;
   }
 }
