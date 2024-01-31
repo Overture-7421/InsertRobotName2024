@@ -15,10 +15,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class SupportArmCommand2
-    : public frc2::CommandHelper<frc2::Command, SupportArmCommand2> {
+class SupportArmCommand
+    : public frc2::CommandHelper<frc2::Command, SupportArmCommand> {
  public:
-  SupportArmCommand2(SupportArms* supportarms, SupportArmsState targetstate);
+  SupportArmCommand(SupportArms* supportarms, SupportArmsState targetstate);
 
   void Initialize() override;
 
