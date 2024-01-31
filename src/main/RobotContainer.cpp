@@ -5,18 +5,17 @@
 #include "RobotContainer.h"
 
 #include <frc2/command/Commands.h>
+#include <iostream>
 
 RobotContainer::RobotContainer() {
-	SuperStructureState startingState{ 0,0 };
-	SuperStructureState targetState{ 40, 40 };
+	auto alliance = frc::DriverStation::GetAlliance();
 
-	SuperStructureMoveByDistance::Profile profile;
-	profile.profileActivationDistance = 1_m;
-	profile.startingState = startingState;
-	profile.targetState = targetState;
-	profile.targetCoord = frc::Translation2d(4.3_m, 5.0_m);
-
-	pathplanner::NamedCommands::registerCommand("Climb", std::move(SuperStructureMoveByDistance(&chassis, &superStructure, profile).ToPtr()));
+	// TODO: Delete if not needed in 2025, it just waits until there is an alliance assigned so pose flipping is done correctly.
+	while (!alliance.has_value()) {
+		alliance = frc::DriverStation::GetAlliance();
+		std::cout << "Warning: Waiting for alliance color before starting robot..." << std::endl;
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+	}
 
 	autoChooser.SetDefaultOption("None, null, nada", "None");
 	autoChooser.AddOption("MiddleNote", "MiddleNote");
@@ -30,7 +29,8 @@ void RobotContainer::ConfigureBindings() {
 
 	// Configure the button bindings
 	resetAngleButton.WhileTrue(ResetAngle(&chassis).ToPtr());
-
+	climbButton.WhileTrue(Climb(&chassis, &superStructure, &supportArms, &driver));
+	shootTrap.WhileTrue(TrapShoot(&chassis, &superStructure, &supportArms, &shooter, &storage));
 
 	GroundGrab.WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake).ToPtr());
 	GroundGrab.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());

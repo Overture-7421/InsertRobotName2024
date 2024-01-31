@@ -41,6 +41,7 @@ public:
     units::second_t GetSimulationTime();
     void AddPeriodic(std::function<void()> callback, units::second_t period,
                    units::second_t offset = 0_s);
+    ~OverRobot() override;
 
     SimMotorManager* simMotorManager = SimMotorManager::GetInstance();
     SimPigeonManager* simPigeonManager = SimPigeonManager::GetInstance();

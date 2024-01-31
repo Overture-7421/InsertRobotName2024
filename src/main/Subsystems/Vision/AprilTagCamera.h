@@ -16,5 +16,5 @@ private:
 
 	photon::PhotonCamera camera{ APRILTAGS_CAMERA_NAME };
 	frc::AprilTagFieldLayout tagLayout{ frc::LoadAprilTagLayoutField(frc::AprilTagField::k2024Crescendo) };
-	frc::Transform3d cameraToRobot{ {0_in, 0_in, 0_in}, {0_deg, 0_deg, 0_deg} };
+	frc::Transform3d cameraToRobot{ {-0.25_m, 0_m, 0.35_m}, {0_deg, 22.91_deg, 180_deg} };
 };

@@ -17,6 +17,8 @@ class SuperStructure : public frc2::SubsystemBase {
 public:
 	SuperStructure();
 	void setTargetCoord(SuperStructureState TargetCoord);
+	void setLowerAngleConstraints(double velocity, double acceleration);
+	void setUpperAngleConstraints(double velocity, double acceleration);
 	double getLowerAngle();
 	double getUpperAngle();
 	SuperStructurePosition getPosition();
@@ -25,7 +27,7 @@ public:
 	void Periodic() override;
 
 private:
-	void setFalconTargetPos(SuperStructureState targetState);
+	void setFalconTargetPos(SuperStructureState targetState, SuperStructureState currentState);
 	double convertAngleToFalconPos(double angle);
 	double upperAngleFFCalculation(double angle);
 
@@ -51,6 +53,6 @@ private:
 	SuperStructurePosition position = SuperStructurePosition::Closing;
 
 	//Motion Magic Feed Forward
-	double lowerFF = 0.0;
-	double upperFF = 0.0;
+	double lowerFF = 0.25;
+	double upperFF = 0.1;
 };

@@ -13,10 +13,8 @@ Shooter::Shooter() {
 	lowerShooterMotor.setSensorToMechanism(UPPER_GEAR_BOX_REDUCTION);
 	lowerShooterMotor.setClosedLoopVoltageRamp(0.5);
 
-	upperShooterMotor.setPIDValues(4.0, 0.0, 0.0, 0.0, 0.0);
-	lowerShooterMotor.setPIDValues(4.0, 0.0, 0.0, 0.0, 0.0);
-
-	//this->velocity = velocity;
+	upperShooterMotor.setPIDValues(0.00055, 0.0, 0.0, 0.0, 0.0495);
+	lowerShooterMotor.setPIDValues(0.00055, 0.0, 0.0, 0.0, 0.0495);
 }
 
 void Shooter::setVelocityVoltage(double velocity) {
@@ -41,11 +39,9 @@ double Shooter::getLowerMotorCurrentVelocity() {
 
 }
 
-
 // This method will be called once per scheduler run
 void Shooter::Periodic() {
 	frc::SmartDashboard::PutNumber("Shooter Velocity Goal:", velocity);
 	frc::SmartDashboard::PutNumber("Shooter Upper Velocity:", getUpperMotorCurrentVelocity());
 	frc::SmartDashboard::PutNumber("Shooter Lower Velocity:", getLowerMotorCurrentVelocity());
-
 }

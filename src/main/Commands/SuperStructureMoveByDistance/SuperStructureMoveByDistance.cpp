@@ -4,37 +4,37 @@
 
 #include "SuperStructureMoveByDistance.h"
 
-SuperStructureMoveByDistance::SuperStructureMoveByDistance(Chassis* chassis, SuperStructure* superStructure, Profile profile) {
-  this->chassis = chassis;
-  this->superStructure = superStructure;
-  this->profile = profile;
+SuperStructureMoveByDistance::SuperStructureMoveByDistance(SuperStructure* superStructure, Profile profile, std::function<units::meter_t()> distanceToTargetProvider) {
+	this->superStructure = superStructure;
+	this->profile = profile;
+	this->distanceToTargetProvider = distanceToTargetProvider;
 
-  upperAngleTravel = profile.targetState.upperAngle - profile.startingState.upperAngle;
-  lowerAngleTravel = profile.targetState.lowerAngle - profile.startingState.lowerAngle;
-  AddRequirements(superStructure);
+	upperAngleTravel = profile.targetState.upperAngle - profile.startingState.upperAngle;
+	lowerAngleTravel = profile.targetState.lowerAngle - profile.startingState.lowerAngle;
+	AddRequirements(superStructure);
 }
 
 // Called when the command is initially scheduled.
 void SuperStructureMoveByDistance::Initialize() {
-  superStructure->setTargetCoord(profile.startingState);
+	superStructure->setTargetCoord(profile.startingState);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void SuperStructureMoveByDistance::Execute() {
-  const auto &currentPose = chassis->getOdometry();
-  distanceToTarget = profile.targetCoord.Distance(currentPose.Translation());
+	distanceToTarget = units::math::abs(distanceToTargetProvider());
+	frc::SmartDashboard::PutNumber("SuperStructureMoveByDistance/DistanceMoveByDistance", distanceToTarget.value());
 
-  SuperStructureState targetState = profile.targetState;
+	if (distanceToTarget < profile.profileActivationDistance) {
+		SuperStructureState targetState;
 
-  if(units::math::abs(distanceToTarget) < profile.profileActivationDistance) {
+		double inverseNormalizedDistance = 1.0 - (distanceToTarget / profile.profileActivationDistance).value();
+		frc::SmartDashboard::PutNumber("SuperStructureMoveByDistance/NormalizedDistance", inverseNormalizedDistance);
+		targetState.upperAngle = profile.startingState.upperAngle + upperAngleTravel * inverseNormalizedDistance;
+		targetState.lowerAngle = profile.startingState.lowerAngle + lowerAngleTravel * inverseNormalizedDistance;
 
+		superStructure->setTargetCoord(targetState);
+	}
 
-    double inverseNormalizedDistance = (distanceToTarget / profile.profileActivationDistance).value();
-    targetState.upperAngle = profile.startingState.upperAngle + upperAngleTravel * inverseNormalizedDistance;
-    targetState.lowerAngle = profile.startingState.lowerAngle + lowerAngleTravel * inverseNormalizedDistance;
-  }
-
-  superStructure->setTargetCoord(targetState);
 }
 
 // Called once the command ends or is interrupted.
@@ -42,5 +42,5 @@ void SuperStructureMoveByDistance::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool SuperStructureMoveByDistance::IsFinished() {
-  return distanceToTarget < 0.01_m;
+	return distanceToTarget < 0.01_m;
 }
