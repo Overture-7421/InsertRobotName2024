@@ -6,12 +6,26 @@
 
 #include <frc2/command/SubsystemBase.h>
 #include <frc/AddressableLED.h>
+#include <networktables/NetworkTableInstance.h>
+#include <map>
+
+typedef std::string LedStripName;
+typedef std::vector<frc::AddressableLED::LEDData> LedStrip;
 
 class LedsManager : public frc2::SubsystemBase {
  public:
-  LedsManager(int pwmPort, int ledLength);
+  struct LedStripRange {
+    int startLed;
+    int endLed;
+    bool reversed = false;
+  };
 
-  virtual void UpdateLeds(std::vector<frc::AddressableLED::LEDData>& ledBuffer) = 0;
+  LedsManager(int pwmPort, int ledLength, const std::map<LedStripName, LedStripRange>& ledStripMap);
+
+  void setLedStrip(LedStripName name, const LedStrip& stripData);
+  void setLedStripAll(const LedStrip& stripData);
+  const frc::AddressableLED& getLedStripAll();
+  const LedStrip& getLedStripState(LedStripName name);
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
@@ -20,5 +34,6 @@ class LedsManager : public frc2::SubsystemBase {
   
  private:
   frc::AddressableLED ledStrip;
-  std::vector<frc::AddressableLED::LEDData> ledBuffer;
+  LedStrip ledBuffer;
+  std::map<LedStripName, LedStripRange> ledStripMap;
 };

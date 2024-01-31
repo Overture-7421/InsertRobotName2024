@@ -18,6 +18,7 @@
 #include "Subsystems/Storage/Storage.h"
 #include "Subsystems/SupportArms/SupportArms.h"
 #include "Subsystems/Shooter/Shooter.h"
+
 #include "Commands/SuperStructureCommand/SuperStructureCommand.h"
 #include "Commands/ResetAngle/ResetAngle.h"
 #include "Commands/MoveStorage/MoveStorage.h"
@@ -26,6 +27,7 @@
 #include "Commands/Climbing/Climbing.h"
 
 #include "OvertureLib/Commands/Drive/Drive.h"
+#include "OvertureLib/Subsystems/LedsManager/LedsManager.h"
 
 class RobotContainer {
 public:
@@ -43,6 +45,8 @@ private:
 	SupportArms supportArms;
 	Storage storage;
 	Shooter shooter;
+
+	// LedsManager leds;
 
 	// Controllers
 	frc::XboxController driver{ 0 };
