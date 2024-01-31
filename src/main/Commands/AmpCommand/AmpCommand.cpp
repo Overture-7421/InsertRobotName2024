@@ -6,6 +6,6 @@
 AmpCommand::AmpCommand(SuperStructure* superStucture) {
 
   AddCommands(
-
+    SuperStructureCommand(superStucture, {50.0, 30.0})
   );
 }
