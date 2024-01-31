@@ -24,7 +24,9 @@ void SupportArmCommand2::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool SupportArmCommand2::IsFinished() {
-  if (m_supportarms->getLowerAngle() == m_targetState.lowerAngle) {
+  double error = abs(m_targetState.lowerAngle - m_supportarms->getLowerAngle());
+
+  if (error <= 2 ) {
 	return true;
 	}
 	else{

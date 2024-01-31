@@ -22,10 +22,10 @@
 
 #include "Commands/SuperStructureMoveByDistance/SuperStructureMoveByDistance.h"
 
-#include "Commands/IntakeCommand/IntakeCommand.h"
-#include "Commands/StorageCommand/StorageCommand.h"
-#include "Commands/SuperStructureCommand/SuperStructureCommand.h"
-#include "Commands/SupportArmCommand/SupportArmCommand.h"
+#include "Commands/GroundGrabCommand/GroundGrabCommand.h"
+#include "Commands/SourceGrabCommand/SourceGrabCommand.h"
+#include "Commands/AmpCommand/AmpCommand.h"
+#include "Commands/ClosedCommand/ClosedCommand.h"
 
 #include "OvertureLib/Commands/Drive/Drive.h"
 
@@ -62,12 +62,9 @@ private:
 
 	// Mechanism Commands
 
-	frc2::Trigger intakeTrue{ [this] {return opertr.GetLeftTriggerAxis() > 0.5;} };
-	frc2::Trigger storageTrue{ [this] {return opertr.GetLeftBumper();} };
-	frc2::Trigger storageFalse{ [this] {return opertr.GetRightBumper();} };
-	frc2::Trigger superStructurePos1{ [this] {return opertr.GetXButton();} };
-	frc2::Trigger superStructurePos2{ [this] {return opertr.GetBButton();} };
-	frc2::Trigger supportArmOpen{ [this] {return opertr.GetAButton();} };
+	frc2::Trigger GroundGrab{ [this] {return opertr.GetLeftTriggerAxis() > 0.3;} };
+	frc2::Trigger SourceGrab{ [this] {return opertr.GetLeftBumper();} };
+
 
 	//Auto Chooser
 	frc::SendableChooser<std::string> autoChooser;

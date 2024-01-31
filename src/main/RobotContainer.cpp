@@ -33,16 +33,12 @@ void RobotContainer::ConfigureBindings() {
 	resetAngleButton.WhileTrue(ResetAngle(&chassis).ToPtr());
 
 
-	intakeTrue.OnTrue(IntakeCommand(&intake, 3_V).ToPtr());
-	intakeTrue.OnFalse(IntakeCommand(&intake, 0_V).ToPtr());
-	storageTrue.OnTrue(StorageCommand(&storage, 2_V).ToPtr());
-	storageTrue.OnFalse(StorageCommand(&storage, 0_V).ToPtr());
-	storageFalse.OnTrue(StorageCommand(&storage, -2_V).ToPtr());
-	storageFalse.OnFalse(StorageCommand(&storage, 0_V).ToPtr());
-	superStructurePos1.WhileTrue(SuperStructureCommand(&superStructure, {0.0, 0.0}).ToPtr());
-	superStructurePos2.WhileTrue(SuperStructureCommand(&superStructure, {30.0, -30.0}).ToPtr());
-	supportArmOpen.OnTrue(SupportArmCommand2(&supportArms, {-90.0}).ToPtr())
-					.OnFalse(SupportArmCommand2(&supportArms, {0.0}).ToPtr());
+	GroundGrab.WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake).ToPtr());
+	GroundGrab.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+
+	SourceGrab.WhileTrue(SourceGrabCommand(&superStructure, &shooter).ToPtr());
+	SourceGrab.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+
 }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
