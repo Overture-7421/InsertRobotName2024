@@ -6,15 +6,15 @@
 
 #include "main/Commands/IntakeCommand/IntakeCommand.h"
 
-IntakeCommand::IntakeCommand(Intake* m_intake, units::volt_t m_voltage) {
-    this->m_intake = m_intake;
-    this->m_voltage = m_voltage;
-    AddRequirements({m_intake});
+IntakeCommand::IntakeCommand(Intake* intake, units::volt_t voltage) {
+    this->intake = intake;
+    this->voltage = voltage;
+    AddRequirements({intake});
 }
 
 // Called when the command is initially scheduled.
 void IntakeCommand::Initialize() {
-    m_intake->setVoltage(m_voltage);
+    intake->setVoltage(voltage);
 }
 
 // Called repeatedly when this Command is scheduled to run

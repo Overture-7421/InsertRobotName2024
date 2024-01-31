@@ -18,7 +18,7 @@
 class StorageCommand
     : public frc2::CommandHelper<frc2::Command, StorageCommand> {
  public:
-  StorageCommand(Storage* m_Storage, units::volt_t m_voltage);
+  StorageCommand(Storage* storage, units::volt_t voltage);
 
   void Initialize() override;
 
@@ -29,6 +29,6 @@ class StorageCommand
   bool IsFinished() override;
 
 private:
-  Storage* m_Storage;
-  units::volt_t m_voltage;
+  Storage* storage;
+  units::volt_t voltage;
 };

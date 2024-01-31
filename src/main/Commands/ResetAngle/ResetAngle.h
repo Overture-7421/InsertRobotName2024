@@ -31,6 +31,6 @@ public:
 	bool IsFinished() override;
 
 private:
-	SwerveChassis* m_swerveChassis;
-	double m_angle;
+	SwerveChassis* swerveChassis;
+	double angle;
 };
