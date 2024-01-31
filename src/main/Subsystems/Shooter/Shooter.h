@@ -18,14 +18,10 @@ public:
 	void Periodic() override;
 
 private:
-	OverTalonFX ShooterMotor{ 26, ControllerNeutralMode::Brake, false, "rio" };
-
+	OverTalonFX shooterMotor{ 26, ControllerNeutralMode::Brake, false, "rio" };
 
 	const double LOWER_GEAR_BOX_REDUCTION = 1/2.4;
 	const double UPPER_GEAR_BOX_REDUCTION = 1/2.4;
 
 	double velocity;
-	double m_velocity;
-
-
 };

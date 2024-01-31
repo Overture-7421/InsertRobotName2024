@@ -18,7 +18,7 @@
 class ShooterCommand
     : public frc2::CommandHelper<frc2::Command, ShooterCommand> {
  public:
-  ShooterCommand(Shooter* m_Shooter, double m_velocity);
+  ShooterCommand(Shooter* shooter, double velocity);
 
   
   void Initialize() override;
@@ -29,9 +29,8 @@ class ShooterCommand
 
   bool IsFinished() override;
 
-  
 
 private:
-  Shooter* m_Shooter;
-  double m_velocity;
+  Shooter* shooter;
+  double velocity;
 };

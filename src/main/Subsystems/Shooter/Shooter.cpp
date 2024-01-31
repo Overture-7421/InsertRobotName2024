@@ -5,29 +5,26 @@
 #include "Shooter.h"
 
 Shooter::Shooter() {
-	ShooterMotor.setSupplyCurrentLimit(true, 20, 25, 0.5);
-	ShooterMotor.setSensorToMechanism(UPPER_GEAR_BOX_REDUCTION);
-	ShooterMotor.setClosedLoopVoltageRamp(0.5);
+	shooterMotor.setSupplyCurrentLimit(true, 20, 25, 0.5);
+	shooterMotor.setSensorToMechanism(UPPER_GEAR_BOX_REDUCTION);
+	shooterMotor.setClosedLoopVoltageRamp(0.5);
 
-	ShooterMotor.setPIDValues(4.0, 0.0, 0.0, 0.0, 0.0);
+	shooterMotor.setPIDValues(4.0, 0.0, 0.0, 0.0, 0.0);
 
 	//this->velocity = velocity;
 }
 
 void Shooter::setVelocityVoltage(double velocity) {
-	ShooterMotor.setVelocityVoltage(velocity, false);
+	shooterMotor.setVelocityVoltage(velocity, false);
 	this->velocity = velocity;
-
 }
-
 
 void Shooter::setVoltage(units::volt_t voltage) {
-	ShooterMotor.setVoltage(voltage, false);
+	shooterMotor.setVoltage(voltage, false);
 }
 
-
 double Shooter::getCurrentVelocity() {
-	return ShooterMotor.getVelocity(1);
+	return shooterMotor.getVelocity(1);
 }
 
 // This method will be called once per scheduler run

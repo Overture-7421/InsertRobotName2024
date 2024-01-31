@@ -30,8 +30,8 @@ public:
 
 private:
   // Subsystem
-  SuperStructure* m_SuperStructure;
+  SuperStructure* superStructure;
 
   // State
-  SuperStructureState m_targetState;
+  SuperStructureState targetState;
 };

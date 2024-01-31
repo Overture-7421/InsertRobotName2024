@@ -4,17 +4,15 @@
 
 #include "ShooterCommand.h"
 
-ShooterCommand::ShooterCommand(Shooter* m_Shooter, double m_velocity) {
-  // Use addRequirements() here to declare subsystem dependencies.
-
-  this->m_velocity = m_velocity;
-  this->m_Shooter = m_Shooter;
-  AddRequirements({ m_Shooter });
+ShooterCommand::ShooterCommand(Shooter* shooter, double velocity) {
+  this->velocity = velocity;
+  this->shooter = shooter;
+  AddRequirements({ shooter });
 }
 
 // Called when the command is initially scheduled.
 void ShooterCommand::Initialize() {
-    m_Shooter->setVelocityVoltage(m_velocity);
+    shooter->setVelocityVoltage(velocity);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -26,8 +24,7 @@ void ShooterCommand::End(bool interrupted) {}
 // Returns true when the command should end.
 bool ShooterCommand::IsFinished() {
   
-double error = abs(m_velocity - m_Shooter->getCurrentVelocity());
-
+double error = abs(velocity - shooter->getCurrentVelocity());
   if(error <= 10){
     return true;
   }

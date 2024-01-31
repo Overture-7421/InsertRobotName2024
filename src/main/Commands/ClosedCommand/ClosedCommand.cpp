@@ -9,9 +9,13 @@
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 ClosedCommand::ClosedCommand(SuperStructure* superStructure, Intake* intake, Storage* storage, Shooter* shooter) {
   AddCommands(
+    
+    frc2::ParallelCommandGroup{
     ShooterCommand(shooter, 0.00),
     IntakeCommand(intake, 0_V),
-    StorageCommand(storage, 0_V),
+    StorageCommand(storage, 0_V)
+    },
     SuperStructureCommand(superStructure, {-30.0, 0.0})
+
     );
 }

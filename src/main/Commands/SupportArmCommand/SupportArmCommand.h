@@ -18,7 +18,7 @@
 class SupportArmCommand
     : public frc2::CommandHelper<frc2::Command, SupportArmCommand> {
  public:
-  SupportArmCommand(SupportArms* supportarms, SupportArmsState targetstate);
+  SupportArmCommand(SupportArms* supportArms, SupportArmsState targetState);
 
   void Initialize() override;
 
@@ -30,7 +30,7 @@ class SupportArmCommand
     
   
   private:
-    SupportArms* m_supportarms;
+    SupportArms* supportArms;
   
-    SupportArmsState m_targetState;
+    SupportArmsState targetState;
 };
