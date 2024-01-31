@@ -13,12 +13,14 @@ class Shooter : public frc2::SubsystemBase {
 public:
 	Shooter();
 	void setVelocityVoltage(double velocity);
-	double getCurrentVelocity();
+	double getUpperMotorCurrentVelocity();
+	double getLowerMotorCurrentVelocity();
 	void setVoltage(units::volt_t voltage);
 	void Periodic() override;
 
 private:
-	OverTalonFX shooterMotor{ 26, ControllerNeutralMode::Brake, false, "rio" };
+	OverTalonFX upperShooterMotor{ 26, ControllerNeutralMode::Brake, false, "rio" };
+	OverTalonFX lowerShooterMotor{ 27, ControllerNeutralMode::Brake, false, "rio" };
 
 	const double LOWER_GEAR_BOX_REDUCTION = 1/2.4;
 	const double UPPER_GEAR_BOX_REDUCTION = 1/2.4;
