@@ -23,7 +23,10 @@ void SuperStructureCommand::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool SuperStructureCommand::IsFinished() {
-	if (m_SuperStructure->getLowerAngle() == m_targetState.lowerAngle && m_SuperStructure->getUpperAngle() == m_targetState.upperAngle){
+	double lowError = abs(m_targetState.lowerAngle - m_SuperStructure->getLowerAngle());
+	double upperError = abs(m_targetState.upperAngle - m_SuperStructure->getUpperAngle());
+
+	if (lowError <= 2 && upperError <= 2){
 	return true;
 	}
 	else {

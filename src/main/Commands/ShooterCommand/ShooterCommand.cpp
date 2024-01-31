@@ -25,7 +25,10 @@ void ShooterCommand::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool ShooterCommand::IsFinished() {
-  if(m_Shooter->getCurrentVelocity() == m_velocity){
+  
+double error = abs(m_velocity - m_Shooter->getCurrentVelocity());
+
+  if(error <= 10){
     return true;
   }
   else{
