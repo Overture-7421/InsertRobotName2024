@@ -1,10 +1,11 @@
 #include "Climbing.h"
 #include <exception>
 
+#include "main/Commands/SuperStructureCommand/SuperStructureCommand.h"
+#include "main/Commands/SupportArmCommand/SupportArmCommand.h"
 #include "main/Commands/SuperStructureMoveByDistance/SuperStructureMoveByDistance.h"
 #include "main/Commands/SupportArmsMoveByDistance/SupportArmsMoveByDistance.h"
 
-// TODO: Update superstructure and support arm commands to not wait 3s for them to end, use real commands when they are completed.
 frc2::CommandPtr GoToClimbingLocationAndSetupJoints(Chassis* chassis, SuperStructure* superStructure, SupportArms* supportArms, StageLocation location) {
 	SuperStructureState startingState{ -14, -60 };
 	SuperStructureState targetState{ 85, -90 };
@@ -54,9 +55,10 @@ frc2::CommandPtr GoToClimbingLocationAndSetupJoints(Chassis* chassis, SuperStruc
 
 	return frc2::cmd::Sequence(
 		pathplanner::AutoBuilder::pathfindToPose(flipPoseIfNeeded(pathToFollow->getStartingDifferentialPose()), constraints),
-		frc2::cmd::RunOnce([=]() {superStructure->setTargetCoord(startingState);}, { superStructure }),
-		frc2::cmd::RunOnce([=]() {supportArms->setTargetCoord(startingState2);}, { supportArms }),
-		frc2::cmd::Wait(3_s),
+		frc2::cmd::Parallel(
+			SuperStructureCommand(superStructure, startingState).ToPtr(),
+			SupportArmCommand2(supportArms, startingState2).ToPtr()
+		),
 		frc2::cmd::Deadline(
 			pathplanner::AutoBuilder::followPath(pathToFollow),
 			SuperStructureMoveByDistance(superStructure, profile, distanceFunction).ToPtr(),
@@ -67,11 +69,9 @@ frc2::CommandPtr GoToClimbingLocationAndSetupJoints(Chassis* chassis, SuperStruc
 
 frc2::CommandPtr ClimbAtLocation(SuperStructure* superStructure, frc::XboxController* controller) {
 	return frc2::cmd::Sequence(
-		frc2::cmd::RunOnce([=]() {superStructure->setTargetCoord({ -30 , 0 });}, { superStructure }),
-		frc2::cmd::Wait(3_s),
+		SuperStructureCommand(superStructure, {-30, 0}).ToPtr(),
 		WaitForButton(controller, frc::XboxController::Button::kA),
-		frc2::cmd::RunOnce([=]() {superStructure->setTargetCoord({ 85, -90 });}, { superStructure }),
-		frc2::cmd::Wait(3_s)
+		SuperStructureCommand(superStructure, {85, -90}).ToPtr()
 	);
 }
 

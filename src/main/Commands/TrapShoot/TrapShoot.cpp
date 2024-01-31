@@ -4,6 +4,12 @@
 
 #include "TrapShoot.h"
 
+#include "main/Commands/SuperStructureCommand/SuperStructureCommand.h"
+#include "main/Commands/ShooterCommand/ShooterCommand.h"
+#include "main/Commands/StorageCommand/StorageCommand.h"
+
+// TODO: Make command that automatically waits for the shooter to fire the note and stops the storage using the sensors.
+
 frc2::CommandPtr GoToShootingLocation(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, Storage* storage, StageLocation location) {
 	frc::Pose2d pathToFollow;
 
@@ -32,16 +38,14 @@ frc2::CommandPtr GoToShootingLocation(Chassis* chassis, SuperStructure* superStr
 	return frc2::cmd::Sequence(
 		frc2::cmd::Parallel(
 			pathplanner::AutoBuilder::pathfindToPose(flipPoseIfNeeded(pathToFollow), constraints),
-			frc2::cmd::RunOnce([=]() {superStructure->setTargetCoord({ 0, 0 });}, { superStructure }),
-			frc2::cmd::RunOnce([=]() {shooter->setVelocityVoltage({ 20 });}, { shooter })),
-		frc2::cmd::Sequence(
-			frc2::cmd::Wait(2_s),
-			frc2::cmd::RunOnce([=]() {storage->setVoltage(4.0_V);}, { storage }),
-			frc2::cmd::Wait(1_s),
-			frc2::cmd::Parallel(
-				frc2::cmd::RunOnce([=]() {storage->setVoltage(0_V);}, { storage }),
-				frc2::cmd::RunOnce([=]() {shooter->setVelocityVoltage({ 0 });}, { shooter })
-			)
+			SuperStructureCommand(superStructure, { 0, 0 }).ToPtr(),
+			ShooterCommand(shooter, { 20 }).ToPtr()
+		),			
+		StorageCommand(storage, 4.0_V).ToPtr(), // Use command that users sensor instead of just waiting a second
+		frc2::cmd::Wait(1_s),
+		frc2::cmd::Parallel(
+			ShooterCommand(shooter, { 20 }).ToPtr(),
+			StorageCommand(storage, 4.0_V).ToPtr()
 		)
 	);
 
