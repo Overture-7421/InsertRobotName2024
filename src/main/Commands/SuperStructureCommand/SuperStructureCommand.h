@@ -1,23 +1,26 @@
-#pragma once 
+#pragma once
 
-#include <frc2/command/InstantCommand.h>
-#include <frc2/command/ParallelCommandGroup.h>
-#include <frc2/command/SequentialCommandGroup.h>
-#include <frc2/command/WaitCommand.h>
-#include <frc2/command/CommandPtr.h>
-#include <frc2/command/Commands.h>
-
+#include <frc2/command/Command.h>
+#include <frc2/command/CommandHelper.h>
 #include "main/Subsystems/SuperStructure/SuperStructure.h"
-#include "main/Subsystems/Intake/Intake.h"
-#include "main/Subsystems/SupportArms/SupportArms.h"
-#include "main/Subsystems/Storage/Storage.h"
-#include "main/Subsystems/Shooter/Shooter.h"
-#include "main/Subsystems/Chassis/Chassis.h"
 
+class SuperStructureCommand
+  : public frc2::CommandHelper<frc2::Command, SuperStructureCommand> {
+public:
+  SuperStructureCommand(SuperStructure* superStructure, SuperStructureState targetState);
 
-frc2::CommandPtr StartIntake(Intake* m_Intake, SuperStructure* m_SuperStructure, Storage* m_Storage);
-frc2::CommandPtr StopIntake(Intake* m_Intake, SuperStructure* m_SuperStructure, Storage* m_Storage);
-frc2::CommandPtr ShootingPose(Intake* m_Intake, SuperStructure* m_SuperStructure);
-frc2::CommandPtr AngleShootingProcess(double* angleShooting);
-frc2::CommandPtr ShooterAngle(SuperStructure* m_SuperStructure);
-frc2::CommandPtr IdleSuperStructure(Intake* m_Intake, SuperStructure* m_SuperStructure);
+  void Initialize() override;
+
+  void Execute() override;
+
+  void End(bool interrupted) override;
+
+  bool IsFinished() override;
+
+private:
+  // Subsystem
+  SuperStructure* m_SuperStructure;
+
+  // State
+  SuperStructureState m_targetState;
+};

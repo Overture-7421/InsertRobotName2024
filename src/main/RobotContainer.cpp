@@ -28,20 +28,21 @@ void RobotContainer::ConfigureBindings() {
 	superStructure.SetDefaultCommand(frc2::cmd::RunOnce([this]() {superStructure.setTargetCoord({ -15, 0 });}, { &superStructure }));
 
 	chassis.SetDefaultCommand(Drive(&chassis, &driver));
-	superStructure.SetDefaultCommand(IdleSuperStructure(&intake, &superStructure));
 
 	// Configure the button bindings
 	resetAngleButton.WhileTrue(ResetAngle(&chassis).ToPtr());
 
-	climbButton.WhileTrue(Climb(&chassis, &superStructure, &supportArms, &driver));
-	shootTrap.WhileTrue(TrapShoot(&chassis, &superStructure, &supportArms, &shooter, &storage));
 
-	intakePosition.OnTrue(StartIntake(&intake, &superStructure, &storage)).OnFalse(StopIntake(&intake, &superStructure, &storage));
-	shootingPose.OnTrue(ShootingPose(&intake, &superStructure)).OnFalse(StopIntake(&intake, &superStructure, &storage));
-	moveStorage.WhileTrue(MoveStorage(&storage, 1_V).ToPtr());
-	moveStorageInverted.WhileTrue(MoveStorage(&storage, -1_V).ToPtr());
-	shootshooter.WhileTrue(ShootShooter(&shooter, 3.0).ToPtr());
-	shooterAngle.WhileTrue(ShooterAngle(&superStructure));
+	intakeTrue.OnTrue(IntakeCommand(&intake, 3_V).ToPtr());
+	intakeTrue.OnFalse(IntakeCommand(&intake, 0_V).ToPtr());
+	storageTrue.OnTrue(StorageCommand(&storage, 2_V).ToPtr());
+	storageTrue.OnFalse(StorageCommand(&storage, 0_V).ToPtr());
+	storageFalse.OnTrue(StorageCommand(&storage, -2_V).ToPtr());
+	storageFalse.OnFalse(StorageCommand(&storage, 0_V).ToPtr());
+	superStructurePos1.WhileTrue(SuperStructureCommand(&superStructure, {0.0, 0.0}).ToPtr());
+	superStructurePos2.WhileTrue(SuperStructureCommand(&superStructure, {30.0, -30.0}).ToPtr());
+	supportArmOpen.OnTrue(SupportArmCommand2(&supportArms, {-90.0}).ToPtr())
+					.OnFalse(SupportArmCommand2(&supportArms, {0.0}).ToPtr());
 }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {

@@ -2,12 +2,9 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "ShootShooter.h"
+#include "ShooterCommand.h"
 
-#include <frc2/command/button/Trigger.h>
-#include <frc/XboxController.h>
-
-ShootShooter::ShootShooter(Shooter* m_Shooter, double m_velocity) {
+ShooterCommand::ShooterCommand(Shooter* m_Shooter, double m_velocity) {
   // Use addRequirements() here to declare subsystem dependencies.
 
   this->m_velocity = m_velocity;
@@ -16,23 +13,22 @@ ShootShooter::ShootShooter(Shooter* m_Shooter, double m_velocity) {
 }
 
 // Called when the command is initially scheduled.
-void ShootShooter::Initialize() {
-
-  m_Shooter->setVelocityVoltage(m_velocity);
-
+void ShooterCommand::Initialize() {
+    m_Shooter->setVelocityVoltage(m_velocity);
 }
 
 // Called repeatedly when this Command is scheduled to run
-void ShootShooter::Execute() {
-
-}
+void ShooterCommand::Execute() {}
 
 // Called once the command ends or is interrupted.
-void ShootShooter::End(bool interrupted) {
-  m_Shooter->setVelocityVoltage(0.0);
-}
+void ShooterCommand::End(bool interrupted) {}
 
 // Returns true when the command should end.
-bool ShootShooter::IsFinished() {
-  return false;
+bool ShooterCommand::IsFinished() {
+  if(m_Shooter->getCurrentVelocity() == m_velocity){
+    return true;
+  }
+  else{
+    return false;
+  }
 }

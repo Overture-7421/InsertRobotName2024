@@ -1,46 +1,32 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
 #include "SuperStructureCommand.h"
 
-frc2::CommandPtr StartIntake(Intake* m_Intake, SuperStructure* m_SuperStructure, Storage* m_Storage) {
-	return frc2::cmd::Parallel(
-		frc2::InstantCommand([m_Intake] {m_Intake->setVoltage(3_V);}, { m_Intake }).ToPtr(),
-		frc2::InstantCommand([m_SuperStructure] {m_SuperStructure->setTargetCoord({ -34, -17 });}, { m_SuperStructure }).ToPtr(),
-		frc2::InstantCommand([m_Storage] {m_Storage->setVoltage(1_V);}, { m_Storage }).ToPtr()
-	);
+SuperStructureCommand::SuperStructureCommand(SuperStructure* superStructure, SuperStructureState targetState) {
+	this->m_SuperStructure = superStructure;
+	this->m_targetState = targetState;
+	AddRequirements(m_SuperStructure);
 }
 
-frc2::CommandPtr StopIntake(Intake* m_Intake, SuperStructure* m_SuperStructure, Storage* m_Storage) {
-	return frc2::cmd::Parallel(
-		frc2::InstantCommand([m_Intake] {m_Intake->setVoltage(0_V);}, { m_Intake }).ToPtr(),
-		frc2::InstantCommand([m_SuperStructure] {m_SuperStructure->setTargetCoord({ -34, -14});}, { m_SuperStructure }).ToPtr(),
-		frc2::InstantCommand([m_Storage] {m_Storage->setVoltage(0_V);}, { m_Storage }).ToPtr()
-	);
+// Called when the command is initially scheduled.
+void SuperStructureCommand::Initialize() {
+	m_SuperStructure->setTargetCoord(m_targetState);
 }
 
-frc2::CommandPtr ShootingPose(Intake* m_Intake, SuperStructure* m_SuperStructure) {
-	return frc2::cmd::Parallel(
+// Called repeatedly when this Command is scheduled to run
+void SuperStructureCommand::Execute() {}
 
-		// Faltan speedwheels para shooter
-		//frc2::InstantCommand([m_Intake] {m_Intake->setVoltage(0_V);}, { m_Intake }).ToPtr(),
-		//frc2::InstantCommand([m_SuperStructure, structureState] {m_SuperStructure->setTargetCoord({ 105, 40 });}, { m_SuperStructure }).ToPtr()
-	);																			// 15 - 40
-}
+// Called once the command ends or is interrupted.
+void SuperStructureCommand::End(bool interrupted) {}
 
-// frc2::CommandPtr AngleShootingProcess(double* angleShooting) {
-
-// 	// sleep(4);
-// 	// angleShooting = 15.0;
-// 	// sleep(4);
-// 	// angleShooting = 40.0;
-// 	return;
-// }
-
-frc2::CommandPtr ShooterAngle(SuperStructure* m_SuperStructure) {
-	return frc2::InstantCommand([m_SuperStructure] {m_SuperStructure->setTargetCoord({40, 40});}, { m_SuperStructure }).ToPtr();
-}
-
-frc2::CommandPtr IdleSuperStructure(Intake* m_Intake, SuperStructure* m_SuperStructure) {
-	return frc2::cmd::Parallel(
-		frc2::InstantCommand([m_Intake] {m_Intake->setVoltage(0_V);}, { m_Intake }).ToPtr(),
-		frc2::InstantCommand([m_SuperStructure] {m_SuperStructure->setTargetCoord({ -34, -14});}, { m_SuperStructure }).ToPtr()
-	);
+// Returns true when the command should end.
+bool SuperStructureCommand::IsFinished() {
+	if (m_SuperStructure->getLowerAngle() == m_targetState.lowerAngle && m_SuperStructure->getUpperAngle() == m_targetState.upperAngle){
+	return true;
+	}
+	else {
+		return false;
+	}
 }
