@@ -14,14 +14,13 @@ public:
 	Shooter();
 	void setVelocityVoltage(double velocity);
 	double getCurrentVelocity();
-	void setVoltage(units::volt_t voltage);
 	void Periodic() override;
 
 private:
 	OverTalonFX shooterMotor{ 26, ControllerNeutralMode::Brake, false, "rio" };
 
-	const double LOWER_GEAR_BOX_REDUCTION = 1/2.4;
-	const double UPPER_GEAR_BOX_REDUCTION = 1/2.4;
+	const double LOWER_GEAR_BOX_REDUCTION = 1.0/2.4;
+	const double UPPER_GEAR_BOX_REDUCTION = 1.0/2.4;
 
 	double velocity;
 };

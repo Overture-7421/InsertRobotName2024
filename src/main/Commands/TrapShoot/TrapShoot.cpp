@@ -39,13 +39,13 @@ frc2::CommandPtr GoToShootingLocation(Chassis* chassis, SuperStructure* superStr
 		frc2::cmd::Parallel(
 			pathplanner::AutoBuilder::pathfindToPose(flipPoseIfNeeded(pathToFollow), constraints),
 			SuperStructureCommand(superStructure, { 0, 0 }).ToPtr(),
-			ShooterCommand(shooter, { 20 }).ToPtr()
+			ShooterCommand(shooter, { 100 }).ToPtr()
 		),			
 		StorageCommand(storage, 4.0_V).ToPtr(), // Use command that users sensor instead of just waiting a second
 		frc2::cmd::Wait(1_s),
 		frc2::cmd::Parallel(
-			ShooterCommand(shooter, { 20 }).ToPtr(),
-			StorageCommand(storage, 4.0_V).ToPtr()
+			ShooterCommand(shooter, { 0 }).ToPtr(),
+			StorageCommand(storage, 0.0_V).ToPtr()
 		)
 	);
 

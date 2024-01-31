@@ -57,7 +57,7 @@ frc2::CommandPtr GoToClimbingLocationAndSetupJoints(Chassis* chassis, SuperStruc
 		pathplanner::AutoBuilder::pathfindToPose(flipPoseIfNeeded(pathToFollow->getStartingDifferentialPose()), constraints),
 		frc2::cmd::Parallel(
 			SuperStructureCommand(superStructure, startingState).ToPtr(),
-			SupportArmCommand2(supportArms, startingState2).ToPtr()
+			SupportArmCommand(supportArms, startingState2).ToPtr()
 		),
 		frc2::cmd::Deadline(
 			pathplanner::AutoBuilder::followPath(pathToFollow),

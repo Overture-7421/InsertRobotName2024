@@ -27,6 +27,9 @@
 #include "Commands/AmpCommand/AmpCommand.h"
 #include "Commands/ClosedCommand/ClosedCommand.h"
 
+#include "Commands/Climbing/Climbing.h"
+#include "Commands/TrapShoot/TrapShoot.h"
+
 #include "OvertureLib/Commands/Drive/Drive.h"
 
 class RobotContainer {

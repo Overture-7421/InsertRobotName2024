@@ -9,9 +9,7 @@ Shooter::Shooter() {
 	shooterMotor.setSensorToMechanism(UPPER_GEAR_BOX_REDUCTION);
 	shooterMotor.setClosedLoopVoltageRamp(0.5);
 
-	shooterMotor.setPIDValues(4.0, 0.0, 0.0, 0.0, 0.0);
-
-	//this->velocity = velocity;
+	shooterMotor.setPIDValues(0.00055, 0.0, 0.0, 0.0, 0.0495);
 }
 
 void Shooter::setVelocityVoltage(double velocity) {
@@ -19,16 +17,12 @@ void Shooter::setVelocityVoltage(double velocity) {
 	this->velocity = velocity;
 }
 
-void Shooter::setVoltage(units::volt_t voltage) {
-	shooterMotor.setVoltage(voltage, false);
-}
-
 double Shooter::getCurrentVelocity() {
-	return shooterMotor.getVelocity(1);
+	return shooterMotor.GetVelocity().GetValue().value();
 }
 
 // This method will be called once per scheduler run
 void Shooter::Periodic() {
-	frc::SmartDashboard::PutNumber("Shooter Velocity Goal:", velocity);
-	frc::SmartDashboard::PutNumber("Shooter Velocity:", getCurrentVelocity());
+	frc::SmartDashboard::PutNumber("Shooter/VelocityTarget", velocity);
+	frc::SmartDashboard::PutNumber("Shooter/Velocity", getCurrentVelocity());
 }

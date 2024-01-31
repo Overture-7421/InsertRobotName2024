@@ -29,7 +29,8 @@ void RobotContainer::ConfigureBindings() {
 
 	// Configure the button bindings
 	resetAngleButton.WhileTrue(ResetAngle(&chassis).ToPtr());
-
+	climbButton.WhileTrue(Climb(&chassis, &superStructure, &supportArms, &driver));
+	shootTrap.WhileTrue(TrapShoot(&chassis, &superStructure, &supportArms, &shooter, &storage));
 
 	GroundGrab.WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake).ToPtr());
 	GroundGrab.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
