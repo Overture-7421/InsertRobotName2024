@@ -28,5 +28,5 @@ void IntakeCommand::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool IntakeCommand::IsFinished() {
-  return false;
+  return true;
 }

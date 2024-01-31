@@ -32,8 +32,8 @@ void RobotContainer::ConfigureBindings() {
 	resetAngleButton.WhileTrue(ResetAngle(&chassis).ToPtr());
 
 
-	GroundGrab.OnTrue(GroundGrabCommand(&superStructure, &storage, &intake).ToPtr());
-	SourceGrab.OnTrue(SourceGrabCommand(&superStructure, &storage).ToPtr());
+	GroundGrab.WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake).ToPtr());
+	SourceGrab.WhileTrue(SourceGrabCommand(&superStructure, &storage).ToPtr());
 
 }
 
