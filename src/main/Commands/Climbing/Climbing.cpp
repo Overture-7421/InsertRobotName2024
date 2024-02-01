@@ -106,9 +106,6 @@ frc2::CommandPtr AutoClimb(Chassis* chassis, SuperStructure* superStructure, Sup
 };
 
 frc2::CommandPtr ManualClimb(Chassis* chassis, SuperStructure* superStructure, SupportArms* supportArms, AprilTagCamera* aprilTagCamera, frc::XboxController* controller) {
-	chassis->resetOdometry(frc::Pose2d(0_m, 0_m, 0_deg));
-	aprilTagCamera->setPoseEstimator(false);
-
 	std::shared_ptr<pathplanner::PathPlannerPath> pathToFollow = pathplanner::PathPlannerPath::fromPathFile("OnTheFly");
 	auto lastPoint = pathToFollow->getAllPathPoints().at(pathToFollow->getAllPathPoints().size() - 1);
 
@@ -118,7 +115,9 @@ frc2::CommandPtr ManualClimb(Chassis* chassis, SuperStructure* superStructure, S
 	std::function<units::meter_t()> distanceFunction = [=]() {return getDistanceToChassis(chassis, targetPos);};
 
 	return frc2::cmd::Sequence(
-		GoToClimbingLocationPathFind(pathToFollow),
+		frc2::cmd::RunOnce([=]() {aprilTagCamera->setPoseEstimator(false);}),
+		frc2::cmd::RunOnce([=]() {chassis->resetOdometry(frc::Pose2d(0_m, 8_m, 0_deg));}),
+		GoToClimbingLocationOnTheFly(pathToFollow),
 		SetUpJoints(chassis, superStructure, supportArms, pathToFollow, distanceFunction),
 		WaitForButton(controller, frc::XboxController::Button::kA),
 		ClimbAtLocation(superStructure, controller)
