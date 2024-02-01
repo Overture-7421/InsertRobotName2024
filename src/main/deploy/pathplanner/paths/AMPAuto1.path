@@ -1,0 +1,117 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.4920228910398299,
+        "y": 6.395323513303277
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.526526067747076,
+        "y": 5.790985977433264
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.557560337404902,
+        "y": 7.375743504277187
+      },
+      "prevControl": {
+        "x": 7.576789914554532,
+        "y": 7.064272428396047
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.25,
+      "rotationDegrees": 0.0,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.95,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "ShootingPose"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "ShootShooter"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "IntakePose"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "StartIntake"
+              }
+            },
+            {
+              "type": "wait",
+              "data": {
+                "waitTime": 1.0
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "StopIntake"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "AMPAuto",
+  "previewStartingState": {
+    "rotation": 27.691723955002303,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}

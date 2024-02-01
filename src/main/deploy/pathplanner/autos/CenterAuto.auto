@@ -1,0 +1,37 @@
+{
+  "version": 1.0,
+  "startingPose": null,
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CenterAuto1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CenterAuto2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CenterAuto3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CenterAuto4"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "CenterAuto",
+  "choreoAuto": false
+}

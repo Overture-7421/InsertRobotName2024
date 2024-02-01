@@ -1,0 +1,73 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.56,
+        "y": 7.38
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.911110027577199,
+        "y": 6.919666008230826
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.011983074003351,
+        "y": 6.3249913348785025
+      },
+      "prevControl": {
+        "x": 6.616128314101867,
+        "y": 6.755733863030226
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.95,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "ShootingPose"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "ShootShooter"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 6.1585229953100935,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "AMPAuto",
+  "previewStartingState": null,
+  "useDefaultConstraints": false
+}

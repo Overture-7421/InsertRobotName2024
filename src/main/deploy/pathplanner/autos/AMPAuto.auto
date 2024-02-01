@@ -1,0 +1,43 @@
+{
+  "version": 1.0,
+  "startingPose": null,
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "AMPAuto1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "AMPAuto2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "AMPAuto3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "AMPAuto4"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "AMPAuto5"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "CenterAuto",
+  "choreoAuto": false
+}
