@@ -1,17 +1,16 @@
 #include "Climbing.h"
 #include <exception>
 
-#include "main/Commands/SuperStructureCommand/SuperStructureCommand.h"
-#include "main/Commands/SupportArmCommand/SupportArmCommand.h"
-#include "main/Commands/SuperStructureMoveByDistance/SuperStructureMoveByDistance.h"
-#include "main/Commands/SupportArmsMoveByDistance/SupportArmsMoveByDistance.h"
-
 pathplanner::PathConstraints constraints = pathplanner::PathConstraints(
 	2.0_mps, 1.0_mps_sq,
 	560_deg_per_s, 720_deg_per_s_sq);
 
 frc2::CommandPtr GoToClimbingLocationPathFind(std::shared_ptr<pathplanner::PathPlannerPath> pathToFollow) {
 	return pathplanner::AutoBuilder::pathfindToPose(flipPoseIfNeeded(pathToFollow->getStartingDifferentialPose()), constraints);
+}
+
+frc2::CommandPtr GoToClimbingLocationOnTheFly(std::shared_ptr<pathplanner::PathPlannerPath> pathToFollow) {
+	return pathplanner::AutoBuilder::followPath(pathToFollow);
 }
 
 frc2::CommandPtr SetUpJoints(Chassis* chassis, SuperStructure* superStructure, SupportArms* supportArms, std::shared_ptr<pathplanner::PathPlannerPath> pathToFollow, std::function<units::meter_t()> distanceFunction) {
@@ -106,9 +105,22 @@ frc2::CommandPtr AutoClimb(Chassis* chassis, SuperStructure* superStructure, Sup
 	);
 };
 
-frc2::CommandPtr ManualClimb(Chassis* chassis, SuperStructure* superStructure, SupportArms* supportArms, frc::XboxController* controller) {
+frc2::CommandPtr ManualClimb(Chassis* chassis, SuperStructure* superStructure, SupportArms* supportArms, AprilTagCamera* aprilTagCamera, frc::XboxController* controller) {
+	chassis->resetOdometry(frc::Pose2d(0_m, 0_m, 0_deg));
+	aprilTagCamera->setPoseEstimator(false);
+
+	std::shared_ptr<pathplanner::PathPlannerPath> pathToFollow = pathplanner::PathPlannerPath::fromPathFile("OnTheFly");
+	auto lastPoint = pathToFollow->getAllPathPoints().at(pathToFollow->getAllPathPoints().size() - 1);
+
+	frc::Pose2d targetPos{ lastPoint.position, pathToFollow->getGoalEndState().getRotation() };
+
+
+	std::function<units::meter_t()> distanceFunction = [=]() {return getDistanceToChassis(chassis, targetPos);};
+
 	return frc2::cmd::Sequence(
-		// SuperStructureCommand(superStructure, { -30, 0 }).ToPtr(),
-		// SupportArmCommand(supportArms, { 120 }).ToPtr()
+		GoToClimbingLocationPathFind(pathToFollow),
+		SetUpJoints(chassis, superStructure, supportArms, pathToFollow, distanceFunction),
+		WaitForButton(controller, frc::XboxController::Button::kA),
+		ClimbAtLocation(superStructure, controller)
 	);
 }

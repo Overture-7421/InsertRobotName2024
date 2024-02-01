@@ -38,6 +38,8 @@ void RobotContainer::ConfigureBindings() {
 	SourceGrab.WhileTrue(SourceGrabCommand(&superStructure, &shooter).ToPtr());
 	SourceGrab.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
+	manualClimb.WhileTrue(ManualClimb(&chassis, &superStructure, &supportArms, &aprilTagCamera, &opertr));
+
 }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {

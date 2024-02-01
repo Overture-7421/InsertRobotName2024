@@ -67,6 +67,7 @@ private:
 
 	frc2::Trigger GroundGrab{ [this] {return opertr.GetLeftTriggerAxis() > 0.3;} };
 	frc2::Trigger SourceGrab{ [this] {return opertr.GetLeftBumper();} };
+	frc2::Trigger manualClimb{ [this] {return opertr.GetRightBumper();} };
 
 
 	//Auto Chooser
