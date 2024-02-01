@@ -66,8 +66,8 @@ private:
 	// Mechanism Commands
 
 	frc2::Trigger GroundGrab{ [this] {return opertr.GetLeftTriggerAxis() > 0.3;} };
-	frc2::Trigger SourceGrab{ [this] {return opertr.GetLeftBumper();} };
-
+	frc2::Trigger SourceGrab{ [this] {return opertr.GetRightTriggerAxis() > 0.3;} };
+	frc2::Trigger AmpShoot{ [this] {return opertr.GetLeftBumper();} };
 
 	//Auto Chooser
 	frc::SendableChooser<std::string> autoChooser;
