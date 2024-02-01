@@ -26,6 +26,7 @@
 #include "Commands/SourceGrabCommand/SourceGrabCommand.h"
 #include "Commands/AmpCommand/AmpCommand.h"
 #include "Commands/ClosedCommand/ClosedCommand.h"
+#include "Commands/SpeakerCommand/SpeakerCommand.h"
 
 #include "Commands/Climbing/Climbing.h"
 #include "Commands/TrapShoot/TrapShoot.h"
@@ -68,6 +69,7 @@ private:
 	frc2::Trigger GroundGrab{ [this] {return opertr.GetLeftTriggerAxis() > 0.3;} };
 	frc2::Trigger SourceGrab{ [this] {return opertr.GetRightTriggerAxis() > 0.3;} };
 	frc2::Trigger AmpShoot{ [this] {return opertr.GetLeftBumper();} };
+	frc2::Trigger SpeakerShoot { [this] {return opertr.GetRightBumper();} };
 
 	//Auto Chooser
 	frc::SendableChooser<std::string> autoChooser;
