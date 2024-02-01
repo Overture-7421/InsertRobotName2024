@@ -22,10 +22,7 @@ class LedsManager : public frc2::SubsystemBase {
 
   LedsManager(int pwmPort, int ledLength, const std::map<LedStripName, LedStripRange>& ledStripMap);
 
-  void setLedStrip(LedStripName name, const LedStrip& stripData);
-  void setLedStripAll(const LedStrip& stripData);
-  const frc::AddressableLED& getLedStripAll();
-  const LedStrip& getLedStripState(LedStripName name);
+  std::span<frc::AddressableLED::LEDData> getLedStrip(LedStripName name);
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
@@ -35,5 +32,6 @@ class LedsManager : public frc2::SubsystemBase {
  private:
   frc::AddressableLED ledStrip;
   LedStrip ledBuffer;
+  std::span<frc::AddressableLED::LEDData> ledBufferSpan;
   std::map<LedStripName, LedStripRange> ledStripMap;
 };
