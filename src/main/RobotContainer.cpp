@@ -47,6 +47,12 @@ void RobotContainer::ConfigureBindings() {
 	SourceGrab.WhileTrue(SourceGrabCommand(&superStructure, &shooter).ToPtr());
 	SourceGrab.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
+	AmpShoot.WhileTrue(AmpCommand(&superStructure, &shooter, &storage).ToPtr());
+	AmpShoot.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+
+	SpeakerShoot.WhileTrue(SpeakerCommand(&superStructure, &shooter, &storage).ToPtr());
+	SpeakerShoot.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+
 }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
