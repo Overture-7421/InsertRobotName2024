@@ -32,8 +32,8 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "New Event Marker",
-      "waypointRelativePos": 0.0,
+      "name": "GroundGrabCommand",
+      "waypointRelativePos": 0.95,
       "command": {
         "type": "sequential",
         "data": {
@@ -41,48 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "ShootingPose"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "ShootShooter"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "New Event Marker",
-      "waypointRelativePos": 0.95,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "IntakePose"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "StartIntake"
-              }
-            },
-            {
-              "type": "wait",
-              "data": {
-                "waitTime": 1.0
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "StopIntake"
+                "name": "GroundGrabCommand"
               }
             }
           ]

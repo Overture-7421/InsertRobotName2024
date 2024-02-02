@@ -32,7 +32,7 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "New Event Marker",
+      "name": "GroundGrabCommand",
       "waypointRelativePos": 0.95,
       "command": {
         "type": "sequential",
@@ -42,18 +42,6 @@
               "type": "named",
               "data": {
                 "name": "GroundGrabCommand"
-              }
-            },
-            {
-              "type": "wait",
-              "data": {
-                "waitTime": 1.0
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "ClosedCommand"
               }
             }
           ]
@@ -73,7 +61,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "AMPAuto",
   "previewStartingState": {
     "rotation": 6.16,
     "velocity": 0

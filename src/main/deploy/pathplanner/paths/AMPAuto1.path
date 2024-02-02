@@ -39,21 +39,21 @@
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.95,
+      "waypointRelativePos": 0.0,
       "command": {
         "type": "sequential",
         "data": {
           "commands": [
             {
-              "type": "wait",
+              "type": "named",
               "data": {
-                "waitTime": 1.0
+                "name": "ShootingPose"
               }
             },
             {
               "type": "named",
               "data": {
-                "name": "ClosedCommand"
+                "name": "ShootShooter"
               }
             }
           ]
@@ -61,8 +61,8 @@
       }
     },
     {
-      "name": "New Event Marker",
-      "waypointRelativePos": 0,
+      "name": "GroundGrabCommand",
+      "waypointRelativePos": 0.95,
       "command": {
         "type": "sequential",
         "data": {
@@ -71,12 +71,6 @@
               "type": "named",
               "data": {
                 "name": "GroundGrabCommand"
-              }
-            },
-            {
-              "type": "wait",
-              "data": {
-                "waitTime": 1.5
               }
             }
           ]
@@ -96,7 +90,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "AMPAuto",
   "previewStartingState": {
     "rotation": 28.22193948238503,
     "velocity": 0

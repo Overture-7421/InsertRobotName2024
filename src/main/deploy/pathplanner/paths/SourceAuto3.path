@@ -32,8 +32,8 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Intake",
-      "waypointRelativePos": 0.75,
+      "name": "GroundGrabCommand",
+      "waypointRelativePos": 0.95,
       "command": {
         "type": "sequential",
         "data": {
@@ -41,25 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "IntakePose"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "StartIntake"
-              }
-            },
-            {
-              "type": "wait",
-              "data": {
-                "waitTime": 1.0
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "StopIntake"
+                "name": "GroundGrabCommand"
               }
             }
           ]
