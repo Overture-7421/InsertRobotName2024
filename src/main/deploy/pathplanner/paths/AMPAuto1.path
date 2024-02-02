@@ -74,12 +74,6 @@
               }
             },
             {
-              "type": "named",
-              "data": {
-                "name": "StartIntake"
-              }
-            },
-            {
               "type": "wait",
               "data": {
                 "waitTime": 1.0
@@ -108,7 +102,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "AMPAuto",
+  "folder": null,
   "previewStartingState": {
     "rotation": 28.22193948238503,
     "velocity": 0
