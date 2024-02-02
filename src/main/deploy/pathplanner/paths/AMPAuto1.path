@@ -45,15 +45,15 @@
         "data": {
           "commands": [
             {
-              "type": "named",
+              "type": "wait",
               "data": {
-                "name": "ShootingPose"
+                "waitTime": 1.0
               }
             },
             {
               "type": "named",
               "data": {
-                "name": "ShootShooter"
+                "name": "ClosedCommand"
               }
             }
           ]
@@ -70,19 +70,13 @@
             {
               "type": "named",
               "data": {
-                "name": "IntakePose"
+                "name": "GroundGrabCommand"
               }
             },
             {
               "type": "wait",
               "data": {
-                "waitTime": 1.0
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "StopIntake"
+                "waitTime": 1.5
               }
             }
           ]

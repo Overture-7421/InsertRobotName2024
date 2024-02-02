@@ -41,13 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "IntakePose"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "StartIntake"
+                "name": "GroundGrabCommand"
               }
             },
             {
@@ -59,7 +53,7 @@
             {
               "type": "named",
               "data": {
-                "name": "StopIntake"
+                "name": "ClosedCommand"
               }
             }
           ]
@@ -79,7 +73,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "AMPAuto",
+  "folder": null,
   "previewStartingState": {
     "rotation": 6.16,
     "velocity": 0

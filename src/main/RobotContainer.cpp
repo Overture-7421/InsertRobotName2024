@@ -25,8 +25,8 @@ RobotContainer::RobotContainer() {
 
 	pathplanner::NamedCommands::registerCommand("GroundGrabCommand", GroundGrabCommand(&superStructure, &storage, &intake).ToPtr());
 	pathplanner::NamedCommands::registerCommand("ClosedCommand", ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
-	pathplanner::NamedCommands::registerCommand("SpeakerCommand", SpeakerCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
-	pathplanner::NamedCommands::registerCommand("AmpCommand", ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+	pathplanner::NamedCommands::registerCommand("SpeakerCommand", SpeakerCommand(&superStructure, &shooter, &storage).ToPtr());
+	pathplanner::NamedCommands::registerCommand("AmpCommand", AmpCommand(&superStructure, &shooter, &storage).ToPtr());
 	pathplanner::NamedCommands::registerCommand("StorageCommand", StorageCommand(&storage, 3_V).ToPtr());
 
 	frc::SmartDashboard::PutData("Auto Chooser", &autoChooser);
