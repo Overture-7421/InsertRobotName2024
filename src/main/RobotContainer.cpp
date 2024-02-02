@@ -18,7 +18,10 @@ RobotContainer::RobotContainer() {
 	}
 
 	autoChooser.SetDefaultOption("None, null, nada", "None");
-	autoChooser.AddOption("MiddleNote", "MiddleNote");
+	autoChooser.AddOption("CenterAuto", "CenterAuto");
+	autoChooser.AddOption("AMPAuto", "AMPAuto");
+	autoChooser.AddOption("SourceAuto", "SourceAuto");
+	autoChooser.AddOption("CenterAutoDirect", "CenterAutoDirect");
 
 	frc::SmartDashboard::PutData("Auto Chooser", &autoChooser);
 	ConfigureBindings();
