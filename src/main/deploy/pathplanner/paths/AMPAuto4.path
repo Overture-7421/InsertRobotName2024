@@ -41,13 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "ShootingPose"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "ShootShooter"
+                "name": "SpeakerCommand"
               }
             }
           ]
@@ -67,7 +61,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "AMPAuto",
+  "folder": null,
   "previewStartingState": null,
   "useDefaultConstraints": false
 }

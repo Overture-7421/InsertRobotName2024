@@ -23,6 +23,12 @@ RobotContainer::RobotContainer() {
 	autoChooser.AddOption("SourceAuto", "SourceAuto");
 	autoChooser.AddOption("CenterAutoDirect", "CenterAutoDirect");
 
+	pathplanner::NamedCommands::registerCommand("GroundGrabCommand", GroundGrabCommand(&superStructure, &storage, &intake).ToPtr());
+	pathplanner::NamedCommands::registerCommand("ClosedCommand", ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+	pathplanner::NamedCommands::registerCommand("SpeakerCommand", SpeakerCommand(&superStructure, &shooter, &storage).ToPtr());
+	pathplanner::NamedCommands::registerCommand("AmpCommand", AmpCommand(&superStructure, &shooter, &storage).ToPtr());
+	pathplanner::NamedCommands::registerCommand("StorageCommand", StorageCommand(&storage, 3_V).ToPtr());
+
 	frc::SmartDashboard::PutData("Auto Chooser", &autoChooser);
 	ConfigureBindings();
 }
@@ -40,6 +46,12 @@ void RobotContainer::ConfigureBindings() {
 
 	SourceGrab.WhileTrue(SourceGrabCommand(&superStructure, &shooter).ToPtr());
 	SourceGrab.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+
+	AmpShoot.WhileTrue(AmpCommand(&superStructure, &shooter, &storage).ToPtr());
+	AmpShoot.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+
+	SpeakerShoot.WhileTrue(SpeakerCommand(&superStructure, &shooter, &storage).ToPtr());
+	SpeakerShoot.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
 }
 

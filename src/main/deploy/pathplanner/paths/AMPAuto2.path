@@ -41,13 +41,13 @@
             {
               "type": "named",
               "data": {
-                "name": "ShootingPose"
+                "name": "SpeakerCommand"
               }
             },
             {
               "type": "named",
               "data": {
-                "name": "ShootShooter"
+                "name": "GroundGrabCommand"
               }
             }
           ]
@@ -67,7 +67,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "AMPAuto",
+  "folder": null,
   "previewStartingState": null,
   "useDefaultConstraints": false
 }
