@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.38,
-        "y": 6.65
+        "x": 5.7875591928074,
+        "y": 1.6512279529551925
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.40661573994279,
-        "y": 6.645574764028993
+        "x": 6.630739424103669,
+        "y": 2.049396395511764
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "source4to5"
     },
     {
       "anchor": {
-        "x": 7.4973413284915,
-        "y": 7.4598028796628215
+        "x": 7.520763001583063,
+        "y": 4.087081954477746
       },
       "prevControl": {
-        "x": 6.556774636160199,
-        "y": 7.336108624647824
+        "x": 6.689293606832576,
+        "y": 2.740335751712873
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,8 +32,8 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "New Event Marker",
-      "waypointRelativePos": 0.1,
+      "name": "Intake",
+      "waypointRelativePos": 0.95,
       "command": {
         "type": "sequential",
         "data": {
@@ -41,13 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "ShootingPose"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "ShootShooter"
+                "name": "IntakePose"
               }
             }
           ]
@@ -67,7 +61,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "CenterAuto",
+  "folder": "SourceAuto",
   "previewStartingState": null,
   "useDefaultConstraints": false
 }

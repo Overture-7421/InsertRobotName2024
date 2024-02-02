@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 2.38,
-        "y": 7.0005744540878965
+        "y": 6.651755158003897
       },
       "prevControl": {
         "x": 1.864199525733551,
-        "y": 7.0468741536348585
+        "y": 6.698054857550859
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,7 +32,7 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "New Event Marker",
+      "name": "Shoot",
       "waypointRelativePos": 0.3,
       "command": {
         "type": "sequential",
@@ -55,7 +55,7 @@
       }
     },
     {
-      "name": "New Event Marker",
+      "name": "Intake",
       "waypointRelativePos": 0.95,
       "command": {
         "type": "sequential",
@@ -98,7 +98,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 40.0,
     "rotateFast": false
   },
   "reversed": false,

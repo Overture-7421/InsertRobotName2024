@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.4920228910398299,
-      "y": 6.395323513303277
+      "x": 1.18,
+      "y": 3.2087692135441324
     },
-    "rotation": 27.0
+    "rotation": -63.502733302431885
   },
   "command": {
     "type": "sequential",
@@ -14,36 +14,36 @@
         {
           "type": "path",
           "data": {
-            "pathName": "AMPAuto1"
+            "pathName": "SourceAuto1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "AMPAuto2"
+            "pathName": "SourceAuto2"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "AMPAuto3"
+            "pathName": "SourceAuto3"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "AMPAuto4"
+            "pathName": "SourceAuto4"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "AMPAuto5"
+            "pathName": "SourceAuto5"
           }
         }
       ]
     }
   },
-  "folder": "AMPAuto",
+  "folder": "SourceAuto",
   "choreoAuto": false
 }
