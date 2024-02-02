@@ -1,0 +1,88 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.458837956180377,
+        "y": 3.1036525707724034
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.6923950849389797,
+        "y": 3.1536013974185684
+      },
+      "isLocked": false,
+      "linkedName": "CenterAutoDirect2to3"
+    },
+    {
+      "anchor": {
+        "x": 2.2638981178259976,
+        "y": 4.088495364490729
+      },
+      "prevControl": {
+        "x": 1.6703291451597786,
+        "y": 4.030325893613097
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "CenterAutoDirect3to4"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "Intake",
+      "waypointRelativePos": 0.95,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "IntakePose"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "StartIntake"
+              }
+            },
+            {
+              "type": "wait",
+              "data": {
+                "waitTime": 1.0
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "StopIntake"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "CenterAutoDirect",
+  "previewStartingState": {
+    "rotation": -45.110000000000014,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}
