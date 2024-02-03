@@ -57,9 +57,9 @@ frc2::CommandPtr ClimbAtLocation(SuperStructure* superStructure, frc::XboxContro
 }
 
 frc2::CommandPtr AutoClimb(Chassis* chassis, SuperStructure* superStructure, SupportArms* supportArms, frc::XboxController* controller) {
-	static std::shared_ptr<pathplanner::PathPlannerPath> climbPathLeft = pathplanner::PathPlannerPath::fromPathFile("AMP Climb Left");
-	static std::shared_ptr<pathplanner::PathPlannerPath> climbPathRight = pathplanner::PathPlannerPath::fromPathFile("AMP Climb Right");
-	static std::shared_ptr<pathplanner::PathPlannerPath> climbPathBack = pathplanner::PathPlannerPath::fromPathFile("AMP Climb Back");
+	static std::shared_ptr<pathplanner::PathPlannerPath> climbPathLeft = pathplanner::PathPlannerPath::fromPathFile("Climb Left");
+	static std::shared_ptr<pathplanner::PathPlannerPath> climbPathRight = pathplanner::PathPlannerPath::fromPathFile("Climb Right");
+	static std::shared_ptr<pathplanner::PathPlannerPath> climbPathBack = pathplanner::PathPlannerPath::fromPathFile("Climb Back");
 
 	return frc2::cmd::Select<StageLocation>([chassis]() {return findClosestStageLocation(chassis);},
 		std::pair{ StageLocation::Left, frc2::cmd::Sequence(
@@ -84,7 +84,7 @@ frc2::CommandPtr AutoClimb(Chassis* chassis, SuperStructure* superStructure, Sup
 };
 
 frc2::CommandPtr ManualClimb(Chassis* chassis, SuperStructure* superStructure, SupportArms* supportArms, AprilTagCamera* aprilTagCamera, frc::XboxController* controller) {
-	static std::shared_ptr<pathplanner::PathPlannerPath> climbPathManual = pathplanner::PathPlannerPath::fromPathFile("OnTheFly");
+	static std::shared_ptr<pathplanner::PathPlannerPath> climbPathManual = pathplanner::PathPlannerPath::fromPathFile("Climb Manual");
 	climbPathManual->preventFlipping = true;
 
 	return frc2::cmd::Sequence(
