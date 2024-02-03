@@ -32,31 +32,8 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Shoot",
-      "waypointRelativePos": 0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "ShootingPose"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "ShootShooter"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "GroundGrabCommand",
-      "waypointRelativePos": 0.95,
+      "name": "t",
+      "waypointRelativePos": 0.35,
       "command": {
         "type": "sequential",
         "data": {

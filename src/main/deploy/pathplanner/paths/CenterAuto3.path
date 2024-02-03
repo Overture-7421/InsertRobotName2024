@@ -41,13 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "ShootingPose"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "ShootShooter"
+                "name": "SpeakerCommand"
               }
             }
           ]

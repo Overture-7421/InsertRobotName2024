@@ -23,15 +23,16 @@ RobotContainer::RobotContainer() {
 	autoChooser.AddOption("SourceAuto", "SourceAuto");
 	autoChooser.AddOption("CenterAutoDirect", "CenterAutoDirect");
 
-	pathplanner::NamedCommands::registerCommand("GroundGrabCommand", GroundGrabCommand(&superStructure, &storage, &intake).ToPtr());
-	pathplanner::NamedCommands::registerCommand("ClosedCommand", ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
-	pathplanner::NamedCommands::registerCommand("SpeakerCommand", SpeakerCommand(&superStructure, &shooter, &storage).ToPtr());
-	pathplanner::NamedCommands::registerCommand("AmpCommand", AmpCommand(&superStructure, &shooter, &storage).ToPtr());
-	pathplanner::NamedCommands::registerCommand("StorageCommand", StorageCommand(&storage, 3_V).ToPtr());
+	pathplanner::NamedCommands::registerCommand("GroundGrabCommand", std::move(GroundGrabCommand(&superStructure, &storage, &intake).ToPtr()));
+	pathplanner::NamedCommands::registerCommand("ClosedCommand", std::move(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr()));
+	pathplanner::NamedCommands::registerCommand("SpeakerCommand", std::move(SpeakerCommand(&superStructure, &shooter, &storage).ToPtr()));
+	pathplanner::NamedCommands::registerCommand("AmpCommand", std::move(AmpCommand(&superStructure, &shooter, &storage).ToPtr()));
+	pathplanner::NamedCommands::registerCommand("StorageCommand", std::move(StorageCommand(&storage, 3_V).ToPtr()));
+	pathplanner::NamedCommands::registerCommand("ShooterCommand", std::move(ShooterCommand(&shooter, 4.00).ToPtr()));
 
 	frc::SmartDashboard::PutData("Auto Chooser", &autoChooser);
 	ConfigureBindings();
-}
+}	
 
 void RobotContainer::ConfigureBindings() {
 	chassis.SetDefaultCommand(Drive(&chassis, &driver));
