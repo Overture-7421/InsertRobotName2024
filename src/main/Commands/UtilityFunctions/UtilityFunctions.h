@@ -25,7 +25,7 @@ static frc::Pose2d flipPoseIfNeeded(frc::Pose2d pose) {
 }
 
 static units::length::meter_t getDistanceToChassis(Chassis* chassis, frc::Pose2d targetPose) {
-	return chassis->getOdometry().Translation().Distance(flipPoseIfNeeded(targetPose).Translation());
+	return chassis->getOdometry().Translation().Distance(targetPose.Translation());
 }
 
 static StageLocation findClosestStageLocation(Chassis* chassis) {
@@ -34,9 +34,10 @@ static StageLocation findClosestStageLocation(Chassis* chassis) {
 
 
 	for (auto location : stageLocations) {
-		distancesToStageLocations.push_back(std::pair{ location.first, getDistanceToChassis(chassis, location.second) });
+		distancesToStageLocations.push_back(std::pair{ location.first, getDistanceToChassis(chassis, flipPoseIfNeeded(location.second)) });
 	}
 
 	std::sort(distancesToStageLocations.begin(), distancesToStageLocations.end(), [](auto a, auto b) { return a.second < b.second;});
+
 	return distancesToStageLocations.front().first;
 }
