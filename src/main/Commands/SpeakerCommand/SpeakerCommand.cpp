@@ -11,10 +11,8 @@ SpeakerCommand::SpeakerCommand(SuperStructure* superStructure, Shooter* shooter,
   
   AddCommands(
     frc2::ParallelCommandGroup(
-      SuperStructureCommand(superStructure, {50.0, 30.0}),
+      SuperStructureCommand(superStructure, {-35.0, -20.0}),
       ShooterCommand(shooter, 6.00)
-    ),
-
-  StorageCommand(storage, 3_V)
+    )
   );
 }
