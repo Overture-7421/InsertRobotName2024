@@ -12,7 +12,7 @@ SupportArms::SupportArms() {
 	m_lowerRight.setSensorToMechanism(LOWER_GEAR_BOX_REDUCTION);
 
 	// COnfigure Motion Magic and PID
-	m_lowerRight.setPIDValues(75.0, 0.0, 0.0, 0.0, 0.0);
+	m_lowerRight.setPIDValues(25.0, 0.0, 0.0, 0.0, 0.0);
 	m_lowerRight.configureMotionMagic(5.0, 1.0, 0.0);
 
 	std::this_thread::sleep_for(std::chrono::seconds(2));
