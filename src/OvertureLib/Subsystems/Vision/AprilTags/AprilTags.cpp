@@ -9,7 +9,7 @@ void AprilTags::setCameraAndLayout(photon::PhotonCamera* camera, frc::AprilTagFi
 	this->m_Camera = camera;
 	this->m_TagLayout = tagLayout;
 	this->m_CameraToRobot = cameraToRobot;
-
+	
 	m_TagLayout->SetOrigin(frc::AprilTagFieldLayout::OriginPosition::kBlueAllianceWallRightSide);
 
 	poseEstimatorSet = true;

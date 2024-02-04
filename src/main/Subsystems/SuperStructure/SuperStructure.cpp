@@ -21,8 +21,8 @@ SuperStructure::SuperStructure() {
 	m_upperMotor.setSensorToMechanism(UPPER_GEAR_BOX_REDUCTION);
 
 	// COnfigure Motion Magic and PID
-	m_lowerRight.setPIDValues(240.0, 0.0, 0.0, 0.0, 0.0);
-	m_lowerRight.configureMotionMagic(5.0, 0.75, 0.0);
+	m_lowerRight.setPIDValues(200.0, 0.0, 0.0, 0.0, 0.0);
+	m_lowerRight.configureMotionMagic(5.0, 0.85, 0.0);
 
 	m_upperMotor.setPIDValues(65.0, 0.0, 0.0, 0.0, 0.0);
 	m_upperMotor.configureMotionMagic(4.0, 3.0, 0.0);
