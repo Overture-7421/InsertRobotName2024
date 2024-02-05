@@ -13,13 +13,13 @@
 frc2::CommandPtr VisionSourceGrabCommand(SuperStructure* superStucture, Shooter* shooter) {
 
 	pathplanner::PathConstraints constraints = pathplanner::PathConstraints(
-		2.0_mps, 1.0_mps_sq,
+		3.0_mps, 3.0_mps_sq,
 		560_deg_per_s, 720_deg_per_s_sq);
 
 	return frc2::cmd::Sequence(
 		frc2::cmd::Parallel(
 			pathplanner::AutoBuilder::pathfindToPose(flipPoseIfNeeded({ 15.68_m, 0.60_m, {120_deg} }), constraints),
-			SuperStructureCommand(superStucture, { 60.0, -50.0 }).ToPtr()
+			SuperStructureCommand(superStucture, { 70.0, -50.0 }).ToPtr()
 		),
 		SourceGrabCommand(superStucture, shooter).ToPtr()
 	);
