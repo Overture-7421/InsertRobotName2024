@@ -9,8 +9,12 @@
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 SourceGrabCommand::SourceGrabCommand(SuperStructure* superStructure, Shooter* shooter) {
 
-  AddCommands(
-    SuperStructureCommand(superStructure, {60.0, -50.0}),
-    ShooterCommand(shooter, -4.00)
-  );
+	AddCommands(
+		SuperStructureCommand(superStructure, { 70.0, -50.0 }),
+		ShooterCommand(shooter, -4.00)
+	);
 }
+
+
+
+
