@@ -2,13 +2,13 @@
 #include <exception>
 
 pathplanner::PathConstraints pathfindingConstraints = pathplanner::PathConstraints(
-	1.5_mps, 3.0_mps_sq,
+	2.0_mps, 3.0_mps_sq,
 	560_deg_per_s, 720_deg_per_s_sq);
 
 
 SuperStructureState superStructureStartingState{ -14, -60 };
 SuperStructureState superStructureTargetState{ 85, -90 };
-SuperStructureMoveByDistance::Profile superStructureProfile {superStructureStartingState, superStructureTargetState, 1.5_m};
+SuperStructureMoveByDistance::Profile superStructureProfile {superStructureStartingState, superStructureTargetState, 1.75_m};
 
 SupportArmsState supportArmsStartingState{ 0 };
 SupportArmsState supportArmsTargetState{ 110 };
