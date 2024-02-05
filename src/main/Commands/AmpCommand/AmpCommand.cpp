@@ -7,7 +7,7 @@ AmpCommand::AmpCommand(SuperStructure* superStucture, Shooter* shooter, Storage*
 
 	AddCommands(
 		frc2::ParallelCommandGroup(
-			SuperStructureCommand(superStucture, { 60.0, -10.0 }),
+			SuperStructureCommand(superStucture, { 60.0, -20.0 }),
 			ShooterCommand(shooter, 6.00)
 		)
 	);
