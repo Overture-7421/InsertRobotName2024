@@ -5,13 +5,10 @@
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 AmpCommand::AmpCommand(SuperStructure* superStucture, Shooter* shooter, Storage* storage) {
 
-  AddCommands(
-    frc2::ParallelCommandGroup(
-      frc2::SequentialCommandGroup(
-      SuperStructureCommand(superStucture, {-20.0, -0.0}), 
-      SuperStructureCommand(superStucture, {-5.0, -100.0})
-      ),
-      ShooterCommand(shooter, 6.00)
-    )
-  );
+	AddCommands(
+		frc2::ParallelCommandGroup(
+			SuperStructureCommand(superStucture, { 70.0, -0.0 }),
+			ShooterCommand(shooter, 6.00)
+		)
+	);
 }
