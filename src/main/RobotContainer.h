@@ -28,6 +28,7 @@
 #include "Commands/ClosedCommand/ClosedCommand.h"
 #include "Commands/SpeakerCommand/SpeakerCommand.h"
 #include "Commands/VisionAmpCommand/VisionAmpCommand.h"
+#include "Commands/VisionSourceGrabCommand/VisionSourceGrabCommand.h"
 
 #include "Commands/Climbing/Climbing.h"
 #include "Commands/TrapShoot/TrapShoot.h"
@@ -67,12 +68,13 @@ private:
 
 	// Mechanism Commands
 
-	frc2::Trigger GroundGrab{ [this] {return opertr.GetLeftTriggerAxis() > 0.3;} };
-	frc2::Trigger SourceGrab{ [this] {return opertr.GetRightTriggerAxis() > 0.3;} };
-	frc2::Trigger AmpShoot{ [this] {return opertr.GetLeftBumper();} };
-	frc2::Trigger SpeakerShoot{ [this] {return opertr.GetRightBumper();} };
-	frc2::Trigger StorageIn{ [this] {return opertr.GetYButton();} };
-	frc2::Trigger AmpButton{ [this] {return opertr.GetBackButton();} };
+	frc2::Trigger groundGrab{ [this] {return opertr.GetLeftTriggerAxis() > 0.3;} };
+	frc2::Trigger sourceGrab{ [this] {return opertr.GetRightTriggerAxis() > 0.3;} };
+	frc2::Trigger ampShoot{ [this] {return opertr.GetLeftBumper();} };
+	frc2::Trigger speakerShoot{ [this] {return opertr.GetRightBumper();} };
+	frc2::Trigger storageIn{ [this] {return opertr.GetYButton();} };
+	frc2::Trigger ampButton{ [this] {return opertr.GetBackButton();} };
+	frc2::Trigger sourceButton{ [this] {return opertr.GetXButton();} };
 	frc2::Trigger manualClimb{ [this] {return opertr.GetBButton();} };
 
 
