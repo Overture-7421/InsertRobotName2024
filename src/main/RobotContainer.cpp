@@ -29,7 +29,7 @@ void RobotContainer::ConfigureBindings() {
 
 	// Configure the button bindings
 	resetAngleButton.WhileTrue(ResetAngle(&chassis).ToPtr());
-	climbButton.WhileTrue(Climb(&chassis, &superStructure, &supportArms, &driver));
+	climbButton.WhileTrue(AutoClimb(&chassis, &superStructure, &supportArms, &driver));
 	shootTrap.WhileTrue(TrapShoot(&chassis, &superStructure, &supportArms, &shooter, &storage));
 
 	GroundGrab.WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake).ToPtr());
@@ -39,8 +39,8 @@ void RobotContainer::ConfigureBindings() {
 	SourceGrab.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
 	AmpShoot.WhileTrue(AmpCommand(&superStructure, &shooter, &storage).ToPtr());
-	AmpShoot.OnFalse(frc2::SequentialCommandGroup(SuperStructureCommand(&superStructure, {-5.0, -0.0}), 
-													  ClosedCommand(&superStructure, &intake, &storage, &shooter)).ToPtr());
+	AmpShoot.OnFalse(frc2::SequentialCommandGroup(SuperStructureCommand(&superStructure, { -5.0, -0.0 }),
+		ClosedCommand(&superStructure, &intake, &storage, &shooter)).ToPtr());
 
 	SpeakerShoot.WhileTrue(SpeakerCommand(&superStructure, &shooter, &storage).ToPtr());
 	SpeakerShoot.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
@@ -51,6 +51,8 @@ void RobotContainer::ConfigureBindings() {
 	AmpButton.WhileTrue(VisionAmpCommand(&superStructure, &shooter, &storage));
 	AmpButton.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
+
+	manualClimb.WhileTrue(ManualClimb(&chassis, &superStructure, &supportArms, &aprilTagCamera, &opertr));
 
 }
 

@@ -70,9 +70,10 @@ private:
 	frc2::Trigger GroundGrab{ [this] {return opertr.GetLeftTriggerAxis() > 0.3;} };
 	frc2::Trigger SourceGrab{ [this] {return opertr.GetRightTriggerAxis() > 0.3;} };
 	frc2::Trigger AmpShoot{ [this] {return opertr.GetLeftBumper();} };
-	frc2::Trigger SpeakerShoot { [this] {return opertr.GetRightBumper();} };
+	frc2::Trigger SpeakerShoot{ [this] {return opertr.GetRightBumper();} };
 	frc2::Trigger StorageIn{ [this] {return opertr.GetYButton();} };
-	frc2::Trigger AmpButton { [this] {return opertr.GetBackButton();} };
+	frc2::Trigger AmpButton{ [this] {return opertr.GetBackButton();} };
+	frc2::Trigger manualClimb{ [this] {return opertr.GetBButton();} };
 
 
 	//Auto Chooser
