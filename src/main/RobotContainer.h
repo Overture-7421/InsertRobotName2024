@@ -63,9 +63,6 @@ private:
 	frc2::Trigger shootTrap{ [this] {return driver.GetLeftBumper();} };
 
 
-	frc2::Trigger superStructureTest{ [this] {return driver.GetAButton();} };
-
-
 	// Mechanism Commands
 
 	frc2::Trigger groundGrab{ [this] {return opertr.GetLeftTriggerAxis() > 0.3;} };
