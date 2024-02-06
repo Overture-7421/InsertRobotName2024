@@ -24,9 +24,3 @@ Chassis::Chassis() {
 #endif
 
 }
-
-//This method will be called once per schedule run
-void Chassis::Periodic() {
-	updateOdometry();
-	shuffleboardPeriodic();
-}

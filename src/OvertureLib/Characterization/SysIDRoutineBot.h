@@ -7,19 +7,14 @@
 #include <frc2/command/CommandPtr.h>
 #include <frc2/command/button/CommandXboxController.h>
 
-#include "../Subsystems/Chassis/Chassis.h"
+#include "OvertureLib/Subsystems/Swerve/SwerveCharacterization/SwerveCharacterization.h"
 
 #include "OvertureLib/Commands/Drive/Drive.h"
 
 class SysIDRoutineBot {
- public:
-  SysIDRoutineBot();
+public:
+	SysIDRoutineBot();
 
-  frc2::CommandPtr GetAutonomousCommand();
-
-private:
-  void ConfigureBindings();
-  frc2::CommandXboxController m_driverController{ 0 };
-  Chassis m_drive;
-  
+protected:
+	void ConfigureSysIdBindings(SwerveCharacterization* m_drive, frc2::CommandXboxController* m_driverController);
 };
