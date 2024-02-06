@@ -13,8 +13,8 @@ Shooter::Shooter() {
 	lowerShooterMotor.setSensorToMechanism(UPPER_GEAR_BOX_REDUCTION);
 	lowerShooterMotor.setClosedLoopVoltageRamp(0.5);
 
-	upperShooterMotor.setPIDValues(0.00055, 0.0, 0.0, 0.0, 0.0495);
-	lowerShooterMotor.setPIDValues(0.00055, 0.0, 0.0, 0.0, 0.0495);
+	upperShooterMotor.setPIDValues(0.001, 0.0, 0.0, 0.0, 0.07);
+	lowerShooterMotor.setPIDValues(0.001, 0.0, 0.0, 0.0, 0.07);
 }
 
 void Shooter::setVelocityVoltage(double velocity) {

@@ -10,7 +10,7 @@
 // For more information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 
-frc2::CommandPtr VisionSourceGrabCommand(SuperStructure* superStucture, Shooter* shooter) {
+frc2::CommandPtr VisionSourceGrabCommand(SuperStructure* superStucture, Shooter* shooter, Storage* storage) {
 
 	pathplanner::PathConstraints constraints = pathplanner::PathConstraints(
 		3.0_mps, 3.0_mps_sq,
@@ -21,9 +21,8 @@ frc2::CommandPtr VisionSourceGrabCommand(SuperStructure* superStucture, Shooter*
 			pathplanner::AutoBuilder::pathfindToPose(flipPoseIfNeeded({ 15.68_m, 0.60_m, {120_deg} }), constraints),
 			SuperStructureCommand(superStucture, { 70.0, -50.0 }).ToPtr()
 		),
-		SourceGrabCommand(superStucture, shooter).ToPtr()
+		SourceGrabCommand(superStucture, shooter).ToPtr(),
+		StorageCommand(storage, 3_V).ToPtr()
 	);
 
-
-
-}
+};
