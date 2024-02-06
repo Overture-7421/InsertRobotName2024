@@ -69,7 +69,7 @@ private:
 	// Mechanism Commands
 
 	frc2::Trigger groundGrab{ [this] {return opertr.GetLeftTriggerAxis() > 0.3;} };
-	frc2::Trigger sourceGrab{ [this] {return opertr.GetRightTriggerAxis() > 0.3;} };
+	frc2::Trigger sourceGrab{ [this] {return opertr.GetAButton();} };
 	frc2::Trigger ampShoot{ [this] {return opertr.GetLeftBumper();} };
 	frc2::Trigger speakerShoot{ [this] {return opertr.GetRightBumper();} };
 	frc2::Trigger storageIn{ [this] {return opertr.GetYButton();} };
