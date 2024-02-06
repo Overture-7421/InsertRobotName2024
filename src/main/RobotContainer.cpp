@@ -21,7 +21,9 @@ RobotContainer::RobotContainer() {
 	autoChooser.AddOption("MiddleNote", "MiddleNote");
 
 	frc::SmartDashboard::PutData("Auto Chooser", &autoChooser);
+
 	ConfigureBindings();
+	// ConfigureSysIdBindings(&chassis, &driver);
 }
 
 void RobotContainer::ConfigureBindings() {
