@@ -67,10 +67,6 @@ public:
 	void Periodic() override;
 
 protected:
-	double linearX;
-	double linearY;
-	double angular;
-
 	OverPigeon* pigeon;
 
 	SwerveModule* frontLeftModule;
@@ -99,6 +95,6 @@ private:
 
 	bool headingOverride = false;
 
-	frc::ProfiledPIDController<units::radians> headingController{ 0.5, 0, 0, frc::TrapezoidProfile<units::radians>::Constraints{ 2_rad_per_s, 2_rad_per_s_sq } };
+	frc::ProfiledPIDController<units::radians> headingController{ 6.5, 0, 0.75, frc::TrapezoidProfile<units::radians>::Constraints{ 9_rad_per_s, 12.5_rad_per_s_sq } };
 	frc::Rotation2d headingTarget;
 };
