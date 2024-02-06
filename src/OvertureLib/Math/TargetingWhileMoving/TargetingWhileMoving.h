@@ -4,11 +4,25 @@
 
 #pragma once
 #include <frc/geometry/Translation2d.h>
+#include <frc/geometry/Pose2d.h>
+#include <frc/kinematics/ChassisSpeeds.h>
+
+#include <units/acceleration.h>
+#include <units/velocity.h>
+#include <map>
+
+#include "OvertureLib/Math/ChassisAccels.h"
+#include "OvertureLib/Math/InterpolatingTable/InterpolatingTable.h"
+
+typedef InterpolatingTable<units::meter_t, units::second_t> DistanceToTravelTimeTable;
 
 class TargetingWhileMoving {
  public:
-  TargetingWhileMoving();
- private:
-  frc::Translation2d target;
+  TargetingWhileMoving(frc::Translation2d targetLocation, DistanceToTravelTimeTable distanceToTravelTime, units::second_t accelCompFactor = 0.01_s);
 
+  frc::Translation2d getMovingTarget(const frc::Pose2d& robotPose, const frc::ChassisSpeeds& fieldRelativeSpeed, const ChassisAccels& fieldRelativeAccel);
+ private:
+  frc::Translation2d targetLocation;
+  DistanceToTravelTimeTable distanceToTravelTime;
+  units::second_t accelCompFactor;
 };

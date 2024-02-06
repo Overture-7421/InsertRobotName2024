@@ -176,6 +176,14 @@ frc::ChassisSpeeds SwerveChassis::getRobotRelativeSpeeds() {
 	return kinematics->ToChassisSpeeds(getModuleStates());
 }
 
+frc::ChassisSpeeds SwerveChassis::getFieldRelativeSpeeds(){
+	return fieldRelativeSpeed;
+}
+
+ChassisAccels SwerveChassis::getFIeldRelativeAccels(){
+	return fieldRelativeAccel;
+}
+
 /**
  * @brief Returns the robot odometry
  *
@@ -333,12 +341,31 @@ void SwerveChassis::sysIdVoltage(units::volt_t voltage) {
  */
 void SwerveChassis::updateOdometry() {
 	odometry->Update(pigeon->GetRotation2d(), getModulePosition());
+	frc::ChassisSpeeds robotRelativeSpeed = getRobotRelativeSpeeds();
+	frc::Rotation2d robotHeading = getOdometry().Rotation();
+
+	fieldRelativeSpeed = frc::ChassisSpeeds::FromRobotRelativeSpeeds(robotRelativeSpeed, robotHeading);
+	fieldRelativeAccel = ChassisAccels(fieldRelativeSpeed, lastFieldRelativeSpeed);
+	fieldRelativeAccel.ax = accelXFilter.Calculate(fieldRelativeAccel.ax);
+	fieldRelativeAccel.ay = accelYFilter.Calculate(fieldRelativeAccel.ay);
+	fieldRelativeAccel.omega = accelOmegaFilter.Calculate(fieldRelativeAccel.omega);
+
+	lastFieldRelativeSpeed = fieldRelativeSpeed;
 }
 
 void SwerveChassis::shuffleboardPeriodic() {
 	frc::SmartDashboard::PutNumber("Odometry/LinearX", linearX);
 	frc::SmartDashboard::PutNumber("Odometry/LinearY", linearY);
 	frc::SmartDashboard::PutNumber("Odometry/Angular", angular);
+
+	// frc::SmartDashboard::PutNumber("Odometry/AccelX", fieldRelativeAccel.ax.value());
+	// frc::SmartDashboard::PutNumber("Odometry/AccelY", fieldRelativeAccel.ay.value());
+	// frc::SmartDashboard::PutNumber("Odometry/AccelOmega", fieldRelativeAccel.omega.value());
+
+
+	// frc::SmartDashboard::PutNumber("Odometry/SpeedX", fieldRelativeSpeed.vx.value());
+	// frc::SmartDashboard::PutNumber("Odometry/SpeedY", fieldRelativeSpeed.vy.value());
+	// frc::SmartDashboard::PutNumber("Odometry/SpeedOmega", fieldRelativeSpeed.omega.value());
 
 	auto estimatedPos = getOdometry();
 

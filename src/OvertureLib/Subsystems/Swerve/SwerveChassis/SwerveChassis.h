@@ -13,7 +13,7 @@
 #include <frc/estimator/SwerveDrivePoseEstimator.h>
 #include <frc/DriverStation.h>
 #include <frc/RobotController.h>
-
+#include <frc/filter/LinearFilter.h>
 #include <frc/smartdashboard/Field2d.h>
 
 #include <frc2/command/sysid/SysIdRoutine.h>
@@ -25,6 +25,7 @@
 
 #include "OvertureLib/Sensors/OverPigeon/OverPigeon.h"
 #include "OvertureLib/Subsystems/Swerve/SwerveModule/SwerveModule.h"
+#include "OvertureLib/Math/ChassisAccels.h"
 
 using namespace pathplanner;
 
@@ -41,6 +42,8 @@ public:
 	void driveRobotRelative(frc::ChassisSpeeds speeds);
 	void driveFieldRelative(frc::ChassisSpeeds speeds);
 	frc::ChassisSpeeds getRobotRelativeSpeeds();
+	frc::ChassisSpeeds getFieldRelativeSpeeds();
+	ChassisAccels getFIeldRelativeAccels();
 
 	frc::Pose2d getOdometry();
 	void resetOdometry(frc::Pose2d initPose);
@@ -80,6 +83,12 @@ protected:
 	std::array<frc::SwerveModulePosition, 4>* odometryPos;
 
 	frc::SwerveDrivePoseEstimator<4>* odometry;
+
+	frc::ChassisSpeeds fieldRelativeSpeed, lastFieldRelativeSpeed;
+	ChassisAccels fieldRelativeAccel;
+	frc::LinearFilter<units::meters_per_second_squared_t> accelXFilter = frc::LinearFilter<units::meters_per_second_squared_t>::SinglePoleIIR(0.05, 0.02_s);
+	frc::LinearFilter<units::meters_per_second_squared_t> accelYFilter = frc::LinearFilter<units::meters_per_second_squared_t>::SinglePoleIIR(0.05, 0.02_s);
+	frc::LinearFilter<units::radians_per_second_squared_t> accelOmegaFilter = frc::LinearFilter<units::radians_per_second_squared_t>::SinglePoleIIR(0.05, 0.02_s);
 
 private:
 	frc2::sysid::SysIdRoutine m_sysIdRoutine{

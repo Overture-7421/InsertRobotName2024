@@ -15,13 +15,23 @@ const std::vector<std::pair<StageLocation, frc::Pose2d>> stageLocations{
 };
 
 static frc::Pose2d flipPoseIfNeeded(frc::Pose2d pose) {
-	auto alliance = frc::DriverStation::GetAlliance();
+	static auto alliance = frc::DriverStation::GetAlliance();
 
 	auto shouldFlip = alliance.has_value() && (alliance.value() == frc::DriverStation::Alliance::kRed);
 	if (shouldFlip) {
 		pose = pathplanner::GeometryUtil::flipFieldPose(pose);
 	}
 	return pose;
+}
+
+static frc::Translation2d flipTranslationIfNeeded(frc::Translation2d translation) {
+	static auto alliance = frc::DriverStation::GetAlliance();
+
+	auto shouldFlip = alliance.has_value() && (alliance.value() == frc::DriverStation::Alliance::kRed);
+	if (shouldFlip) {
+		translation = pathplanner::GeometryUtil::flipFieldPosition(translation);
+	}
+	return translation;
 }
 
 static units::length::meter_t getDistanceToChassis(Chassis* chassis, frc::Pose2d targetPose) {
