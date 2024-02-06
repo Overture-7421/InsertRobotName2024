@@ -31,8 +31,9 @@
 #include "Commands/TrapShoot/TrapShoot.h"
 
 #include "OvertureLib/Commands/Drive/Drive.h"
+#include "OvertureLib/Characterization/SysIDRoutineBot.h"
 
-class RobotContainer {
+class RobotContainer : public SysIDRoutineBot {
 public:
 	RobotContainer();
 

@@ -6,9 +6,11 @@
 
 #include <frc/smartdashboard/SmartDashboard.h>
 
+#include <OvertureLib/Subsystems/Swerve/SwerveCharacterization/SwerveCharacterization.h>
 #include <OvertureLib/Subsystems/Swerve/SwerveChassis/SwerveChassis.h>
 #include <OvertureLib/Subsystems/Swerve/SwerveModule/SwerveModule.h>
 
+// class Chassis : public SwerveCharacterization {
 class Chassis : public SwerveChassis {
 public:
 	Chassis();

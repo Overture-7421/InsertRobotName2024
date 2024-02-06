@@ -176,11 +176,11 @@ frc::ChassisSpeeds SwerveChassis::getRobotRelativeSpeeds() {
 	return kinematics->ToChassisSpeeds(getModuleStates());
 }
 
-frc::ChassisSpeeds SwerveChassis::getFieldRelativeSpeeds(){
+frc::ChassisSpeeds SwerveChassis::getFieldRelativeSpeeds() {
 	return fieldRelativeSpeed;
 }
 
-ChassisAccels SwerveChassis::getFIeldRelativeAccels(){
+ChassisAccels SwerveChassis::getFIeldRelativeAccels() {
 	return fieldRelativeAccel;
 }
 
@@ -303,38 +303,6 @@ double SwerveChassis::getRoll() {
 	return pigeon->GetRoll().GetValue().value();
 }
 
-/**
- * @brief Runs the SysId Quasisstatic command
-*/
-frc2::CommandPtr SwerveChassis::SysIdQuadstatic(frc2::sysid::Direction direction) {
-	return frc2::cmd::Sequence(
-		frc2::InstantCommand([this]() { sysIdVoltage(0_V); }).ToPtr(),
-		frc2::cmd::Wait(0.5_s),
-		m_sysIdRoutine.Quasistatic(direction)
-	);
-}
-
-/**
- * @brief Runs the SysId Dynamic command
-*/
-frc2::CommandPtr SwerveChassis::SysIdDinamic(frc2::sysid::Direction direction) {
-	return frc2::cmd::Sequence(
-		frc2::InstantCommand([this]() { sysIdVoltage(0_V); }).ToPtr(),
-		frc2::cmd::Wait(0.5_s),
-		m_sysIdRoutine.Dynamic(direction)
-	);
-}
-
-/**
- * @brief Sets the voltage for the SysId command
-*/
-void SwerveChassis::sysIdVoltage(units::volt_t voltage) {
-	frontLeftModule->setRawVoltageSpeed(voltage);
-	frontRightModule->setRawVoltageSpeed(voltage);
-	backLeftModule->setRawVoltageSpeed(voltage);
-	backRightModule->setRawVoltageSpeed(voltage);
-
-}
 
 /**
  * @brief Updates the robot odometry
