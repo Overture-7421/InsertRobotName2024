@@ -5,11 +5,13 @@
   "pathFolders": [
     "AMPAuto",
     "CenterAuto",
+    "CenterAutoDirect",
     "SourceAuto"
   ],
   "autoFolders": [
     "AMPAuto",
     "CenterAuto",
+    "CenterAutoDirect",
     "SourceAuto"
   ],
   "defaultMaxVel": 3.0,
