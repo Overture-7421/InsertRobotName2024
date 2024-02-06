@@ -15,12 +15,14 @@
 #include <frc/RobotController.h>
 #include <frc/filter/LinearFilter.h>
 #include <frc/smartdashboard/Field2d.h>
+#include <frc/controller/ProfiledPIDController.h>
 
 #include <frc2/command/SubsystemBase.h>
 #include <pathplanner/lib/auto/AutoBuilder.h>
 #include <pathplanner/lib/util/HolonomicPathFollowerConfig.h>
 #include <pathplanner/lib/util/PIDConstants.h>
 #include <pathplanner/lib/util/ReplanningConfig.h>
+#include <pathplanner/lib/controllers/PPHolonomicDriveController.h>
 
 #include "OvertureLib/Sensors/OverPigeon/OverPigeon.h"
 #include "OvertureLib/Subsystems/Swerve/SwerveModule/SwerveModule.h"
@@ -31,6 +33,8 @@ using namespace pathplanner;
 class SwerveChassis : public frc2::SubsystemBase {
 public:
 	SwerveChassis();
+	void setTargetHeading(frc::Rotation2d rotationTarget);
+	void setHeadingOverride(bool headingOverride);
 	void setModulePositions(std::array<frc::Translation2d, 4>* positions);
 	void setModulesRatios(double turnRatio, double driveRatio, double wheelDiameter);
 	void setModules(SwerveModule* frontLeft, SwerveModule* frontRight, SwerveModule* backleft, SwerveModule* backRight);
@@ -60,6 +64,7 @@ public:
 
 	void updateOdometry();
 	void shuffleboardPeriodic();
+	void Periodic() override;
 
 protected:
 	double linearX;
@@ -79,6 +84,8 @@ protected:
 
 	frc::SwerveDrivePoseEstimator<4>* odometry;
 
+	frc::ChassisSpeeds desiredSpeeds;
+
 	frc::ChassisSpeeds fieldRelativeSpeed, lastFieldRelativeSpeed;
 	ChassisAccels fieldRelativeAccel;
 	frc::LinearFilter<units::meters_per_second_squared_t> accelXFilter = frc::LinearFilter<units::meters_per_second_squared_t>::SinglePoleIIR(0.05, 0.02_s);
@@ -86,6 +93,12 @@ protected:
 	frc::LinearFilter<units::radians_per_second_squared_t> accelOmegaFilter = frc::LinearFilter<units::radians_per_second_squared_t>::SinglePoleIIR(0.05, 0.02_s);
 
 private:
+	std::optional<frc::Rotation2d> getRotationTargetOverride();
 
 	frc::Field2d field2d;
+
+	bool headingOverride = false;
+
+	frc::ProfiledPIDController<units::radians> headingController{ 0.5, 0, 0, frc::TrapezoidProfile<units::radians>::Constraints{ 2_rad_per_s, 2_rad_per_s_sq } };
+	frc::Rotation2d headingTarget;
 };

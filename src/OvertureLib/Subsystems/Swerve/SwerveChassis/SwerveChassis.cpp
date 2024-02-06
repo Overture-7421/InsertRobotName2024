@@ -35,6 +35,34 @@ SwerveChassis::SwerveChassis() {
 	);
 
 	frc::SmartDashboard::PutData("Odometry", &field2d);
+
+	pathplanner::PPHolonomicDriveController::setRotationTargetOverride([this]() { return getRotationTargetOverride(); });
+}
+
+std::optional<frc::Rotation2d> SwerveChassis::getRotationTargetOverride() {
+	if (headingOverride) {
+		return headingTarget;
+	} else {
+		return std::nullopt;
+	}
+}
+
+/**
+ * @brief Sets the target heading
+ *
+ * @param rotationTarget The target heading
+ */
+void SwerveChassis::setTargetHeading(frc::Rotation2d rotationTarget) {
+	headingTarget = rotationTarget;
+}
+
+/**
+ * @brief Sets the heading override
+ *
+ * @param headingOverride The heading override
+ */
+void SwerveChassis::setHeadingOverride(bool headingOverride) {
+	this->headingOverride = headingOverride;
 }
 
 /**
@@ -149,11 +177,6 @@ void SwerveChassis::driveRobotRelative(frc::ChassisSpeeds speeds) {
 	this->linearY = speeds.vy.value();
 	this->angular = speeds.omega.value();
 
-	wpi::array<frc::SwerveModuleState, 4> desiredStates = kinematics->ToSwerveModuleStates(speeds);
-
-	kinematics->DesaturateWheelSpeeds(&desiredStates, 5.75_mps);
-
-	setModuleStates(desiredStates);
 }
 
 /**
@@ -342,4 +365,19 @@ void SwerveChassis::shuffleboardPeriodic() {
 	frc::SmartDashboard::PutNumber("Odometry/X", estimatedPos.X().value());
 	frc::SmartDashboard::PutNumber("Odometry/Y", estimatedPos.Y().value());
 	frc::SmartDashboard::PutNumber("Odometry/Pigeon", estimatedPos.Rotation().Degrees().value());
+}
+
+void SwerveChassis::Periodic() {
+	if (headingOverride) {
+		desiredSpeeds.omega = units::radians_per_second_t{ headingController.Calculate(getOdometry().Rotation().Degrees()), headingTarget.Degrees() };
+	}
+
+	wpi::array<frc::SwerveModuleState, 4U> desiredStates = kinematics->ToSwerveModuleStates(desiredSpeeds);
+
+	kinematics->DesaturateWheelSpeeds(&desiredStates, 5.75_mps);
+
+	setModuleStates(desiredStates);
+
+	updateOdometry();
+	shuffleboardPeriodic();
 }

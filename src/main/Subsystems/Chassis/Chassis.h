@@ -15,8 +15,6 @@ class Chassis : public SwerveChassis {
 public:
 	Chassis();
 
-	void Periodic() override;
-
 private:
 #ifndef __FRC_ROBORIO__
 	SwerveModule backRight{ 5, 6, 11, -90, "BackRightModule", "OverCANivore" };
