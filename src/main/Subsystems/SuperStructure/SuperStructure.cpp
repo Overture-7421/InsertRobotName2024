@@ -100,10 +100,10 @@ void SuperStructure::Periodic() {
 		actualTarget.lowerAngle = 95;
 	}
 
-	if (m_TargetState.upperAngle < 0) {
-		actualTarget.upperAngle = 0;
-	} else if (m_TargetState.upperAngle > 90) {
-		actualTarget.upperAngle = 90;
+	if (m_TargetState.upperAngle < -80) {
+		actualTarget.upperAngle = -80;
+	} else if (m_TargetState.upperAngle > 25) {
+		actualTarget.upperAngle = 25;
 	}
 
 	if (currentState.lowerAngle < -25 && actualTarget.upperAngle < -10){
