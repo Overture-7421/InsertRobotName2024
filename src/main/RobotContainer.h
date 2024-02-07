@@ -29,6 +29,7 @@
 #include "Commands/SpeakerCommand/SpeakerCommand.h"
 #include "Commands/VisionAmpCommand/VisionAmpCommand.h"
 #include "Commands/VisionSourceGrabCommand/VisionSourceGrabCommand.h"
+#include "Commands/VisionSpeakerCommand/VisionSpeakerCommand.h"
 
 #include "Commands/Climbing/Climbing.h"
 #include "Commands/TrapShoot/TrapShoot.h"

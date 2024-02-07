@@ -4,9 +4,44 @@
 
 #include "VisionSpeakerCommand.h"
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.
-// For more information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-VisionSpeakerCommand::VisionSpeakerCommand() {
+VisionSpeakerCommand::VisionSpeakerCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter) {
+  // Use addRequirements() here to declare subsystem dependencies.
+  AddRequirements({superStructure, shooter});
+  this->chassis = chassis;
+  this->superStructure = superStructure;
+  this->shooter = shooter;
+}
 
+// Called when the command is initially scheduled.
+void VisionSpeakerCommand::Initialize() {
+  chassis->setHeadingOverride(true);
+}
+
+// Called repeatedly when this Command is scheduled to run
+void VisionSpeakerCommand::Execute() {
+  frc::Pose2d chassisPose = chassis->getOdometry();
+  frc::Translation2d speakerLoc = dynamicTarget.getMovingTarget(chassisPose, chassis->getFieldRelativeSpeeds(), chassis->getFIeldRelativeAccels());
+  frc::Translation2d chassisLoc = chassisPose.Translation();
+
+  frc::Translation2d chassisToTarget = speakerLoc - chassisLoc;
+  distance = chassisToTarget.Distance({0_m, 0_m});
+  angle = chassisToTarget.Angle().RotateBy({180_deg});
+  frc::SmartDashboard::PutNumber("Distance to Target", double(distance));
+  frc::SmartDashboard::PutNumber("Angle to Target", angle.Degrees().value());
+
+  chassis->setTargetHeading(angle);
+  superStructure->setTargetCoord({distanceToLowerAngleTable[distance], distanceToUpperAngleTable[distance]});
+  shooter->setVelocityVoltage(distanceToVelocityTable[distance]);
+
+  
+}
+
+// Called once the command ends or is interrupted.
+void VisionSpeakerCommand::End(bool interrupted) {
+  chassis->setHeadingOverride(false);
+}
+
+// Returns true when the command should end.
+bool VisionSpeakerCommand::IsFinished() {
+  return false;
 }
