@@ -15,7 +15,7 @@ const std::vector<std::pair<StageLocation, frc::Pose2d>> stageLocations{
 };
 
 static frc::Pose2d flipPoseIfNeeded(frc::Pose2d pose) {
-	auto alliance = frc::DriverStation::GetAlliance();
+	static auto alliance = frc::DriverStation::GetAlliance();
 
 	auto shouldFlip = alliance.has_value() && (alliance.value() == frc::DriverStation::Alliance::kRed);
 	if (shouldFlip) {
@@ -24,8 +24,18 @@ static frc::Pose2d flipPoseIfNeeded(frc::Pose2d pose) {
 	return pose;
 }
 
+static frc::Translation2d flipTranslationIfNeeded(frc::Translation2d translation) {
+	static auto alliance = frc::DriverStation::GetAlliance();
+
+	auto shouldFlip = alliance.has_value() && (alliance.value() == frc::DriverStation::Alliance::kRed);
+	if (shouldFlip) {
+		translation = pathplanner::GeometryUtil::flipFieldPosition(translation);
+	}
+	return translation;
+}
+
 static units::length::meter_t getDistanceToChassis(Chassis* chassis, frc::Pose2d targetPose) {
-	return chassis->getOdometry().Translation().Distance(flipPoseIfNeeded(targetPose).Translation());
+	return chassis->getOdometry().Translation().Distance(targetPose.Translation());
 }
 
 static StageLocation findClosestStageLocation(Chassis* chassis) {
@@ -34,9 +44,10 @@ static StageLocation findClosestStageLocation(Chassis* chassis) {
 
 
 	for (auto location : stageLocations) {
-		distancesToStageLocations.push_back(std::pair{ location.first, getDistanceToChassis(chassis, location.second) });
+		distancesToStageLocations.push_back(std::pair{ location.first, getDistanceToChassis(chassis, flipPoseIfNeeded(location.second)) });
 	}
 
 	std::sort(distancesToStageLocations.begin(), distancesToStageLocations.end(), [](auto a, auto b) { return a.second < b.second;});
+
 	return distancesToStageLocations.front().first;
 }

@@ -9,7 +9,7 @@ void AprilTags::setCameraAndLayout(photon::PhotonCamera* camera, frc::AprilTagFi
 	this->m_Camera = camera;
 	this->m_TagLayout = tagLayout;
 	this->m_CameraToRobot = cameraToRobot;
-
+	
 	m_TagLayout->SetOrigin(frc::AprilTagFieldLayout::OriginPosition::kBlueAllianceWallRightSide);
 
 	poseEstimatorSet = true;
@@ -53,7 +53,7 @@ void AprilTags::updateOdometry() {
 	photon::PhotonPipelineResult pipelineResult = result.value();
 	
 
-	if (checkTagDistance(pipelineResult, 1, 3.00) || checkTagDistance(pipelineResult, 2, 6.00) || checkTagDistance(pipelineResult, 3, 7.00)) {
+	if (checkTagDistance(pipelineResult, 1, 4.0) || checkTagDistance(pipelineResult, 2, 6.00) || checkTagDistance(pipelineResult, 3, 8.00)) {
 		addMeasurementToChassis(pipelineResult);
 	}
 }

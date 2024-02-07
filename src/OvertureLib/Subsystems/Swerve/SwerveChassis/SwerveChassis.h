@@ -13,24 +13,28 @@
 #include <frc/estimator/SwerveDrivePoseEstimator.h>
 #include <frc/DriverStation.h>
 #include <frc/RobotController.h>
-
+#include <frc/filter/LinearFilter.h>
 #include <frc/smartdashboard/Field2d.h>
+#include <frc/controller/ProfiledPIDController.h>
 
-#include <frc2/command/sysid/SysIdRoutine.h>
 #include <frc2/command/SubsystemBase.h>
 #include <pathplanner/lib/auto/AutoBuilder.h>
 #include <pathplanner/lib/util/HolonomicPathFollowerConfig.h>
 #include <pathplanner/lib/util/PIDConstants.h>
 #include <pathplanner/lib/util/ReplanningConfig.h>
+#include <pathplanner/lib/controllers/PPHolonomicDriveController.h>
 
 #include "OvertureLib/Sensors/OverPigeon/OverPigeon.h"
 #include "OvertureLib/Subsystems/Swerve/SwerveModule/SwerveModule.h"
+#include "OvertureLib/Math/ChassisAccels.h"
 
 using namespace pathplanner;
 
 class SwerveChassis : public frc2::SubsystemBase {
 public:
 	SwerveChassis();
+	void setTargetHeading(frc::Rotation2d rotationTarget);
+	void setHeadingOverride(bool headingOverride);
 	void setModulePositions(std::array<frc::Translation2d, 4>* positions);
 	void setModulesRatios(double turnRatio, double driveRatio, double wheelDiameter);
 	void setModules(SwerveModule* frontLeft, SwerveModule* frontRight, SwerveModule* backleft, SwerveModule* backRight);
@@ -41,6 +45,8 @@ public:
 	void driveRobotRelative(frc::ChassisSpeeds speeds);
 	void driveFieldRelative(frc::ChassisSpeeds speeds);
 	frc::ChassisSpeeds getRobotRelativeSpeeds();
+	frc::ChassisSpeeds getFieldRelativeSpeeds();
+	ChassisAccels getFIeldRelativeAccels();
 
 	frc::Pose2d getOdometry();
 	void resetOdometry(frc::Pose2d initPose);
@@ -56,18 +62,11 @@ public:
 	double getYaw();
 	double getRoll();
 
-	frc2::CommandPtr SysIdQuadstatic(frc2::sysid::Direction direction);
-	frc2::CommandPtr SysIdDinamic(frc2::sysid::Direction direction);
-	void sysIdVoltage(units::volt_t voltage);
-
 	void updateOdometry();
 	void shuffleboardPeriodic();
+	void Periodic() override;
 
 protected:
-	double linearX;
-	double linearY;
-	double angular;
-
 	OverPigeon* pigeon;
 
 	SwerveModule* frontLeftModule;
@@ -81,33 +80,21 @@ protected:
 
 	frc::SwerveDrivePoseEstimator<4>* odometry;
 
+	frc::ChassisSpeeds desiredSpeeds;
+
+	frc::ChassisSpeeds fieldRelativeSpeed, lastFieldRelativeSpeed;
+	ChassisAccels fieldRelativeAccel;
+	frc::LinearFilter<units::meters_per_second_squared_t> accelXFilter = frc::LinearFilter<units::meters_per_second_squared_t>::SinglePoleIIR(0.05, 0.02_s);
+	frc::LinearFilter<units::meters_per_second_squared_t> accelYFilter = frc::LinearFilter<units::meters_per_second_squared_t>::SinglePoleIIR(0.05, 0.02_s);
+	frc::LinearFilter<units::radians_per_second_squared_t> accelOmegaFilter = frc::LinearFilter<units::radians_per_second_squared_t>::SinglePoleIIR(0.05, 0.02_s);
+
 private:
-	frc2::sysid::SysIdRoutine m_sysIdRoutine{
-		  frc2::sysid::Config{std::nullopt, std::nullopt, std::nullopt,
-							  std::nullopt},
-		  frc2::sysid::Mechanism{
-			  [this](units::volt_t driveVoltage) {
-				sysIdVoltage(driveVoltage);
-			  },
-			  [this](frc::sysid::SysIdRoutineLog* log) {
-				log->Motor("frontRight")
-					.voltage(units::volt_t{frontRightModule->getVoltage()})
-					.position(units::meter_t{frontRightModule->getDistance()})
-					.velocity(units::meters_per_second_t{frontRightModule->getSpeed()});
-				log->Motor("frontLeft")
-					.voltage(units::volt_t{frontLeftModule->getVoltage()})
-					.position(units::meter_t{frontLeftModule->getDistance()})
-					.velocity(units::meters_per_second_t{frontLeftModule->getSpeed()});
-				log->Motor("backRight")
-					.voltage(units::volt_t{backRightModule->getVoltage()})
-					.position(units::meter_t{backRightModule->getDistance()})
-					.velocity(units::meters_per_second_t{backRightModule->getSpeed()});
-				log->Motor("backLeft")
-					.voltage(units::volt_t{backLeftModule->getVoltage()})
-					.position(units::meter_t{backLeftModule->getDistance()})
-					.velocity(units::meters_per_second_t{backLeftModule->getSpeed()});
-			  },
-			  this} };
+	std::optional<frc::Rotation2d> getRotationTargetOverride();
 
 	frc::Field2d field2d;
+
+	bool headingOverride = false;
+
+	frc::ProfiledPIDController<units::radians> headingController{ 6.5, 0, 0.75, frc::TrapezoidProfile<units::radians>::Constraints{ 9_rad_per_s, 12.5_rad_per_s_sq } };
+	frc::Rotation2d headingTarget;
 };

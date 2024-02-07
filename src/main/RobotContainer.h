@@ -33,8 +33,9 @@
 #include "Commands/TrapShoot/TrapShoot.h"
 
 #include "OvertureLib/Commands/Drive/Drive.h"
+#include "OvertureLib/Characterization/SysIDRoutineBot.h"
 
-class RobotContainer {
+class RobotContainer : public SysIDRoutineBot {
 public:
 	RobotContainer();
 
@@ -68,11 +69,8 @@ private:
 	// Mechanism Commands
 
 	frc2::Trigger GroundGrab{ [this] {return opertr.GetLeftTriggerAxis() > 0.3;} };
-	frc2::Trigger SourceGrab{ [this] {return opertr.GetRightTriggerAxis() > 0.3;} };
-	frc2::Trigger AmpShoot{ [this] {return opertr.GetLeftBumper();} };
-	frc2::Trigger SpeakerShoot { [this] {return opertr.GetRightBumper();} };
-	frc2::Trigger StorageIn{ [this] {return opertr.GetYButton();} };
-	frc2::Trigger AmpButton { [this] {return opertr.GetBackButton();} };
+	frc2::Trigger SourceGrab{ [this] {return opertr.GetLeftBumper();} };
+	frc2::Trigger manualClimb{ [this] {return opertr.GetRightBumper();} };
 
 
 	//Auto Chooser

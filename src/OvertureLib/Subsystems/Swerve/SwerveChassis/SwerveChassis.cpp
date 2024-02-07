@@ -14,7 +14,7 @@ SwerveChassis::SwerveChassis() {
 		[this]() { return getRobotRelativeSpeeds(); },
 		[this](frc::ChassisSpeeds speeds) { driveRobotRelative(speeds); },
 		HolonomicPathFollowerConfig(
-			PIDConstants(2.0, 0.0, 0.0),
+			PIDConstants(5.0, 0.0, 0.0),
 			PIDConstants(5.0, 0.0, 0.0),
 			5.0_mps,
 			0.3732276_m,
@@ -35,6 +35,37 @@ SwerveChassis::SwerveChassis() {
 	);
 
 	frc::SmartDashboard::PutData("Odometry", &field2d);
+
+	headingController.EnableContinuousInput(-1.0 * units::radian_t(M_PI), units::radian_t(M_PI));
+	pathplanner::PPHolonomicDriveController::setRotationTargetOverride([this]() { return getRotationTargetOverride(); });
+}
+
+std::optional<frc::Rotation2d> SwerveChassis::getRotationTargetOverride() {
+	if (headingOverride) {
+		return headingTarget;
+	} else {
+		return std::nullopt;
+	}
+}
+
+/**
+ * @brief Sets the target heading
+ *
+ * @param rotationTarget The target heading
+ */
+void SwerveChassis::setTargetHeading(frc::Rotation2d rotationTarget) {
+	headingTarget = rotationTarget;
+	headingController.SetGoal(headingTarget.Radians());
+}
+
+/**
+ * @brief Sets the heading override
+ *
+ * @param headingOverride The heading override
+ */
+void SwerveChassis::setHeadingOverride(bool headingOverride) {
+	this->headingOverride = headingOverride;
+	headingController.Reset(getOdometry().Rotation().Radians());
 }
 
 /**
@@ -145,15 +176,7 @@ void SwerveChassis::setFeedForward(units::volt_t kS, units::volt_t kV, units::vo
  * @param speeds ChassisSpeeds object
  */
 void SwerveChassis::driveRobotRelative(frc::ChassisSpeeds speeds) {
-	this->linearX = speeds.vx.value();
-	this->linearY = speeds.vy.value();
-	this->angular = speeds.omega.value();
-
-	wpi::array<frc::SwerveModuleState, 4> desiredStates = kinematics->ToSwerveModuleStates(speeds);
-
-	kinematics->DesaturateWheelSpeeds(&desiredStates, 5.75_mps);
-
-	setModuleStates(desiredStates);
+	desiredSpeeds = speeds;
 }
 
 /**
@@ -174,6 +197,14 @@ void SwerveChassis::driveFieldRelative(frc::ChassisSpeeds speeds) {
  */
 frc::ChassisSpeeds SwerveChassis::getRobotRelativeSpeeds() {
 	return kinematics->ToChassisSpeeds(getModuleStates());
+}
+
+frc::ChassisSpeeds SwerveChassis::getFieldRelativeSpeeds() {
+	return fieldRelativeSpeed;
+}
+
+ChassisAccels SwerveChassis::getFIeldRelativeAccels() {
+	return fieldRelativeAccel;
 }
 
 /**
@@ -295,50 +326,37 @@ double SwerveChassis::getRoll() {
 	return pigeon->GetRoll().GetValue().value();
 }
 
-/**
- * @brief Runs the SysId Quasisstatic command
-*/
-frc2::CommandPtr SwerveChassis::SysIdQuadstatic(frc2::sysid::Direction direction) {
-	return frc2::cmd::Sequence(
-		frc2::InstantCommand([this]() { sysIdVoltage(0_V); }).ToPtr(),
-		frc2::cmd::Wait(0.5_s),
-		m_sysIdRoutine.Quasistatic(direction)
-	);
-}
-
-/**
- * @brief Runs the SysId Dynamic command
-*/
-frc2::CommandPtr SwerveChassis::SysIdDinamic(frc2::sysid::Direction direction) {
-	return frc2::cmd::Sequence(
-		frc2::InstantCommand([this]() { sysIdVoltage(0_V); }).ToPtr(),
-		frc2::cmd::Wait(0.5_s),
-		m_sysIdRoutine.Dynamic(direction)
-	);
-}
-
-/**
- * @brief Sets the voltage for the SysId command
-*/
-void SwerveChassis::sysIdVoltage(units::volt_t voltage) {
-	frontLeftModule->setRawVoltageSpeed(voltage);
-	frontRightModule->setRawVoltageSpeed(voltage);
-	backLeftModule->setRawVoltageSpeed(voltage);
-	backRightModule->setRawVoltageSpeed(voltage);
-
-}
 
 /**
  * @brief Updates the robot odometry
  */
 void SwerveChassis::updateOdometry() {
 	odometry->Update(pigeon->GetRotation2d(), getModulePosition());
+	frc::ChassisSpeeds robotRelativeSpeed = getRobotRelativeSpeeds();
+	frc::Rotation2d robotHeading = getOdometry().Rotation();
+
+	fieldRelativeSpeed = frc::ChassisSpeeds::FromRobotRelativeSpeeds(robotRelativeSpeed, robotHeading);
+	fieldRelativeAccel = ChassisAccels(fieldRelativeSpeed, lastFieldRelativeSpeed);
+	fieldRelativeAccel.ax = accelXFilter.Calculate(fieldRelativeAccel.ax);
+	fieldRelativeAccel.ay = accelYFilter.Calculate(fieldRelativeAccel.ay);
+	fieldRelativeAccel.omega = accelOmegaFilter.Calculate(fieldRelativeAccel.omega);
+
+	lastFieldRelativeSpeed = fieldRelativeSpeed;
 }
 
 void SwerveChassis::shuffleboardPeriodic() {
-	frc::SmartDashboard::PutNumber("Odometry/LinearX", linearX);
-	frc::SmartDashboard::PutNumber("Odometry/LinearY", linearY);
-	frc::SmartDashboard::PutNumber("Odometry/Angular", angular);
+	frc::SmartDashboard::PutNumber("Odometry/LinearX", desiredSpeeds.vx.value());
+	frc::SmartDashboard::PutNumber("Odometry/LinearY", desiredSpeeds.vy.value());
+	frc::SmartDashboard::PutNumber("Odometry/Angular", desiredSpeeds.omega.value());
+
+	// frc::SmartDashboard::PutNumber("Odometry/AccelX", fieldRelativeAccel.ax.value());
+	// frc::SmartDashboard::PutNumber("Odometry/AccelY", fieldRelativeAccel.ay.value());
+	// frc::SmartDashboard::PutNumber("Odometry/AccelOmega", fieldRelativeAccel.omega.value());
+
+
+	// frc::SmartDashboard::PutNumber("Odometry/SpeedX", fieldRelativeSpeed.vx.value());
+	// frc::SmartDashboard::PutNumber("Odometry/SpeedY", fieldRelativeSpeed.vy.value());
+	// frc::SmartDashboard::PutNumber("Odometry/SpeedOmega", fieldRelativeSpeed.omega.value());
 
 	auto estimatedPos = getOdometry();
 
@@ -347,4 +365,22 @@ void SwerveChassis::shuffleboardPeriodic() {
 	frc::SmartDashboard::PutNumber("Odometry/X", estimatedPos.X().value());
 	frc::SmartDashboard::PutNumber("Odometry/Y", estimatedPos.Y().value());
 	frc::SmartDashboard::PutNumber("Odometry/Pigeon", estimatedPos.Rotation().Degrees().value());
+}
+
+void SwerveChassis::Periodic() {
+	if (headingOverride) {
+		desiredSpeeds.omega = units::radians_per_second_t{ headingController.Calculate(getOdometry().Rotation().Radians())};
+
+		frc::SmartDashboard::PutNumber("Odometry/HeadingTarget", headingTarget.Degrees().value());
+		frc::SmartDashboard::PutNumber("Odometry/HeadingError", headingController.GetPositionError().value());
+	}
+
+	wpi::array<frc::SwerveModuleState, 4U> desiredStates = kinematics->ToSwerveModuleStates(desiredSpeeds);
+
+	kinematics->DesaturateWheelSpeeds(&desiredStates, 5.75_mps);
+
+	setModuleStates(desiredStates);
+
+	updateOdometry();
+	shuffleboardPeriodic();
 }

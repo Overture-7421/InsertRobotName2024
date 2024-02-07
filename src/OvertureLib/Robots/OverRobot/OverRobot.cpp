@@ -89,6 +89,9 @@ void OverRobot::StartCompetition(){
 }
 
 void OverRobot::EndCompetition(){
+  nt::NetworkTableInstance ntInst = nt::NetworkTableInstance::GetDefault();
+  ntInst.Disconnect();
+  nt::NetworkTableInstance::GetDefault().Destroy(ntInst);
 }
 
 OverRobot::~OverRobot(){

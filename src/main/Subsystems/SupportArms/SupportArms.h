@@ -27,7 +27,7 @@ private:
 	double convertAngleToFalconPos(double angle);
 
 	//constant
-	const double LOWER_GEAR_BOX_REDUCTION = 106;
+	const double LOWER_GEAR_BOX_REDUCTION = 106.0;
 
 	//Encoders
 	OverDutyCycleEncoder lowerEncoder{ 2 };

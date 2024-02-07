@@ -31,15 +31,17 @@ RobotContainer::RobotContainer() {
 	pathplanner::NamedCommands::registerCommand("ShooterCommand", std::move(ShooterCommand(&shooter, 4.00).ToPtr()));
 
 	frc::SmartDashboard::PutData("Auto Chooser", &autoChooser);
+
 	ConfigureBindings();
-}	
+	// ConfigureSysIdBindings(&chassis, &driver);
+}
 
 void RobotContainer::ConfigureBindings() {
 	chassis.SetDefaultCommand(Drive(&chassis, &driver));
 
 	// Configure the button bindings
 	resetAngleButton.WhileTrue(ResetAngle(&chassis).ToPtr());
-	climbButton.WhileTrue(Climb(&chassis, &superStructure, &supportArms, &driver));
+	climbButton.WhileTrue(AutoClimb(&chassis, &superStructure, &supportArms, &driver));
 	shootTrap.WhileTrue(TrapShoot(&chassis, &superStructure, &supportArms, &shooter, &storage));
 
 	GroundGrab.WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake).ToPtr());
@@ -48,6 +50,7 @@ void RobotContainer::ConfigureBindings() {
 	SourceGrab.WhileTrue(SourceGrabCommand(&superStructure, &shooter).ToPtr());
 	SourceGrab.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
+<<<<<<< HEAD
 	AmpShoot.WhileTrue(AmpCommand(&superStructure, &shooter, &storage).ToPtr());
 	AmpShoot.OnFalse(frc2::SequentialCommandGroup(SuperStructureCommand(&superStructure, {-5.0, -0.0}), 
 													  ClosedCommand(&superStructure, &intake, &storage, &shooter)).ToPtr());
@@ -61,6 +64,9 @@ void RobotContainer::ConfigureBindings() {
 	AmpButton.WhileTrue(VisionAmpCommand(&superStructure, &shooter, &storage));
 	AmpButton.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
+=======
+	manualClimb.WhileTrue(ManualClimb(&chassis, &superStructure, &supportArms, &aprilTagCamera, &opertr));
+>>>>>>> main
 
 }
 

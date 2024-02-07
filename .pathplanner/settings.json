@@ -1,19 +1,11 @@
 {
-  "robotWidth": 0.9,
-  "robotLength": 0.9,
+  "robotWidth": 0.82,
+  "robotLength": 0.963,
   "holonomicMode": true,
   "pathFolders": [
-    "AMPAuto",
-    "CenterAuto",
-    "CenterAutoDirect",
-    "SourceAuto"
+    "Climbing"
   ],
-  "autoFolders": [
-    "AMPAuto",
-    "CenterAuto",
-    "CenterAutoDirect",
-    "SourceAuto"
-  ],
+  "autoFolders": [],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,
