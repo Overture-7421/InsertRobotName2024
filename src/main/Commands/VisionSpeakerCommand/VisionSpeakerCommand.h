@@ -7,6 +7,7 @@
 #include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/XboxController.h>
 
 #include "OvertureLib/Math/InterpolatingTable/InterpolatingTable.h"
 #include "OvertureLib/Math/Utils.h"
@@ -27,7 +28,7 @@
 class VisionSpeakerCommand
     : public frc2::CommandHelper<frc2::Command, VisionSpeakerCommand> {
  public:
-  VisionSpeakerCommand(Chassis* chassis, SuperStructure* SuperStructure, Shooter* shooter);
+  VisionSpeakerCommand(Chassis* chassis, SuperStructure* SuperStructure, Shooter* shooter, frc::XboxController* joystick);
 
   void Initialize() override;
 
@@ -81,6 +82,7 @@ class VisionSpeakerCommand
   SuperStructure* superStructure;
   Chassis* chassis;
   Shooter* shooter;
+  frc::XboxController* joystick;
 
   TargetingWhileMoving dynamicTarget {
     flipTranslationIfNeeded({0.06_m, 5.54_m}), 

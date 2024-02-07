@@ -60,22 +60,21 @@ private:
 
 
 	// Driver Commands
-	frc2::Trigger resetAngleButton{ [this] {return driver.GetBackButton();} };
-	frc2::Trigger climbButton{ [this] {return driver.GetStartButton();} };
-	frc2::Trigger shootTrap{ [this] {return driver.GetLeftBumper();} };
-
+	frc2::Trigger ampV{ [this] {return driver.GetLeftTriggerAxis() > 0.3;} };
+	frc2::Trigger sourceV{ [this] {return driver.GetRightBumper();} };
+	frc2::Trigger speakerV{ [this] {return driver.GetRightTriggerAxis() > 0.3;} };	// TO GET TESTED
+	frc2::Trigger DisableFOD{ [this] {return driver.GetLeftBumper();} };
 
 	// Mechanism Commands
-
-	frc2::Trigger groundGrab{ [this] {return opertr.GetLeftTriggerAxis() > 0.3;} };
-	frc2::Trigger sourceGrab{ [this] {return opertr.GetAButton();} };
-	frc2::Trigger ampShoot{ [this] {return opertr.GetLeftBumper();} };
-	frc2::Trigger speakerShoot{ [this] {return opertr.GetRightBumper();} };
-	frc2::Trigger storageIn{ [this] {return opertr.GetYButton();} };
-	frc2::Trigger ampButton{ [this] {return opertr.GetBackButton();} };
-	frc2::Trigger sourceButton{ [this] {return opertr.GetXButton();} };
-	frc2::Trigger manualClimb{ [this] {return opertr.GetBButton();} };
-
+	frc2::Trigger ampM{ [this] {return opertr.GetLeftBumper();} };
+	frc2::Trigger sourceM{ [this] {return opertr.GetBButton();} };
+	frc2::Trigger climbV{ [this] {return opertr.GetXButton();} };
+	frc2::Trigger climbM{ [this] {return opertr.GetYButton();} };
+	frc2::Trigger shootM{ [this] {return opertr.GetLeftTriggerAxis() > 0.3;} };
+	frc2::Trigger speakerM{ [this] {return opertr.GetRightBumper();} };
+	frc2::Trigger trapV{ [this] {return opertr.GetAButton();} };
+	frc2::Trigger closed{ [this] {return opertr.GetPOV() == 0;} };
+	frc2::Trigger intakeM{ [this] {return opertr.GetRightTriggerAxis() > 0.3;} };
 
 	//Auto Chooser
 	frc::SendableChooser<std::string> autoChooser;

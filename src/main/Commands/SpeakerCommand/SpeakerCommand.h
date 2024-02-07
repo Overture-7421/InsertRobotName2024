@@ -15,5 +15,5 @@ class SpeakerCommand
     : public frc2::CommandHelper<frc2::SequentialCommandGroup,
                                  SpeakerCommand> {
  public:
-  SpeakerCommand(SuperStructure* superStructure, Shooter* shooter, Storage* storage);
+  SpeakerCommand(SuperStructure* superStructure, Shooter* shooter);
 };
