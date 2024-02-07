@@ -50,23 +50,7 @@ void RobotContainer::ConfigureBindings() {
 	SourceGrab.WhileTrue(SourceGrabCommand(&superStructure, &shooter).ToPtr());
 	SourceGrab.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-<<<<<<< HEAD
-	AmpShoot.WhileTrue(AmpCommand(&superStructure, &shooter, &storage).ToPtr());
-	AmpShoot.OnFalse(frc2::SequentialCommandGroup(SuperStructureCommand(&superStructure, {-5.0, -0.0}), 
-													  ClosedCommand(&superStructure, &intake, &storage, &shooter)).ToPtr());
-
-	SpeakerShoot.WhileTrue(SpeakerCommand(&superStructure, &shooter, &storage).ToPtr());
-	SpeakerShoot.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
-
-	StorageIn.WhileTrue(StorageCommand(&storage, 3_V).ToPtr());
-	StorageIn.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
-
-	AmpButton.WhileTrue(VisionAmpCommand(&superStructure, &shooter, &storage));
-	AmpButton.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
-
-=======
 	manualClimb.WhileTrue(ManualClimb(&chassis, &superStructure, &supportArms, &aprilTagCamera, &opertr));
->>>>>>> main
 
 }
 
