@@ -94,11 +94,29 @@ void SuperStructure::Periodic() {
 
 	SuperStructureState actualTarget = m_TargetState;
 
+	if (m_TargetState.lowerAngle < -25) {
+		actualTarget.lowerAngle = -25;
+	} else if (m_TargetState.lowerAngle > 95) {
+		actualTarget.lowerAngle = 95;
+	}
+
+	if (m_TargetState.upperAngle < 0) {
+		actualTarget.upperAngle = 0;
+	} else if (m_TargetState.upperAngle > 90) {
+		actualTarget.upperAngle = 90;
+	}
+
 	if (currentState.lowerAngle < -25 && actualTarget.upperAngle < -10){
 		actualTarget.upperAngle = -10;
 	}
 
 	setFalconTargetPos(actualTarget, currentState);
+
+	frc::SmartDashboard::PutNumber("ActualTarget lower", actualTarget.lowerAngle);
+	frc::SmartDashboard::PutNumber("ActualTarget upper", actualTarget.upperAngle);
+
+	frc::SmartDashboard::PutNumber("m_TargetState lower", m_TargetState.lowerAngle);
+	frc::SmartDashboard::PutNumber("m_TargetState upper", m_TargetState.upperAngle);
 
 	frc::SmartDashboard::PutNumber("SuperStructure/Target/Lower Angle", m_TargetState.lowerAngle);
 	frc::SmartDashboard::PutNumber("SuperStructure/Target/Upper Angle", m_TargetState.upperAngle);
