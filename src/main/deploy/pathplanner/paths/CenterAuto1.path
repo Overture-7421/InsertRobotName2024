@@ -29,7 +29,19 @@
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "New Constraints Zone",
+      "minWaypointRelativePos": 0,
+      "maxWaypointRelativePos": 0.05,
+      "constraints": {
+        "maxVelocity": 0.33,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0
+      }
+    }
+  ],
   "eventMarkers": [
     {
       "name": "GroundGrabCommand",
@@ -63,7 +75,7 @@
   "reversed": false,
   "folder": "CenterAuto",
   "previewStartingState": {
-    "rotation": -0.4099978483517201,
+    "rotation": -53.31,
     "velocity": 0
   },
   "useDefaultConstraints": false
