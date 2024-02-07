@@ -14,4 +14,5 @@
 #include "main/Subsystems/Storage/Storage.h"
 #include "main/Commands/StorageCommand/StorageCommand.h"
 
-frc2::CommandPtr VisionAmpCommand(SuperStructure* superStucture, Shooter* shooter, Storage* storage);
+
+frc2::CommandPtr VisionSourceGrabCommand(SuperStructure* superStucture, Shooter* shooter, Storage* storage);

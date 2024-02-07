@@ -8,9 +8,9 @@
 // For more information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 GroundGrabCommand::GroundGrabCommand(SuperStructure* superStructure, Storage* storage, Intake* intake) {
-   
+
    AddCommands(
-    SuperStructureCommand (superStructure, {-35.0,-5.0}), 
+    SuperStructureCommand (superStructure, {-30.0,-10.0}), 
     frc2::ParallelCommandGroup(
       IntakeCommand(intake, 3_V),
       StorageCommand(storage, 3_V)

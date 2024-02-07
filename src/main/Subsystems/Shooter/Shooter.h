@@ -13,6 +13,7 @@ class Shooter : public frc2::SubsystemBase {
 public:
 	Shooter();
 	void setVelocityVoltage(double velocity);
+	double getCurrentVelocity();
 	double getUpperMotorCurrentVelocity();
 	double getLowerMotorCurrentVelocity();
 	void setVoltage(units::volt_t voltage);

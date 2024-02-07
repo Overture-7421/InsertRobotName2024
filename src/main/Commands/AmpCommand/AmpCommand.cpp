@@ -3,15 +3,12 @@
 // NOTE:  Consider using this command inline, rather than writing a subclass.
 // For more information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-AmpCommand::AmpCommand(SuperStructure* superStucture, Shooter* shooter, Storage* storage) {
+AmpCommand::AmpCommand(SuperStructure* superStucture, Shooter* shooter) {
 
-  AddCommands(
-    frc2::ParallelCommandGroup(
-      frc2::SequentialCommandGroup(
-      SuperStructureCommand(superStucture, {-20.0, -0.0}), 
-      SuperStructureCommand(superStucture, {-5.0, -100.0})
-      ),
-      ShooterCommand(shooter, 6.00)
-    )
-  );
+	AddCommands(
+		frc2::ParallelCommandGroup(
+			SuperStructureCommand(superStucture, { 65.0, -30.0 }),
+			ShooterCommand(shooter, 6.00)
+		)
+	);
 }
