@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.0787334451105934,
-        "y": 4.123385238222728
+        "x": 1.08,
+        "y": 3.996715511015664
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.324615507675956,
-        "y": 4.131521543363028
+        "x": 1.08,
+        "y": 4.02
       },
       "prevControl": {
-        "x": 1.6559069622975557,
-        "y": 4.098975484037277
+        "x": 1.0757814746903966,
+        "y": 4.012586108776804
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,27 +30,9 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "GroundGrabCommand",
-      "waypointRelativePos": 0.15,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "GroundGrabCommand"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 5.75,
+    "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
@@ -63,8 +45,8 @@
   "reversed": false,
   "folder": "CenterAuto",
   "previewStartingState": {
-    "rotation": -0.4099978483517201,
+    "rotation": -90.02178166101343,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }
