@@ -28,14 +28,21 @@ void Drive::Execute() {
 		kMaxAngularSpeed = 7.0;
 	}
 
-	units::meters_per_second_t xInput{ Utils::ApplyAxisFilter(-joystick->GetLeftY()) * kMaxSpeed * alliance};
-	units::meters_per_second_t yInput{ Utils::ApplyAxisFilter(-joystick->GetLeftX()) * kMaxSpeed * alliance};
+	units::meters_per_second_t xInput{ Utils::ApplyAxisFilter(-joystick->GetLeftY()) * kMaxSpeed};
+	units::meters_per_second_t yInput{ Utils::ApplyAxisFilter(-joystick->GetLeftX()) * kMaxSpeed};
 	units::radians_per_second_t rInput{ Utils::ApplyAxisFilter(-joystick->GetRightX()) * kMaxAngularSpeed};
 
-	m_swerveChassis->driveFieldRelative({
-		xLimiter.Calculate(xInput),
-		yLimiter.Calculate(yInput),
-		rLimiter.Calculate(rInput) });
+	if (joystick->GetLeftBumper()) {
+		m_swerveChassis->driveRobotRelative({
+			xLimiter.Calculate(xInput),
+			yLimiter.Calculate(yInput),
+			rLimiter.Calculate(rInput) });
+		} else {
+			m_swerveChassis->driveFieldRelative({
+				xLimiter.Calculate(xInput * alliance),
+				yLimiter.Calculate(yInput * alliance),
+				rLimiter.Calculate(rInput) });
+	}
 }
 
 // Called once the command ends or is interrupted.

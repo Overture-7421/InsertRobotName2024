@@ -1,6 +1,6 @@
 {
   "robotWidth": 0.82,
-  "robotLength": 0.963,
+  "robotLength": 0.96,
   "holonomicMode": true,
   "pathFolders": [
     "Climbing"

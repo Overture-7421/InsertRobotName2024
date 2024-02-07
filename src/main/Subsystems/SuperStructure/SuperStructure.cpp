@@ -91,7 +91,14 @@ double SuperStructure::upperAngleFFCalculation(double angle) {
 void SuperStructure::Periodic() {
 
 	SuperStructureState currentState = getCurrentState();
-	setFalconTargetPos(m_TargetState, currentState);
+
+	SuperStructureState actualTarget = m_TargetState;
+
+	if (currentState.lowerAngle < -25 && actualTarget.upperAngle < -10){
+		actualTarget.upperAngle = -10;
+	}
+
+	setFalconTargetPos(actualTarget, currentState);
 
 	frc::SmartDashboard::PutNumber("SuperStructure/Target/Lower Angle", m_TargetState.lowerAngle);
 	frc::SmartDashboard::PutNumber("SuperStructure/Target/Upper Angle", m_TargetState.upperAngle);

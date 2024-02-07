@@ -58,7 +58,7 @@ frc2::CommandPtr SetUpJoints(Chassis* chassis, SuperStructure* superStructure, S
 frc2::CommandPtr ClimbAtLocation(SuperStructure* superStructure, frc::XboxController* controller) {
 	return frc2::cmd::Sequence(
 		SuperStructureCommand(superStructure, { -30, 0 }).ToPtr(),
-		WaitForButton(controller, frc::XboxController::Button::kA),
+		WaitForButton(controller, frc::XboxController::Button::kBack),
 		SuperStructureCommand(superStructure, { 85, -90 }).ToPtr()
 	);
 }
@@ -72,19 +72,19 @@ frc2::CommandPtr AutoClimb(Chassis* chassis, SuperStructure* superStructure, Sup
 		std::pair{ StageLocation::Left, frc2::cmd::Sequence(
 			GoToClimbingLocationPathFind(superStructure, supportArms, climbPathLeft),
 			SetUpJoints(chassis, superStructure, supportArms, climbPathLeft),
-			WaitForButton(controller, frc::XboxController::Button::kA),
+			WaitForButton(controller, frc::XboxController::Button::kBack),
 			ClimbAtLocation(superStructure, controller)
 		) },
 		std::pair{ StageLocation::Right, frc2::cmd::Sequence(
 			GoToClimbingLocationPathFind(superStructure, supportArms, climbPathRight),
 			SetUpJoints(chassis, superStructure, supportArms, climbPathRight),
-			WaitForButton(controller, frc::XboxController::Button::kA),
+			WaitForButton(controller, frc::XboxController::Button::kBack),
 			ClimbAtLocation(superStructure, controller)
 		) },
 		std::pair{ StageLocation::Back, frc2::cmd::Sequence(
 			GoToClimbingLocationPathFind(superStructure, supportArms, climbPathBack),
 			SetUpJoints(chassis, superStructure, supportArms, climbPathBack),
-			WaitForButton(controller, frc::XboxController::Button::kA),
+			WaitForButton(controller, frc::XboxController::Button::kBack),
 			ClimbAtLocation(superStructure, controller)
 		) }
 	);
@@ -100,7 +100,7 @@ frc2::CommandPtr ManualClimb(Chassis* chassis, SuperStructure* superStructure, S
 			chassis->resetOdometry(climbPathManual->getStartingDifferentialPose());
 		}),
 		SetUpJoints(chassis, superStructure, supportArms, climbPathManual),
-		WaitForButton(controller, frc::XboxController::Button::kA),
+		WaitForButton(controller, frc::XboxController::Button::kBack),
 		ClimbAtLocation(superStructure, controller)
 	);
 }
