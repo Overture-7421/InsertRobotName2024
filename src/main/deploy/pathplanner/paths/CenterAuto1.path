@@ -33,7 +33,7 @@
   "eventMarkers": [
     {
       "name": "GroundGrabCommand",
-      "waypointRelativePos": 0.6,
+      "waypointRelativePos": 0.7,
       "command": {
         "type": "sequential",
         "data": {
@@ -50,7 +50,7 @@
     },
     {
       "name": "VisionSpeakerCommand",
-      "waypointRelativePos": 0,
+      "waypointRelativePos": 0.55,
       "command": {
         "type": "sequential",
         "data": {
@@ -80,7 +80,7 @@
   "reversed": false,
   "folder": "CenterAuto",
   "previewStartingState": {
-    "rotation": -53.31390331924425,
+    "rotation": -90.0,
     "velocity": 0
   },
   "useDefaultConstraints": false
