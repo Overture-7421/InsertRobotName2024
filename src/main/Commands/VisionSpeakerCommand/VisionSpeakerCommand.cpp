@@ -15,6 +15,15 @@ VisionSpeakerCommand::VisionSpeakerCommand(Chassis* chassis, SuperStructure* sup
   this->joystick = joystick;
 }
 
+VisionSpeakerCommand::VisionSpeakerCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, Storage* storage) {
+  // Use addRequirements() here to declare subsystem dependencies.
+  AddRequirements({superStructure, shooter});
+  this->chassis = chassis;
+  this->superStructure = superStructure;
+  this->shooter = shooter;
+  this->storage = storage;
+}
+
 // Called when the command is initially scheduled.
 void VisionSpeakerCommand::Initialize() {
   chassis->setHeadingOverride(true);
@@ -51,9 +60,17 @@ void VisionSpeakerCommand::Execute() {
   
 
   if (lowerAngleInTolerance && upperAngleInTolerance && headingInTolerance && shooterSpeedInTolerance) {
+    if (joystick == nullptr) {
+    storage->setVoltage(3_V);
+    } else {
     joystick->SetRumble(frc::GenericHID::kBothRumble, 1.0);
+    }
   } else {
+    if (joystick == nullptr) {
+     storage->setVoltage(0_V); 
+    } else {
     joystick->SetRumble(frc::GenericHID::kBothRumble, 0.0);
+    }
   }
 
 }
@@ -61,7 +78,11 @@ void VisionSpeakerCommand::Execute() {
 // Called once the command ends or is interrupted.
 void VisionSpeakerCommand::End(bool interrupted) {
   chassis->setHeadingOverride(false);
+  if (joystick == nullptr){
+  storage->setVoltage(0_V);
+  } else {
   joystick->SetRumble(frc::GenericHID::kBothRumble, 0.0);
+  }
 }
 
 // Returns true when the command should end.

@@ -15,8 +15,10 @@
 #include "main/Subsystems/Chassis/Chassis.h"
 #include "main/Subsystems/SuperStructure/SuperStructure.h"
 #include "main/Subsystems/Shooter/Shooter.h"
+#include "main/Subsystems/Storage/Storage.h"
 
 #include "main/Commands/UtilityFunctions/UtilityFunctions.h"
+#include "main/Commands/StorageCommand/StorageCommand.h"
 
 /**
  * An example command.
@@ -29,6 +31,7 @@ class VisionSpeakerCommand
     : public frc2::CommandHelper<frc2::Command, VisionSpeakerCommand> {
  public:
   VisionSpeakerCommand(Chassis* chassis, SuperStructure* SuperStructure, Shooter* shooter, frc::XboxController* joystick);
+  VisionSpeakerCommand(Chassis* chassis, SuperStructure* SuperStructure, Shooter* shooter, Storage* storage);
 
   void Initialize() override;
 
@@ -82,7 +85,8 @@ class VisionSpeakerCommand
   SuperStructure* superStructure;
   Chassis* chassis;
   Shooter* shooter;
-  frc::XboxController* joystick;
+  frc::XboxController* joystick = nullptr;
+  Storage* storage;
 
   TargetingWhileMoving dynamicTarget {
     flipTranslationIfNeeded({0.06_m, 5.54_m}), 

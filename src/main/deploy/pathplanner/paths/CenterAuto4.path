@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.3985485374679727,
-        "y": 6.733731013824367
+        "x": 3.40661573994279,
+        "y": 6.645574764028993
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 6.630739424103669,
-        "y": 7.155321129472502
+        "x": 7.3277188165239435,
+        "y": 7.439585700413961
       },
       "prevControl": {
-        "x": 5.690172731772368,
-        "y": 7.031626874457505
+        "x": 6.387152124192642,
+        "y": 7.315891445398964
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,7 +32,7 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "New Event Marker",
+      "name": "VisionSpeakerCommand",
       "waypointRelativePos": 0.1,
       "command": {
         "type": "sequential",
@@ -41,13 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "ShootingPose"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "ShootShooter"
+                "name": "VisionSpeakerCommand"
               }
             }
           ]
@@ -63,7 +57,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 2.161079488226355,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,

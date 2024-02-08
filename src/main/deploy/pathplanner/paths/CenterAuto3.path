@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.1103565174320065,
-        "y": 5.597779868883561
+        "x": 2.38,
+        "y": 5.59
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8644289499705946,
-        "y": 5.726599070887158
+        "x": 1.905891465242752,
+        "y": 5.556577431979269
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.250886555981385,
-        "y": 6.534646792546081
+        "x": 2.38,
+        "y": 6.651755158003897
       },
       "prevControl": {
-        "x": 1.9346939692452838,
-        "y": 6.651755158003897
+        "x": 1.864199525733551,
+        "y": 6.698054857550859
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,7 +32,7 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Shoot",
+      "name": "VisionSpeakerCommand",
       "waypointRelativePos": 0.3,
       "command": {
         "type": "sequential",
@@ -41,7 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "SpeakerCommand"
+                "name": "VisionSpeakerCommand"
               }
             }
           ]
@@ -50,7 +50,7 @@
     },
     {
       "name": "GroundGrabCommand",
-      "waypointRelativePos": 0.95,
+      "waypointRelativePos": 0.7,
       "command": {
         "type": "sequential",
         "data": {
