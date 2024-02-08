@@ -80,7 +80,7 @@ void VisionSpeakerCommand::End(bool interrupted) {
   chassis->setHeadingOverride(false);
   if (joystick == nullptr){
   storage->setVoltage(0_V);
-  } else {
+  } else { 
   joystick->SetRumble(frc::GenericHID::kBothRumble, 0.0);
   }
 }
