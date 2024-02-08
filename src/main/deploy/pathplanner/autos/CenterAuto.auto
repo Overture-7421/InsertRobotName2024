@@ -10,24 +10,6 @@
           "data": {
             "pathName": "CenterAuto1"
           }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "CenterAuto2"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "CenterAuto3"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "CenterAuto4"
-          }
         }
       ]
     }
