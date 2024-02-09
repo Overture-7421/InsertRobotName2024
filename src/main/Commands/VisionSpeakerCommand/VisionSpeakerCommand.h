@@ -9,6 +9,8 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/XboxController.h>
 
+#include <frc/Timer.h>
+
 #include "OvertureLib/Math/InterpolatingTable/InterpolatingTable.h"
 #include "OvertureLib/Math/Utils.h"
 #include "OvertureLib/Math/TargetingWhileMoving/TargetingWhileMoving.h"
@@ -32,6 +34,13 @@ class VisionSpeakerCommand
  public:
   VisionSpeakerCommand(Chassis* chassis, SuperStructure* SuperStructure, Shooter* shooter, frc::XboxController* joystick);
   VisionSpeakerCommand(Chassis* chassis, SuperStructure* SuperStructure, Shooter* shooter, Storage* storage);
+
+
+  
+  frc::Timer Timer;	
+
+
+
 
   void Initialize() override;
 
@@ -87,6 +96,11 @@ class VisionSpeakerCommand
   Shooter* shooter;
   frc::XboxController* joystick = nullptr;
   Storage* storage;
+
+  bool lowerAngleInTolerance;
+  bool upperAngleInTolerance;
+  bool headingInTolerance;
+  bool shooterSpeedInTolerance;
 
   TargetingWhileMoving dynamicTarget {
     flipTranslationIfNeeded({0.06_m, 5.54_m}), 

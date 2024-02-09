@@ -56,12 +56,13 @@ void VisionSpeakerCommand::Execute() {
   frc::SmartDashboard::PutBoolean("lowerAngleInTolerance ", lowerAngleInTolerance);
   frc::SmartDashboard::PutBoolean("upperAngleInTolerance ", upperAngleInTolerance);
   frc::SmartDashboard::PutBoolean("headingInTolerance ", headingInTolerance);
-  frc::SmartDashboard::PutBoolean("shooterSpeedInTolerance ", shooterSpeedInTolerance);
-  
+  frc::SmartDashboard::PutBoolean("shooterSpeedInTolerance ", shooterSpeedInTolerance);  
 
   if (lowerAngleInTolerance && upperAngleInTolerance && headingInTolerance && shooterSpeedInTolerance) {
     if (joystick == nullptr) {
+    Timer.Start();
     storage->setVoltage(3_V);
+
     } else {
     joystick->SetRumble(frc::GenericHID::kBothRumble, 1.0);
     }
@@ -78,8 +79,14 @@ void VisionSpeakerCommand::Execute() {
 // Called once the command ends or is interrupted.
 void VisionSpeakerCommand::End(bool interrupted) {
   chassis->setHeadingOverride(false);
+
+  
   if (joystick == nullptr){
-  storage->setVoltage(0_V);
+    if (Timer.Get() >= 1.00_s){
+      storage->setVoltage(0_V);
+    } else {
+      storage->setVoltage(3_V);
+    }
   } else { 
   joystick->SetRumble(frc::GenericHID::kBothRumble, 0.0);
   }
@@ -87,5 +94,7 @@ void VisionSpeakerCommand::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool VisionSpeakerCommand::IsFinished() {
-  return true;
+
+  return false;
+
 }
