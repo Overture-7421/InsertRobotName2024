@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 2.05,
-        "y": 5.515804013063089
+        "x": 2.12,
+        "y": 5.506676679275977
       },
       "prevControl": {
-        "x": 1.1669778172889675,
-        "y": 5.712859104903928
+        "x": 1.2369778172889678,
+        "y": 5.703731771116816
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,23 +42,6 @@
               "type": "named",
               "data": {
                 "name": "GroundGrabCommand"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "VisionSpeakerCommand",
-      "waypointRelativePos": 0.5,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "VisionSpeakerCommand"
               }
             }
           ]
