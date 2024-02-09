@@ -27,6 +27,8 @@ VisionSpeakerCommand::VisionSpeakerCommand(Chassis* chassis, SuperStructure* sup
 // Called when the command is initially scheduled.
 void VisionSpeakerCommand::Initialize() {
   chassis->setHeadingOverride(true);
+  Timer.Reset();
+  Timer.Stop();
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -62,7 +64,6 @@ void VisionSpeakerCommand::Execute() {
     if (joystick == nullptr) {
     Timer.Start();
     storage->setVoltage(3_V);
-
     } else {
     joystick->SetRumble(frc::GenericHID::kBothRumble, 1.0);
     }
@@ -79,22 +80,16 @@ void VisionSpeakerCommand::Execute() {
 // Called once the command ends or is interrupted.
 void VisionSpeakerCommand::End(bool interrupted) {
   chassis->setHeadingOverride(false);
-
-  
-  if (joystick == nullptr){
-    if (Timer.Get() >= 1.00_s){
-      storage->setVoltage(0_V);
-    } else {
-      storage->setVoltage(3_V);
-    }
-  } else { 
+  storage->setVoltage(0_V);
   joystick->SetRumble(frc::GenericHID::kBothRumble, 0.0);
-  }
+  
 }
 
 // Returns true when the command should end.
 bool VisionSpeakerCommand::IsFinished() {
+  if (joystick == nullptr && Timer.Get() >= 1.00_s){
+      return true;
+  } 
 
   return false;
-
 }
