@@ -66,7 +66,7 @@ SupportArmsState SupportArms::getCurrentState() {
 void SupportArms::setFalconTargetPos(SupportArmsState targetState, SupportArmsState currentState) {
 	// m_lowerRight.setMotionMagicPosition(convertAngleToFalconPos(targetState.lowerAngle), lowerFF * cos(currentState.lowerAngle * DEG_TO_RAD), false);
 
-	//pidController.SetReference(convertAngleToFalconPos(targetState.lowerAngle), rev::ControlType::kSmartMotion);
+	pidController.SetReference(convertAngleToFalconPos(targetState.lowerAngle), rev::ControlType::kSmartMotion, 0, lowerFF * cos(currentState.lowerAngle * DEG_TO_RAD));
 }
 
 double SupportArms::convertAngleToFalconPos(double angle) {
