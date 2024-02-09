@@ -5,6 +5,7 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
+#include <frc/trajectory/TrapezoidProfile.h>
 #include <rev/CANSparkMax.h>
 
 #include "SupportArmsState.h"
@@ -41,6 +42,10 @@ private:
  	 rev::CANSparkMax m_lowerRight {23, rev::CANSparkMax::MotorType::kBrushless};
 	 rev::SparkPIDController pidController = m_lowerRight.GetPIDController();
 	 rev::SparkRelativeEncoder encoder = m_lowerRight.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor);
+
+	 frc::TrapezoidProfile<units::degree_t> trapezoidProfile {{0_deg_per_s, 0_deg_per_s_sq}};
+	 frc::TrapezoidProfile<units::degree_t>::State setpoint;
+	 units::second_t dt = 20_ms;
 
 	// State
 	SupportArmsState m_TargetState{ getCurrentState() };
