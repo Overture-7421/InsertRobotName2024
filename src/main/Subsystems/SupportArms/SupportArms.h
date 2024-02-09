@@ -5,6 +5,7 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
+#include <rev/CANSparkMax.h>
 
 #include "SupportArmsState.h"
 #include "SupportArmsPosition.h"
@@ -35,7 +36,11 @@ private:
 
 
 	// LowerMotors
-	OverTalonFX m_lowerRight{ 23, ControllerNeutralMode::Brake, true, "rio" };
+	// OverTalonFX m_lowerRight{ 23, ControllerNeutralMode::Brake, true, "rio" };
+
+ 	 rev::CANSparkMax m_lowerRight {23, rev::CANSparkMax::MotorType::kBrushless};
+	 rev::SparkPIDController pidController = m_lowerRight.GetPIDController();
+	 rev::SparkRelativeEncoder encoder = m_lowerRight.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor);
 
 	// State
 	SupportArmsState m_TargetState{ getCurrentState() };

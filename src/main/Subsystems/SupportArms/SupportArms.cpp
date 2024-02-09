@@ -9,16 +9,34 @@
 #define DEG_TO_RAD M_PI / 180.0
 
 SupportArms::SupportArms() {
-	// Configure Motors
-	m_lowerRight.setSupplyCurrentLimit(true, 20, 30, 0.5);
-	m_lowerRight.setSensorToMechanism(LOWER_GEAR_BOX_REDUCTION);
+	// // Configure Motors
+	// m_lowerRight.setSupplyCurrentLimit(true, 20, 30, 0.5);
+	// m_lowerRight.setSensorToMechanism(LOWER_GEAR_BOX_REDUCTION);
 
-	// COnfigure Motion Magic and PID
-	m_lowerRight.setPIDValues(45.0, 0.0, 0.0, 0.0, 0.0);
-	m_lowerRight.configureMotionMagic(20.0, 20.0, 0.0);
+	// // COnfigure Motion Magic and PID
+	// m_lowerRight.setPIDValues(45.0, 0.0, 0.0, 0.0, 0.0);
+	// m_lowerRight.configureMotionMagic(20.0, 20.0, 0.0);
+
+	// std::this_thread::sleep_for(std::chrono::seconds(2));
+	// m_lowerRight.setSensorPosition(convertAngleToFalconPos(getLowerAngle()));
+
+
+	// Configure Motors
+	m_lowerRight.SetSmartCurrentLimit(20);
+	m_lowerRight.SetSecondaryCurrentLimit(30);
+
+	// Configure Motion Magic and PID
+	pidController.SetP(0.0);
+	pidController.SetI(0.0);
+	pidController.SetD(0.0);
+	pidController.SetFF(0.0);
+
+	pidController.SetSmartMotionMaxVelocity(0.0);
+	pidController.SetSmartMotionMaxAccel(0.0);
 
 	std::this_thread::sleep_for(std::chrono::seconds(2));
-	m_lowerRight.setSensorPosition(convertAngleToFalconPos(getLowerAngle()));
+	encoder.SetPositionConversionFactor(1.0 / LOWER_GEAR_BOX_REDUCTION);
+	encoder.SetPosition(convertAngleToFalconPos(getLowerAngle()));
 
 	setTargetCoord({ getLowerAngle() });
 }
@@ -46,7 +64,9 @@ SupportArmsState SupportArms::getCurrentState() {
 }
 
 void SupportArms::setFalconTargetPos(SupportArmsState targetState, SupportArmsState currentState) {
-	m_lowerRight.setMotionMagicPosition(convertAngleToFalconPos(targetState.lowerAngle), lowerFF * cos(currentState.lowerAngle * DEG_TO_RAD), false);
+	// m_lowerRight.setMotionMagicPosition(convertAngleToFalconPos(targetState.lowerAngle), lowerFF * cos(currentState.lowerAngle * DEG_TO_RAD), false);
+
+	//pidController.SetReference(convertAngleToFalconPos(targetState.lowerAngle), rev::ControlType::kSmartMotion);
 }
 
 double SupportArms::convertAngleToFalconPos(double angle) {
@@ -57,4 +77,10 @@ double SupportArms::convertAngleToFalconPos(double angle) {
 void SupportArms::Periodic() {
 	SupportArmsState currentState = getCurrentState();
 	setFalconTargetPos(m_TargetState, currentState);
+
+
+	// Debugging
+	frc::SmartDashboard::PutNumber("SupportArms/Current/Lower Angle", currentState.lowerAngle);
+
+	frc::SmartDashboard::PutNumber("SupportArms/Current/Lower Position", encoder.GetPosition());
 }

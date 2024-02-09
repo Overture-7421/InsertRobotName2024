@@ -5,6 +5,7 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
+#include <rev/CANSparkMax.h>
 
 #include "OvertureLib/MotorControllers/OverTalonFX/OverTalonFX.h"
 #include "OvertureLib/MotorControllers/ControllerNeutralMode/ControllerNeutralMode.h"
@@ -16,5 +17,6 @@ public:
 	void Periodic() override;
 
 private:
-	OverTalonFX intakeMotor{ 25, ControllerNeutralMode::Brake, false, "rio" };
+	// OverTalonFX intakeMotor{ 25, ControllerNeutralMode::Brake, false, "rio" };
+ 	 rev::CANSparkMax intakeMotor {25, rev::CANSparkMax::MotorType::kBrushless};
 };

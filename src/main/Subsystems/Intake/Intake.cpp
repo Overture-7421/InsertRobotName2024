@@ -5,11 +5,21 @@
 #include "Intake.h"
 
 Intake::Intake() {
-	intakeMotor.setSupplyCurrentLimit(true, 20, 25, 0.5);
+	// intakeMotor.setSupplyCurrentLimit(true, 20, 25, 0.5);
+
+	// intakeMotor.setNeutralMode(ControllerNeutralMode::Coast);
+
+	intakeMotor.SetSmartCurrentLimit(20);
+	intakeMotor.SetSecondaryCurrentLimit(25);
+
+	intakeMotor.EnableVoltageCompensation(12);
+	intakeMotor.SetIdleMode(rev::CANSparkBase::IdleMode::kCoast);
 }
 
 void Intake::setVoltage(units::volt_t voltage) {
-	intakeMotor.setVoltage(voltage, false);
+	// intakeMotor.setVoltage(voltage, false);
+
+	// intakeMotor.SetVoltage(voltage);
 }
 
 // This method will be called once per scheduler run
