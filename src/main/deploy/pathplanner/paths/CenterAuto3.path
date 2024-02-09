@@ -32,23 +32,6 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "VisionSpeakerCommand",
-      "waypointRelativePos": 0.3,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "VisionSpeakerCommand"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
       "name": "GroundGrabCommand",
       "waypointRelativePos": 0.7,
       "command": {
