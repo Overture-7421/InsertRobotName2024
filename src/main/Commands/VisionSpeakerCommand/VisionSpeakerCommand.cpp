@@ -80,9 +80,11 @@ void VisionSpeakerCommand::Execute() {
 // Called once the command ends or is interrupted.
 void VisionSpeakerCommand::End(bool interrupted) {
   chassis->setHeadingOverride(false);
+  if (joystick == nullptr){
   storage->setVoltage(0_V);
+  } else {
   joystick->SetRumble(frc::GenericHID::kBothRumble, 0.0);
-  
+  }
 }
 
 // Returns true when the command should end.
