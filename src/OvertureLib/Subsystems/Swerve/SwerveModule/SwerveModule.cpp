@@ -28,7 +28,7 @@ SwerveModule::SwerveModule(int rotatorID, int wheelID, int canCoderID, double of
 	// m_driveMotor->setClosedLoopTorqueRamp(0.1);
 	// m_driveMotor->setTorqueCurrentLimit(40, -40, 0.1);
 	m_driveMotor->setClosedLoopVoltageRamp(0.1);
-	m_driveMotor->setSupplyCurrentLimit(true, 20, 30, 0.5);
+	m_driveMotor->setSupplyCurrentLimit(true, 35, 40, 3);
 
 	setFFConstants(0_V, 0_V, 0_V);
 }
