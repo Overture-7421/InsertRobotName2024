@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.4920228910398299,
-        "y": 6.395323513303277
+        "x": 1.2587578200067437,
+        "y": 6.427207160464143
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.526526067747076,
-        "y": 5.790985977433264
+        "x": 2.293260996713991,
+        "y": 5.822869624594131
       },
       "isLocked": false,
       "linkedName": null
@@ -51,7 +51,7 @@
   "reversed": false,
   "folder": "AMPAuto",
   "previewStartingState": {
-    "rotation": 28.22193948238503,
+    "rotation": 45.0,
     "velocity": 0
   },
   "useDefaultConstraints": false
