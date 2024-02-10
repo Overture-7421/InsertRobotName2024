@@ -6,6 +6,7 @@
 
 #include <frc2/command/CommandPtr.h>
 #include <frc2/command/button/Trigger.h>
+#include <frc2/command/button/CommandXboxController.h>
 #include <frc/XboxController.h>
 #include <frc/smartdashboard/SendableChooser.h>
 
@@ -46,8 +47,8 @@ private:
 	void ConfigureBindings();
 
 	// Subsystems
-	Chassis chassis;
-	AprilTagCamera aprilTagCamera{ &chassis };
+	// Chassis chassis;
+	// AprilTagCamera aprilTagCamera{ &chassis };
 	Intake intake;
 	SuperStructure superStructure;
 	SupportArms supportArms;
@@ -57,6 +58,13 @@ private:
 	// Controllers
 	frc::XboxController driver{ 0 };
 	frc::XboxController opertr{ 1 };
+
+
+	// frc2::CommandXboxController charectization{ 4 };
+
+
+	// Calibration
+	frc2::Trigger testButton {[this] {return driver.GetAButton();}};
 
 
 	// Driver Commands

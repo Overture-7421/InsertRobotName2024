@@ -14,5 +14,16 @@ void Storage::setVoltage(units::volt_t voltage) {
 	// storageMotor.setVoltage(voltage, false);
 }
 
+bool Storage::isNoteOnForwardSensor(){
+	return !forwardSensor.Get();
+}
+
+bool Storage::isNoteOnBackSensor(){
+	return !backSensor.Get();
+}
+
 // This method will be called once per scheduler run
-void Storage::Periodic() {}
+void Storage::Periodic() {
+	frc::SmartDashboard::PutBoolean("Storage/NoteOnForward", isNoteOnForwardSensor());
+	frc::SmartDashboard::PutBoolean("Storage/NoteOnBack", isNoteOnBackSensor());
+}

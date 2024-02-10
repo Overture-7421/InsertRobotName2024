@@ -6,13 +6,14 @@
 
 #include <frc2/command/SubsystemBase.h>
 #include <frc/trajectory/TrapezoidProfile.h>
-#include <rev/CANSparkMax.h>
 
 #include "SupportArmsState.h"
 #include "SupportArmsPosition.h"
 #include <OvertureLib/MotorControllers/OverTalonFX/OverTalonFX.h>
 #include <OvertureLib/MotorControllers/ControllerNeutralMode/ControllerNeutralMode.h>
 #include <OvertureLib/Sensors/OverDutyCycleEncoder/OverDutyCycleEncoder.h>
+
+#include <units/angular_acceleration.h>
 
 class SupportArms : public frc2::SubsystemBase {
 public:
@@ -29,23 +30,15 @@ private:
 	double convertAngleToFalconPos(double angle);
 
 	//constant
-	const double LOWER_GEAR_BOX_REDUCTION = 106.0;
+	const double LOWER_GEAR_BOX_REDUCTION = 80.1818;
 
 	//Encoders
-	OverDutyCycleEncoder lowerEncoder{ 2 };
+	OverDutyCycleEncoder lowerEncoder{ 4 };
 	double lowerOffset = 0;
 
 
 	// LowerMotors
-	// OverTalonFX m_lowerRight{ 23, ControllerNeutralMode::Brake, true, "rio" };
-
- 	 rev::CANSparkMax m_lowerRight {23, rev::CANSparkMax::MotorType::kBrushless};
-	 rev::SparkPIDController pidController = m_lowerRight.GetPIDController();
-	 rev::SparkRelativeEncoder encoder = m_lowerRight.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor);
-
-	 frc::TrapezoidProfile<units::degree_t> trapezoidProfile {{0_deg_per_s, 0_deg_per_s_sq}};
-	 frc::TrapezoidProfile<units::degree_t>::State setpoint;
-	 units::second_t dt = 20_ms;
+	OverTalonFX m_lowerRight{ 23, ControllerNeutralMode::Brake, true, "rio" };
 
 	// State
 	SupportArmsState m_TargetState{ getCurrentState() };
