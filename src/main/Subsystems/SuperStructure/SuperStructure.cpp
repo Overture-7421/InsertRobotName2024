@@ -21,11 +21,11 @@ SuperStructure::SuperStructure() {
 	m_upperMotor.setSensorToMechanism(UPPER_GEAR_BOX_REDUCTION);
 
 	// COnfigure Motion Magic and PID
-	m_lowerRight.setPIDValues(200.0, 0.0, 0.0, 0.0, 0.0);
-	m_lowerRight.configureMotionMagic(5.0, 0.85, 0.0);
+	m_lowerRight.setPIDValues(220.0, 0.0, 0.0, 0.0, 0.0);
+	m_lowerRight.configureMotionMagic(15, 40.0, 0.0);
 
-	m_upperMotor.setPIDValues(65.0, 0.0, 0.0, 0.0, 0.0);
-	m_upperMotor.configureMotionMagic(4.0, 3.0, 0.0);
+	m_upperMotor.setPIDValues(70.0, 0.0, 0.0, 0.0, 0.0);
+	m_upperMotor.configureMotionMagic(15.0, 40.0, 0.0);
 
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 	m_lowerRight.setSensorPosition(convertAngleToFalconPos(getLowerAngle()));
