@@ -95,6 +95,6 @@ private:
 
 	bool headingOverride = false;
 
-	frc::ProfiledPIDController<units::radians> headingController{7.5, 0, 0.1, frc::TrapezoidProfile<units::radians>::Constraints{ 9_rad_per_s, 12.5_rad_per_s_sq } };
+	frc::ProfiledPIDController<units::radians> headingController{5.5, 0, 0.0, frc::TrapezoidProfile<units::radians>::Constraints{ 9_rad_per_s, 12.5_rad_per_s_sq } };
 	frc::Rotation2d headingTarget;
 };
