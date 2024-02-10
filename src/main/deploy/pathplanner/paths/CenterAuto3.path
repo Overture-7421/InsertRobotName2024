@@ -3,55 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.16,
-        "y": 5.53
+        "x": 2.446817325425873,
+        "y": 5.511817049731372
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.6858914652427524,
-        "y": 5.4965774319792695
+        "x": 2.446817325425873,
+        "y": 5.987102196546171
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Center 2-3"
     },
     {
       "anchor": {
-        "x": 2.36240162677498,
-        "y": 6.599493548689479
+        "x": 2.446817325425873,
+        "y": 6.806996674491571
       },
       "prevControl": {
-        "x": 1.8466011525085313,
-        "y": 6.645793248236441
+        "x": 2.446817325425873,
+        "y": 6.289122373689115
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Center3-4"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "GroundGrabCommand",
-      "waypointRelativePos": 0.7,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "GroundGrabCommand"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 5.0,
-    "maxAcceleration": 1.0,
+    "maxVelocity": 1.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
@@ -62,6 +44,9 @@
   },
   "reversed": false,
   "folder": "CenterAuto",
-  "previewStartingState": null,
+  "previewStartingState": {
+    "rotation": 25.0,
+    "velocity": 0
+  },
   "useDefaultConstraints": false
 }

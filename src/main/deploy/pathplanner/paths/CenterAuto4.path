@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.36,
-        "y": 6.6
+        "x": 2.446817325425873,
+        "y": 6.806996674491571
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.654648704443421,
-        "y": 6.600842098616158
+        "x": 2.741466029869294,
+        "y": 6.807838773107729
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Center3-4"
     },
     {
       "anchor": {
@@ -32,8 +32,8 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 5.0,
-    "maxAcceleration": 1.0,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

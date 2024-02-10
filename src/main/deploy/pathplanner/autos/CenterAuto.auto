@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.0776255034652926,
-      "y": 4.016624819893985
+      "x": 1.24,
+      "y": 4.32
     },
-    "rotation": -78.38999999999999
+    "rotation": -45.0
   },
   "command": {
     "type": "sequential",
@@ -18,27 +18,86 @@
           }
         },
         {
-          "type": "path",
+          "type": "deadline",
           "data": {
-            "pathName": "CenterAuto1"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "CenterAuto1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "GroundGrabCommand"
+                }
+              }
+            ]
           }
         },
         {
-          "type": "path",
+          "type": "deadline",
           "data": {
-            "pathName": "CenterAuto2"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "CenterAuto2"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "VisionSpeakerCommand"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "GroundGrabCommand"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         },
         {
-          "type": "named",
+          "type": "deadline",
           "data": {
-            "name": "VisionSpeakerCommand"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "CenterAuto3"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "CenterAuto3"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "VisionSpeakerCommand"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "GroundGrabCommand"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         },
         {
