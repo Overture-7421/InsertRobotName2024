@@ -12,12 +12,6 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "VisionSpeakerCommand"
-          }
-        },
-        {
           "type": "deadline",
           "data": {
             "commands": [
@@ -28,9 +22,22 @@
                 }
               },
               {
-                "type": "named",
+                "type": "parallel",
                 "data": {
-                  "name": "GroundGrabCommand"
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "VisionSpeakerCommand"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "GroundGrabCommand"
+                      }
+                    }
+                  ]
                 }
               }
             ]
