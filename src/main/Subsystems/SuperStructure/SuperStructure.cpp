@@ -10,15 +10,15 @@
 
 SuperStructure::SuperStructure() {
 	// Configure Motors
-	m_lowerRight.setSupplyCurrentLimit(true, 30, 40, 3);
+	m_lowerRight.setSupplyCurrentLimit(true, 30, 40, 0.5);
 	m_lowerRight.setSensorToMechanism(LOWER_GEAR_BOX_REDUCTION);
 
-	m_lowerLeft.setSupplyCurrentLimit(true, 30, 40, 3);
+	m_lowerLeft.setSupplyCurrentLimit(true, 30, 40, 0.5);
 	m_lowerLeft.setSensorToMechanism(LOWER_GEAR_BOX_REDUCTION);
 
 	m_lowerRight.setFollow(m_lowerLeft.GetDeviceID(), true);
 
-	m_upperMotor.setSupplyCurrentLimit(true, 30, 40, 3);
+	m_upperMotor.setSupplyCurrentLimit(true, 30, 40, 0.5);
 	m_upperMotor.setSensorToMechanism(UPPER_GEAR_BOX_REDUCTION);
 
 
