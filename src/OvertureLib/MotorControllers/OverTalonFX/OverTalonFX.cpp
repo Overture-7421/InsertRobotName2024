@@ -341,6 +341,11 @@ void OverTalonFX::configureMotionMagic(double cruiseVelocity, double acceleratio
 	GetConfigurator().Apply(config);
 }
 
+void OverTalonFX::configureSoftwareLimitSwitch(ctre::phoenix6::configs::SoftwareLimitSwitchConfigs configs){
+	config.SoftwareLimitSwitch = configs;
+	GetConfigurator().Apply(config);
+}
+
 /**
  * @brief Sets the TalonFX continuous wrap
  */

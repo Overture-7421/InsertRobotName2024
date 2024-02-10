@@ -51,6 +51,7 @@ public:
 
 	void setPIDValues(double kP, double kI, double kD, double kS, double kV);
 	void configureMotionMagic(double cruiseVelocity, double acceleration, double jerk);
+	void configureSoftwareLimitSwitch(ctre::phoenix6::configs::SoftwareLimitSwitchConfigs configs);
 	void setContinuousWrap();
 
 private:

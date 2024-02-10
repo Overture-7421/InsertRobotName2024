@@ -27,21 +27,23 @@ SuperStructure::SuperStructure() {
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 	m_upperMotor.setSensorPosition(convertAngleToFalconPos(getUpperAngle()));
 
-	auto upperMotorConfig = m_upperMotor.getConfig();
-	upperMotorConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-	upperMotorConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 0;
+	SoftwareLimitSwitchConfigs upperMotorSoftLimitConfig;
+	upperMotorSoftLimitConfig.ForwardSoftLimitEnable = true;
+	upperMotorSoftLimitConfig.ForwardSoftLimitThreshold = 0;
 
-	upperMotorConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
-	upperMotorConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -0.548096;
-	m_upperMotor.GetConfigurator().Apply(upperMotorConfig);
+	upperMotorSoftLimitConfig.ReverseSoftLimitEnable = true;
+	upperMotorSoftLimitConfig.ReverseSoftLimitThreshold = -0.548096;
 
-	auto lowerMotorConfig = m_lowerRight.getConfig();
-	lowerMotorConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-	lowerMotorConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 0.256592;
+	m_upperMotor.configureSoftwareLimitSwitch(upperMotorSoftLimitConfig);
 
-	lowerMotorConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
-	lowerMotorConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -0.090088;
-	m_lowerRight.GetConfigurator().Apply(lowerMotorConfig);
+	SoftwareLimitSwitchConfigs lowerMotorSoftLimitConfig;
+	lowerMotorSoftLimitConfig.ForwardSoftLimitEnable = true;
+	lowerMotorSoftLimitConfig.ForwardSoftLimitThreshold = 0.256592;
+
+	lowerMotorSoftLimitConfig.ReverseSoftLimitEnable = true;
+	lowerMotorSoftLimitConfig.ReverseSoftLimitThreshold = -0.090088;
+
+	m_lowerRight.configureSoftwareLimitSwitch(lowerMotorSoftLimitConfig);
 
 	m_lowerRight.setContinuousWrap();
 	m_upperMotor.setContinuousWrap();
