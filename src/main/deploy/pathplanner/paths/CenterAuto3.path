@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.446817325425873,
-        "y": 5.987102196546171
+        "x": 1.3074487833435935,
+        "y": 5.55076982040085
       },
       "isLocked": false,
       "linkedName": "Center 2-3"
@@ -20,8 +20,8 @@
         "y": 6.806996674491571
       },
       "prevControl": {
-        "x": 2.446817325425873,
-        "y": 6.289122373689115
+        "x": 1.4827362513562519,
+        "y": 6.845949445161049
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,7 +32,7 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
+    "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
@@ -45,8 +45,8 @@
   "reversed": false,
   "folder": "CenterAuto",
   "previewStartingState": {
-    "rotation": 25.0,
+    "rotation": 0.0,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

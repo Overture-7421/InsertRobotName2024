@@ -21,7 +21,6 @@ RobotContainer::RobotContainer() {
 	autoChooser.AddOption("CenterAuto", "CenterAuto");
 	autoChooser.AddOption("AMPAuto", "AMPAuto");
 	autoChooser.AddOption("SourceAuto", "SourceAuto");
-	autoChooser.AddOption("CenterAutoDirect", "CenterAutoDirect");
 
 	pathplanner::NamedCommands::registerCommand("GroundGrabCommand", std::move(GroundGrabCommand(&superStructure, &storage, &intake).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("ClosedCommand", std::move(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr()));
@@ -41,7 +40,7 @@ void RobotContainer::ConfigureBindings() {
 
 	ampV.WhileTrue(VisionAmpCommand(&superStructure, &shooter, &storage));
 	ampV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
-	
+
 	sourceV.WhileTrue(VisionSourceGrabCommand(&superStructure, &shooter, &storage));
 	sourceV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
