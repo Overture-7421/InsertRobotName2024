@@ -104,6 +104,18 @@
               }
             ]
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "AMPAuto6"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "VisionSpeakerCommand"
+          }
         }
       ]
     }
