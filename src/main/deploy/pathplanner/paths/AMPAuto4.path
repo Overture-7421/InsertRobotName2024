@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.55,
-        "y": 5.76
+        "x": 7.676226787803517,
+        "y": 5.774748251750359
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.74908811171789,
-        "y": 6.085460593257496
+        "x": 6.875314899521407,
+        "y": 6.100208845007855
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "AMP 3-4"
     },
     {
       "anchor": {
@@ -25,32 +25,14 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "AMP 4-5"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "New Event Marker",
-      "waypointRelativePos": 0.95,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "SpeakerCommand"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 6.0,
+    "maxVelocity": 4.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0

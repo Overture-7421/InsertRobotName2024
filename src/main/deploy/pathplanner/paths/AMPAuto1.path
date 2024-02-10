@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 7.557560337404902,
-        "y": 7.375743504277187
+        "x": 7.676226787803517,
+        "y": 7.449717390537984
       },
       "prevControl": {
-        "x": 7.576789914554532,
-        "y": 7.064272428396047
+        "x": 7.695456364953148,
+        "y": 7.138246314656844
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "AMP 1-2"
     }
   ],
   "rotationTargets": [
@@ -36,50 +36,9 @@
     }
   ],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "New Event Marker",
-      "waypointRelativePos": 0.0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "ShootingPose"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "ShootShooter"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "GroundGrabCommand",
-      "waypointRelativePos": 0.95,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "GroundGrabCommand"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 6.0,
+    "maxVelocity": 5.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
