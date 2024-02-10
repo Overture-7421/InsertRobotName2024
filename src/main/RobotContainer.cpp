@@ -31,14 +31,14 @@ RobotContainer::RobotContainer()
 void RobotContainer::ConfigureBindings()
 {
 
-	testButton.OnTrue(frc2::cmd::RunOnce([this]
-										 {
-											 intake.setVoltage(12_V);
-										 }))
-		.OnFalse(frc2::cmd::RunOnce([this]
-									{
-											intake.setVoltage(0_V);
-									 }));
+	// testButton.OnTrue(frc2::cmd::RunOnce([this]
+	// 									 {
+	// 										 intake.setVoltage(12_V);
+	// 									 }))
+	// 	.OnFalse(frc2::cmd::RunOnce([this]
+	// 								{
+	// 										intake.setVoltage(0_V);
+	// 								 }));
 
 	// charectization.A().WhileTrue(
 	// 	superStructure.sysIdQuadstaticLower(frc2::sysid::Direction::kReverse));

@@ -136,7 +136,5 @@ void SuperStructure::Periodic() {
 	frc::SmartDashboard::PutNumber("SuperStructure/Current/Lower", currentState.lowerAngle);
 	frc::SmartDashboard::PutNumber("SuperStructure/Current/Upper", currentState.upperAngle);
 
-	frc::SmartDashboard::PutNumber("SuperStructure/Current/Lower Motor Position", m_lowerLeft.GetPosition().GetValueAsDouble());
-	frc::SmartDashboard::PutNumber("SuperStructure/Current/Upper Motor Position", m_upperMotor.GetPosition().GetValueAsDouble());
-
+	frc::SmartDashboard::PutString("SuperStructure/LimitSwitch/Lower", m_lowerLeft.GetReverseLimit().GetValue().Serialize());
 }
