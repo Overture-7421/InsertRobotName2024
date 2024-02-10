@@ -107,6 +107,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "ClosedCommand"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "CenterAuto4"
