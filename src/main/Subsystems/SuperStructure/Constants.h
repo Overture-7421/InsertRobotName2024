@@ -14,8 +14,8 @@ namespace SuperStructureConstants {
     const static double LowerAngleSafetyThreshold = -25;
     const static double UpperAngleSafetyLimit = -10;
 
-    const static SuperStructureState GroundGrabState = {-30.0,-10.0};
+    const static SuperStructureState GroundGrabState = {-27.3,-13.3};
     const static SuperStructureState SourceGrabState = { 70.0, -50.0 };
-    const static SuperStructureState ManualSpeakerState = {-20.0, -22.0};
+    const static SuperStructureState ManualSpeakerState = {-20.0, -17.0};
     const static SuperStructureState AmpState = { 65.0, -30.0 };
 };
