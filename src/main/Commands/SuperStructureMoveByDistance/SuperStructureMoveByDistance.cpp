@@ -22,13 +22,11 @@ void SuperStructureMoveByDistance::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void SuperStructureMoveByDistance::Execute() {
 	distanceToTarget = units::math::abs(distanceToTargetProvider());
-	frc::SmartDashboard::PutNumber("SuperStructureMoveByDistance/DistanceMoveByDistance", distanceToTarget.value());
 
 	if (distanceToTarget < profile.profileActivationDistance) {
 		SuperStructureState targetState;
 
 		double inverseNormalizedDistance = 1.0 - (distanceToTarget / profile.profileActivationDistance).value();
-		frc::SmartDashboard::PutNumber("SuperStructureMoveByDistance/NormalizedDistance", inverseNormalizedDistance);
 		targetState.upperAngle = profile.startingState.upperAngle + upperAngleTravel * inverseNormalizedDistance;
 		targetState.lowerAngle = profile.startingState.lowerAngle + lowerAngleTravel * inverseNormalizedDistance;
 

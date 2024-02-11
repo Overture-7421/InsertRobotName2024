@@ -8,6 +8,7 @@
 
 #include "OvertureLib/MotorControllers/OverTalonFX/OverTalonFX.h"
 #include "OvertureLib/MotorControllers/ControllerNeutralMode/ControllerNeutralMode.h"
+#include "Constants.h"
 
 class Shooter : public frc2::SubsystemBase {
 public:
@@ -22,9 +23,4 @@ public:
 private:
 	OverTalonFX upperShooterMotor{ 26, ControllerNeutralMode::Brake, false, "rio" };
 	OverTalonFX lowerShooterMotor{ 27, ControllerNeutralMode::Brake, false, "rio" };
-
-	const double LOWER_GEAR_BOX_REDUCTION = 1.0/2.4;
-	const double UPPER_GEAR_BOX_REDUCTION = 1.0/2.4;
-
-	double velocity;
 };

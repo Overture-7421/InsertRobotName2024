@@ -6,34 +6,24 @@
 
 #include <frc2/command/SubsystemBase.h>
 
-#include "SuperStructureState.h"
-#include "SuperStructurePosition.h"
 #include <OvertureLib/MotorControllers/OverTalonFX/OverTalonFX.h>
 #include <OvertureLib/MotorControllers/ControllerNeutralMode/ControllerNeutralMode.h>
 #include <OvertureLib/Sensors/OverDutyCycleEncoder/OverDutyCycleEncoder.h>
-
+#include "Constants.h"
+#include "SuperStructureState.h"
 
 class SuperStructure : public frc2::SubsystemBase {
 public:
 	SuperStructure();
-	void setTargetCoord(SuperStructureState TargetCoord);
-	void setLowerAngleConstraints(double velocity, double acceleration);
-	void setUpperAngleConstraints(double velocity, double acceleration);
+	void setTargetCoord(SuperStructureState targetState);
 	double getLowerAngle();
 	double getUpperAngle();
-	SuperStructurePosition getPosition();
-	void setPosition(SuperStructurePosition pos);
 	SuperStructureState getCurrentState();
 	void Periodic() override;
 
 private:
 	void setFalconTargetPos(SuperStructureState targetState, SuperStructureState currentState);
 	double convertAngleToFalconPos(double angle);
-	double upperAngleFFCalculation(double angle);
-
-	//constant
-	const double LOWER_GEAR_BOX_REDUCTION = 230.0;
-	const double UPPER_GEAR_BOX_REDUCTION = 90.0;
 
 	//Encoders
 	OverDutyCycleEncoder lowerEncoder{ 0 };
@@ -42,15 +32,14 @@ private:
 	double upperOffset = 0;
 
 	// LowerMotors
-	OverTalonFX m_lowerRight{ 20, ControllerNeutralMode::Brake, true, "rio" };
-	OverTalonFX m_lowerLeft{ 21, ControllerNeutralMode::Brake, true, "rio" };
+	OverTalonFX lowerRightMotor{ 20, ControllerNeutralMode::Brake, true, "rio" };
+	OverTalonFX lowerLeftMotor{ 21, ControllerNeutralMode::Brake, true, "rio" };
 
 	// Upper Motors
-	OverTalonFX m_upperMotor{ 22, ControllerNeutralMode::Brake, true, "rio" };
+	OverTalonFX upperMotor{ 22, ControllerNeutralMode::Brake, true, "rio" };
 
 	// State
-	SuperStructureState m_TargetState{ getCurrentState() };
-	SuperStructurePosition position = SuperStructurePosition::Closing;
+	SuperStructureState targetState;
 
 	//Motion Magic Feed Forward
 	double lowerFF = 0.25;

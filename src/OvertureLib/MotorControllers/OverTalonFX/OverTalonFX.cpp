@@ -294,7 +294,6 @@ void OverTalonFX::setMotionMagicPosition(double position, double feedForward, bo
 	motionMagicVoltage.FeedForward = units::volt_t{ feedForward };
 	motionMagicVoltage.EnableFOC = enableFOC;
 	SetControl(motionMagicVoltage.WithPosition(units::turn_t{ position }));
-	frc::SmartDashboard::PutNumber("TEST VALUEEE", position);
 }
 
 /**
