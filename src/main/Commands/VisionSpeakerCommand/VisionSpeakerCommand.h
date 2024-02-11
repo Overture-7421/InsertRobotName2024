@@ -96,15 +96,17 @@ private:
 	TargetingWhileMoving dynamicTarget{
 	  flipTranslationIfNeeded({0.06_m, 5.54_m}),
 	  {
-	  {1_m, 0.1_s},
-	  {2_m, 0.2_s},
-	  {3_m, 0.3_s},
-	  {4_m, 0.4_s},
-	  {5_m, 0.5_s},
-	  {6_m, 0.6_s},
-	  {7_m, 0.7_s}
+	  {1_m, 0.2_s},
+	  {2_m, 0.3_s},
+	  {3_m, 0.4_s},
+	  {4_m, 0.5_s},
+	  {5_m, 0.6_s},
+	  {6_m, 0.7_s},
+	  {7_m, 0.8_s}
 	  }
 	};
 	units::meter_t distance = 0.0_m;
 	frc::Rotation2d angle;
+
+	frc::Field2d field;
 };

@@ -29,12 +29,16 @@ void VisionSpeakerCommand::Initialize() {
 	chassis->setHeadingOverride(true);
 	Timer.Reset();
 	Timer.Stop();
+
+	frc::SmartDashboard::PutData("TargetPose", &field);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void VisionSpeakerCommand::Execute() {
 	frc::Pose2d chassisPose = chassis->getOdometry();
 	frc::Translation2d speakerLoc = dynamicTarget.getMovingTarget(chassisPose, chassis->getFieldRelativeSpeeds(), chassis->getFIeldRelativeAccels());
+	field.SetRobotPose({speakerLoc, {0_deg}});
+	
 	frc::Translation2d chassisLoc = chassisPose.Translation();
 
 	frc::Translation2d chassisToTarget = speakerLoc - chassisLoc;
@@ -50,14 +54,19 @@ void VisionSpeakerCommand::Execute() {
 	superStructure->setTargetCoord({ targetLowerAngle, targetUpperAngle });
 	shooter->setVelocityVoltage(targetShooterVelocity);
 
-	bool lowerAngleInTolerance = std::abs(targetLowerAngle - superStructure->getLowerAngle()) < 1.00;
-	bool upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 1.00;
-	bool headingInTolerance = units::math::abs(frc::InputModulus(angle.Degrees() - chassisPose.Rotation().Degrees(), -180_deg, 180_deg)) < 5_deg;
-	bool shooterSpeedInTolerance = std::abs(targetShooterVelocity - shooter->getCurrentVelocity()) < 5.00;
+	units::degree_t headingTolerance = 2_deg + units::degree_t(std::clamp( 1 - distance.value() / 8.0, 0.0, 1.0) * 10); // Heading tolerance extra of X deg when close, more precise when further back;
+	units::degree_t headingError = frc::InputModulus(angle.Degrees() - chassisPose.Rotation().Degrees(), -180_deg, 180_deg);
+
+	bool lowerAngleInTolerance = std::abs(targetLowerAngle - superStructure->getLowerAngle()) < (2.00);
+	bool upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < (2.00);
+	bool headingInTolerance = units::math::abs(headingError) < headingTolerance;
+	bool shooterSpeedInTolerance = std::abs(targetShooterVelocity - shooter->getCurrentVelocity()) < 3.00;
 
 	frc::SmartDashboard::PutBoolean("lowerAngleInTolerance ", lowerAngleInTolerance);
 	frc::SmartDashboard::PutBoolean("upperAngleInTolerance ", upperAngleInTolerance);
+	frc::SmartDashboard::PutNumber("headingDynamicTolerance ", headingTolerance.value());
 	frc::SmartDashboard::PutBoolean("headingInTolerance ", headingInTolerance);
+	frc::SmartDashboard::PutNumber("headingError", headingError.value());
 	frc::SmartDashboard::PutBoolean("shooterSpeedInTolerance ", shooterSpeedInTolerance);
 
 	if (lowerAngleInTolerance && upperAngleInTolerance && headingInTolerance && shooterSpeedInTolerance) {
@@ -68,9 +77,7 @@ void VisionSpeakerCommand::Execute() {
 			joystick->SetRumble(frc::GenericHID::kBothRumble, 1.0);
 		}
 	} else {
-		if (joystick == nullptr) {
-			storage->setVoltage(0_V);
-		} else {
+		if (joystick != nullptr) {
 			joystick->SetRumble(frc::GenericHID::kBothRumble, 0.0);
 		}
 	}
