@@ -9,6 +9,7 @@
 
 #include "OvertureLib/MotorControllers/OverTalonFX/OverTalonFX.h"
 #include "OvertureLib/MotorControllers/ControllerNeutralMode/ControllerNeutralMode.h"
+#include "Constants.h"
 
 class Shooter : public frc2::SubsystemBase {
 public:

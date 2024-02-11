@@ -15,7 +15,7 @@ ClosedCommand::ClosedCommand(SuperStructure* superStructure, Intake* intake, Sto
     IntakeCommand(intake, 0_V),
     StorageCommand(storage, 0_V)
     },
-    SuperStructureCommand (superStructure, {-27.3,-13.3})
+    SuperStructureCommand(superStructure, SuperStructureConstants::GroundGrabState)
 
     );
 }

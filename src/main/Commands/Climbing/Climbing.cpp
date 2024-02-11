@@ -14,11 +14,10 @@ SupportArmsState supportArmsStartingState{ 0 };
 SupportArmsState supportArmsTargetState{ 110 };
 SupportArmsMoveByDistance::Profile supportArmsProfile {supportArmsStartingState, supportArmsTargetState, 1_m};
 
-
 frc2::CommandPtr GoToClimbingLocationPathFind(SuperStructure* superStructure, SupportArms* supportArms, std::shared_ptr<pathplanner::PathPlannerPath> pathToFollow) {
 	return frc2::cmd::Sequence(
 			frc2::cmd::Deadline(
-				pathplanner::AutoBuilder::pathfindToPose(flipPoseIfNeeded(pathToFollow->getStartingDifferentialPose()), pathfindingConstraints),
+				pathplanner::AutoBuilder::pathfindToPoseFlipped(pathToFollow->getStartingDifferentialPose(), pathfindingConstraints),
 				SuperStructureCommand(superStructure, superStructureStartingState).ToPtr(),
 				SupportArmCommand(supportArms, supportArmsStartingState).ToPtr()
 			),
@@ -34,12 +33,14 @@ frc2::CommandPtr SetUpJoints(Chassis* chassis, SuperStructure* superStructure, S
 
 	auto lastPoint = pathToFollow->getAllPathPoints().at(pathToFollow->getAllPathPoints().size() - 1);
 	frc::Pose2d targetPos{ lastPoint.position, pathToFollow->getGoalEndState().getRotation() };
-	
-	if(!pathToFollow->preventFlipping){
-		targetPos = flipPoseIfNeeded(targetPos);
-	}
 
-	std::function<units::meter_t()> distanceFunction = [=]() {return getDistanceToChassis(chassis, targetPos);};
+	std::function<units::meter_t()> distanceFunction = [=]() {
+		if(shouldFlip()){
+			return getDistanceToChassis(chassis, pathplanner::GeometryUtil::flipFieldPose(targetPos));
+		}else{
+			return getDistanceToChassis(chassis, targetPos);
+		}
+	};
 
 	return frc2::cmd::Sequence(
 		frc2::cmd::Parallel(

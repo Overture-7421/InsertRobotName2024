@@ -9,10 +9,11 @@
 
 #include "main/Commands/SuperStructureCommand/SuperStructureCommand.h"
 #include "main/Commands/ShooterCommand/ShooterCommand.h"
+#include "main/Commands/StorageCommand/StorageCommand.h"
 
 class SourceGrabCommand
     : public frc2::CommandHelper<frc2::SequentialCommandGroup,
                                  SourceGrabCommand> {
  public:
-  SourceGrabCommand(SuperStructure* superStructure, Shooter* shooter);
+  SourceGrabCommand(SuperStructure* superStructure, Shooter* shooter, Storage* storage);
 };

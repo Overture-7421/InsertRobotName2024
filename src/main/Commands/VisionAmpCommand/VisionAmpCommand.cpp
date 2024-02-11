@@ -18,10 +18,10 @@ frc2::CommandPtr VisionAmpCommand(SuperStructure* superStucture, Shooter* shoote
 
 	return frc2::cmd::Sequence(
 		frc2::cmd::Parallel(
-			pathplanner::AutoBuilder::pathfindToPose(flipPoseIfNeeded({ 1.80_m, 7.78_m, {-90_deg} }), constraints),
-			SuperStructureCommand(superStucture, { 65.0, -30.0 }).ToPtr()
+			pathplanner::AutoBuilder::pathfindToPoseFlipped({ 1.80_m, 7.78_m, {-90_deg} }, constraints),
+			SuperStructureCommand(superStucture, SuperStructureConstants::AmpState).ToPtr()
 		),
 		AmpCommand(superStucture, shooter).ToPtr(),
-		StorageCommand(storage, 3_V).ToPtr()
+		StorageCommand(storage, StorageConstants::AmpScoreVolts).ToPtr()
 	);
 };

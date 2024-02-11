@@ -7,20 +7,18 @@
 #include <frc2/command/SubsystemBase.h>
 #include <frc/controller/ArmFeedforward.h>
 
-#include "SuperStructureState.h"
-#include "SuperStructurePosition.h"
 #include <OvertureLib/MotorControllers/OverTalonFX/OverTalonFX.h>
 #include <OvertureLib/MotorControllers/ControllerNeutralMode/ControllerNeutralMode.h>
 #include <OvertureLib/Sensors/OverDutyCycleEncoder/OverDutyCycleEncoder.h>
 #include <frc2/command/sysid/SysIdRoutine.h>
 
+#include "Constants.h"
+#include "SuperStructureState.h"
 
 class SuperStructure : public frc2::SubsystemBase {
 public:
 	SuperStructure();
-	void setTargetCoord(SuperStructureState TargetCoord);
-	void setLowerAngleConstraints(double velocity, double acceleration);
-	void setUpperAngleConstraints(double velocity, double acceleration);
+	void setTargetCoord(SuperStructureState targetState);
 	double getLowerAngle();
 	double getUpperAngle();
 
@@ -40,8 +38,6 @@ public:
 		return sysIdRoutineUpper.Dynamic(direction);
 	}
 
-	SuperStructurePosition getPosition();
-	void setPosition(SuperStructurePosition pos);
 	SuperStructureState getCurrentState();
 	void Periodic() override;
 
@@ -49,10 +45,6 @@ public:
 private:
 	void setFalconTargetPos(SuperStructureState targetState, SuperStructureState currentState);
 	double convertAngleToFalconPos(double angle);
-
-	//constant
-	const double LOWER_GEAR_BOX_REDUCTION = 230.4;
-	const double UPPER_GEAR_BOX_REDUCTION = 90.0;
 
 	//Encoders
 	OverDutyCycleEncoder lowerEncoder{ 3 };
@@ -62,15 +54,14 @@ private:
 
 
 	// LowerMotors
-	OverTalonFX m_lowerRight{ 20, ControllerNeutralMode::Brake, false, "rio" };
-	OverTalonFX m_lowerLeft{ 21, ControllerNeutralMode::Brake, true, "rio" };
+	OverTalonFX lowerRightMotor{ 20, ControllerNeutralMode::Brake, true, "rio" };
+	OverTalonFX lowerLeftMotor{ 21, ControllerNeutralMode::Brake, true, "rio" };
 
 	// Upper Motors
-	OverTalonFX m_upperMotor{ 22, ControllerNeutralMode::Brake, true, "rio" };
+	OverTalonFX upperMotor{ 22, ControllerNeutralMode::Brake, true, "rio" };
 
 	// State
-	SuperStructureState m_TargetState{ getCurrentState() };
-	SuperStructurePosition position = SuperStructurePosition::Closing;
+	SuperStructureState targetState;
 
 	//Motion Magic Feed Forward
 	double lowerFF = 2.75;
@@ -81,14 +72,14 @@ private:
 							std::nullopt},
 		frc2::sysid::Mechanism{
 			[this](units::volt_t driveVoltage) {
-				m_lowerRight.SetVoltage(driveVoltage);
+				lowerRightMotor.SetVoltage(driveVoltage);
 			},
 			[this](frc::sysid::SysIdRoutineLog* log) {
 
 			log->Motor("SuperStructureLower")
-				.voltage(m_lowerRight.GetMotorVoltage().GetValue())
-				.position(m_lowerRight.GetPosition().GetValue())
-				.velocity(m_lowerRight.GetVelocity().GetValue());
+				.voltage(lowerRightMotor.GetMotorVoltage().GetValue())
+				.position(lowerRightMotor.GetPosition().GetValue())
+				.velocity(lowerRightMotor.GetVelocity().GetValue());
 			},
 			this} };
 
@@ -97,14 +88,14 @@ private:
 							std::nullopt},
 		frc2::sysid::Mechanism{
 			[this](units::volt_t driveVoltage) {
-				m_lowerRight.SetVoltage(driveVoltage);
+				upperMotor.SetVoltage(driveVoltage);
 			},
 			[this](frc::sysid::SysIdRoutineLog* log) {
 
 			log->Motor("SuperStructureUpper")
-				.voltage(m_upperMotor.GetMotorVoltage().GetValue())
-				.position(m_upperMotor.GetPosition().GetValue())
-				.velocity(m_upperMotor.GetVelocity().GetValue());
+				.voltage(upperMotor.GetMotorVoltage().GetValue())
+				.position(upperMotor.GetPosition().GetValue())
+				.velocity(upperMotor.GetVelocity().GetValue());
 			},
 			this} };
 };

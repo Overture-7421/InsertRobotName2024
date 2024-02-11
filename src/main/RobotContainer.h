@@ -71,7 +71,6 @@ private:
 	frc2::Trigger ampV{ [this] {return driver.GetLeftTriggerAxis() > 0.3;} };
 	frc2::Trigger sourceV{ [this] {return driver.GetRightBumper();} };
 	frc2::Trigger speakerV{ [this] {return driver.GetRightTriggerAxis() > 0.3;} };	// TO GET TESTED
-	frc2::Trigger DisableFOD{ [this] {return driver.GetLeftBumper();} };
 
 	// Mechanism Commands
 	frc2::Trigger ampM{ [this] {return opertr.GetLeftBumper();} };
