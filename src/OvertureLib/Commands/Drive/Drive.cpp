@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "Drive.h"
+#include <iostream>
 
 Drive::Drive(SwerveChassis* swerveChassis, frc::XboxController* controller) :
 	m_swerveChassis(swerveChassis), joystick(controller) {
@@ -14,20 +15,13 @@ Drive::Drive(SwerveChassis* swerveChassis, frc::XboxController* controller) :
 void Drive::Initialize() {
 	if (frc::DriverStation::GetAlliance() == frc::DriverStation::Alliance::kRed){
 		alliance = -1;
+	}else{
+		alliance = 1;
 	}
 }
 
 // Called repeatedly when this Command is scheduled to run
 void Drive::Execute() {
-
-	if (joystick->GetRightBumper()) {
-		kMaxSpeed = 2;
-		kMaxAngularSpeed = 3.5;
-	} else {
-		kMaxSpeed = 5.75;
-		kMaxAngularSpeed = 7.0;
-	}
-
 	units::meters_per_second_t xInput{ Utils::ApplyAxisFilter(-joystick->GetLeftY()) * kMaxSpeed};
 	units::meters_per_second_t yInput{ Utils::ApplyAxisFilter(-joystick->GetLeftX()) * kMaxSpeed};
 	units::radians_per_second_t rInput{ Utils::ApplyAxisFilter(-joystick->GetRightX()) * kMaxAngularSpeed};

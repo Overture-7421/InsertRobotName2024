@@ -84,8 +84,7 @@ class VisionSpeakerCommand
   Shooter* shooter;
   frc::XboxController* joystick;
 
-  TargetingWhileMoving dynamicTarget {
-    flipTranslationIfNeeded({0.06_m, 5.54_m}), 
+  TargetingWhileMoving dynamicTarget { 
     {
     {1_m, 0.8_s},
     {2_m, 0.8_s},

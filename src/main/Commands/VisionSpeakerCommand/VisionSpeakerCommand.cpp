@@ -18,6 +18,12 @@ VisionSpeakerCommand::VisionSpeakerCommand(Chassis* chassis, SuperStructure* sup
 // Called when the command is initially scheduled.
 void VisionSpeakerCommand::Initialize() {
   chassis->setHeadingOverride(true);
+
+  if(shouldFlip()){
+    dynamicTarget.setTargetLocation(pathplanner::GeometryUtil::flipFieldPosition({0.06_m, 5.54_m}));
+  }else{
+    dynamicTarget.setTargetLocation({0.06_m, 5.54_m});
+  }
 }
 
 // Called repeatedly when this Command is scheduled to run
