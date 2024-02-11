@@ -4,10 +4,14 @@
 
 #include "TargetingWhileMoving.h"
 
-TargetingWhileMoving::TargetingWhileMoving(frc::Translation2d targetLocation, DistanceToTravelTimeTable distanceToTravelTime, units::second_t accelCompFactor) 
-: targetLocation(targetLocation), distanceToTravelTime(distanceToTravelTime), accelCompFactor(accelCompFactor){
+TargetingWhileMoving::TargetingWhileMoving(DistanceToTravelTimeTable distanceToTravelTime, units::second_t accelCompFactor) 
+: distanceToTravelTime(distanceToTravelTime), accelCompFactor(accelCompFactor){
 
 };
+
+void TargetingWhileMoving::setTargetLocation(frc::Translation2d targetLocation) {
+    this->targetLocation = targetLocation;
+}
 
 frc::Translation2d TargetingWhileMoving::getMovingTarget(const frc::Pose2d& robotPose, const frc::ChassisSpeeds& fieldRelativeSpeed, const ChassisAccels& fieldRelativeAccel) {
     frc::Translation2d robotLocation = robotPose.Translation();

@@ -37,7 +37,7 @@ frc2::CommandPtr GoToShootingLocation(Chassis* chassis, SuperStructure* superStr
 
 	return frc2::cmd::Sequence(
 		frc2::cmd::Parallel(
-			pathplanner::AutoBuilder::pathfindToPose(flipPoseIfNeeded(pathToFollow), constraints),
+			pathplanner::AutoBuilder::pathfindToPoseFlipped(pathToFollow, constraints),
 			SuperStructureCommand(superStructure, { 0, 0 }).ToPtr(),
 			ShooterCommand(shooter, { 100 }).ToPtr()
 		),			

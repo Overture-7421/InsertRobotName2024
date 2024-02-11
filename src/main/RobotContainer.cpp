@@ -8,15 +8,6 @@
 #include <iostream>
 
 RobotContainer::RobotContainer() {
-	auto alliance = frc::DriverStation::GetAlliance();
-
-	// TODO: Delete if not needed in 2025, it just waits until there is an alliance assigned so pose flipping is done correctly.
-	while (!alliance.has_value()) {
-		alliance = frc::DriverStation::GetAlliance();
-		std::cout << "Warning: Waiting for alliance color before starting robot..." << std::endl;
-		std::this_thread::sleep_for(std::chrono::milliseconds(500));
-	}
-
 	autoChooser.SetDefaultOption("None, null, nada", "None");
 	autoChooser.AddOption("MiddleNote", "MiddleNote");
 
