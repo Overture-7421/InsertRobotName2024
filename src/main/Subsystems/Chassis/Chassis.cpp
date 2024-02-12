@@ -8,7 +8,7 @@ Chassis::Chassis() {
 	pigeon = &chassisPigeon;
 	setModulePositions(&modulePos);
 	setModules(&frontLeft, &frontRight, &backLeft, &backRight);
-	setModulesRatios(turnRatio, driveRatio, wheelDiameter);
+	setModulesRatios(ChassisConstants::RotationGearRatio, ChassisConstants::DriveGearRatio, ChassisConstants::WheelDiameter.value());
 	setRotatorPID(53, 0, 0);
 
 #ifndef __FRC_ROBORIO__

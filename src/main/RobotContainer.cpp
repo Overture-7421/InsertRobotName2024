@@ -33,7 +33,7 @@ void RobotContainer::ConfigureBindings() {
 	ampM.WhileTrue(AmpCommand(&superStructure, &shooter).ToPtr());
 	ampM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	sourceM.WhileTrue(SourceGrabCommand(&superStructure, &shooter).ToPtr());
+	sourceM.WhileTrue(SourceGrabCommand(&superStructure, &shooter, &storage).ToPtr());
 	sourceM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
 	climbV.WhileTrue(AutoClimb(&chassis, &superStructure, &supportArms, &opertr));
@@ -53,9 +53,8 @@ void RobotContainer::ConfigureBindings() {
 
 	closed.WhileTrue(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	intakeM.WhileTrue(IntakeCommand(&intake, 4_V).ToPtr());
+	intakeM.WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake).ToPtr());
 	intakeM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
-
 }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {

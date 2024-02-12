@@ -69,16 +69,6 @@ class VisionSpeakerCommand
     {0.7_m, 7.00}
     };
 
-  InterpolatingTable<units::meter_t, double> DistanceToTravelTimeTable{
-    {0.1_m, 1.00},
-    {0.2_m, 2.00},
-    {0.3_m, 3.00},
-    {0.4_m, 4.00},
-    {0.5_m, 5.00},
-    {0.6_m, 6.00},
-    {0.7_m, 7.00}
-    };
-
   SuperStructure* superStructure;
   Chassis* chassis;
   Shooter* shooter;
@@ -86,13 +76,13 @@ class VisionSpeakerCommand
 
   TargetingWhileMoving dynamicTarget { 
     {
-    {1_m, 0.8_s},
-    {2_m, 0.8_s},
-    {3_m, 0.8_s},
-    {4_m, 0.8_s},
-    {5_m, 0.8_s},
-    {6_m, 0.8_s},
-    {7_m, 0.8_s}
+    {1_m, 0.1_s},
+    {2_m, 0.2_s},
+    {3_m, 0.3_s},
+    {4_m, 0.4_s},
+    {5_m, 0.5_s},
+    {6_m, 0.6_s},
+    {7_m, 0.7_s}
     }
   };
   units::meter_t distance = 0.0_m;

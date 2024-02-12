@@ -7,8 +7,8 @@ AmpCommand::AmpCommand(SuperStructure* superStucture, Shooter* shooter) {
 
 	AddCommands(
 		frc2::ParallelCommandGroup(
-			SuperStructureCommand(superStucture, { 65.0, -30.0 }),
-			ShooterCommand(shooter, 6.00)
+			SuperStructureCommand(superStucture, SuperStructureConstants::AmpState),
+			ShooterCommand(shooter, ShooterConstants::AmpScoreSpeed)
 		)
 	);
 }

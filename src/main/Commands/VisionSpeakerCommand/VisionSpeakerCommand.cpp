@@ -35,8 +35,6 @@ void VisionSpeakerCommand::Execute() {
   frc::Translation2d chassisToTarget = speakerLoc - chassisLoc;
   distance = chassisToTarget.Distance({0_m, 0_m});
   angle = chassisToTarget.Angle().RotateBy({180_deg});
-  frc::SmartDashboard::PutNumber("Distance to Target", double(distance));
-  frc::SmartDashboard::PutNumber("Angle to Target", angle.Degrees().value());
 
   chassis->setTargetHeading(angle);
   double targetLowerAngle = distanceToLowerAngleTable[distance];
@@ -49,12 +47,6 @@ void VisionSpeakerCommand::Execute() {
   bool upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 1.00;
   bool headingInTolerance = units::math::abs(frc::InputModulus(angle.Degrees() - chassisPose.Rotation().Degrees(), -180_deg, 180_deg)) < 3_deg; 
   bool shooterSpeedInTolerance = std::abs(targetShooterVelocity - shooter->getCurrentVelocity()) < 5.00; 
-
-  frc::SmartDashboard::PutBoolean("lowerAngleInTolerance ", lowerAngleInTolerance);
-  frc::SmartDashboard::PutBoolean("upperAngleInTolerance ", upperAngleInTolerance);
-  frc::SmartDashboard::PutBoolean("headingInTolerance ", headingInTolerance);
-  frc::SmartDashboard::PutBoolean("shooterSpeedInTolerance ", shooterSpeedInTolerance);
-  
 
   if (lowerAngleInTolerance && upperAngleInTolerance && headingInTolerance && shooterSpeedInTolerance) {
     joystick->SetRumble(frc::GenericHID::kBothRumble, 1.0);

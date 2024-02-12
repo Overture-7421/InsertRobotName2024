@@ -10,6 +10,8 @@
 #include <OvertureLib/Subsystems/Swerve/SwerveChassis/SwerveChassis.h>
 #include <OvertureLib/Subsystems/Swerve/SwerveModule/SwerveModule.h>
 
+#include "Constants.h"
+
 // class Chassis : public SwerveCharacterization {
 class Chassis : public SwerveChassis {
 public:
@@ -30,15 +32,11 @@ private:
 
 
 	std::array<frc::Translation2d, 4> modulePos{
-	 frc::Translation2d(10.39_in, 10.39_in),   //Front Left
-		 frc::Translation2d(10.39_in, -10.39_in),   //Front Right
-		 frc::Translation2d(-10.39_in, -10.39_in),   //Back Right
-		 frc::Translation2d(-10.39_in, 10.39_in),   //Back Left
+	 ChassisConstants::FrontLeftModuleTranslation,   //Front Left
+	 ChassisConstants::FrontRightModuleTranslation,   //Front Right
+	 ChassisConstants::BackRightModuleTranslation,   //Back Right
+	 ChassisConstants::BackLeftModuleTranslation,   //Back Left
 	};
-
-	double turnRatio = 150 / 7;
-	double driveRatio = 5.9027777;
-	double wheelDiameter = 0.1016;
 
 	OverPigeon chassisPigeon{ 13, "OverCANivore" };
 };
