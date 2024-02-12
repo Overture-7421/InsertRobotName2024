@@ -60,8 +60,8 @@ void RobotContainer::ConfigureBindings()
 	// shootM.WhileTrue(StorageCommand(&storage, 3_V).ToPtr());
 	// shootM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	speakerM.WhileTrue(SpeakerCommand(&superStructure, &shooter).ToPtr());
-	speakerM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+	// speakerM.WhileTrue(SpeakerCommand(&superStructure, &shooter).ToPtr());
+	// speakerM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
 	// trapV.WhileTrue(TrapShoot(&chassis, &superStructure, &supportArms, &shooter, &storage));
 	// trapV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
