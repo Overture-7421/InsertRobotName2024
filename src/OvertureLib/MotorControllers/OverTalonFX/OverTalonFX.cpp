@@ -317,14 +317,13 @@ void OverTalonFX::setVelocityTorqueCurrentFOC(double velocity) {
  * @param kV The V value of the TalonFX
  */
 void OverTalonFX::setPIDValues(double kP, double kI, double kD, double kS, double kV) {
-	Slot0Configs slot0Configs{};
-	slot0Configs.kP = kP;
-	slot0Configs.kI = kI;
-	slot0Configs.kD = kD;
-	slot0Configs.kS = kS;
-	slot0Configs.kV = kV;
+	config.Slot0.kP = kP;
+	config.Slot0.kI = kI;
+	config.Slot0.kD = kD;
+	config.Slot0.kS = kS;
+	config.Slot0.kV = kV;
 
-	GetConfigurator().Apply(slot0Configs);
+	GetConfigurator().Apply(config);
 }
 
 /**
@@ -335,12 +334,16 @@ void OverTalonFX::setPIDValues(double kP, double kI, double kD, double kS, doubl
  * @param jerk           The jerk of the TalonFX
  */
 void OverTalonFX::configureMotionMagic(double cruiseVelocity, double acceleration, double jerk) {
-	MotionMagicConfigs motionMagicConfigs{};
-	motionMagicConfigs.MotionMagicCruiseVelocity = cruiseVelocity;
-	motionMagicConfigs.MotionMagicAcceleration = acceleration;
-	motionMagicConfigs.MotionMagicJerk = jerk;
+	config.MotionMagic.MotionMagicCruiseVelocity = cruiseVelocity;
+	config.MotionMagic.MotionMagicAcceleration = acceleration;
+	config.MotionMagic.MotionMagicJerk = jerk;
 
-	GetConfigurator().Apply(motionMagicConfigs);
+	GetConfigurator().Apply(config);
+}
+
+void OverTalonFX::configureSoftwareLimitSwitch(ctre::phoenix6::configs::SoftwareLimitSwitchConfigs configs){
+	config.SoftwareLimitSwitch = configs;
+	GetConfigurator().Apply(config);
 }
 
 /**

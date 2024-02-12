@@ -74,9 +74,9 @@ model {
                 targetPlatform wpi.platforms.desktop
             }
 
-            // binaries.all {
-            //     lib library: 'pathplanner', linkage: 'shared'
-            // }
+            binaries.all {
+                cppCompiler.define('_USE_MATH_DEFINES')
+            }
 
             sources.cpp {
                 source {

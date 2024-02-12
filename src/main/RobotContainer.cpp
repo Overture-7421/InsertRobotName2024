@@ -7,11 +7,13 @@
 #include <frc2/command/Commands.h>
 #include <iostream>
 
-RobotContainer::RobotContainer() {
+RobotContainer::RobotContainer()
+{
 	auto alliance = frc::DriverStation::GetAlliance();
 
 	// TODO: Delete if not needed in 2025, it just waits until there is an alliance assigned so pose flipping is done correctly.
-	while (!alliance.has_value()) {
+	while (!alliance.has_value())
+	{
 		alliance = frc::DriverStation::GetAlliance();
 		std::cout << "Warning: Waiting for alliance color before starting robot..." << std::endl;
 		std::this_thread::sleep_for(std::chrono::milliseconds(500));
@@ -35,7 +37,9 @@ RobotContainer::RobotContainer() {
 	// ConfigureSysIdBindings(&chassis, &driver);
 }
 
-void RobotContainer::ConfigureBindings() {
+void RobotContainer::ConfigureBindings()
+{
+
 	chassis.SetDefaultCommand(Drive(&chassis, &driver));
 
 	ampV.WhileTrue(VisionAmpCommand(&superStructure, &shooter, &storage));
@@ -47,7 +51,7 @@ void RobotContainer::ConfigureBindings() {
 	speakerV.WhileTrue(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &opertr).ToPtr());
 	speakerV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	// Operator 
+	// Operator
 	ampM.WhileTrue(AmpCommand(&superStructure, &shooter).ToPtr());
 	ampM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
@@ -73,13 +77,14 @@ void RobotContainer::ConfigureBindings() {
 
 	intakeM.WhileTrue(IntakeCommand(&intake, 4_V).ToPtr());
 	intakeM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
-
 }
 
-frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
+frc2::CommandPtr RobotContainer::GetAutonomousCommand()
+{
 	std::string autoName = autoChooser.GetSelected();
-	if (autoName == "None") {
-		return  frc2::cmd::None();
+	if (autoName == "None")
+	{
+		return frc2::cmd::None();
 	}
 
 	return pathplanner::AutoBuilder::buildAuto(autoName);

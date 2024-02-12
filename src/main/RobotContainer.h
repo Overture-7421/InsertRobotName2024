@@ -6,6 +6,7 @@
 
 #include <frc2/command/CommandPtr.h>
 #include <frc2/command/button/Trigger.h>
+#include <frc2/command/button/CommandXboxController.h>
 #include <frc/XboxController.h>
 #include <frc/smartdashboard/SendableChooser.h>
 
@@ -57,7 +58,6 @@ private:
 	// Controllers
 	frc::XboxController driver{ 0 };
 	frc::XboxController opertr{ 1 };
-
 
 	// Driver Commands
 	frc2::Trigger ampV{ [this] {return driver.GetLeftTriggerAxis() > 0.3;} };

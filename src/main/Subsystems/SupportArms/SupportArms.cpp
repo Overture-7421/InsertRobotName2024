@@ -14,8 +14,8 @@ SupportArms::SupportArms() {
 	m_lowerRight.setSensorToMechanism(LOWER_GEAR_BOX_REDUCTION);
 
 	// COnfigure Motion Magic and PID
-	m_lowerRight.setPIDValues(45.0, 0.0, 0.0, 0.0, 0.0);
-	m_lowerRight.configureMotionMagic(20.0, 20.0, 0.0);
+	m_lowerRight.setPIDValues(0.0, 0.0, 0.0, 0.0, 0.0);
+	m_lowerRight.configureMotionMagic(0.0, 0.0, 0.0);
 
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 	m_lowerRight.setSensorPosition(convertAngleToFalconPos(getLowerAngle()));
@@ -28,7 +28,9 @@ void SupportArms::setTargetCoord(SupportArmsState targetCoord) {
 }
 
 double SupportArms::getLowerAngle() {
-	return (lowerEncoder.GetAbsolutePosition() - lowerOffset) * 360;
+	double rawLowerEncoder = lowerEncoder.GetAbsolutePosition() + lowerOffset; // Goes from 0 to 1
+	double degrees = rawLowerEncoder * 360;
+	return frc::InputModulus(degrees, -180.0, 180.0);
 }
 
 SupportArmsPosition SupportArms::getPosition() {
@@ -46,7 +48,8 @@ SupportArmsState SupportArms::getCurrentState() {
 }
 
 void SupportArms::setFalconTargetPos(SupportArmsState targetState, SupportArmsState currentState) {
-	m_lowerRight.setMotionMagicPosition(convertAngleToFalconPos(targetState.lowerAngle), lowerFF * cos(currentState.lowerAngle * DEG_TO_RAD), false);
+	// m_lowerRight.setMotionMagicPosition(convertAngleToFalconPos(targetState.lowerAngle), lowerFF * cos(currentState.lowerAngle * DEG_TO_RAD), false);
+	//pidController.SetReference(convertAngleToFalconPos(setpoint.position.value()), rev::ControlType::kPosition, 0, lowerFF * cos(currentState.lowerAngle * DEG_TO_RAD));
 }
 
 double SupportArms::convertAngleToFalconPos(double angle) {
@@ -57,4 +60,9 @@ double SupportArms::convertAngleToFalconPos(double angle) {
 void SupportArms::Periodic() {
 	SupportArmsState currentState = getCurrentState();
 	setFalconTargetPos(m_TargetState, currentState);
+
+
+	// Debugging
+	frc::SmartDashboard::PutNumber("SupportArms/Current/Lower Angle", currentState.lowerAngle);
+	frc::SmartDashboard::PutNumber("SupportArms/Current/Lower Position", lowerEncoder.GetAbsolutePosition());
 }

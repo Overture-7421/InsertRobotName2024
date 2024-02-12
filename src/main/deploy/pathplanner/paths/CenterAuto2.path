@@ -39,11 +39,7 @@
   },
   "goalEndState": {
     "velocity": 0.0,
-    "rotation": 0.0,
     "rotateFast": false
-  },
-  "reversed": false,
-  "folder": "CenterAuto",
   "previewStartingState": {
     "rotation": 0.0,
     "velocity": 0

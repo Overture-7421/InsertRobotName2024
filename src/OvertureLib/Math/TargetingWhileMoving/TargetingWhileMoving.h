@@ -18,7 +18,7 @@ typedef InterpolatingTable<units::meter_t, units::second_t> DistanceToTravelTime
 
 class TargetingWhileMoving {
  public:
-  TargetingWhileMoving(frc::Translation2d targetLocation, DistanceToTravelTimeTable distanceToTravelTime, units::second_t accelCompFactor = 0.01_s);
+  TargetingWhileMoving(frc::Translation2d targetLocation, DistanceToTravelTimeTable distanceToTravelTime, units::second_t accelCompFactor = 0.05_s);
 
   frc::Translation2d getMovingTarget(const frc::Pose2d& robotPose, const frc::ChassisSpeeds& fieldRelativeSpeed, const ChassisAccels& fieldRelativeAccel);
  private:
