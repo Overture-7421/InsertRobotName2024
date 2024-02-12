@@ -33,7 +33,7 @@ void RobotContainer::ConfigureBindings()
 	// characterization.X().WhileTrue(shooter.sysIdDynamic(frc2::sysid::Direction::kForward));
 	// characterization.Y().WhileTrue(shooter.sysIdDynamic(frc2::sysid::Direction::kReverse));
 
-	// chassis.SetDefaultCommand(Drive(&chassis, &driver));
+	chassis.SetDefaultCommand(Drive(&chassis, &driver));
 
 	// ampV.WhileTrue(VisionAmpCommand(&superStructure, &shooter, &storage));
 	// ampV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());

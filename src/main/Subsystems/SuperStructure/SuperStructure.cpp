@@ -5,6 +5,7 @@
 #include "SuperStructure.h"
 #include <frc/MathUtil.h>
 #include <thread>
+#include <iostream>
 
 #define DEG_TO_RAD M_PI / 180.0
 
@@ -22,9 +23,12 @@ SuperStructure::SuperStructure() {
 	upperMotor.setSensorToMechanism(SuperStructureConstants::UpperAngleGearRatio);
 
 
-	std::this_thread::sleep_for(std::chrono::seconds(2));
+	while(!upperEncoder.IsConnected() || !lowerEncoder.IsConnected()){ // TODO: See if this works instead of just waiting X amount of time
+		std::cout << "Waiting for encoders on SuperStructure..." << std::endl;
+		std::this_thread::sleep_for(std::chrono::milliseconds(100));
+	}
+
 	lowerRightMotor.setSensorPosition(convertAngleToFalconPos(getLowerAngle()));
-	std::this_thread::sleep_for(std::chrono::seconds(2));
 	upperMotor.setSensorPosition(convertAngleToFalconPos(getUpperAngle()));
 
 	SoftwareLimitSwitchConfigs lowerMotorSoftLimitConfig;

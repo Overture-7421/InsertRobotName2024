@@ -185,7 +185,7 @@ void SwerveChassis::driveRobotRelative(frc::ChassisSpeeds speeds) {
  * @param speeds ChassisSpeeds object
  */
 void SwerveChassis::driveFieldRelative(frc::ChassisSpeeds speeds) {
-	frc::ChassisSpeeds chassisSpeeds = frc::ChassisSpeeds::Discretize(frc::ChassisSpeeds::FromFieldRelativeSpeeds(speeds, getOdometry().Rotation()), 0.02_s);
+	frc::ChassisSpeeds chassisSpeeds = frc::ChassisSpeeds::Discretize(frc::ChassisSpeeds::FromFieldRelativeSpeeds(speeds, getOdometry().Rotation()), RobotConstants::LoopTime);
 
 	driveRobotRelative(chassisSpeeds);
 }
@@ -377,7 +377,7 @@ void SwerveChassis::Periodic() {
 
 	wpi::array<frc::SwerveModuleState, 4U> desiredStates = kinematics->ToSwerveModuleStates(desiredSpeeds);
 
-	kinematics->DesaturateWheelSpeeds(&desiredStates, 5.75_mps);
+	kinematics->DesaturateWheelSpeeds(&desiredStates, 5.0_mps);
 
 	setModuleStates(desiredStates);
 

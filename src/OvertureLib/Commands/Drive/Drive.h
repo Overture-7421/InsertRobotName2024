@@ -33,13 +33,13 @@ private:
 
 	/* Speed Constants */
 	double kMaxSpeed{ 5.75 };
-	double kMaxAngularSpeed{ 9.0 };
+	double kMaxAngularSpeed{ 18.0 };
 
 	int alliance = 1;
 
 	/* Constant */
-	units::meters_per_second_squared_t maxAcceleration{ 12 };
-	units::radians_per_second_squared_t maxRotation{ 16 };
+	units::meters_per_second_squared_t maxAcceleration{ 5.75 * 3 };
+	units::radians_per_second_squared_t maxRotation{ 18.0 * 3 };
 
 	/* Limiters */
 	frc::SlewRateLimiter<units::meters_per_second> xLimiter{ maxAcceleration };

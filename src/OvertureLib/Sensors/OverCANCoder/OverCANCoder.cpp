@@ -35,7 +35,7 @@ OverCANCoder::OverCANCoder(int _id, double offset, std::string _bus) : CANcoder(
 * @return CANCoder's absolute position
 */
 double OverCANCoder::getSensorAbsolutePosition() {
-	return GetAbsolutePosition().Refresh().GetValue().value();
+	return GetAbsolutePosition().GetValue().value();
 }
 
 const CANcoderConfiguration& OverCANCoder::getConfiguration(){

@@ -5,6 +5,8 @@
 #include "SupportArms.h"
 #include <frc/MathUtil.h>
 #include <thread>
+#include <iostream>
+
 
 #define DEG_TO_RAD M_PI / 180.0
 
@@ -17,7 +19,12 @@ SupportArms::SupportArms() {
 	lowerRightMotor.setPIDValues(0.0, 0.0, 0.0, 0.0, 0.0);
 	lowerRightMotor.configureMotionMagic(0.0, 0.0, 0.0);
 
-	std::this_thread::sleep_for(std::chrono::seconds(2));
+
+	while(!lowerEncoder.IsConnected()){
+		std::cout << "Waiting for encoder on SupportArms..." << std::endl;	
+		std::this_thread::sleep_for(std::chrono::milliseconds(100));
+	}
+
 	lowerRightMotor.setSensorPosition(convertAngleToFalconPos(getLowerAngle()));
 
 	setTargetCoord({ getLowerAngle() });

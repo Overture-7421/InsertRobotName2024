@@ -4,6 +4,7 @@
 
 #pragma once
 #include <frc/TimedRobot.h>
+#include "RobotConstants.h"
 
 /**
  * Implementation of TimedRobot that allows to seamlessly change between simulation (using Gazebo) and a real robot.
@@ -12,7 +13,7 @@
 #ifdef __FRC_ROBORIO__
 class OverRobot : public frc::TimedRobot {
 public:
-    OverRobot(units::second_t period = kDefaultPeriod) : frc::TimedRobot(period) {
+    OverRobot(units::second_t period = RobotConstants::LoopTime) : frc::TimedRobot(period) {
 
     }
 };
@@ -35,7 +36,7 @@ using namespace frc;
 
 class OverRobot : public frc::IterativeRobotBase {
 public:
-    OverRobot(units::second_t period = frc::TimedRobot::kDefaultPeriod);
+    OverRobot(units::second_t period = RobotConstants::LoopTime);
     void StartCompetition() override;
     void EndCompetition() override;
     units::second_t GetSimulationTime();
