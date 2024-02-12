@@ -22,6 +22,7 @@ class TargetingWhileMoving {
 
   void setTargetLocation(frc::Translation2d targetLocation);
 
+
   frc::Translation2d getMovingTarget(const frc::Pose2d& robotPose, const frc::ChassisSpeeds& fieldRelativeSpeed, const ChassisAccels& fieldRelativeAccel);
  private:
   frc::Translation2d targetLocation;

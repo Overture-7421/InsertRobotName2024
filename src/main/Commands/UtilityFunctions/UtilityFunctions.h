@@ -14,6 +14,7 @@ const std::vector<std::pair<StageLocation, frc::Pose2d>> blueStageLocations{
 	{StageLocation::Back, {{5.51_m, 4.10_m}, {0_deg}}}
 };
 
+
 const std::vector<std::pair<StageLocation, frc::Pose2d>> redStageLocations{
 	{StageLocation::Left,  pathplanner::GeometryUtil::flipFieldPose(blueStageLocations[0].second)},
 	{StageLocation::Right, pathplanner::GeometryUtil::flipFieldPose(blueStageLocations[1].second)},
@@ -50,3 +51,4 @@ static StageLocation findClosestStageLocation(Chassis* chassis) {
 
 	return distancesToStageLocations.front().first;
 }
+

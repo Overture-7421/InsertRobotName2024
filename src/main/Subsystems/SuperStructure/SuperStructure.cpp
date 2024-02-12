@@ -29,22 +29,47 @@ SuperStructure::SuperStructure() {
 
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 	lowerRightMotor.setSensorPosition(convertAngleToFalconPos(getLowerAngle()));
+
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 	upperMotor.setSensorPosition(convertAngleToFalconPos(getUpperAngle()));
 
+	SoftwareLimitSwitchConfigs upperMotorSoftLimitConfig;
+	upperMotorSoftLimitConfig.ForwardSoftLimitEnable = true;
+	upperMotorSoftLimitConfig.ForwardSoftLimitThreshold = 0;
+
+	upperMotorSoftLimitConfig.ReverseSoftLimitEnable = true;
+	upperMotorSoftLimitConfig.ReverseSoftLimitThreshold = -0.548096;
+
+	m_upperMotor.configureSoftwareLimitSwitch(upperMotorSoftLimitConfig);
+
+	SoftwareLimitSwitchConfigs lowerMotorSoftLimitConfig;
+	lowerMotorSoftLimitConfig.ForwardSoftLimitEnable = true;
+	lowerMotorSoftLimitConfig.ForwardSoftLimitThreshold = 0.256592;
+
+	lowerMotorSoftLimitConfig.ReverseSoftLimitEnable = true;
+	lowerMotorSoftLimitConfig.ReverseSoftLimitThreshold = -0.090088;
+
+	m_lowerLeft.configureSoftwareLimitSwitch(lowerMotorSoftLimitConfig);
+
+	m_lowerLeft.setContinuousWrap();
+	m_upperMotor.setContinuousWrap();
+
 	setTargetCoord({ getLowerAngle(), getUpperAngle() });
-}
 
 void SuperStructure::setTargetCoord(SuperStructureState targetState) {
 	this->targetState = targetState;
 }
 
 double SuperStructure::getLowerAngle() {
-	return (lowerEncoder.GetAbsolutePosition() - lowerOffset) * 360;
+	double rawLowerEncoder = lowerEncoder.GetAbsolutePosition() + lowerOffset; // Goes from 0 to 1
+	double degrees = rawLowerEncoder * 360.0;
+	return frc::InputModulus(degrees, -180.0, 180.0);
 }
 
 double SuperStructure::getUpperAngle() {
-	return (upperEncoder.GetAbsolutePosition() - upperOffset) * 360;
+	double rawUpperEncoder = upperEncoder.GetAbsolutePosition() + upperOffset; // Goes from 0 to 1
+	double degrees = rawUpperEncoder * 360.0;
+	return -frc::InputModulus(degrees, -180.0, 180.0);
 }
 
 SuperStructureState SuperStructure::getCurrentState() {
@@ -58,7 +83,7 @@ void SuperStructure::setFalconTargetPos(SuperStructureState targetState, SuperSt
 	lowerRightMotor.setMotionMagicPosition(convertAngleToFalconPos(targetState.lowerAngle), lowerFF * std::cos(currentState.lowerAngle * DEG_TO_RAD), false);
 	upperMotor.setMotionMagicPosition(convertAngleToFalconPos(targetState.upperAngle), upperFF * std::cos((currentState.lowerAngle + currentState.upperAngle + 90.0) * DEG_TO_RAD), false);
 }
-
+  
 double SuperStructure::convertAngleToFalconPos(double angle) {
 	return angle / 360.0;
 }

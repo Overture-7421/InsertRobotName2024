@@ -1,0 +1,125 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.18,
+      "y": 3.2087692135441324
+    },
+    "rotation": -63.502733302431885
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "SourceAuto1"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "VisionSpeakerCommand"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "GroundGrabCommand"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SourceAuto2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "VisionSpeakerCommand"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "SourceAuto3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "GroundGrabCommand"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SourceAuto4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "VisionSpeakerCommand"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "SourceAuto5"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "GroundGrabCommand"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SourceAuto6"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "VisionSpeakerCommand"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "SourceAuto",
+  "choreoAuto": false
+}

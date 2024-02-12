@@ -7,9 +7,19 @@
 #include <frc2/command/Commands.h>
 #include <iostream>
 
+
 RobotContainer::RobotContainer() {
+  pathplanner::NamedCommands::registerCommand("GroundGrabCommand", std::move(GroundGrabCommand(&superStructure, &storage, &intake).ToPtr()));
+	pathplanner::NamedCommands::registerCommand("ClosedCommand", std::move(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr()));
+	pathplanner::NamedCommands::registerCommand("VisionSpeakerCommand", std::move(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &storage)).ToPtr());
+	pathplanner::NamedCommands::registerCommand("VisionAmpCommand", std::move(VisionAmpCommand(&superStructure, &shooter, &storage)));
+	pathplanner::NamedCommands::registerCommand("StorageCommand", std::move(StorageCommand(&storage, 3_V).ToPtr()));
+	pathplanner::NamedCommands::registerCommand("ShooterCommand", std::move(ShooterCommand(&shooter, 4.00).ToPtr()));
+  
 	autoChooser.SetDefaultOption("None, null, nada", "None");
-	autoChooser.AddOption("MiddleNote", "MiddleNote");
+	autoChooser.AddOption("CenterAuto", "CenterAuto");
+	autoChooser.AddOption("AMPAuto", "AMPAuto");
+	autoChooser.AddOption("SourceAuto", "SourceAuto");
 
 	frc::SmartDashboard::PutData("Auto Chooser", &autoChooser);
 
@@ -17,19 +27,21 @@ RobotContainer::RobotContainer() {
 	// ConfigureSysIdBindings(&chassis, &driver);
 }
 
-void RobotContainer::ConfigureBindings() {
+void RobotContainer::ConfigureBindings()
+{
+
 	chassis.SetDefaultCommand(Drive(&chassis, &driver));
 
 	ampV.WhileTrue(VisionAmpCommand(&superStructure, &shooter, &storage));
 	ampV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
-	
+
 	sourceV.WhileTrue(VisionSourceGrabCommand(&superStructure, &shooter, &storage));
 	sourceV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
 	speakerV.WhileTrue(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &opertr).ToPtr());
 	speakerV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	// Operator 
+	// Operator
 	ampM.WhileTrue(AmpCommand(&superStructure, &shooter).ToPtr());
 	ampM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
@@ -57,10 +69,12 @@ void RobotContainer::ConfigureBindings() {
 	intakeM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 }
 
-frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
+frc2::CommandPtr RobotContainer::GetAutonomousCommand()
+{
 	std::string autoName = autoChooser.GetSelected();
-	if (autoName == "None") {
-		return  frc2::cmd::None();
+	if (autoName == "None")
+	{
+		return frc2::cmd::None();
 	}
 
 	return pathplanner::AutoBuilder::buildAuto(autoName);

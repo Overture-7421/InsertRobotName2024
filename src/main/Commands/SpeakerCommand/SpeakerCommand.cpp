@@ -13,6 +13,7 @@ SpeakerCommand::SpeakerCommand(SuperStructure* superStructure, Shooter* shooter)
     frc2::ParallelCommandGroup(
       SuperStructureCommand(superStructure, SuperStructureConstants::ManualSpeakerState),
       ShooterCommand(shooter, ShooterConstants::ManualSpeakerSpeed)
+
     )
   );
 }

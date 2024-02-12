@@ -28,6 +28,10 @@
 #include "OvertureLib/Subsystems/Swerve/SwerveModule/SwerveModule.h"
 #include "OvertureLib/Math/ChassisAccels.h"
 
+#include <frc/system/plant/LinearSystemId.h>
+#include <frc/controller/LinearQuadraticRegulator.h>
+
+
 using namespace pathplanner;
 
 class SwerveChassis : public frc2::SubsystemBase {
@@ -84,9 +88,9 @@ protected:
 
 	frc::ChassisSpeeds fieldRelativeSpeed, lastFieldRelativeSpeed;
 	ChassisAccels fieldRelativeAccel;
-	frc::LinearFilter<units::meters_per_second_squared_t> accelXFilter = frc::LinearFilter<units::meters_per_second_squared_t>::SinglePoleIIR(0.05, 0.02_s);
-	frc::LinearFilter<units::meters_per_second_squared_t> accelYFilter = frc::LinearFilter<units::meters_per_second_squared_t>::SinglePoleIIR(0.05, 0.02_s);
-	frc::LinearFilter<units::radians_per_second_squared_t> accelOmegaFilter = frc::LinearFilter<units::radians_per_second_squared_t>::SinglePoleIIR(0.05, 0.02_s);
+	frc::LinearFilter<units::meters_per_second_squared_t> accelXFilter = frc::LinearFilter<units::meters_per_second_squared_t>::SinglePoleIIR(0.1, 0.02_s);
+	frc::LinearFilter<units::meters_per_second_squared_t> accelYFilter = frc::LinearFilter<units::meters_per_second_squared_t>::SinglePoleIIR(0.1, 0.02_s);
+	frc::LinearFilter<units::radians_per_second_squared_t> accelOmegaFilter = frc::LinearFilter<units::radians_per_second_squared_t>::SinglePoleIIR(0.1, 0.02_s);
 
 private:
 	std::optional<frc::Rotation2d> getRotationTargetOverride();
@@ -94,7 +98,6 @@ private:
 	frc::Field2d field2d;
 
 	bool headingOverride = false;
-
-	frc::ProfiledPIDController<units::radians> headingController{ 6.5, 0, 0.75, frc::TrapezoidProfile<units::radians>::Constraints{ 9_rad_per_s, 12.5_rad_per_s_sq } };
+	frc::ProfiledPIDController<units::radians> headingController{6.0, 0, 0.6, frc::TrapezoidProfile<units::radians>::Constraints{ 18_rad_per_s, 27_rad_per_s_sq } };
 	frc::Rotation2d headingTarget;
 };
