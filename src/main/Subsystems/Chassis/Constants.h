@@ -1,3 +1,5 @@
+#pragma once
+
 #include <units/length.h>
 #include <frc/geometry/Translation2d.h>
 

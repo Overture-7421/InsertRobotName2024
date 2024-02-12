@@ -6,6 +6,9 @@
 
 #include <frc2/command/SubsystemBase.h>
 #include <frc/trajectory/TrapezoidProfile.h>
+#include <frc/controller/ArmFeedforward.h>
+#include <frc2/command/sysid/SysIdRoutine.h>
+#include <units/angular_acceleration.h>
 
 #include "SupportArmsState.h"
 #include "SupportArmsPosition.h"
@@ -13,16 +16,13 @@
 #include <OvertureLib/MotorControllers/ControllerNeutralMode/ControllerNeutralMode.h>
 #include <OvertureLib/Sensors/OverDutyCycleEncoder/OverDutyCycleEncoder.h>
 
-#include <units/angular_acceleration.h>
-#include <frc2/command/sysid/SysIdRoutine.h>
+
 
 class SupportArms : public frc2::SubsystemBase {
 public:
 	SupportArms();
 	void setTargetCoord(SupportArmsState TargetCoord);
 	double getLowerAngle();
-	SupportArmsPosition getPosition();
-	void setPosition(SupportArmsPosition pos);
 	SupportArmsState getCurrentState();
 	void Periodic() override;
 
@@ -47,14 +47,15 @@ private:
 
 
 	// LowerMotors
-	OverTalonFX m_lowerRight{ 23, ControllerNeutralMode::Brake, true, "rio" };
+	OverTalonFX lowerRightMotor{ 23, ControllerNeutralMode::Brake, true, "rio" };
 
 	// State
 	SupportArmsState m_TargetState{ getCurrentState() };
 	SupportArmsPosition position = SupportArmsPosition::Closed;
 
-	//Motion Magic Feed Forward
-	double lowerFF = 0.0;
+	//Feed Forward
+	frc::ArmFeedforward lowerFF {0_V, 0_V, 0_V / 1_tps, 0_V / 1_tr_per_s_sq }; 
+	units::radian_t lowerFFAngleOffset = 0_tr;
 
 
 	frc2::sysid::SysIdRoutine sysIdRoutineLower{
@@ -62,14 +63,14 @@ private:
 							std::nullopt},
 		frc2::sysid::Mechanism{
 			[this](units::volt_t driveVoltage) {
-				m_lowerRight.SetVoltage(driveVoltage);
+				lowerRightMotor.SetVoltage(driveVoltage);
 			},
 			[this](frc::sysid::SysIdRoutineLog* log) {
 
 			log->Motor("SupportArmsLower")
-				.voltage(m_lowerRight.GetMotorVoltage().GetValue())
-				.position(m_lowerRight.GetPosition().GetValue())
-				.velocity(m_lowerRight.GetVelocity().GetValue());
+				.voltage(lowerRightMotor.GetMotorVoltage().GetValue())
+				.position(lowerRightMotor.GetPosition().GetValue())
+				.velocity(lowerRightMotor.GetVelocity().GetValue());
 			},
 		this} };
 };

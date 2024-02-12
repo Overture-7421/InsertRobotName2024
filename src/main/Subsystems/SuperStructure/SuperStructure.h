@@ -11,6 +11,9 @@
 #include <OvertureLib/MotorControllers/ControllerNeutralMode/ControllerNeutralMode.h>
 #include <OvertureLib/Sensors/OverDutyCycleEncoder/OverDutyCycleEncoder.h>
 #include <frc2/command/sysid/SysIdRoutine.h>
+#include <frc2/command/Commands.h>
+#include <units/angular_velocity.h>
+#include <units/angular_acceleration.h>
 
 #include "Constants.h"
 #include "SuperStructureState.h"
@@ -22,20 +25,26 @@ public:
 	double getLowerAngle();
 	double getUpperAngle();
 
-	frc2::CommandPtr sysIdQuadstaticLower(frc2::sysid::Direction direction) {
+	frc2::CommandPtr sysIdQuasistaticLower(frc2::sysid::Direction direction) {
 		return sysIdRoutineLower.Quasistatic(direction);
 	}
 
-	frc2::CommandPtr sysIdDinamicLower(frc2::sysid::Direction direction) {
+	frc2::CommandPtr sysIdDynamicLower(frc2::sysid::Direction direction) {
 		return sysIdRoutineLower.Dynamic(direction);
 	}
 
-	frc2::CommandPtr sysIdQuadstaticUpper(frc2::sysid::Direction direction) {
-		return sysIdRoutineUpper.Quasistatic(direction);
+	frc2::CommandPtr sysIdQuasistaticUpper(frc2::sysid::Direction direction) {
+		return frc2::cmd::Sequence(
+			frc2::cmd::Run([this] {setTargetCoord({0, 0});}).WithTimeout(1.5_s),
+			sysIdRoutineUpper.Quasistatic(direction)
+		);
 	}
 
-	frc2::CommandPtr sysIdDinamicUpper(frc2::sysid::Direction direction) {
-		return sysIdRoutineUpper.Dynamic(direction);
+	frc2::CommandPtr sysIdDynamicUpper(frc2::sysid::Direction direction) {
+		return frc2::cmd::Sequence(
+			frc2::cmd::Run([this] {setTargetCoord({0, 0});}).WithTimeout(1.5_s),
+			sysIdRoutineUpper.Dynamic(direction)
+		);	
 	}
 
 	SuperStructureState getCurrentState();
@@ -49,26 +58,36 @@ private:
 	//Encoders
 	OverDutyCycleEncoder lowerEncoder{ 3 };
 	OverDutyCycleEncoder upperEncoder{ 2 };
-	double lowerOffset = -0.338472;
-	double upperOffset = -0.577487;
+
+	#ifdef __FRC_ROBORIO__
+		double lowerOffset = -0.338472;
+		double upperOffset = -0.577487;
+	#else
+		double lowerOffset = 0;
+		double upperOffset = 0;
+	#endif
 
 
 	// LowerMotors
-	OverTalonFX lowerRightMotor{ 20, ControllerNeutralMode::Brake, true, "rio" };
+	OverTalonFX lowerRightMotor{ 20, ControllerNeutralMode::Brake, false, "rio" };
 	OverTalonFX lowerLeftMotor{ 21, ControllerNeutralMode::Brake, true, "rio" };
 
 	// Upper Motors
 	OverTalonFX upperMotor{ 22, ControllerNeutralMode::Brake, true, "rio" };
 
+
 	// State
 	SuperStructureState targetState;
 
-	//Motion Magic Feed Forward
-	double lowerFF = 2.75;
-	double upperFF = 0.5;
+	//Feed Forward
+	frc::ArmFeedforward lowerFF {0_V, 0_V, 0_V / 1_tps, 0_V / 1_tr_per_s_sq }; 
+	units::radian_t lowerFFAngleOffset = 0_tr;
+
+	frc::ArmFeedforward upperFF {0_V, 0_V, 0_V / 1_tps, 0_V / 1_tr_per_s_sq}; 
+	units::radian_t upperFFAngleOffset = 0_tr;
 
 	frc2::sysid::SysIdRoutine sysIdRoutineLower{
-		frc2::sysid::Config{0.75_V / 1_s, 4_V, 3_s,
+		frc2::sysid::Config{0.75_V / 1_s, 5_V, 10_s,
 							std::nullopt},
 		frc2::sysid::Mechanism{
 			[this](units::volt_t driveVoltage) {
@@ -84,7 +103,7 @@ private:
 			this} };
 
 	frc2::sysid::SysIdRoutine sysIdRoutineUpper{
-		frc2::sysid::Config{0.75_V / 1_s, 4_V, 4_s,
+		frc2::sysid::Config{0.75_V / 1_s, 4_V, 10_s,
 							std::nullopt},
 		frc2::sysid::Mechanism{
 			[this](units::volt_t driveVoltage) {

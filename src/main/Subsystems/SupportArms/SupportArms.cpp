@@ -10,15 +10,15 @@
 
 SupportArms::SupportArms() {
 	// Configure Motors
-	m_lowerRight.setSupplyCurrentLimit(true, 20, 30, 0.5);
-	m_lowerRight.setSensorToMechanism(LOWER_GEAR_BOX_REDUCTION);
+	lowerRightMotor.setSupplyCurrentLimit(true, 20, 30, 0.5);
+	lowerRightMotor.setSensorToMechanism(LOWER_GEAR_BOX_REDUCTION);
 
 	// COnfigure Motion Magic and PID
-	m_lowerRight.setPIDValues(0.0, 0.0, 0.0, 0.0, 0.0);
-	m_lowerRight.configureMotionMagic(0.0, 0.0, 0.0);
+	lowerRightMotor.setPIDValues(0.0, 0.0, 0.0, 0.0, 0.0);
+	lowerRightMotor.configureMotionMagic(0.0, 0.0, 0.0);
 
 	std::this_thread::sleep_for(std::chrono::seconds(2));
-	m_lowerRight.setSensorPosition(convertAngleToFalconPos(getLowerAngle()));
+	lowerRightMotor.setSensorPosition(convertAngleToFalconPos(getLowerAngle()));
 
 	setTargetCoord({ getLowerAngle() });
 }
@@ -29,16 +29,8 @@ void SupportArms::setTargetCoord(SupportArmsState targetCoord) {
 
 double SupportArms::getLowerAngle() {
 	double rawLowerEncoder = lowerEncoder.GetAbsolutePosition() + lowerOffset; // Goes from 0 to 1
-	double degrees = rawLowerEncoder * 360;
+	double degrees = rawLowerEncoder * 360.0;
 	return frc::InputModulus(degrees, -180.0, 180.0);
-}
-
-SupportArmsPosition SupportArms::getPosition() {
-	return position;
-}
-
-void SupportArms::setPosition(SupportArmsPosition pos) {
-	position = pos;
 }
 
 SupportArmsState SupportArms::getCurrentState() {
@@ -48,12 +40,11 @@ SupportArmsState SupportArms::getCurrentState() {
 }
 
 void SupportArms::setFalconTargetPos(SupportArmsState targetState, SupportArmsState currentState) {
-	// m_lowerRight.setMotionMagicPosition(convertAngleToFalconPos(targetState.lowerAngle), lowerFF * cos(currentState.lowerAngle * DEG_TO_RAD), false);
-	//pidController.SetReference(convertAngleToFalconPos(setpoint.position.value()), rev::ControlType::kPosition, 0, lowerFF * cos(currentState.lowerAngle * DEG_TO_RAD));
+	lowerRightMotor.setMotionMagicPosition(convertAngleToFalconPos(targetState.lowerAngle), lowerFF.Calculate(units::degree_t(targetState.lowerAngle) + lowerFFAngleOffset, units::radians_per_second_t(0)).value(), false);
 }
 
 double SupportArms::convertAngleToFalconPos(double angle) {
-	return angle / 360;
+	return angle / 360.0;
 }
 
 // This method will be called once per scheduler run
@@ -63,6 +54,6 @@ void SupportArms::Periodic() {
 
 
 	// Debugging
-	frc::SmartDashboard::PutNumber("SupportArms/Current/Lower Angle", currentState.lowerAngle);
-	frc::SmartDashboard::PutNumber("SupportArms/Current/Lower Position", lowerEncoder.GetAbsolutePosition());
+	frc::SmartDashboard::PutNumber("SupportArms/Current/Angle", currentState.lowerAngle);
+	frc::SmartDashboard::PutNumber("SupportArms/Current/Motor Position", lowerEncoder.GetAbsolutePosition());
 }

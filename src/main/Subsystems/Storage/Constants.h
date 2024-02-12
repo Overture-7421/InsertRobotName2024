@@ -1,3 +1,4 @@
+#pragma once
 #include <units/voltage.h>
 
 namespace StorageConstants {

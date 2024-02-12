@@ -1,3 +1,5 @@
+#pragma once
+
 namespace ShooterConstants {
 	const static double LowerGearboxReduction = 1.0/2.4;
 	const static double UpperGearboxReduction = 1.0/2.4;

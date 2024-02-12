@@ -252,9 +252,10 @@ void OverTalonFX::setVoltage(units::volt_t voltage, bool enableFOC) {
  * @param velocity  The velocity to set the TalonFX to
  * @param enableFOC Whether or not to enable FOC
  */
-void OverTalonFX::setVelocityVoltage(double velocity, bool enableFOC) {
+void OverTalonFX::setVelocityVoltage(double velocity, double feedForward, bool enableFOC) {
 	VelocityVoltage velocityOut{ 0_tps };
 	velocityOut.EnableFOC = enableFOC;
+	velocityOut.FeedForward = units::volt_t(feedForward);
 	SetControl(velocityOut.WithVelocity(units::turns_per_second_t{ velocity }));
 }
 

@@ -49,30 +49,24 @@ private:
 	// Subsystems
 	// Chassis chassis;
 	// AprilTagCamera aprilTagCamera{ &chassis };
-	// Intake intake;
-	// SuperStructure superStructure;
+	Intake intake;
+	SuperStructure superStructure;
 	// SupportArms supportArms;
-	// Storage storage;
-	// Shooter shooter;
+	Storage storage;
+	Shooter shooter;
 
-	// Controllers
+	// // Controllers
 	frc::XboxController driver{ 0 };
 	frc::XboxController opertr{ 1 };
 
+	frc2::CommandXboxController characterization {5};
 
-	// frc2::CommandXboxController charectization{ 4 };
-
-
-	// Calibration
-	frc2::Trigger testButton {[this] {return driver.GetAButton();}};
-
-
-	// Driver Commands
+	// // Driver Commands
 	frc2::Trigger ampV{ [this] {return driver.GetLeftTriggerAxis() > 0.3;} };
 	frc2::Trigger sourceV{ [this] {return driver.GetRightBumper();} };
 	frc2::Trigger speakerV{ [this] {return driver.GetRightTriggerAxis() > 0.3;} };	// TO GET TESTED
 
-	// Mechanism Commands
+	// // Mechanism Commands
 	frc2::Trigger ampM{ [this] {return opertr.GetLeftBumper();} };
 	frc2::Trigger sourceM{ [this] {return opertr.GetBButton();} };
 	frc2::Trigger climbV{ [this] {return opertr.GetXButton();} };

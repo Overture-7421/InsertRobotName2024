@@ -43,7 +43,7 @@ public:
 	const TalonFXConfiguration& getConfig();
 
 	void setVoltage(units::volt_t voltage, bool enableFOC);
-	void setVelocityVoltage(double velocity, bool enableFOC);
+	void setVelocityVoltage(double velocity, double feedForward, bool enableFOC);
 	void setDutyCycle(double dutyCycle, bool enableFOC);
 	void setPositionVoltage(double position, bool enableFOC);
 	void setMotionMagicPosition(double position, double feedForward, bool enableFOC);
