@@ -47,19 +47,19 @@ private:
 	void ConfigureBindings();
 
 	// Subsystems
-	// Chassis chassis;
-	// AprilTagCamera aprilTagCamera{ &chassis };
-	// Intake intake;
-	// SuperStructure superStructure;
-	// SupportArms supportArms;
-	// Storage storage;
-	// Shooter shooter;
+	Chassis chassis;
+	AprilTagCamera aprilTagCamera{ &chassis };
+	Intake intake;
+	SuperStructure superStructure;
+	SupportArms supportArms;
+	Storage storage;
+	Shooter shooter;
 
 	// // Controllers
 	frc::XboxController driver{ 0 };
 	frc::XboxController opertr{ 1 };
 
-	frc2::CommandXboxController characterization {5};
+	frc2::CommandXboxController characterization{ 5 };
 
 	// // Driver Commands
 	frc2::Trigger ampV{ [this] {return driver.GetLeftTriggerAxis() > 0.3;} };

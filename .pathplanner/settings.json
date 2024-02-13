@@ -3,10 +3,9 @@
   "robotLength": 0.96,
   "holonomicMode": true,
   "pathFolders": [
-    "CenterAuto",
-    "CenterAutoDirect",
-    "Climbing",
     "AMPAuto",
+    "CenterAuto",
+    "Climbing",
     "SourceAuto"
   ],
   "autoFolders": [
