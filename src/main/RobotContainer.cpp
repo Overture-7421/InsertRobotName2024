@@ -55,8 +55,8 @@ void RobotContainer::ConfigureBindings()
 	// climbM.WhileTrue(ManualClimb(&chassis, &superStructure, &supportArms, &aprilTagCamera, &opertr));
 	// climbM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	// shootM.WhileTrue(StorageCommand(&storage, 3_V).ToPtr());
-	// shootM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+	shootM.WhileTrue(StorageCommand(&storage, 3_V).ToPtr());
+	shootM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
 	// speakerM.WhileTrue(SpeakerCommand(&superStructure, &shooter).ToPtr());
 	// speakerM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
