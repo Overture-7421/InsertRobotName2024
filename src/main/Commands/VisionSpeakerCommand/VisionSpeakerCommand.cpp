@@ -29,9 +29,9 @@ void VisionSpeakerCommand::Initialize() {
 	chassis->setHeadingOverride(true);
 
 	if (shouldFlip()) {
-		dynamicTarget.setTargetLocation(pathplanner::GeometryUtil::flipFieldPosition({ 0.06_m, 5.54_m }));
+		dynamicTarget.setTargetLocation(pathplanner::GeometryUtil::flipFieldPosition(VisionSpeakerCommandConstants::TargetLocation));
 	} else {
-		dynamicTarget.setTargetLocation({ 0.06_m, 5.54_m });
+		dynamicTarget.setTargetLocation(VisionSpeakerCommandConstants::TargetLocation);
 	}
 
 	Timer.Reset();
@@ -53,9 +53,9 @@ void VisionSpeakerCommand::Execute() {
 	frc::SmartDashboard::PutNumber("Angle to Target", angle.Degrees().value());
 
 	chassis->setTargetHeading(angle);
-	double targetLowerAngle = distanceToLowerAngleTable[distance];
-	double targetUpperAngle = distanceToUpperAngleTable[distance];
-	double targetShooterVelocity = distanceToVelocityTable[distance];
+	double targetLowerAngle = VisionSpeakerCommandConstants::DistanceToLowerAngleTable[distance];
+	double targetUpperAngle = VisionSpeakerCommandConstants::DistanceToUpperAngleTable[distance];
+	double targetShooterVelocity = VisionSpeakerCommandConstants::DistanceToVelocityTable[distance];
 	superStructure->setTargetCoord({ targetLowerAngle, targetUpperAngle });
 	shooter->setVelocityVoltage(targetShooterVelocity);
 
