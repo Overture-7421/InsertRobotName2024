@@ -16,6 +16,12 @@ VisionSpeakerCommandNoShoot::VisionSpeakerCommandNoShoot(Chassis* chassis, Super
 
 // Called when the command is initially scheduled.
 void VisionSpeakerCommandNoShoot::Initialize() {
+	if (shouldFlip()) {
+		targetLocation = pathplanner::GeometryUtil::flipFieldPosition(VisionSpeakerCommandConstants::TargetLocation);
+	} else {
+		targetLocation = VisionSpeakerCommandConstants::TargetLocation;
+	}
+
 	chassis->setHeadingOverride(true);
 }
 
@@ -24,7 +30,7 @@ void VisionSpeakerCommandNoShoot::Execute() {
 	frc::Pose2d chassisPose = chassis->getOdometry();
 	frc::Translation2d chassisLoc = chassisPose.Translation();
 
-	frc::Translation2d chassisToTarget = VisionSpeakerCommandConstants::TargetLocation - chassisLoc;
+	frc::Translation2d chassisToTarget = targetLocation - chassisLoc;
 	distance = chassisToTarget.Distance({ 0_m, 0_m });
 	angle = chassisToTarget.Angle().RotateBy({ 180_deg });
 

@@ -11,6 +11,7 @@
 #include "main/Subsystems/SuperStructure/SuperStructure.h"
 #include "main/Subsystems/Shooter/Shooter.h"
 #include "main/Commands/VisionSpeakerCommand/Constants.h"
+#include "main/Commands/UtilityFunctions/UtilityFunctions.h"
 
 class VisionSpeakerCommandNoShoot
 	: public frc2::CommandHelper<frc2::Command, VisionSpeakerCommandNoShoot> {
@@ -29,6 +30,8 @@ private:
 	SuperStructure* superStructure;
 	Chassis* chassis;
 	Shooter* shooter;
+	
+	frc::Translation2d targetLocation;
 
 	units::meter_t distance = 0.0_m;
 	frc::Rotation2d angle;
