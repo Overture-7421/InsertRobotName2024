@@ -19,15 +19,17 @@ RobotContainer::RobotContainer() {
 
 void RobotContainer::ConfigureBindings()
 {	
-	characterization.A().OnTrue(SuperStructureCommand(&superStructure, {60, 0}).ToPtr())
-						.OnFalse(SuperStructureCommand(&superStructure, {0, -30}).ToPtr());
+	// characterization.B()
+	// 	.WhileTrue(supportArms.sysIdQuadstaticLower(frc2::sysid::Direction::kForward));
 
-	// Shooter
-	// characterization.B().WhileTrue(shooter.sysIdQuasistatic(frc2::sysid::Direction::kForward));
-	// characterization.A().WhileTrue(shooter.sysIdQuasistatic(frc2::sysid::Direction::kReverse));
+	// characterization.A()
+	// 	.WhileTrue(supportArms.sysIdQuadstaticLower(frc2::sysid::Direction::kReverse));
 
-	// characterization.X().WhileTrue(shooter.sysIdDynamic(frc2::sysid::Direction::kForward));
-	// characterization.Y().WhileTrue(shooter.sysIdDynamic(frc2::sysid::Direction::kReverse));
+	// characterization.X()
+	// 	.WhileTrue(supportArms.sysIdDinamicLower(frc2::sysid::Direction::kForward));
+
+	// characterization.Y()
+	// 	.WhileTrue(supportArms.sysIdDinamicLower(frc2::sysid::Direction::kReverse));
 
 	// chassis.SetDefaultCommand(Drive(&chassis, &driver));
 

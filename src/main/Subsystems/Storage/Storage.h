@@ -21,6 +21,6 @@ public:
 	void Periodic() override;
 private:
 	OverTalonFX storageMotor{ 24, ControllerNeutralMode::Brake, false, "rio" };
-	frc::DigitalInput forwardSensor {0};
-	frc::DigitalInput backSensor {1};
+	frc::DigitalInput forwardSensor {2};
+	frc::DigitalInput backSensor {0};
 };

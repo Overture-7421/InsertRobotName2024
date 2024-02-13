@@ -6,12 +6,10 @@
 
 Storage::Storage() {
 	storageMotor.setSupplyCurrentLimit(true, 20, 25, 0.5);
-
-	storageMotor.setNeutralMode(ControllerNeutralMode::Coast);
 }
 
 void Storage::setVoltage(units::volt_t voltage) {
-	// storageMotor.setVoltage(voltage, false);
+	storageMotor.setVoltage(voltage, false);
 }
 
 bool Storage::isNoteOnForwardSensor(){

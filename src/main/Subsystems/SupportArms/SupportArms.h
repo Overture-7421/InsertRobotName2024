@@ -43,7 +43,7 @@ private:
 
 	//Encoders
 	OverDutyCycleEncoder lowerEncoder{ 1 };
-	double lowerOffset = 0;
+	double lowerOffset = -0.761712;
 
 
 	// LowerMotors
@@ -54,9 +54,7 @@ private:
 	SupportArmsPosition position = SupportArmsPosition::Closed;
 
 	//Feed Forward
-	frc::ArmFeedforward lowerFF {0_V, 0_V, 0_V / 1_tps, 0_V / 1_tr_per_s_sq }; 
-	units::radian_t lowerFFAngleOffset = 0_tr;
-
+	frc::ArmFeedforward lowerFF {0.32417_V, 0.068615_V, 7.975_V / 1_tps, 0.081073_V / 1_tr_per_s_sq }; 
 
 	frc2::sysid::SysIdRoutine sysIdRoutineLower{
 		frc2::sysid::Config{0.75_V / 1_s, 4_V, 3_s,

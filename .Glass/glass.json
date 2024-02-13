@@ -2,6 +2,9 @@
   "NetworkTables": {
     "transitory": {
       "SmartDashboard": {
+        "Shooter": {
+          "open": true
+        },
         "Storage": {
           "open": true
         },
@@ -20,13 +23,13 @@
               "open": true
             },
             "open": true
-          },
-          "open": true
+          }
         },
         "SupportArms": {
           "Current": {
             "open": true
-          }
+          },
+          "open": true
         },
         "open": true
       }

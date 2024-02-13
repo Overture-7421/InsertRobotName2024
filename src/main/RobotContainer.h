@@ -51,9 +51,9 @@ private:
 	// AprilTagCamera aprilTagCamera{ &chassis };
 	// Intake intake;
 	SuperStructure superStructure;
-	// SupportArms supportArms;
-	// Storage storage;
-	// Shooter shooter;
+	SupportArms supportArms;
+	Storage storage;
+	Shooter shooter;
 
 	// // Controllers
 	frc::XboxController driver{ 0 };

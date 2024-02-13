@@ -82,8 +82,8 @@ SuperStructureState SuperStructure::getCurrentState() {
 }
 
 void SuperStructure::setFalconTargetPos(SuperStructureState targetState, SuperStructureState currentState) {
-	lowerLeftMotor.setMotionMagicPosition(convertAngleToFalconPos(targetState.lowerAngle), lowerFF.Calculate(units::degree_t(targetState.lowerAngle) + lowerFFAngleOffset, units::radians_per_second_t(0)).value(), false);
-	upperMotor.setMotionMagicPosition(convertAngleToFalconPos(targetState.upperAngle), upperFF.Calculate(units::degree_t(targetState.lowerAngle + targetState.upperAngle) + upperFFAngleOffset, units::radians_per_second_t(0)).value(), false);
+	lowerLeftMotor.setMotionMagicPosition(convertAngleToFalconPos(targetState.lowerAngle), lowerFF.Calculate(units::degree_t(targetState.lowerAngle), units::radians_per_second_t(0)).value(), false);
+	upperMotor.setMotionMagicPosition(convertAngleToFalconPos(targetState.upperAngle), upperFF.Calculate(units::degree_t(targetState.lowerAngle + targetState.upperAngle), units::radians_per_second_t(0)).value(), false);
 }
 
 double SuperStructure::convertAngleToFalconPos(double angle) {
