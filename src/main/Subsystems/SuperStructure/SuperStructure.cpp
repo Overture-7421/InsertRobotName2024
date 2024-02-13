@@ -22,13 +22,9 @@ SuperStructure::SuperStructure() {
 	upperMotor.setSupplyCurrentLimit(true, 30, 40, 0.5);
 	upperMotor.setSensorToMechanism(SuperStructureConstants::UpperAngleGearRatio);
 
-
-	while(!upperEncoder.IsConnected() || !lowerEncoder.IsConnected()){ // TODO: See if this works instead of just waiting X amount of time
-		std::cout << "Waiting for encoders on SuperStructure..." << std::endl;
-		std::this_thread::sleep_for(std::chrono::milliseconds(100));
-	}
-
-	lowerRightMotor.setSensorPosition(convertAngleToFalconPos(getLowerAngle()));
+	std::this_thread::sleep_for(std::chrono::seconds(2));
+	lowerLeftMotor.setSensorPosition(convertAngleToFalconPos(getLowerAngle()));
+	std::this_thread::sleep_for(std::chrono::seconds(2));
 	upperMotor.setSensorPosition(convertAngleToFalconPos(getUpperAngle()));
 
 	SoftwareLimitSwitchConfigs lowerMotorSoftLimitConfig;
@@ -55,11 +51,11 @@ SuperStructure::SuperStructure() {
 	setTargetCoord({ getLowerAngle(), getUpperAngle() });
 
 	// Configure Motion Magic and PID
-	lowerLeftMotor.setPIDValues(0.0, 0.0, 0.0, 0.0, 0.0);
-	lowerLeftMotor.configureMotionMagic(0.0, 0.0, 0.0);
+	lowerLeftMotor.setPIDValues(320.0, 0.0, 0.0, 0.0, 0.0);
+	lowerLeftMotor.configureMotionMagic(15.0, 40.0, 0.0);
 
-	upperMotor.setPIDValues(0.0, 0.0, 0.0, 0.0, 0.0);
-	upperMotor.configureMotionMagic(0.0, 0.0, 0.0);
+	upperMotor.setPIDValues(150.0, 0.0, 0.0, 0.0, 0.0);
+	upperMotor.configureMotionMagic(15.0, 40.0, 0.0);
 }
 
 void SuperStructure::setTargetCoord(SuperStructureState targetState) {
@@ -109,11 +105,14 @@ void SuperStructure::Periodic() {
 	frc::SmartDashboard::PutNumber("SuperStructure/Current/Lower", currentState.lowerAngle);
 	frc::SmartDashboard::PutNumber("SuperStructure/Current/Upper", currentState.upperAngle);
 
+	frc::SmartDashboard::PutNumber("SuperStructure/Current/LowerMotor", lowerLeftMotor.GetPosition().GetValueAsDouble());
+	frc::SmartDashboard::PutNumber("SuperStructure/Current/UpperMotor", upperMotor.GetPosition().GetValueAsDouble());
+
 	frc::SmartDashboard::PutNumber("SuperStructure/DesiredTarget/Lower", targetState.lowerAngle);
 	frc::SmartDashboard::PutNumber("SuperStructure/DesiredTarget/Upper", targetState.upperAngle);
 
 	frc::SmartDashboard::PutNumber("SuperStructure/ActualTarget/Lower", actualTarget.lowerAngle);
 	frc::SmartDashboard::PutNumber("SuperStructure/ActualTarget/Upper", actualTarget.upperAngle);
 
-	//setFalconTargetPos(actualTarget, currentState);
+	setFalconTargetPos(actualTarget, currentState);
 }

@@ -19,12 +19,8 @@ RobotContainer::RobotContainer() {
 
 void RobotContainer::ConfigureBindings()
 {	
-	// SuperStructure Upper
-	// characterization.B().WhileTrue(superStructure.sysIdQuasistaticUpper(frc2::sysid::Direction::kForward));
-	// characterization.A().WhileTrue(superStructure.sysIdQuasistaticUpper(frc2::sysid::Direction::kReverse));
-
-	// characterization.X().WhileTrue(superStructure.sysIdDynamicUpper(frc2::sysid::Direction::kForward));
-	// characterization.Y().WhileTrue(superStructure.sysIdDynamicUpper(frc2::sysid::Direction::kReverse));
+	characterization.A().OnTrue(SuperStructureCommand(&superStructure, {60, 0}).ToPtr())
+						.OnFalse(SuperStructureCommand(&superStructure, {0, -30}).ToPtr());
 
 	// Shooter
 	// characterization.B().WhileTrue(shooter.sysIdQuasistatic(frc2::sysid::Direction::kForward));
@@ -33,7 +29,7 @@ void RobotContainer::ConfigureBindings()
 	// characterization.X().WhileTrue(shooter.sysIdDynamic(frc2::sysid::Direction::kForward));
 	// characterization.Y().WhileTrue(shooter.sysIdDynamic(frc2::sysid::Direction::kReverse));
 
-	chassis.SetDefaultCommand(Drive(&chassis, &driver));
+	// chassis.SetDefaultCommand(Drive(&chassis, &driver));
 
 	// ampV.WhileTrue(VisionAmpCommand(&superStructure, &shooter, &storage));
 	// ampV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());

@@ -57,7 +57,7 @@ private:
 
 	//Encoders
 	OverDutyCycleEncoder lowerEncoder{ 3 };
-	OverDutyCycleEncoder upperEncoder{ 2 };
+	OverDutyCycleEncoder upperEncoder{ 4 };
 
 	#ifdef __FRC_ROBORIO__
 		double lowerOffset = -0.338472;
@@ -80,11 +80,11 @@ private:
 	SuperStructureState targetState;
 
 	//Feed Forward
-	frc::ArmFeedforward lowerFF {0_V, 0_V, 0_V / 1_tps, 0_V / 1_tr_per_s_sq }; 
+	frc::ArmFeedforward lowerFF {0.28393_V, 0.42394_V, 27.372_V / 1_tps, 0.9068_V / 1_tr_per_s_sq }; 
 	units::radian_t lowerFFAngleOffset = 0_tr;
 
-	frc::ArmFeedforward upperFF {0_V, 0_V, 0_V / 1_tps, 0_V / 1_tr_per_s_sq}; 
-	units::radian_t upperFFAngleOffset = 0_tr;
+	frc::ArmFeedforward upperFF {0.52996_V, 0.2418_V, 6.7295_V / 1_tps, 0.97016_V / 1_tr_per_s_sq}; 
+	units::radian_t upperFFAngleOffset = 0.088489_tr;
 
 	frc2::sysid::SysIdRoutine sysIdRoutineLower{
 		frc2::sysid::Config{0.75_V / 1_s, 5_V, 10_s,
