@@ -35,8 +35,8 @@ private:
 	OverTalonFX upperShooterMotor{ 26, ControllerNeutralMode::Brake, false, "rio" };
 	OverTalonFX lowerShooterMotor{ 27, ControllerNeutralMode::Brake, false, "rio" };
 
-	frc::SimpleMotorFeedforward<units::turn> upperFF {0_V, 0_V / 1_tps, 0_V / 1_tr_per_s_sq};
-	frc::SimpleMotorFeedforward<units::turn> lowerFF {0_V, 0_V / 1_tps, 0_V / 1_tr_per_s_sq};
+	frc::SimpleMotorFeedforward<units::turn> upperFF {0.4_V, 0_V / 1_tps, 0_V / 1_tr_per_s_sq};
+	frc::SimpleMotorFeedforward<units::turn> lowerFF {0.4_V, 0_V / 1_tps, 0_V / 1_tr_per_s_sq};
 
 	frc2::sysid::SysIdRoutine sysIdRoutine{
 	frc2::sysid::Config{0.5_V / 1_s, 3_V, 6_s,
