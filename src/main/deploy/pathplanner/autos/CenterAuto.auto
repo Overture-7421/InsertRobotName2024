@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.24,
-      "y": 4.32
+      "x": 1.137922275844552,
+      "y": 4.043688087376175
     },
     "rotation": -45.0
   },
@@ -135,6 +135,6 @@
       ]
     }
   },
-  "folder": "CenterAuto",
+  "folder": null,
   "choreoAuto": false
 }

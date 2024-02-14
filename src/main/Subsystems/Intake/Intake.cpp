@@ -5,7 +5,7 @@
 #include "Intake.h"
 
 Intake::Intake() {
-	intakeMotor.setSupplyCurrentLimit(true, 30, 40, 0.5);
+	intakeMotor.setSupplyCurrentLimit(true, 20, 30, 0.5);
 }
 
 void Intake::setVoltage(units::volt_t voltage) {

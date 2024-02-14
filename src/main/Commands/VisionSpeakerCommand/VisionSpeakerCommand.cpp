@@ -57,11 +57,11 @@ void VisionSpeakerCommand::Execute() {
 	superStructure->setTargetCoord({ targetLowerAngle, targetUpperAngle });
 	shooter->setVelocityVoltage(targetShooterVelocity);
 
-	units::degree_t headingTolerance = 2_deg + units::degree_t(std::clamp(1 - distance.value() / 8.0, 0.0, 1.0) * 5); // Heading tolerance extra of X deg when close, more precise when further back;
+	units::degree_t headingTolerance = 2_deg + units::degree_t(std::clamp(1 - distance.value() / 8.0, 0.0, 1.0) * 8); // Heading tolerance extra of X deg when close, more precise when further back;
 	units::degree_t headingError = units::math::abs(frc::InputModulus(angle.Degrees() - chassisPose.Rotation().Degrees(), -180_deg, 180_deg));
 
-  bool lowerAngleInTolerance = std::abs(targetLowerAngle - superStructure->getLowerAngle()) < 1.00;
-  bool upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 1.00;
+  bool lowerAngleInTolerance = std::abs(targetLowerAngle - superStructure->getLowerAngle()) < 2.00;
+  bool upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 2.00;
   bool headingInTolerance = headingError < headingTolerance; 
   bool shooterSpeedInTolerance = std::abs(targetShooterVelocity - shooter->getCurrentVelocity()) < 5.00; 
 
@@ -69,11 +69,6 @@ void VisionSpeakerCommand::Execute() {
   frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/UpperAngleReached", upperAngleInTolerance);
   frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/HeadingReached", headingInTolerance);
   frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/ShooterReached", shooterSpeedInTolerance);
-
-	bool lowerAngleInTolerance = std::abs(targetLowerAngle - superStructure->getLowerAngle()) < (2.00);
-	bool upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < (2.00);
-	bool headingInTolerance = headingError < headingTolerance;
-	bool shooterSpeedInTolerance = std::abs(targetShooterVelocity - shooter->getCurrentVelocity()) < 3.00;
 
 	if (lowerAngleInTolerance && upperAngleInTolerance && headingInTolerance && shooterSpeedInTolerance) {
 		if (joystick == nullptr) {
