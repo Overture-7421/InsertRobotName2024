@@ -52,7 +52,7 @@ SuperStructure::SuperStructure() {
 
 	// Configure Motion Magic and PID
 	lowerLeftMotor.setPIDValues(390.0, 0.0, 0.0, 0.0, 0.0);
-	lowerLeftMotor.configureMotionMagic(1.0, 6.0, 0.0);
+	lowerLeftMotor.configureMotionMagic(1.0, 3.0, 0.0);
 
 	upperMotor.setPIDValues(250.0, 0.0, 0.0, 0.0, 0.0);
 	upperMotor.configureMotionMagic(1.0, 6.0, 0.0);

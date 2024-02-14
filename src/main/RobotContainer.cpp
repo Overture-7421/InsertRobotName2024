@@ -40,8 +40,8 @@ void RobotContainer::ConfigureBindings() {
 	// tabulate.ToggleOnTrue(TabulateCommand(&chassis, &superStructure, &shooter).ToPtr());
 
 
-	// ampV.WhileTrue(VisionAmpCommand(&superStructure, &shooter, &storage));
-	// ampV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+	ampV.WhileTrue(VisionAmpCommand(&superStructure, &shooter, &storage));
+	ampV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
 	// sourceV.WhileTrue(VisionSourceGrabCommand(&superStructure, &shooter, &storage));
 	// sourceV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
