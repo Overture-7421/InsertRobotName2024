@@ -5,4 +5,5 @@ namespace StorageConstants {
     const static units::volt_t GroundGrabVolts = 2.5_V;
     const static units::volt_t SourceGrabVolts = -3_V;
     const static units::volt_t AmpScoreVolts = -3_V;
+    const static units::volt_t SpeakerScoreVolts = 3_V;
 };
