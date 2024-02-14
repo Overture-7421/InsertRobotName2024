@@ -5,7 +5,7 @@
 #include "Storage.h"
 
 Storage::Storage() {
-	storageMotor.setSupplyCurrentLimit(true, 20, 25, 0.5);
+	storageMotor.setSupplyCurrentLimit(true, 30, 35, 0.5);
 }
 
 void Storage::setVoltage(units::volt_t voltage) {

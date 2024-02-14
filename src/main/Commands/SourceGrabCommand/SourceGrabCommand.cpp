@@ -4,17 +4,20 @@
 
 #include "SourceGrabCommand.h"
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.
-// For more information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-SourceGrabCommand::SourceGrabCommand(SuperStructure* superStructure, Shooter* shooter, Storage* storage) {
 
-	AddCommands(
-		SuperStructureCommand(superStructure, SuperStructureConstants::SourceGrabState),
-		
-		frc2::ParallelCommandGroup(
-			ShooterCommand(shooter, ShooterConstants::SourceGrabSpeed),
-			StorageCommand(storage, StorageConstants::SourceGrabVolts)
+frc2::CommandPtr SourceGrabCommand(SuperStructure* superStructure, Shooter* shooter, Storage* storage) {
+	return frc2::cmd::Sequence(
+		SuperStructureCommand(superStructure, SuperStructureConstants::SourceGrabState).ToPtr(),
+		ShooterCommand(shooter, ShooterConstants::SourceGrabSpeed).ToPtr(),
+		StorageCommand(storage, StorageConstants::SourceGrabVolts).Repeatedly().Until(
+			[=]() {
+        		return storage->isNoteOnBackSensor();
+      		}
+		).AndThen(
+			[=]() {
+				shooter->setVelocityVoltage(0.0);
+				storage->setVoltage(0.0_V);
+			}
 		)
 	);
 }

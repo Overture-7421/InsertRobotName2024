@@ -14,6 +14,7 @@
 #include <frc2/command/Commands.h>
 #include <units/angular_velocity.h>
 #include <units/angular_acceleration.h>
+#include <units/angle.h>
 
 #include "Constants.h"
 #include "SuperStructureState.h"
@@ -82,6 +83,7 @@ private:
 	//Feed Forward
 	frc::ArmFeedforward lowerFF {0.28393_V, 0.42394_V, 27.372_V / 1_tps, 0.9068_V / 1_tr_per_s_sq }; 
 	frc::ArmFeedforward upperFF {0.52996_V, 0.2418_V, 6.7295_V / 1_tps, 0.97016_V / 1_tr_per_s_sq}; 
+	units::turn_t upperFFOffset = 0.25_tr;
 
 	frc2::sysid::SysIdRoutine sysIdRoutineLower{
 		frc2::sysid::Config{0.75_V / 1_s, 5_V, 10_s,

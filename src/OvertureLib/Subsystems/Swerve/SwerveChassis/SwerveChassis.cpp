@@ -34,7 +34,8 @@ SwerveChassis::SwerveChassis() {
 		this // Reference to this subsystem to set requirements
 	);
 
-	frc::SmartDashboard::PutData("Odometry", &field2d);
+	frc::SmartDashboard::PutData("Chassis/Odometry", &field2d);
+	frc::SmartDashboard::PutData("Chassis/HeadingController", &headingController);
 
 	headingController.EnableContinuousInput(-1.0 * units::radian_t(M_PI), units::radian_t(M_PI));
 	pathplanner::PPHolonomicDriveController::setRotationTargetOverride([this]() { return getRotationTargetOverride(); });
@@ -369,7 +370,13 @@ void SwerveChassis::shuffleboardPeriodic() {
 
 void SwerveChassis::Periodic() {
 	if (headingOverride) {
-		desiredSpeeds.omega = units::radians_per_second_t{ headingController.Calculate(getOdometry().Rotation().Radians())};
+
+		double outOmega = headingController.Calculate(getOdometry().Rotation().Radians());
+		if(std::abs(outOmega) < 0.15) {
+			outOmega = 0.0;
+		}
+		desiredSpeeds.omega = units::radians_per_second_t{outOmega};
+
 
 		frc::SmartDashboard::PutNumber("Odometry/HeadingTarget", headingTarget.Degrees().value());
 		frc::SmartDashboard::PutNumber("Odometry/HeadingError", headingController.GetPositionError().value());

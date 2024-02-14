@@ -19,9 +19,9 @@ frc2::CommandPtr VisionSourceGrabCommand(SuperStructure* superStucture, Shooter*
 	return frc2::cmd::Sequence(
 		frc2::cmd::Parallel(
 			pathplanner::AutoBuilder::pathfindToPoseFlipped({ 15.68_m, 0.60_m, {120_deg} }, constraints),
-			SuperStructureCommand(superStucture, { 70.0, -50.0 }).ToPtr()
+			SuperStructureCommand(superStucture, SuperStructureConstants::SourceGrabState).ToPtr()
 		),
-		SourceGrabCommand(superStucture, shooter, storage).ToPtr()
+		SourceGrabCommand(superStucture, shooter, storage)
 	);
 
 };

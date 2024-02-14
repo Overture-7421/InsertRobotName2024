@@ -17,5 +17,5 @@ public:
 	void Periodic() override;
 
 private:
-	OverTalonFX intakeMotor{ 25, ControllerNeutralMode::Brake, false, "rio" };
+	OverTalonFX intakeMotor{ 25, ControllerNeutralMode::Brake, true, "rio" };
 };

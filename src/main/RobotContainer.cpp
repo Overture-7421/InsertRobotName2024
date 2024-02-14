@@ -30,7 +30,9 @@ void RobotContainer::ConfigureBindings() {
 	// characterization.Y()
 	// 	.WhileTrue(supportArms.sysIdDinamicLower(frc2::sysid::Direction::kReverse));
 
-	// chassis.SetDefaultCommand(Drive(&chassis, &driver));
+	chassis.SetDefaultCommand(Drive(&chassis, &driver));
+	// tabulate.WhileTrue(TabulateCommand(&chassis, &superStructure, &shooter).ToPtr());
+
 
 	// ampV.WhileTrue(VisionAmpCommand(&superStructure, &shooter, &storage));
 	// ampV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
@@ -38,14 +40,14 @@ void RobotContainer::ConfigureBindings() {
 	// sourceV.WhileTrue(VisionSourceGrabCommand(&superStructure, &shooter, &storage));
 	// sourceV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	// speakerV.WhileTrue(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &opertr).ToPtr());
-	// speakerV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+	speakerV.WhileTrue(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &opertr).ToPtr());
+	speakerV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
 	// // Operator 
 	// ampM.WhileTrue(AmpCommand(&superStructure, &shooter).ToPtr());
 	// ampM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	// sourceM.WhileTrue(SourceGrabCommand(&superStructure, &shooter, &storage).ToPtr());
+	// sourceM.WhileTrue(SourceGrabCommand(&superStructure, &shooter, &storage));
 	// sourceM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
 	// climbV.WhileTrue(AutoClimb(&chassis, &superStructure, &supportArms, &opertr));
@@ -54,8 +56,8 @@ void RobotContainer::ConfigureBindings() {
 	// climbM.WhileTrue(ManualClimb(&chassis, &superStructure, &supportArms, &aprilTagCamera, &opertr));
 	// climbM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	shootM.WhileTrue(StorageCommand(&storage, 3_V).ToPtr());
-	shootM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+	shootM.WhileTrue(StorageCommand(&storage, 4_V).ToPtr());
+	shootM.OnFalse(StorageCommand(&storage, 0_V).ToPtr());
 
 	// speakerM.WhileTrue(SpeakerCommand(&superStructure, &shooter).ToPtr());
 	// speakerM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
@@ -65,8 +67,8 @@ void RobotContainer::ConfigureBindings() {
 
 	// closed.WhileTrue(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	// intakeM.WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake).ToPtr());
-	// intakeM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+	intakeM.WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake));
+	intakeM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {

@@ -51,11 +51,11 @@ SuperStructure::SuperStructure() {
 	setTargetCoord({ getLowerAngle(), getUpperAngle() });
 
 	// Configure Motion Magic and PID
-	lowerLeftMotor.setPIDValues(320.0, 0.0, 0.0, 0.0, 0.0);
-	lowerLeftMotor.configureMotionMagic(15.0, 40.0, 0.0);
+	lowerLeftMotor.setPIDValues(390.0, 0.0, 0.0, 0.0, 0.0);
+	lowerLeftMotor.configureMotionMagic(1.0, 1.0, 0.0);
 
-	upperMotor.setPIDValues(150.0, 0.0, 0.0, 0.0, 0.0);
-	upperMotor.configureMotionMagic(15.0, 40.0, 0.0);
+	upperMotor.setPIDValues(250.0, 0.0, 0.0, 0.0, 0.0);
+	upperMotor.configureMotionMagic(1.0, 1.0, 0.0);
 }
 
 void SuperStructure::setTargetCoord(SuperStructureState targetState) {
@@ -83,7 +83,7 @@ SuperStructureState SuperStructure::getCurrentState() {
 
 void SuperStructure::setFalconTargetPos(SuperStructureState targetState, SuperStructureState currentState) {
 	lowerLeftMotor.setMotionMagicPosition(convertAngleToFalconPos(targetState.lowerAngle), lowerFF.Calculate(units::degree_t(targetState.lowerAngle), units::radians_per_second_t(0)).value(), false);
-	upperMotor.setMotionMagicPosition(convertAngleToFalconPos(targetState.upperAngle), upperFF.Calculate(units::degree_t(targetState.lowerAngle + targetState.upperAngle), units::radians_per_second_t(0)).value(), false);
+	upperMotor.setMotionMagicPosition(convertAngleToFalconPos(targetState.upperAngle), upperFF.Calculate(units::degree_t(targetState.upperAngle) + upperFFOffset, units::radians_per_second_t(0)).value(), false);
 }
 
 double SuperStructure::convertAngleToFalconPos(double angle) {
