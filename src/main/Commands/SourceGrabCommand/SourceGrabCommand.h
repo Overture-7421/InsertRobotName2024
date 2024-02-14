@@ -11,9 +11,4 @@
 #include "main/Commands/ShooterCommand/ShooterCommand.h"
 #include "main/Commands/StorageCommand/StorageCommand.h"
 
-class SourceGrabCommand
-    : public frc2::CommandHelper<frc2::SequentialCommandGroup,
-                                 SourceGrabCommand> {
- public:
-  SourceGrabCommand(SuperStructure* superStructure, Shooter* shooter, Storage* storage);
-};
+frc2::CommandPtr SourceGrabCommand(SuperStructure* superStructure, Shooter* shooter, Storage* storage);

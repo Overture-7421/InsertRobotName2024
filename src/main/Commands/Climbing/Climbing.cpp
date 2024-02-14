@@ -6,9 +6,9 @@ pathplanner::PathConstraints pathfindingConstraints = pathplanner::PathConstrain
 	560_deg_per_s, 720_deg_per_s_sq);
 
 
-SuperStructureState superStructureStartingState{ -14, -60 };
+SuperStructureState superStructureStartingState{ -9, -60 };
 SuperStructureState superStructureTargetState{ 85, -90 };
-SuperStructureMoveByDistance::Profile superStructureProfile {superStructureStartingState, superStructureTargetState, 1.75_m};
+SuperStructureMoveByDistance::Profile superStructureProfile {superStructureStartingState, superStructureTargetState, 1_m};
 
 SupportArmsState supportArmsStartingState{ 0 };
 SupportArmsState supportArmsTargetState{ 110 };
