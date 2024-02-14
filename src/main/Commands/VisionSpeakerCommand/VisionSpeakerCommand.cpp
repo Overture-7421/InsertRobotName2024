@@ -43,11 +43,14 @@ void VisionSpeakerCommand::Execute() {
   superStructure->setTargetCoord({targetLowerAngle, targetUpperAngle});
   shooter->setVelocityVoltage(targetShooterVelocity);
 
+	units::degree_t headingTolerance = 2_deg + units::degree_t(std::clamp(1 - distance.value() / 8.0, 0.0, 1.0) * 5); // Heading tolerance extra of X deg when close, more precise when further back;
+	units::degree_t headingError = units::math::abs(frc::InputModulus(angle.Degrees() - chassisPose.Rotation().Degrees(), -180_deg, 180_deg));
+
+
   bool lowerAngleInTolerance = std::abs(targetLowerAngle - superStructure->getLowerAngle()) < 1.00;
   bool upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 1.00;
-  bool headingInTolerance = units::math::abs(frc::InputModulus(angle.Degrees() - chassisPose.Rotation().Degrees(), -180_deg, 180_deg)) < 5_deg; 
+  bool headingInTolerance = headingError < headingTolerance; 
   bool shooterSpeedInTolerance = std::abs(targetShooterVelocity - shooter->getCurrentVelocity()) < 5.00; 
-
 
   frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/LowerAngleReached", lowerAngleInTolerance);
   frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/UpperAngleReached", upperAngleInTolerance);
