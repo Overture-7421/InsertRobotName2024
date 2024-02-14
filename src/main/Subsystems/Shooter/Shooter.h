@@ -37,6 +37,7 @@ private:
 
 	frc::SimpleMotorFeedforward<units::turn> upperFF {0.23595_V, 0.049669_V / 1_tps, 0.0057865_V / 1_tr_per_s_sq};
 	frc::SimpleMotorFeedforward<units::turn> lowerFF {0.26217_V, 0.04915_V / 1_tps, 0.0062472_V / 1_tr_per_s_sq};
+	double targetVel;
 
 	frc2::sysid::SysIdRoutine sysIdRoutine{
 	frc2::sysid::Config{0.5_V / 1_s, 3_V, 6_s,

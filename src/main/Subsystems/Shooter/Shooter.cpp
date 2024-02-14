@@ -18,6 +18,7 @@ Shooter::Shooter() {
 }
 
 void Shooter::setVelocityVoltage(double velocity) {
+	targetVel = velocity;
 	upperShooterMotor.setVelocityVoltage(velocity, upperFF.Calculate(units::turns_per_second_t(velocity)).value(), false);
 	lowerShooterMotor.setVelocityVoltage(velocity, lowerFF.Calculate(units::turns_per_second_t(velocity)).value(), false);
 }
@@ -38,7 +39,7 @@ double Shooter::getLowerMotorCurrentVelocity() {
 
 // This method will be called once per scheduler run
 void Shooter::Periodic() {
-	frc::SmartDashboard::PutNumber("Shooter/DesiredSpeed", upperShooterMotor.GetClosedLoopReference().GetValueAsDouble());
+	frc::SmartDashboard::PutNumber("Shooter/DesiredSpeed", targetVel);
 	frc::SmartDashboard::PutNumber("Shooter/CurrentSpeed", getCurrentVelocity());
 
 	frc::SmartDashboard::PutNumber("Shooter/Lower/CurrentSpeed", getLowerMotorCurrentVelocity());

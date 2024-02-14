@@ -53,6 +53,9 @@ public:
 
 
 private:
+	double getLowerAngleThroughBore();
+	double getUpperAngleThroughBore();
+
 	void setFalconTargetPos(SuperStructureState targetState, SuperStructureState currentState);
 	double convertAngleToFalconPos(double angle);
 
@@ -81,8 +84,8 @@ private:
 	SuperStructureState targetState;
 
 	//Feed Forward
-	frc::ArmFeedforward lowerFF {0.28393_V, 0.42394_V, 27.372_V / 1_tps, 0.9068_V / 1_tr_per_s_sq }; 
-	frc::ArmFeedforward upperFF {0.52996_V, 0.2418_V, 6.7295_V / 1_tps, 0.97016_V / 1_tr_per_s_sq}; 
+	frc::ArmFeedforward lowerFF {0.28393_V, 0.65_V, 27.372_V / 1_tps, 0.9068_V / 1_tr_per_s_sq }; 
+	frc::ArmFeedforward upperFF {0.52996_V, 0.25_V, 6.7295_V / 1_tps, 0.97016_V / 1_tr_per_s_sq}; 
 	units::turn_t upperFFOffset = 0.25_tr;
 
 	frc2::sysid::SysIdRoutine sysIdRoutineLower{
