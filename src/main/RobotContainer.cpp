@@ -14,11 +14,10 @@ RobotContainer::RobotContainer() {
 	frc::SmartDashboard::PutData("Auto Chooser", &autoChooser);
 
 	ConfigureBindings();
-	// ConfigureSysIdBindings(&chassis, &driver);
+	// ConfigureSysIdBindings(&chassis, &characterization);
 }
 
-void RobotContainer::ConfigureBindings()
-{	
+void RobotContainer::ConfigureBindings() {
 	// characterization.B()
 	// 	.WhileTrue(supportArms.sysIdQuadstaticLower(frc2::sysid::Direction::kForward));
 
@@ -35,7 +34,7 @@ void RobotContainer::ConfigureBindings()
 
 	// ampV.WhileTrue(VisionAmpCommand(&superStructure, &shooter, &storage));
 	// ampV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
-	
+
 	// sourceV.WhileTrue(VisionSourceGrabCommand(&superStructure, &shooter, &storage));
 	// sourceV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
@@ -70,11 +69,9 @@ void RobotContainer::ConfigureBindings()
 	// intakeM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 }
 
-frc2::CommandPtr RobotContainer::GetAutonomousCommand()
-{
+frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
 	std::string autoName = autoChooser.GetSelected();
-	if (autoName == "None")
-	{
+	if (autoName == "None") {
 		return frc2::cmd::None();
 	}
 
