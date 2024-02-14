@@ -47,9 +47,9 @@ private:
 	void ConfigureBindings();
 
 	// Subsystems
-	// Chassis chassis;
-	// AprilTagCamera aprilTagCamera{ &chassis };
-	// Intake intake;
+	Chassis chassis;
+	AprilTagCamera aprilTagCamera{ &chassis };
+	Intake intake;
 	SuperStructure superStructure;
 	SupportArms supportArms;
 	Storage storage;
