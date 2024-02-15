@@ -16,7 +16,7 @@
  */
 SwerveModule::SwerveModule(int rotatorID, int wheelID, int canCoderID, double offset, std::string moduleName, std::string canBus) : m_name(moduleName) {
 	m_driveMotor = new OverTalonFX(wheelID, ControllerNeutralMode::Brake, false, canBus);
-	m_turningMotor = new OverTalonFX(rotatorID, ControllerNeutralMode::Coast, true, canBus);
+	m_turningMotor = new OverTalonFX(rotatorID, ControllerNeutralMode::Brake, true, canBus);
 	m_canCoder = new OverCANCoder(canCoderID, offset, canBus);
 	m_turningMotor->setContinuousWrap();
 	m_turningMotor->setFusedCANCoder(canCoderID);
@@ -28,8 +28,7 @@ SwerveModule::SwerveModule(int rotatorID, int wheelID, int canCoderID, double of
 	// m_driveMotor->setClosedLoopTorqueRamp(0.1);
 	// m_driveMotor->setTorqueCurrentLimit(40, -40, 0.1);
 	m_driveMotor->setClosedLoopVoltageRamp(0.1);
-	m_driveMotor->setSupplyCurrentLimit(true, 30, 40, 0.1);
-
+	m_driveMotor->setSupplyCurrentLimit(true, 40, 60, 0.1);
 
 	m_turningMotor->setPositionUpdateFrequency(200_Hz);
 	m_driveMotor->setVelocityUpdateFrequency(200_Hz);

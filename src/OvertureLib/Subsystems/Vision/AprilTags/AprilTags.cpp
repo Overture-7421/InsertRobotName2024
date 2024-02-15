@@ -51,7 +51,6 @@ void AprilTags::updateOdometry() {
 		return;
 	}
 	photon::PhotonPipelineResult pipelineResult = result.value();
-	
 
 	if (checkTagDistance(pipelineResult, 1, 2.5) || checkTagDistance(pipelineResult, 2, 5.00) || checkTagDistance(pipelineResult, 3, 7.00)) {
 		addMeasurementToChassis(pipelineResult);

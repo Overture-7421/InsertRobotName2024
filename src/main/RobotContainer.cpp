@@ -94,3 +94,11 @@ frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
 
 	return pathplanner::AutoBuilder::buildAuto(autoName);
 }
+
+frc2::CommandPtr RobotContainer::GetTeleopResetCommand() {
+	return frc2::cmd::Parallel(
+		StorageCommand(&storage, 0_V).ToPtr(),
+		ShooterCommand(&shooter, 0).ToPtr(),
+		IntakeCommand(&intake, 0_V).ToPtr()
+	);
+}
