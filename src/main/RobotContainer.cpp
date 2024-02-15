@@ -71,7 +71,7 @@ void RobotContainer::ConfigureBindings() {
 	// climbM.WhileTrue(ManualClimb(&chassis, &superStructure, &supportArms, &aprilTagCamera, &opertr));
 	// climbM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	shootM.WhileTrue(StorageCommand(&storage, 4_V).ToPtr());
+	shootM.WhileTrue(StorageCommand(&storage, StorageConstants::SpeakerScoreVolts).ToPtr());
 	shootM.OnFalse(StorageCommand(&storage, 0_V).ToPtr());
 
 	speakerM.WhileTrue(SpeakerCommand(&superStructure, &shooter).ToPtr());
@@ -96,7 +96,7 @@ frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
 }
 
 frc2::CommandPtr RobotContainer::GetTeleopResetCommand() {
-	return frc2::cmd::Parallel(
+	return frc2::cmd::Deadline(
 		StorageCommand(&storage, 0_V).ToPtr(),
 		ShooterCommand(&shooter, 0).ToPtr(),
 		IntakeCommand(&intake, 0_V).ToPtr()
