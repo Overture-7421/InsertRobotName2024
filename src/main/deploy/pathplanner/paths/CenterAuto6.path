@@ -3,37 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.446817325425873,
-        "y": 6.806996674491571
+        "x": 5.972043071013808,
+        "y": 6.242181499778295
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.741466029869294,
-        "y": 6.807838773107729
+        "x": 7.043244264424471,
+        "y": 6.027941261101977
       },
       "isLocked": false,
-      "linkedName": "Center3-4"
+      "linkedName": "Center 5-6"
     },
     {
       "anchor": {
-        "x": 7.676226787803517,
-        "y": 7.420502812535874
+        "x": 7.715179558472996,
+        "y": 5.794224637085098
       },
       "prevControl": {
-        "x": 6.9361241450834035,
-        "y": 7.167309803184257
+        "x": 6.9848151084202525,
+        "y": 6.027941261101977
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Center 4-5"
+      "linkedName": "Center 6-7"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 4.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
@@ -44,6 +44,9 @@
   },
   "reversed": false,
   "folder": "CenterAuto",
-  "previewStartingState": null,
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
   "useDefaultConstraints": false
 }

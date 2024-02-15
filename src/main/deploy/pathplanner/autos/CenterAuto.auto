@@ -131,6 +131,49 @@
               }
             ]
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CenterAuto5"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "VisionSpeakerCommand"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "CenterAuto6"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "GroundGrabCommand"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CenterAuto7"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "VisionSpeakerCommand"
+          }
         }
       ]
     }
