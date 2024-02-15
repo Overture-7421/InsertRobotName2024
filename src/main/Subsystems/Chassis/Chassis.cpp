@@ -12,15 +12,15 @@ Chassis::Chassis() {
 	setRotatorPID(53, 0, 0);
 
 #ifndef __FRC_ROBORIO__
-	frontLeft.setFFConstants(0.15117_V, 1.9912_V, 0.032941_V);
-	frontRight.setFFConstants(0.15117_V, 1.9912_V, 0.032941_V);
-	backLeft.setFFConstants(0.15117_V, 1.9912_V, 0.032941_V);
+	frontLeft.setFFConstants(0.040347_V, 1.93_V, 0.63363_V);
+	frontRight.setFFConstants(0.26831_V, 1.9683_V, 0.1204_V);
+	backLeft.setFFConstants(0.0089267_V, 1.8401_V, 0.77189_V);
 	backRight.setFFConstants(0.15117_V, 1.9912_V, 0.032941_V);
 #else
-	frontLeft.setFFConstants(0.15117_V, 1.9912_V, 0.032941_V);
-	frontRight.setFFConstants(0.11106_V, 2.0075_V, 0.08823_V);
-	backLeft.setFFConstants(0.030111_V, 2.0732_V, 0.16158_V);
-	backRight.setFFConstants(0.09324_V, 2.0492_V, 0.077588_V);
+	frontLeft.setFFConstants(0.26831_V, 1.9683_V, 0.1204_V);
+	frontRight.setFFConstants(0.26831_V, 1.9683_V, 0.1204_V);
+	backLeft.setFFConstants(0.26831_V, 1.9683_V, 0.1204_V);
+	backRight.setFFConstants(0.26831_V, 1.9683_V, 0.1204_V);
 #endif
 
 }

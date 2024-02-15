@@ -5,6 +5,8 @@
 #include "SupportArms.h"
 #include <frc/MathUtil.h>
 #include <thread>
+#include <iostream>
+
 
 #define DEG_TO_RAD M_PI / 180.0
 
@@ -14,8 +16,8 @@ SupportArms::SupportArms() {
 	lowerRightMotor.setSensorToMechanism(LOWER_GEAR_BOX_REDUCTION);
 
 	// COnfigure Motion Magic and PID
-	lowerRightMotor.setPIDValues(0.0, 0.0, 0.0, 0.0, 0.0);
-	lowerRightMotor.configureMotionMagic(0.0, 0.0, 0.0);
+	lowerRightMotor.setPIDValues(110, 0.0, 0.0, 0.0, 0.0);
+	lowerRightMotor.configureMotionMagic(25.0, 40.0, 0.0);
 
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 	lowerRightMotor.setSensorPosition(convertAngleToFalconPos(getLowerAngle()));
@@ -40,7 +42,7 @@ SupportArmsState SupportArms::getCurrentState() {
 }
 
 void SupportArms::setFalconTargetPos(SupportArmsState targetState, SupportArmsState currentState) {
-	lowerRightMotor.setMotionMagicPosition(convertAngleToFalconPos(targetState.lowerAngle), lowerFF.Calculate(units::degree_t(targetState.lowerAngle) + lowerFFAngleOffset, units::radians_per_second_t(0)).value(), false);
+	lowerRightMotor.setMotionMagicPosition(convertAngleToFalconPos(targetState.lowerAngle), lowerFF.Calculate(units::degree_t(targetState.lowerAngle), units::radians_per_second_t(0)).value(), false);
 }
 
 double SupportArms::convertAngleToFalconPos(double angle) {
@@ -52,8 +54,8 @@ void SupportArms::Periodic() {
 	SupportArmsState currentState = getCurrentState();
 	setFalconTargetPos(m_TargetState, currentState);
 
-
 	// Debugging
 	frc::SmartDashboard::PutNumber("SupportArms/Current/Angle", currentState.lowerAngle);
+	frc::SmartDashboard::PutNumber("SupportArms/Current/Raw Encoder", lowerEncoder.GetAbsolutePosition());
 	frc::SmartDashboard::PutNumber("SupportArms/Current/Motor Position", lowerEncoder.GetAbsolutePosition());
 }

@@ -33,6 +33,7 @@ public:
 
 private:
 	std::optional<frc2::CommandPtr> m_autonomousCommand;
+	std::optional<frc2::CommandPtr> m_teleopResetCommand;
 
 	RobotContainer m_container;
 	// SysIDRoutineBot m_container;

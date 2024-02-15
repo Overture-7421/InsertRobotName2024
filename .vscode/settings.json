@@ -92,6 +92,10 @@
     "valarray": "cpp",
     "variant": "cpp",
     "*.inc": "cpp",
-    "charconv": "cpp"
+    "charconv": "cpp",
+    "xmemory": "cpp",
+    "xtr1common": "cpp",
+    "xtree": "cpp",
+    "xutility": "cpp"
   }
 }

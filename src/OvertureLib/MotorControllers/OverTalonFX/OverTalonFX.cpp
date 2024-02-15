@@ -353,3 +353,11 @@ void OverTalonFX::setContinuousWrap() {
 	config.ClosedLoopGeneral.ContinuousWrap = true;
 	GetConfigurator().Apply(config);
 }
+
+void OverTalonFX::setPositionUpdateFrequency(units::frequency::hertz_t frequencyHz) {
+	GetPosition().SetUpdateFrequency(frequencyHz);
+}
+
+void OverTalonFX::setVelocityUpdateFrequency(units::frequency::hertz_t frequencyHz) {
+	GetVelocity().SetUpdateFrequency(frequencyHz);
+}

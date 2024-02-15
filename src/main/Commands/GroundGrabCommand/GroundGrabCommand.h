@@ -11,9 +11,4 @@
 #include "main/Commands/StorageCommand/StorageCommand.h"
 #include "main/Commands/IntakeCommand/IntakeCommand.h"
 
-class GroundGrabCommand
-    : public frc2::CommandHelper<frc2::SequentialCommandGroup,
-                                 GroundGrabCommand> {
- public:
-  GroundGrabCommand(SuperStructure* superStructure, Storage* storage, Intake* intake);
-};
+frc2::CommandPtr GroundGrabCommand(SuperStructure* superStructure, Storage* storage, Intake* intake);

@@ -2,9 +2,6 @@
   "NetworkTables": {
     "transitory": {
       "SmartDashboard": {
-        "Storage": {
-          "open": true
-        },
         "SuperStructure": {
           "ActualTarget": {
             "open": true
@@ -94,7 +91,10 @@
             }
           ]
         }
-      ]
+      ],
+      "window": {
+        "visible": false
+      }
     }
   }
 }

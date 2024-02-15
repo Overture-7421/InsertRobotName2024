@@ -5,13 +5,11 @@
 #include "Storage.h"
 
 Storage::Storage() {
-	storageMotor.setSupplyCurrentLimit(true, 20, 25, 0.5);
-
-	storageMotor.setNeutralMode(ControllerNeutralMode::Coast);
+	storageMotor.setSupplyCurrentLimit(true, 30, 35, 0.5);
 }
 
 void Storage::setVoltage(units::volt_t voltage) {
-	// storageMotor.setVoltage(voltage, false);
+	storageMotor.setVoltage(voltage, false);
 }
 
 bool Storage::isNoteOnForwardSensor(){

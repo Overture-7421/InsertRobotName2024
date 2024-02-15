@@ -62,6 +62,7 @@ void SimDutyCycleEncoderManager::Update(){
         
         // units::turn_t position = units::turn_t();
         encoder->SetAbsolutePosition(ntable->GetEntry("cancoder_position").GetDouble(0));
+        encoder->SetConnected(ntable->GetEntry("cancoder_position").Exists());
     }
 
     ntInst.Flush();

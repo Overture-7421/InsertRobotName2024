@@ -42,15 +42,11 @@ void VisionSpeakerCommand::Initialize() {
 void VisionSpeakerCommand::Execute() {
 	frc::Pose2d chassisPose = chassis->getOdometry();
 	frc::Translation2d speakerLoc = dynamicTarget.getMovingTarget(chassisPose, chassis->getFieldRelativeSpeeds(), chassis->getFIeldRelativeAccels());
-	field.SetRobotPose({ speakerLoc, {0_deg} });
-
 	frc::Translation2d chassisLoc = chassisPose.Translation();
 
 	frc::Translation2d chassisToTarget = speakerLoc - chassisLoc;
 	distance = chassisToTarget.Distance({ 0_m, 0_m });
 	angle = chassisToTarget.Angle().RotateBy({ 180_deg });
-	frc::SmartDashboard::PutNumber("Distance to Target", double(distance));
-	frc::SmartDashboard::PutNumber("Angle to Target", angle.Degrees().value());
 
 	chassis->setTargetHeading(angle);
 	double targetLowerAngle = distanceToLowerAngleTable[distance];
@@ -59,7 +55,7 @@ void VisionSpeakerCommand::Execute() {
 	superStructure->setTargetCoord({ targetLowerAngle, targetUpperAngle });
 	shooter->setVelocityVoltage(targetShooterVelocity);
 
-	units::degree_t headingTolerance = 2_deg + units::degree_t(std::clamp(1 - distance.value() / 8.0, 0.0, 1.0) * 10); // Heading tolerance extra of X deg when close, more precise when further back;
+	units::degree_t headingTolerance = 2_deg + units::degree_t(std::clamp(1 - distance.value() / 8.0, 0.0, 1.0) * 5); // Heading tolerance extra of X deg when close, more precise when further back;
 	units::degree_t headingError = frc::InputModulus(angle.Degrees() - chassisPose.Rotation().Degrees(), -180_deg, 180_deg);
 
 	bool lowerAngleInTolerance = std::abs(targetLowerAngle - superStructure->getLowerAngle()) < (2.00);
@@ -67,12 +63,10 @@ void VisionSpeakerCommand::Execute() {
 	bool headingInTolerance = units::math::abs(headingError) < headingTolerance;
 	bool shooterSpeedInTolerance = std::abs(targetShooterVelocity - shooter->getCurrentVelocity()) < 3.00;
 
-	frc::SmartDashboard::PutBoolean("lowerAngleInTolerance ", lowerAngleInTolerance);
-	frc::SmartDashboard::PutBoolean("upperAngleInTolerance ", upperAngleInTolerance);
-	frc::SmartDashboard::PutNumber("headingDynamicTolerance ", headingTolerance.value());
-	frc::SmartDashboard::PutBoolean("headingInTolerance ", headingInTolerance);
-	frc::SmartDashboard::PutNumber("headingError", headingError.value());
-	frc::SmartDashboard::PutBoolean("shooterSpeedInTolerance ", shooterSpeedInTolerance);
+	frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/LowerAngleReached ", lowerAngleInTolerance);
+	frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/UpperAngleReached ", upperAngleInTolerance);
+	frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/HeadingReached ", headingInTolerance);
+	frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/ShooterReached ", shooterSpeedInTolerance);
 
 	if (lowerAngleInTolerance && upperAngleInTolerance && headingInTolerance && shooterSpeedInTolerance) {
 		if (joystick == nullptr) {

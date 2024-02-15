@@ -34,7 +34,8 @@ SwerveChassis::SwerveChassis() {
 		this // Reference to this subsystem to set requirements
 	);
 
-	frc::SmartDashboard::PutData("Odometry", &field2d);
+	frc::SmartDashboard::PutData("Chassis/Odometry", &field2d);
+	frc::SmartDashboard::PutData("Chassis/HeadingController", &headingController);
 
 	headingController.EnableContinuousInput(-1.0 * units::radian_t(M_PI), units::radian_t(M_PI));
 	pathplanner::PPHolonomicDriveController::setRotationTargetOverride([this]() { return getRotationTargetOverride(); });
@@ -185,7 +186,7 @@ void SwerveChassis::driveRobotRelative(frc::ChassisSpeeds speeds) {
  * @param speeds ChassisSpeeds object
  */
 void SwerveChassis::driveFieldRelative(frc::ChassisSpeeds speeds) {
-	frc::ChassisSpeeds chassisSpeeds = frc::ChassisSpeeds::Discretize(frc::ChassisSpeeds::FromFieldRelativeSpeeds(speeds, getOdometry().Rotation()), 0.02_s);
+	frc::ChassisSpeeds chassisSpeeds = frc::ChassisSpeeds::Discretize(frc::ChassisSpeeds::FromFieldRelativeSpeeds(speeds, getOdometry().Rotation()), RobotConstants::LoopTime);
 
 	driveRobotRelative(chassisSpeeds);
 }
@@ -369,7 +370,13 @@ void SwerveChassis::shuffleboardPeriodic() {
 
 void SwerveChassis::Periodic() {
 	if (headingOverride) {
-		desiredSpeeds.omega = units::radians_per_second_t{ headingController.Calculate(getOdometry().Rotation().Radians())};
+
+		double outOmega = headingController.Calculate(getOdometry().Rotation().Radians());
+		if(std::abs(outOmega) < 0.15) {
+			outOmega = 0.0;
+		}
+		desiredSpeeds.omega = units::radians_per_second_t{outOmega};
+
 
 		frc::SmartDashboard::PutNumber("Odometry/HeadingTarget", headingTarget.Degrees().value());
 		frc::SmartDashboard::PutNumber("Odometry/HeadingError", headingController.GetPositionError().value());
@@ -377,7 +384,7 @@ void SwerveChassis::Periodic() {
 
 	wpi::array<frc::SwerveModuleState, 4U> desiredStates = kinematics->ToSwerveModuleStates(desiredSpeeds);
 
-	kinematics->DesaturateWheelSpeeds(&desiredStates, 5.75_mps);
+	kinematics->DesaturateWheelSpeeds(&desiredStates, 5.0_mps);
 
 	setModuleStates(desiredStates);
 

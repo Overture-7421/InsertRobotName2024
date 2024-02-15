@@ -6,7 +6,6 @@
 
 ResetAngle::ResetAngle(SwerveChassis* swerveChassis) : swerveChassis(swerveChassis) {
 	// Use addRequirements() here to declare subsystem dependencies.
-	AddRequirements({ swerveChassis });
 }
 
 // Called when the command is initially scheduled.
@@ -24,5 +23,5 @@ void ResetAngle::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool ResetAngle::IsFinished() {
-	return false;
+	return true;
 }

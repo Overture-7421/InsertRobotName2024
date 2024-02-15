@@ -4,16 +4,25 @@
 
 #include "GroundGrabCommand.h"
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.
-// For more information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-GroundGrabCommand::GroundGrabCommand(SuperStructure* superStructure, Storage* storage, Intake* intake) {
 
-   AddCommands(
-    SuperStructureCommand (superStructure, SuperStructureConstants::GroundGrabState), 
-    frc2::ParallelCommandGroup(
-      IntakeCommand(intake, IntakeConstants::GroundGrabVolts),
-      StorageCommand(storage, StorageConstants::GroundGrabVolts)
+frc2::CommandPtr GroundGrabCommand(SuperStructure* superStructure, Storage* storage, Intake* intake) {
+
+  return frc2::cmd::Sequence(
+    SuperStructureCommand (superStructure, SuperStructureConstants::GroundGrabState).ToPtr(), 
+    frc2::cmd::Parallel(
+        IntakeCommand(intake, IntakeConstants::GroundGrabVolts).ToPtr(),
+        StorageCommand(storage, StorageConstants::GroundGrabVolts).ToPtr()
+    ).Repeatedly().Until(
+      [=]() {
+        return storage->isNoteOnForwardSensor();
+      }
+    ).AndThen(
+      frc2::cmd::Wait(0.05_s)
+    ).AndThen(
+      [=]() {
+        storage->setVoltage(0.0_V);
+        intake->setVoltage(0.0_V);
+      }
     )
   );
 }

@@ -54,7 +54,9 @@ public:
 	void configureSoftwareLimitSwitch(ctre::phoenix6::configs::SoftwareLimitSwitchConfigs configs);
 	void setContinuousWrap();
 
+	void setPositionUpdateFrequency(units::frequency::hertz_t frequencyHz);
+	void setVelocityUpdateFrequency(units::frequency::hertz_t frequencyHz);
+
 private:
 	TalonFXConfiguration config;
-
 };
