@@ -1,0 +1,125 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.26,
+      "y": 6.43
+    },
+    "rotation": 35.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "AMPAuto1"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "VisionSpeakerCommand"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "GroundGrabCommand"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "AMPAuto2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "VisionSpeakerCommand"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "AMPAuto3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "GroundGrabCommand"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "AMPAuto4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "VisionSpeakerCommand"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "AMPAuto5"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "GroundGrabCommand"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "AMPAuto6"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "VisionSpeakerCommand"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "AMPAuto",
+  "choreoAuto": false
+}
