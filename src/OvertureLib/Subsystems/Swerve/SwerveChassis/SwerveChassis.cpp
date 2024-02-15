@@ -372,7 +372,7 @@ void SwerveChassis::Periodic() {
 	if (headingOverride) {
 
 		double outOmega = headingController.Calculate(getOdometry().Rotation().Radians());
-		if(std::abs(outOmega) < 0.15) {
+		if(std::abs(outOmega) < 0.15 && desiredSpeeds.vx == 0_mps && desiredSpeeds.vy == 0_mps) {
 			outOmega = 0.0;
 		}
 		desiredSpeeds.omega = units::radians_per_second_t{outOmega};
