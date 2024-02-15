@@ -87,5 +87,9 @@ frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
 }
 
 frc2::CommandPtr RobotContainer::GetTeleopResetCommand() {
-	return ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr();
+	return frc2::cmd::Parallel(
+		StorageCommand(&storage, 0_V).ToPtr(),
+		ShooterCommand(&shooter, 0).ToPtr(),
+		IntakeCommand(&intake, 0_V).ToPtr()
+	);
 }
