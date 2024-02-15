@@ -72,18 +72,21 @@ frc2::CommandPtr AutoClimb(Chassis* chassis, SuperStructure* superStructure, Sup
 	return frc2::cmd::Select<StageLocation>([chassis]() {return findClosestStageLocation(chassis);},
 		std::pair{ StageLocation::Left, frc2::cmd::Sequence(
 			GoToClimbingLocationPathFind(superStructure, supportArms, climbPathLeft),
+			WaitForButton(controller, frc::XboxController::Button::kBack),
 			SetUpJoints(chassis, superStructure, supportArms, climbPathLeft),
 			WaitForButton(controller, frc::XboxController::Button::kBack),
 			ClimbAtLocation(superStructure, controller)
 		) },
 		std::pair{ StageLocation::Right, frc2::cmd::Sequence(
 			GoToClimbingLocationPathFind(superStructure, supportArms, climbPathRight),
+			WaitForButton(controller, frc::XboxController::Button::kBack),
 			SetUpJoints(chassis, superStructure, supportArms, climbPathRight),
 			WaitForButton(controller, frc::XboxController::Button::kBack),
 			ClimbAtLocation(superStructure, controller)
 		) },
 		std::pair{ StageLocation::Back, frc2::cmd::Sequence(
 			GoToClimbingLocationPathFind(superStructure, supportArms, climbPathBack),
+			WaitForButton(controller, frc::XboxController::Button::kBack),
 			SetUpJoints(chassis, superStructure, supportArms, climbPathBack),
 			WaitForButton(controller, frc::XboxController::Button::kBack),
 			ClimbAtLocation(superStructure, controller)
@@ -101,6 +104,8 @@ frc2::CommandPtr ManualClimb(Chassis* chassis, SuperStructure* superStructure, S
 			chassis->resetOdometry(climbPathManual->getStartingDifferentialPose());
 		}),
 		SetUpJoints(chassis, superStructure, supportArms, climbPathManual),
+		WaitForButton(controller, frc::XboxController::Button::kBack),
+		pathplanner::AutoBuilder::pathfindToPose({0.25_m, 8.0_m, {0_deg}}, pathfindingConstraints),
 		WaitForButton(controller, frc::XboxController::Button::kBack),
 		ClimbAtLocation(superStructure, controller)
 	);
