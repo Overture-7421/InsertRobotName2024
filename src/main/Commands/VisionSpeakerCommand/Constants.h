@@ -1,3 +1,5 @@
+#pragma once
+
 #include <units/length.h>
 #include <units/time.h>
 #include <frc/geometry/Translation2d.h>
@@ -31,14 +33,14 @@ namespace VisionSpeakerCommandConstants {
 		{3.9_m, 125.0}
 	};
 
-    static const InterpolatingTable<units::meter_t, units::second_t> DistanceToShotTimeTable{
-      {1.4_m, 0.40_s}, 
-      {1.9_m, 0.40_s}, 
-      {2.4_m, 0.40_s}, 
-      {2.9_m, 0.40_s}, 
-      {3.4_m, 0.40_s}, 
-      {3.9_m, 0.40_s}, 
-    };
+	static const InterpolatingTable<units::meter_t, units::second_t> DistanceToShotTimeTable{
+	  {1.4_m, 0.40_s},
+	  {1.9_m, 0.40_s},
+	  {2.4_m, 0.40_s},
+	  {2.9_m, 0.40_s},
+	  {3.4_m, 0.40_s},
+	  {3.9_m, 0.40_s},
+	};
 
-    static const frc::Translation2d TargetLocation = { 0.06_m, 5.54_m };
+	static const frc::Translation2d TargetLocation = { 0.06_m, 5.54_m };
 };

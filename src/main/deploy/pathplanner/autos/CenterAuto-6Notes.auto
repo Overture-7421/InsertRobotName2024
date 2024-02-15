@@ -133,6 +133,25 @@
           }
         },
         {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "CenterAuto5"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "VisionNoShoot"
+                }
+              }
+            ]
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "CenterAuto5"
@@ -164,9 +183,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "deadline",
           "data": {
-            "pathName": "CenterAuto7"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "CenterAuto7"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "VisionNoShoot"
+                }
+              }
+            ]
           }
         },
         {

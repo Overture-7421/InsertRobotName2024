@@ -14,6 +14,7 @@ RobotContainer::RobotContainer() {
 	pathplanner::NamedCommands::registerCommand("VisionAmpCommand", std::move(VisionAmpCommand(&superStructure, &shooter, &storage)));
 	pathplanner::NamedCommands::registerCommand("StorageCommand", std::move(StorageCommand(&storage, 3_V).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("ShooterCommand", std::move(ShooterCommand(&shooter, 4.00).ToPtr()));
+	pathplanner::NamedCommands::registerCommand("VisionNoShoot", std::move(VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter).ToPtr()));
 
 	autoChooser.SetDefaultOption("None, null, nada", "None");
 	autoChooser.AddOption("CenterAuto-4Notes", "CenterAuto-4Notes");
