@@ -16,7 +16,8 @@ RobotContainer::RobotContainer() {
 	pathplanner::NamedCommands::registerCommand("ShooterCommand", std::move(ShooterCommand(&shooter, 4.00).ToPtr()));
 
 	autoChooser.SetDefaultOption("None, null, nada", "None");
-	autoChooser.AddOption("CenterAuto", "CenterAuto");
+	autoChooser.AddOption("CenterAuto-4Notes", "CenterAuto-4Notes");
+	autoChooser.AddOption("CenterAuto-6Notes", "CenterAuto-6Notes");
 	autoChooser.AddOption("AMPAuto", "AMPAuto");
 	autoChooser.AddOption("SourceAuto", "SourceAuto");
 
