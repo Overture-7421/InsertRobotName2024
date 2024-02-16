@@ -74,9 +74,9 @@ void RobotContainer::ConfigureBindings() {
 	climbM.OnFalse(
 		frc2::cmd::Parallel(
 			frc2::cmd::RunOnce([&] {
-				aprilTagCamera.setPoseEstimator(true);
-				supportArms.setTargetCoord({0});
-			}),
+		aprilTagCamera.setPoseEstimator(true);
+		supportArms.setTargetCoord({ 0 });
+	}),
 			ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr()
 		)
 	);
@@ -94,6 +94,18 @@ void RobotContainer::ConfigureBindings() {
 
 	intakeM.WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake));
 	intakeM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+
+	centerAuto6Notes = pathplanner::AutoBuilder::buildAuto("CenterAuto-6Notes");
+	centerAuto4Notes = pathplanner::AutoBuilder::buildAuto("CenterAuto-4Notes");
+	ampAuto = pathplanner::AutoBuilder::buildAuto("AMPAuto");
+	sourceAuto = pathplanner::AutoBuilder::buildAuto("SourceAuto");
+
+	autoMap = {
+		{"CenterAuto-6Notes", &centerAuto6Notes},
+		{"CenterAuto-4Notes", &centerAuto4Notes},
+		{"AMPAuto", &ampAuto},
+		{"SourceAuto", &sourceAuto}
+	};
 }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
@@ -102,7 +114,7 @@ frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
 		return frc2::cmd::None();
 	}
 
-	return pathplanner::AutoBuilder::buildAuto(autoName);
+	return std::move(*autoMap[autoName]);
 }
 
 frc2::CommandPtr RobotContainer::GetTeleopResetCommand() {

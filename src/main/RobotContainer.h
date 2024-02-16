@@ -88,4 +88,11 @@ private:
 	frc::SendableChooser<std::string> autoChooser;
 
 	double angleShooting;
+
+	std::map<std::string, frc2::CommandPtr*> autoMap;
+
+	frc2::CommandPtr centerAuto6Notes = frc2::cmd::None();
+	frc2::CommandPtr centerAuto4Notes = frc2::cmd::None();
+	frc2::CommandPtr ampAuto = frc2::cmd::None();
+	frc2::CommandPtr sourceAuto = frc2::cmd::None();
 };
