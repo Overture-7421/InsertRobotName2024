@@ -16,7 +16,7 @@ SwerveChassis::SwerveChassis() {
 		HolonomicPathFollowerConfig(
 			PIDConstants(5.0, 0.0, 0.0),
 			PIDConstants(5.0, 0.0, 0.0),
-			5.0_mps,
+			5.27_mps,
 			0.3732276_m,
 			ReplanningConfig()
 		),
@@ -372,10 +372,10 @@ void SwerveChassis::Periodic() {
 	if (headingOverride) {
 
 		double outOmega = headingController.Calculate(getOdometry().Rotation().Radians());
-		if(std::abs(outOmega) < 0.15 && desiredSpeeds.vx == 0_mps && desiredSpeeds.vy == 0_mps) {
+		if (std::abs(outOmega) < 0.15 && desiredSpeeds.vx == 0_mps && desiredSpeeds.vy == 0_mps) {
 			outOmega = 0.0;
 		}
-		desiredSpeeds.omega = units::radians_per_second_t{outOmega};
+		desiredSpeeds.omega = units::radians_per_second_t{ outOmega };
 
 
 		frc::SmartDashboard::PutNumber("Odometry/HeadingTarget", headingTarget.Degrees().value());
@@ -384,7 +384,7 @@ void SwerveChassis::Periodic() {
 
 	wpi::array<frc::SwerveModuleState, 4U> desiredStates = kinematics->ToSwerveModuleStates(desiredSpeeds);
 
-	kinematics->DesaturateWheelSpeeds(&desiredStates, 5.0_mps);
+	kinematics->DesaturateWheelSpeeds(&desiredStates, 5.27_mps);
 
 	setModuleStates(desiredStates);
 
