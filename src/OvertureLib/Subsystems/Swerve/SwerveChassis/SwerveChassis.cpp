@@ -16,7 +16,7 @@ SwerveChassis::SwerveChassis() {
 		HolonomicPathFollowerConfig(
 			PIDConstants(5.0, 0.0, 0.0),
 			PIDConstants(5.0, 0.0, 0.0),
-			5.27_mps,
+			5.39_mps,
 			0.3732276_m,
 			ReplanningConfig()
 		),
@@ -384,7 +384,7 @@ void SwerveChassis::Periodic() {
 
 	wpi::array<frc::SwerveModuleState, 4U> desiredStates = kinematics->ToSwerveModuleStates(desiredSpeeds);
 
-	kinematics->DesaturateWheelSpeeds(&desiredStates, 5.27_mps);
+	kinematics->DesaturateWheelSpeeds(&desiredStates, 5.39_mps);
 
 	setModuleStates(desiredStates);
 
