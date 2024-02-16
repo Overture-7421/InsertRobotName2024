@@ -47,7 +47,7 @@ class RobotContainer : public SysIDRoutineBot {
 public:
 	RobotContainer();
 
-	frc2::CommandPtr GetAutonomousCommand();
+	frc2::Command* GetAutonomousCommand();
 	frc2::CommandPtr GetTeleopResetCommand();
 private:
 	void ConfigureBindings();
@@ -84,15 +84,13 @@ private:
 	frc2::Trigger closed{ [this] {return opertr.GetPOV() == 0;} };
 	frc2::Trigger intakeM{ [this] {return opertr.GetRightTriggerAxis() > 0.3;} };
 
-	//Auto Chooser
-	frc::SendableChooser<std::string> autoChooser;
-
-	double angleShooting;
-
-	std::map<std::string, frc2::CommandPtr*> autoMap;
-
-	frc2::CommandPtr centerAuto6Notes = frc2::cmd::None();
-	frc2::CommandPtr centerAuto4Notes = frc2::cmd::None();
+	//Autonomous
+	frc2::CommandPtr defaultNoneAuto = frc2::cmd::None();
+	frc2::CommandPtr center6NoteAuto = frc2::cmd::None();
+	frc2::CommandPtr center4NoteAuto = frc2::cmd::None();
 	frc2::CommandPtr ampAuto = frc2::cmd::None();
 	frc2::CommandPtr sourceAuto = frc2::cmd::None();
+
+	//Auto Chooser
+	frc::SendableChooser<frc2::Command*> autoChooser;
 };

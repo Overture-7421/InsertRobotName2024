@@ -16,11 +16,16 @@ RobotContainer::RobotContainer() {
 	pathplanner::NamedCommands::registerCommand("ShooterCommand", std::move(ShooterCommand(&shooter, 4.00).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("VisionNoShoot", std::move(VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter).ToPtr()));
 
-	autoChooser.SetDefaultOption("None, null, nada", "None");
-	autoChooser.AddOption("CenterAuto-4Notes", "CenterAuto-4Notes");
-	autoChooser.AddOption("CenterAuto-6Notes", "CenterAuto-6Notes");
-	autoChooser.AddOption("AMPAuto", "AMPAuto");
-	autoChooser.AddOption("SourceAuto", "SourceAuto");
+	center6NoteAuto = pathplanner::AutoBuilder::buildAuto("CenterAuto-6Notes");
+	center4NoteAuto = pathplanner::AutoBuilder::buildAuto("CenterAuto-4Notes");
+	ampAuto = pathplanner::AutoBuilder::buildAuto("AMPAuto");
+	sourceAuto = pathplanner::AutoBuilder::buildAuto("SourceAuto");
+
+	autoChooser.SetDefaultOption("None, null, nada", defaultNoneAuto.get());
+	autoChooser.AddOption("CenterAuto-6Notes", center6NoteAuto.get());
+	autoChooser.AddOption("CenterAuto-4Notes", center4NoteAuto.get());
+	autoChooser.AddOption("AMPAuto", ampAuto.get());
+	autoChooser.AddOption("SourceAuto", sourceAuto.get());
 
 	frc::SmartDashboard::PutData("Auto Chooser", &autoChooser);
 
@@ -94,27 +99,10 @@ void RobotContainer::ConfigureBindings() {
 
 	intakeM.WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake));
 	intakeM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
-
-	centerAuto6Notes = pathplanner::AutoBuilder::buildAuto("CenterAuto-6Notes");
-	centerAuto4Notes = pathplanner::AutoBuilder::buildAuto("CenterAuto-4Notes");
-	ampAuto = pathplanner::AutoBuilder::buildAuto("AMPAuto");
-	sourceAuto = pathplanner::AutoBuilder::buildAuto("SourceAuto");
-
-	autoMap = {
-		{"CenterAuto-6Notes", &centerAuto6Notes},
-		{"CenterAuto-4Notes", &centerAuto4Notes},
-		{"AMPAuto", &ampAuto},
-		{"SourceAuto", &sourceAuto}
-	};
 }
 
-frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
-	std::string autoName = autoChooser.GetSelected();
-	if (autoName == "None") {
-		return frc2::cmd::None();
-	}
-
-	return std::move(*autoMap[autoName]);
+frc2::Command* RobotContainer::GetAutonomousCommand() {
+	return autoChooser.GetSelected();
 }
 
 frc2::CommandPtr RobotContainer::GetTeleopResetCommand() {
