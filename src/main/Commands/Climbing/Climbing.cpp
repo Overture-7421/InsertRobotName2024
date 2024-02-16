@@ -10,7 +10,7 @@ SuperStructureState superStructureStartingState{ -9, -60 };
 SuperStructureState superStructureTargetState{ 85, -90 };
 SuperStructureMoveByDistance::Profile superStructureProfile {superStructureStartingState, superStructureTargetState, 1_m};
 
-SupportArmsState supportArmsStartingState{ 0 };
+SupportArmsState supportArmsStartingState{ 10 };
 SupportArmsState supportArmsTargetState{ 110 };
 SupportArmsMoveByDistance::Profile supportArmsProfile {supportArmsStartingState, supportArmsTargetState, 1_m};
 
@@ -58,8 +58,14 @@ frc2::CommandPtr SetUpJoints(Chassis* chassis, SuperStructure* superStructure, S
 
 frc2::CommandPtr ClimbAtLocation(SuperStructure* superStructure, frc::XboxController* controller) {
 	return frc2::cmd::Sequence(
+		frc2::cmd::RunOnce([=] {
+			superStructure->setLowerMotionMagicProfile(500, 1.0, 0.75);
+		}),
 		SuperStructureCommand(superStructure, { -30, 0 }).ToPtr(),
 		WaitForButton(controller, frc::XboxController::Button::kBack),
+		frc2::cmd::RunOnce([=] {
+			superStructure->resetLowerMotionMagic();
+		}),
 		SuperStructureCommand(superStructure, { 85, -90 }).ToPtr()
 	);
 }
@@ -104,8 +110,6 @@ frc2::CommandPtr ManualClimb(Chassis* chassis, SuperStructure* superStructure, S
 			chassis->resetOdometry(climbPathManual->getStartingDifferentialPose());
 		}),
 		SetUpJoints(chassis, superStructure, supportArms, climbPathManual),
-		WaitForButton(controller, frc::XboxController::Button::kBack),
-		pathplanner::AutoBuilder::pathfindToPose({0.25_m, 8.0_m, {0_deg}}, pathfindingConstraints),
 		WaitForButton(controller, frc::XboxController::Button::kBack),
 		ClimbAtLocation(superStructure, controller)
 	);

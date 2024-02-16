@@ -14,7 +14,7 @@ ClosedCommand::ClosedCommand(SuperStructure* superStructure, Intake* intake, Sto
     frc2::ParallelDeadlineGroup{
       StorageCommand(storage, 0_V),
       IntakeCommand(intake, 0_V),
-      ShooterCommand(shooter, 0.00)
+      ShooterCommand(shooter, 50.00)
     },
     SuperStructureCommand(superStructure, SuperStructureConstants::GroundGrabState)
 

@@ -26,6 +26,9 @@ public:
 	double getLowerAngle();
 	double getUpperAngle();
 
+	void setLowerMotionMagicProfile(double p, double motionMagicSpeed, double motionMagicAccel);
+	void resetLowerMotionMagic();
+
 	frc2::CommandPtr sysIdQuasistaticLower(frc2::sysid::Direction direction) {
 		return sysIdRoutineLower.Quasistatic(direction);
 	}
@@ -87,6 +90,11 @@ private:
 	frc::ArmFeedforward lowerFF {0.28393_V, 0.65_V, 27.372_V / 1_tps, 0.9068_V / 1_tr_per_s_sq }; 
 	frc::ArmFeedforward upperFF {0.52996_V, 0.25_V, 6.7295_V / 1_tps, 0.97016_V / 1_tr_per_s_sq}; 
 	units::turn_t upperFFOffset = 0.25_tr;
+
+	double oldP = 0;
+	double oldSpeed = 0;
+	double oldAccel = 0;
+
 
 	frc2::sysid::SysIdRoutine sysIdRoutineLower{
 		frc2::sysid::Config{0.75_V / 1_s, 5_V, 10_s,

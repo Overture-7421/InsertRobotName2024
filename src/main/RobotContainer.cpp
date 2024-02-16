@@ -64,14 +64,22 @@ void RobotContainer::ConfigureBindings() {
 	ampM.WhileTrue(AmpCommand(&superStructure, &shooter).ToPtr());
 	ampM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	sourceM.WhileTrue(SourceGrabCommand(&superStructure, &shooter, &storage));
-	sourceM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+	// sourceM.WhileTrue(SourceGrabCommand(&superStructure, &shooter, &storage));
+	// sourceM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
 	// climbV.WhileTrue(AutoClimb(&chassis, &superStructure, &supportArms, &opertr));
 	// climbV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	// climbM.WhileTrue(ManualClimb(&chassis, &superStructure, &supportArms, &aprilTagCamera, &opertr));
-	// climbM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+	climbM.WhileTrue(ManualClimb(&chassis, &superStructure, &supportArms, &aprilTagCamera, &opertr));
+	climbM.OnFalse(
+		frc2::cmd::Parallel(
+			frc2::cmd::RunOnce([&] {
+				aprilTagCamera.setPoseEstimator(true);
+				supportArms.setTargetCoord({0});
+			}),
+			ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr()
+		)
+	);
 
 	shootM.WhileTrue(StorageCommand(&storage, StorageConstants::SpeakerScoreVolts).ToPtr());
 	shootM.OnFalse(StorageCommand(&storage, 0_V).ToPtr());

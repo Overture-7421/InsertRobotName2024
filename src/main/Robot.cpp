@@ -7,6 +7,8 @@
 #include <frc2/command/CommandScheduler.h>
 
 void Robot::RobotInit() {
+  m_teleopResetCommand = m_container.GetTeleopResetCommand();
+
 #ifndef __FRC_ROBORIO__
   simMotorManager->Init({
     {1, "Vantage7421/motors/SDS_Module_FL_rotation_joint"}, 
@@ -84,9 +86,9 @@ void Robot::TeleopInit() {
 
   if (m_autonomousCommand) {
     m_autonomousCommand->Cancel();
-    m_teleopResetCommand = m_container.GetTeleopResetCommand();
-    m_teleopResetCommand->Schedule();
   }
+  m_teleopResetCommand->Schedule();
+
 }
 
 void Robot::TeleopPeriodic() {

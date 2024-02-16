@@ -12,12 +12,12 @@
 
 SupportArms::SupportArms() {
 	// Configure Motors
-	lowerRightMotor.setSupplyCurrentLimit(true, 20, 30, 0.5);
+	lowerRightMotor.setSupplyCurrentLimit(true, 40, 60, 0.5);
 	lowerRightMotor.setSensorToMechanism(LOWER_GEAR_BOX_REDUCTION);
 
 	// COnfigure Motion Magic and PID
-	lowerRightMotor.setPIDValues(110, 0.0, 0.0, 0.0, 0.0);
-	lowerRightMotor.configureMotionMagic(25.0, 40.0, 0.0);
+	lowerRightMotor.setPIDValues(180, 0.0, 0.0, 0.0, 0.0);
+	lowerRightMotor.configureMotionMagic(3.0, 3.0, 0.0);
 
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 	lowerRightMotor.setSensorPosition(convertAngleToFalconPos(getLowerAngle()));

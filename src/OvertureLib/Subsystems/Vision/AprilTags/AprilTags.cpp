@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "AprilTags.h"
+#include <iostream>
 
 AprilTags::AprilTags() {};
 void AprilTags::setCameraAndLayout(photon::PhotonCamera* camera, frc::AprilTagFieldLayout* tagLayout, frc::Transform3d* cameraToRobot) {
@@ -25,7 +26,7 @@ void AprilTags::setCameraAndLayout(photon::PhotonCamera* camera, frc::AprilTagFi
 bool AprilTags::checkTagDistance(const photon::PhotonPipelineResult& result, size_t numberOfTags, double distance) {
 
 	if (result.GetTargets().size() == numberOfTags) {
-		if (result.GetBestTarget().GetBestCameraToTarget().X().value() < distance) {
+		if (result.GetBestTarget().GetBestCameraToTarget().Translation().Distance({0_m, 0_m, 0_m}).value() < distance) {
 			return true;
 		}
 	}
@@ -52,7 +53,7 @@ void AprilTags::updateOdometry() {
 	}
 	photon::PhotonPipelineResult pipelineResult = result.value();
 
-	if (checkTagDistance(pipelineResult, 1, 2.5) || checkTagDistance(pipelineResult, 2, 5.00) || checkTagDistance(pipelineResult, 3, 7.00)) {
+	if (checkTagDistance(pipelineResult, 1, 5.0) || checkTagDistance(pipelineResult, 2, 7.5) || checkTagDistance(pipelineResult, 3, 9.0)) {
 		addMeasurementToChassis(pipelineResult);
 	}
 }

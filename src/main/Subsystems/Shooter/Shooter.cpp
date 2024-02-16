@@ -7,11 +7,11 @@
 Shooter::Shooter() {
 	upperShooterMotor.setSupplyCurrentLimit(true, 20, 25, 0.5);
 	upperShooterMotor.setSensorToMechanism(ShooterConstants::LowerGearboxReduction);
-	upperShooterMotor.setClosedLoopVoltageRamp(0.5);
+	upperShooterMotor.setClosedLoopVoltageRamp(0.1);
 
 	lowerShooterMotor.setSupplyCurrentLimit(true, 20, 25, 0.5);
 	lowerShooterMotor.setSensorToMechanism(ShooterConstants::UpperGearboxReduction);
-	lowerShooterMotor.setClosedLoopVoltageRamp(0.5);
+	lowerShooterMotor.setClosedLoopVoltageRamp(0.1);
 
 	upperShooterMotor.setPIDValues(0.010558, 0.0, 0.0, 0.0, 0.0);
 	lowerShooterMotor.setPIDValues(0.075634, 0.0, 0.0, 0.0, 0.0);

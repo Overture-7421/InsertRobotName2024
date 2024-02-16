@@ -51,8 +51,12 @@ SuperStructure::SuperStructure() {
 	setTargetCoord({ getLowerAngle(), getUpperAngle() });
 
 	// Configure Motion Magic and PID
-	lowerLeftMotor.setPIDValues(390.0, 0.0, 0.0, 0.0, 0.0);
+	lowerLeftMotor.setPIDValues(380.0, 0.0, 0.0, 0.0, 0.0);
 	lowerLeftMotor.configureMotionMagic(1.0, 3.0, 0.0);
+
+	oldP = 380;
+	oldSpeed = 1.0;
+	oldAccel = 3.0;
 
 	upperMotor.setPIDValues(250.0, 0.0, 0.0, 0.0, 0.0);
 	upperMotor.configureMotionMagic(1.0, 6.0, 0.0);
@@ -138,4 +142,23 @@ void SuperStructure::Periodic() {
 	frc::SmartDashboard::PutNumber("SuperStructure/ActualTarget/Upper", actualTarget.upperAngle);
 
 	setFalconTargetPos(actualTarget, currentState);
+}
+
+
+
+void SuperStructure::setLowerMotionMagicProfile(double p, double motionMagicSpeed, double motionMagicAccel){
+	lowerLeftMotor.setPIDValues(p, 0.0, 0.0, 0.0, 0.0);
+	lowerLeftMotor.configureMotionMagic(motionMagicSpeed, motionMagicAccel, 0.0);
+
+	lowerLeftMotor.setSupplyCurrentLimit(true, 50, 60, 0.5);
+	lowerRightMotor.setSupplyCurrentLimit(true, 50, 60, 0.5);
+}
+
+void SuperStructure::resetLowerMotionMagic(){
+	lowerLeftMotor.setPIDValues(oldP, 0.0, 0.0, 0.0, 0.0);
+	lowerLeftMotor.configureMotionMagic(oldSpeed, oldAccel, 0.0);
+
+	lowerLeftMotor.setSupplyCurrentLimit(true, 30, 40, 0.5);
+	lowerRightMotor.setSupplyCurrentLimit(true, 30, 40, 0.5);
+
 }
