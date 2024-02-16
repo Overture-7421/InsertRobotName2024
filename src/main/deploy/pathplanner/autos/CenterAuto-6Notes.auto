@@ -123,7 +123,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "ClosedCommand"
+                        "name": "GroundGrabCommand"
                       }
                     }
                   ]
@@ -149,12 +149,6 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "CenterAuto5"
           }
         },
         {
@@ -206,10 +200,16 @@
           "data": {
             "name": "VisionSpeakerCommand"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ClosedCommand"
+          }
         }
       ]
     }
   },
-  "folder": "CenterAuto",
+  "folder": null,
   "choreoAuto": false
 }
