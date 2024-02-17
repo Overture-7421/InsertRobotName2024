@@ -386,7 +386,7 @@ void SwerveChassis::Periodic() {
 
 	kinematics->DesaturateWheelSpeeds(&desiredStates, 5.39_mps);
 
-	setModuleStates(desiredStates);
+	// setModuleStates(desiredStates);
 
 	updateOdometry();
 	shuffleboardPeriodic();

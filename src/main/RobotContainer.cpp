@@ -29,8 +29,8 @@ RobotContainer::RobotContainer() {
 
 	frc::SmartDashboard::PutData("Auto Chooser", &autoChooser);
 
-	ConfigureBindings();
-	// ConfigureSysIdBindings(&chassis, &characterization);
+	// ConfigureBindings();
+	ConfigureSysIdBindings(&chassis, &characterization);
 }
 
 void RobotContainer::ConfigureBindings() {
