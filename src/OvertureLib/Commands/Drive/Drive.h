@@ -32,13 +32,13 @@ private:
 	SwerveChassis* m_swerveChassis;
 
 	/* Speed Constants */
-	double kMaxSpeed{ 5.75 };
+	double kMaxSpeed{ 5.39 };
 	double kMaxAngularSpeed{ 18.0 };
 
 	int alliance = 1;
 
 	/* Constant */
-	units::meters_per_second_squared_t maxAcceleration{ 5.75 * 3 };
+	units::meters_per_second_squared_t maxAcceleration{ 5.39 * 3 };
 	units::radians_per_second_squared_t maxRotation{ 18.0 * 3 };
 
 	/* Limiters */
