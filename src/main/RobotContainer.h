@@ -43,7 +43,7 @@
 #include "OvertureLib/Commands/Drive/Drive.h"
 #include "OvertureLib/Characterization/SysIDRoutineBot.h"
 
-class RobotContainer : public SysIDRoutineBot {
+class RobotContainer {
 public:
 	RobotContainer();
 
@@ -65,7 +65,6 @@ private:
 	frc::XboxController driver{ 0 };
 	frc::XboxController opertr{ 1 };
 
-	frc2::CommandXboxController characterization{ 5 };
 
 	// // Driver Commands
 	frc2::Trigger ampV{ [this] {return driver.GetLeftTriggerAxis() > 0.3;} };

@@ -97,7 +97,7 @@ void VisionSpeakerCommand::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool VisionSpeakerCommand::IsFinished() {
-	if (joystick == nullptr && /* !storage->isNoteOnForwardSensor()*/ Timer.Get() > 0.2_s) {
+	if (joystick == nullptr && !storage->isNoteOnForwardSensor()) {
 		return true;
 	}
 

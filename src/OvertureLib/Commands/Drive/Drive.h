@@ -39,7 +39,7 @@ private:
 
 	/* Constant */
 	units::meters_per_second_squared_t maxAcceleration{ 5.39 * 3 };
-	units::radians_per_second_squared_t maxRotation{ 18.0 * 3 };
+	units::radians_per_second_squared_t maxRotation{ 18.0 * 2 };
 
 	/* Limiters */
 	frc::SlewRateLimiter<units::meters_per_second> xLimiter{ maxAcceleration };

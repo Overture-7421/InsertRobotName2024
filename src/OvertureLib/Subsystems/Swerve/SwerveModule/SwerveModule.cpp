@@ -187,7 +187,7 @@ void SwerveModule::setVoltages() {
 }
 
 void SwerveModule::Periodic() {
-	// frc::SmartDashboard::PutNumber(m_name + "/Speed", getSpeed());
+	frc::SmartDashboard::PutNumber(m_name + "/Speed", getSpeed());
 	// frc::SmartDashboard::PutNumber(m_name + "/Target", m_state.angle.Degrees().value());
-	// frc::SmartDashboard::PutNumber(m_name + "/Angle", getAngle());
+	frc::SmartDashboard::PutNumber(m_name + "/Angle", getAngle());
 }
