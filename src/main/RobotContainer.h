@@ -67,9 +67,9 @@ private:
 
 
 	// // Driver Commands
-	frc2::Trigger ampV{ [this] {return driver.GetLeftTriggerAxis() > 0.3;} };
+	frc2::Trigger ampV{ [this] {return driver.GetLeftTriggerAxis() > 0.1;} };
 	frc2::Trigger sourceV{ [this] {return driver.GetRightBumper();} };
-	frc2::Trigger speakerV{ [this] {return driver.GetRightTriggerAxis() > 0.3;} };	// TO GET TESTED
+	frc2::Trigger speakerV{ [this] {return driver.GetRightTriggerAxis() > 0.1;} };	// TO GET TESTED
 	frc2::Trigger zeroHeading{ [this] {return driver.GetBackButton();} };
 
 	// frc2::Trigger tabulate { [this] {return driver.GetAButton();}};
@@ -79,11 +79,11 @@ private:
 	frc2::Trigger sourceM{ [this] {return opertr.GetBButton();} };
 	frc2::Trigger climbV{ [this] {return opertr.GetXButton();} };
 	frc2::Trigger climbM{ [this] {return opertr.GetYButton();} };
-	frc2::Trigger shootM{ [this] {return opertr.GetLeftTriggerAxis() > 0.3;} };
+	frc2::Trigger shootM{ [this] {return opertr.GetLeftTriggerAxis() > 0.1;} };
 	frc2::Trigger speakerM{ [this] {return opertr.GetRightBumper();} };
 	frc2::Trigger trapV{ [this] {return opertr.GetAButton();} };
 	frc2::Trigger closed{ [this] {return opertr.GetPOV() == 0;} };
-	frc2::Trigger intakeM{ [this] {return opertr.GetRightTriggerAxis() > 0.3;} };
+	frc2::Trigger intakeM{ [this] {return opertr.GetRightTriggerAxis() > 0.1;} };
 
 	//Autonomous
 	frc2::CommandPtr defaultNoneAuto = frc2::cmd::None();

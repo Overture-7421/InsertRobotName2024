@@ -3,6 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <frc2/command/sysid/SysIdRoutine.h>
+#include <frc/DataLogManager.h>
+#include <fmt/format.h>
 
 #include "OvertureLib/Subsystems/Swerve/SwerveChassis/SwerveChassis.h"
 #pragma once
@@ -15,10 +17,19 @@ public:
 	frc2::CommandPtr SysIdDinamic(frc2::sysid::Direction direction);
 	void sysIdVoltage(units::volt_t voltage);
 private:
+	wpi::log::StringLogEntry m_state;
+	bool isInitialized = false;
 
 	frc2::sysid::SysIdRoutine m_sysIdRoutine{
 		  frc2::sysid::Config{std::nullopt, std::nullopt, std::nullopt,
-							  std::nullopt},
+							  [&](auto a) {
+								if(isInitialized == false) {
+									isInitialized = true;
+									m_state = wpi::log::StringLogEntry{frc::DataLogManager::GetLog(),"sysid-test-state-drive-swerve"};
+								}
+								
+								m_state.Append(frc::sysid::SysIdRoutineLog::StateEnumToString(a));
+							  }},
 		  frc2::sysid::Mechanism{
 			  [this](units::volt_t driveVoltage) {
 				sysIdVoltage(driveVoltage);
