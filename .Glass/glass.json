@@ -2,11 +2,17 @@
   "NetworkTables": {
     "transitory": {
       "SmartDashboard": {
+        "FrontRight": {
+          "open": true
+        },
         "SuperStructure": {
           "ActualTarget": {
             "open": true
           },
           "Current": {
+            "open": true
+          },
+          "DesiredTarget": {
             "open": true
           },
           "FalconTarget": {
@@ -31,7 +37,11 @@
     "types": {
       "/FMSInfo": "FMSInfo",
       "/SmartDashboard/Auto Chooser": "String Chooser",
-      "/SmartDashboard/Odometry": "Field2d"
+      "/SmartDashboard/Chassis/HeadingController": "ProfiledPIDController",
+      "/SmartDashboard/Chassis/Odometry": "Field2d",
+      "/SmartDashboard/Odometry": "Field2d",
+      "/SmartDashboard/SuperStructure/LowerPID": "ProfiledPIDController",
+      "/SmartDashboard/SuperStructure/upperPID": "ProfiledPIDController"
     }
   },
   "NetworkTables Info": {
@@ -51,17 +61,8 @@
             0.0,
             0.8500000238418579
           ],
-          "height": 729,
+          "height": 709,
           "series": [
-            {
-              "color": [
-                0.2980392277240753,
-                0.44705885648727417,
-                0.6901960968971252,
-                1.0
-              ],
-              "id": "NT:/SmartDashboard/SuperStructure/Current/Lower Encoder Position"
-            },
             {
               "color": [
                 0.8666667342185974,
@@ -69,7 +70,7 @@
                 0.32156863808631897,
                 1.0
               ],
-              "id": "NT:/SmartDashboard/SuperStructure/Current/Lower"
+              "id": "NT:/SmartDashboard/FrontRight/Velocity"
             },
             {
               "color": [
@@ -78,23 +79,11 @@
                 0.4078431725502014,
                 1.0
               ],
-              "id": "NT:/SmartDashboard/SuperStructure/Current/Upper"
-            },
-            {
-              "color": [
-                0.7686275243759155,
-                0.30588236451148987,
-                0.32156863808631897,
-                1.0
-              ],
-              "id": "NT:/SmartDashboard/SuperStructure/Current/Upper Encoder Position"
+              "id": "NT:/SmartDashboard/FrontRight/Voltage"
             }
           ]
         }
-      ],
-      "window": {
-        "visible": false
-      }
+      ]
     }
   }
 }

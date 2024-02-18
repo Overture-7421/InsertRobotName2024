@@ -42,7 +42,7 @@ private:
 	const double LOWER_GEAR_BOX_REDUCTION = 80.1818;
 
 	//Encoders
-	OverDutyCycleEncoder lowerEncoder{ 1 };
+	OverDutyCycleEncoder lowerEncoder{ 6 };
 	double lowerOffset = -0.761712;
 
 

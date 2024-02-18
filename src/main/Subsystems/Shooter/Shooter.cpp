@@ -13,7 +13,7 @@ Shooter::Shooter() {
 	lowerShooterMotor.setSensorToMechanism(ShooterConstants::UpperGearboxReduction);
 	lowerShooterMotor.setClosedLoopVoltageRamp(0.1);
 
-	upperShooterMotor.setPIDValues(0.010558, 0.0, 0.0, 0.0, 0.0);
+	upperShooterMotor.setPIDValues(0.075634, 0.0, 0.0, 0.0, 0.0);
 	lowerShooterMotor.setPIDValues(0.075634, 0.0, 0.0, 0.0, 0.0);
 }
 

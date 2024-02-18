@@ -32,7 +32,7 @@ void VisionSpeakerCommandNoShoot::Execute() {
 
 	frc::Translation2d chassisToTarget = targetLocation - chassisLoc;
 	distance = chassisToTarget.Distance({ 0_m, 0_m });
-	angle = chassisToTarget.Angle().RotateBy({ 180_deg });
+	angle = chassisToTarget.Angle().RotateBy({ -180_deg });
 
 
 	chassis->setTargetHeading(angle);

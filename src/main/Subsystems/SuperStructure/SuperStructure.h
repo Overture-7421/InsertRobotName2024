@@ -6,6 +6,7 @@
 
 #include <frc2/command/SubsystemBase.h>
 #include <frc/controller/ArmFeedforward.h>
+#include <frc/controller/ProfiledPIDController.h>
 
 #include <OvertureLib/MotorControllers/OverTalonFX/OverTalonFX.h>
 #include <OvertureLib/MotorControllers/ControllerNeutralMode/ControllerNeutralMode.h>
@@ -18,6 +19,7 @@
 
 #include "Constants.h"
 #include "SuperStructureState.h"
+#include "OvertureLib/Robots/OverRobot/RobotConstants.h"
 
 class SuperStructure : public frc2::SubsystemBase {
 public:
@@ -56,8 +58,8 @@ public:
 
 
 private:
-	double getLowerAngleThroughBore();
-	double getUpperAngleThroughBore();
+	// double getLowerAngleThroughBore();
+	// double getUpperAngleThroughBore();
 
 	void setFalconTargetPos(SuperStructureState targetState, SuperStructureState currentState);
 	double convertAngleToFalconPos(double angle);
@@ -87,8 +89,14 @@ private:
 	SuperStructureState targetState;
 
 	//Feed Forward
-	frc::ArmFeedforward lowerFF {0.28393_V, 0.65_V, 27.372_V / 1_tps, 0.9068_V / 1_tr_per_s_sq }; 
-	frc::ArmFeedforward upperFF {0.52996_V, 0.25_V, 6.7295_V / 1_tps, 0.97016_V / 1_tr_per_s_sq}; 
+	frc::ArmFeedforward lowerFF {0.0_V, 0.4_V, 27.372_V / 1_tps, 0.9068_V / 1_tr_per_s_sq }; 
+	frc::ArmFeedforward upperFF {0.0_V, 0.25_V, 6.7295_V / 1_tps, 0.97016_V / 1_tr_per_s_sq}; 
+
+
+	frc::ProfiledPIDController<units::degrees> lowerPID {0.35, 0.4, 0.0, {360_deg_per_s * 3, 360_deg_per_s_sq * 6}, RobotConstants::LoopTime};
+	frc::ProfiledPIDController<units::degrees> upperPID {0.35, 0.4, 0.0, {360_deg_per_s * 3, 360_deg_per_s_sq * 6}, RobotConstants::LoopTime};
+
+
 	units::turn_t upperFFOffset = 0.25_tr;
 
 	double oldP = 0;

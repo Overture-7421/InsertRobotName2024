@@ -23,9 +23,9 @@ SuperStructure::SuperStructure() {
 	upperMotor.setSensorToMechanism(SuperStructureConstants::UpperAngleGearRatio);
 
 	std::this_thread::sleep_for(std::chrono::seconds(2));
-	lowerLeftMotor.setSensorPosition(convertAngleToFalconPos(getLowerAngleThroughBore()));
+	lowerLeftMotor.setSensorPosition(convertAngleToFalconPos(getLowerAngle()));
 	std::this_thread::sleep_for(std::chrono::seconds(2));
-	upperMotor.setSensorPosition(convertAngleToFalconPos(getUpperAngleThroughBore()));
+	upperMotor.setSensorPosition(convertAngleToFalconPos(getUpperAngle()));
 
 	SoftwareLimitSwitchConfigs lowerMotorSoftLimitConfig;
 	lowerMotorSoftLimitConfig.ForwardSoftLimitEnable = true;
@@ -51,40 +51,44 @@ SuperStructure::SuperStructure() {
 	setTargetCoord({ getLowerAngle(), getUpperAngle() });
 
 	// Configure Motion Magic and PID
-	lowerLeftMotor.setPIDValues(380.0, 0.0, 0.0, 0.0, 0.0);
-	lowerLeftMotor.configureMotionMagic(1.0, 3.0, 0.0);
+	// lowerLeftMotor.setPIDValues(390.0, 0.0, 0.0, 0.0, 0.0);
+	// lowerLeftMotor.configureMotionMagic(1.0, 3.0, 0.0);
 
-	oldP = 380;
-	oldSpeed = 1.0;
-	oldAccel = 3.0;
+	// oldP = 390;
+	// oldSpeed = 1.0;
+	// oldAccel = 3.0;
 
-	upperMotor.setPIDValues(250.0, 0.0, 0.0, 0.0, 0.0);
-	upperMotor.configureMotionMagic(1.0, 6.0, 0.0);
+	// upperMotor.setPIDValues(270.0, 0.0, 0.0, 0.0, 0.0);
+	// upperMotor.configureMotionMagic(1.0, 6.0, 0.0);
+
+	frc::SmartDashboard::PutData("SuperStructure/LowerPID", &lowerPID);
+	frc::SmartDashboard::PutData("SuperStructure/upperPID", &upperPID);
+
 }
 
 void SuperStructure::setTargetCoord(SuperStructureState targetState) {
 	this->targetState = targetState;
 }
 
-double SuperStructure::getLowerAngle() {
-	double rawLowerEncoder = lowerLeftMotor.GetPosition().GetValueAsDouble(); // Goes from 0 to 1
-	double degrees = rawLowerEncoder * 360.0;
-	return frc::InputModulus(degrees, -180.0, 180.0);
-}
+// double SuperStructure::getLowerAngle() {
+// 	double rawLowerEncoder = lowerLeftMotor.GetPosition().GetValueAsDouble(); // Goes from 0 to 1
+// 	double degrees = rawLowerEncoder * 360.0;
+// 	return frc::InputModulus(degrees, -180.0, 180.0);
+// }
 
-double SuperStructure::getUpperAngle() {
-	double rawUpperEncoder = upperMotor.GetPosition().GetValueAsDouble(); // Goes from 0 to 1
-	double degrees = rawUpperEncoder * 360.0;
-	return frc::InputModulus(degrees, -180.0, 180.0);
-}
+// double SuperStructure::getUpperAngle() {
+// 	double rawUpperEncoder = upperMotor.GetPosition().GetValueAsDouble(); // Goes from 0 to 1
+// 	double degrees = rawUpperEncoder * 360.0;
+// 	return frc::InputModulus(degrees, -180.0, 180.0);
+// }
 
-double SuperStructure::getLowerAngleThroughBore(){
+double SuperStructure::getLowerAngle(){
 	double rawLowerEncoder = lowerEncoder.GetAbsolutePosition() + lowerOffset; // Goes from 0 to 1
 	double degrees = rawLowerEncoder * 360.0;
 	return frc::InputModulus(degrees, -180.0, 180.0);
 }
 
-double SuperStructure::getUpperAngleThroughBore(){
+double SuperStructure::getUpperAngle(){
 	double rawUpperEncoder = upperEncoder.GetAbsolutePosition() + upperOffset; // Goes from 0 to 1
 	double degrees = rawUpperEncoder * 360.0;
 	return -frc::InputModulus(degrees, -180.0, 180.0);
@@ -101,13 +105,6 @@ SuperStructureState SuperStructure::getCurrentState() {
 void SuperStructure::setFalconTargetPos(SuperStructureState targetState, SuperStructureState currentState) {
 	auto lowerFFVolts = lowerFF.Calculate(units::degree_t(currentState.lowerAngle), units::radians_per_second_t(0));
 	auto upperFFVolts = upperFF.Calculate(units::degree_t(currentState.lowerAngle + currentState.upperAngle) + upperFFOffset, units::radians_per_second_t(0));
-
-	frc::SmartDashboard::PutNumber("SuperStructure/LowerFF", lowerFFVolts.value());
-	frc::SmartDashboard::PutNumber("SuperStructure/UpperFF", upperFFVolts.value());
-
-	frc::SmartDashboard::PutNumber("SuperStructure/Debug/LowerMotorTarget", convertAngleToFalconPos(targetState.lowerAngle));
-	frc::SmartDashboard::PutNumber("SuperStructure/Debug/UpperMotorTarget", convertAngleToFalconPos(targetState.upperAngle));
-
 
 	lowerLeftMotor.setMotionMagicPosition(convertAngleToFalconPos(targetState.lowerAngle), lowerFFVolts.value(), true);
 	upperMotor.setMotionMagicPosition(convertAngleToFalconPos(targetState.upperAngle), upperFFVolts.value(), true);
@@ -129,36 +126,45 @@ void SuperStructure::Periodic() {
 		actualTarget.upperAngle = SuperStructureConstants::UpperAngleSafetyLimit;
 	}
 
+
+
 	frc::SmartDashboard::PutNumber("SuperStructure/Current/Lower", currentState.lowerAngle);
 	frc::SmartDashboard::PutNumber("SuperStructure/Current/Upper", currentState.upperAngle);
 
-	frc::SmartDashboard::PutNumber("SuperStructure/Debug/LowerMotor", lowerLeftMotor.GetPosition().GetValueAsDouble());
-	frc::SmartDashboard::PutNumber("SuperStructure/Debug/UpperMotor", upperMotor.GetPosition().GetValueAsDouble());
+	// frc::SmartDashboard::PutNumber("SuperStructure/Debug/LowerMotor", lowerLeftMotor.GetPosition().GetValueAsDouble());
+	// frc::SmartDashboard::PutNumber("SuperStructure/Debug/UpperMotor", upperMotor.GetPosition().GetValueAsDouble());
 
 	frc::SmartDashboard::PutNumber("SuperStructure/DesiredTarget/Lower", targetState.lowerAngle);
 	frc::SmartDashboard::PutNumber("SuperStructure/DesiredTarget/Upper", targetState.upperAngle);
 
 	frc::SmartDashboard::PutNumber("SuperStructure/ActualTarget/Lower", actualTarget.lowerAngle);
 	frc::SmartDashboard::PutNumber("SuperStructure/ActualTarget/Upper", actualTarget.upperAngle);
+	double voltageLowerOut = lowerPID.Calculate(units::degree_t(currentState.lowerAngle), units::degree_t(actualTarget.lowerAngle)) + lowerFF.Calculate(units::degree_t(currentState.lowerAngle), units::radians_per_second_t(0)).value();
+	lowerLeftMotor.SetVoltage(units::volt_t(voltageLowerOut));
 
-	setFalconTargetPos(actualTarget, currentState);
+	double voltageUpperOut = upperPID.Calculate(units::degree_t(currentState.upperAngle), units::degree_t(actualTarget.upperAngle)) + upperFF.Calculate(units::degree_t(currentState.lowerAngle + currentState.upperAngle) + upperFFOffset, units::radians_per_second_t(0)).value();
+	upperMotor.SetVoltage(units::volt_t(voltageUpperOut));
+	
+	frc::SmartDashboard::PutNumber("SuperStructure/Current/VoltageLower", voltageLowerOut);
+	frc::SmartDashboard::PutNumber("SuperStructure/Current/VoltageUpper", voltageUpperOut);
+
 }
 
 
 
 void SuperStructure::setLowerMotionMagicProfile(double p, double motionMagicSpeed, double motionMagicAccel){
-	lowerLeftMotor.setPIDValues(p, 0.0, 0.0, 0.0, 0.0);
-	lowerLeftMotor.configureMotionMagic(motionMagicSpeed, motionMagicAccel, 0.0);
+	// lowerLeftMotor.setPIDValues(p, 0.0, 0.0, 0.0, 0.0);
+	// lowerLeftMotor.configureMotionMagic(motionMagicSpeed, motionMagicAccel, 0.0);
 
-	lowerLeftMotor.setSupplyCurrentLimit(true, 50, 60, 0.5);
-	lowerRightMotor.setSupplyCurrentLimit(true, 50, 60, 0.5);
+	// lowerLeftMotor.setSupplyCurrentLimit(true, 50, 60, 0.5);
+	// lowerRightMotor.setSupplyCurrentLimit(true, 50, 60, 0.5);
 }
 
 void SuperStructure::resetLowerMotionMagic(){
-	lowerLeftMotor.setPIDValues(oldP, 0.0, 0.0, 0.0, 0.0);
-	lowerLeftMotor.configureMotionMagic(oldSpeed, oldAccel, 0.0);
+	// lowerLeftMotor.setPIDValues(oldP, 0.0, 0.0, 0.0, 0.0);
+	// lowerLeftMotor.configureMotionMagic(oldSpeed, oldAccel, 0.0);
 
-	lowerLeftMotor.setSupplyCurrentLimit(true, 30, 40, 0.5);
-	lowerRightMotor.setSupplyCurrentLimit(true, 30, 40, 0.5);
+	// lowerLeftMotor.setSupplyCurrentLimit(true, 30, 40, 0.5);
+	// lowerRightMotor.setSupplyCurrentLimit(true, 30, 40, 0.5);
 
 }

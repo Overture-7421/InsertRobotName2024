@@ -35,9 +35,12 @@ void TabulateCommand::Execute() {
 
   frc::Translation2d chassisToTarget = targetLocation - chassisLoc;
   auto distance = chassisToTarget.Distance({0_m, 0_m});
-  auto angle = chassisToTarget.Angle().RotateBy({180_deg});
+  auto angle = chassisToTarget.Angle().RotateBy({-180_deg});
 
   frc::SmartDashboard::PutNumber("Tabulate/Distance", distance.value());
+  frc::SmartDashboard::PutNumber("Tabulate/LowerAngleCurrent", superStructure->getLowerAngle());
+  frc::SmartDashboard::PutNumber("Tabulate/UpperAngleCurrent", superStructure->getUpperAngle());
+  frc::SmartDashboard::PutNumber("Tabulate/ShooterVelCurrent", shooter->getCurrentVelocity());
 
   chassis->setTargetHeading(angle);
   double lowerAngle = frc::SmartDashboard::GetNumber("Tabulate/LowerAngle", superStructure->getLowerAngle());
