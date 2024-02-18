@@ -30,8 +30,8 @@ SwerveModule::SwerveModule(int rotatorID, int wheelID, int canCoderID, double of
 	m_driveMotor->setClosedLoopVoltageRamp(0.1);
 	m_driveMotor->setSupplyCurrentLimit(true, 40, 60, 0.1);
 
-	// m_turningMotor->setPositionUpdateFrequency(200_Hz);
-	// m_driveMotor->setVelocityUpdateFrequency(200_Hz);
+	m_turningMotor->setPositionUpdateFrequency(200_Hz);
+	m_driveMotor->setVelocityUpdateFrequency(200_Hz);
 
 	setFFConstants(0_V, 0_V, 0_V);
 }
