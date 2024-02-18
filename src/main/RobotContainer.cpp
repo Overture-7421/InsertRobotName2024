@@ -35,20 +35,21 @@ RobotContainer::RobotContainer() {
 
 void RobotContainer::ConfigureBindings() {
 	chassis.SetDefaultCommand(Drive(&chassis, &driver));
+	// shooter.SetDefaultCommand(ShooterDefaultCommand(&chassis, &shooter));
 
 	// tabulate.ToggleOnTrue(TabulateCommand(&chassis, &superStructure, &shooter).ToPtr());
 
 	zeroHeading.OnTrue(ResetAngle(&chassis).ToPtr());
 
 	ampV.WhileTrue(VisionAmpCommand(&superStructure, &shooter, &storage));
-	ampV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+	ampV.OnFalse(ClosedCommand(&superStructure, &intake, &storage).ToPtr());
 
 	speakerV.WhileTrue(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &opertr).ToPtr());
-	speakerV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+	speakerV.OnFalse(ClosedCommand(&superStructure, &intake, &storage).ToPtr());
 
 	// Operator 
 	ampM.WhileTrue(AmpCommand(&superStructure, &shooter).ToPtr());
-	ampM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+	ampM.OnFalse(ClosedCommand(&superStructure, &intake, &storage).ToPtr());
 
 	climbM.WhileTrue(ManualClimb(&chassis, &superStructure, &supportArms, &aprilTagCamera, &opertr));
 	climbM.OnFalse(
@@ -57,7 +58,7 @@ void RobotContainer::ConfigureBindings() {
 		aprilTagCamera.setPoseEstimator(true);
 		supportArms.setTargetCoord({ 0 });
 	}),
-			ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr()
+			ClosedCommand(&superStructure, &intake, &storage).ToPtr()
 		)
 	);
 
@@ -66,12 +67,12 @@ void RobotContainer::ConfigureBindings() {
 	shootM.OnFalse(StorageCommand(&storage, 0_V).ToPtr());
 
 	speakerM.WhileTrue(SpeakerCommand(&superStructure, &shooter).ToPtr());
-	speakerM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+	speakerM.OnFalse(ClosedCommand(&superStructure, &intake, &storage).ToPtr());
 
-	closed.WhileTrue(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+	closed.WhileTrue(ClosedCommand(&superStructure, &intake, &storage).ToPtr());
 
 	intakeM.WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake));
-	intakeM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+	intakeM.OnFalse(ClosedCommand(&superStructure, &intake, &storage).ToPtr());
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

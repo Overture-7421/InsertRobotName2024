@@ -33,6 +33,7 @@
 #include "Commands/VisionSpeakerCommand/VisionSpeakerCommand.h"
 #include "Commands/VisionSpeakerCommandNoShoot/VisionSpeakerCommandNoShoot.h"
 #include "Commands/ResetAngle/ResetAngle.h"
+#include "Commands/ShooterDefaultCommand/ShooterDefaultCommand.h"
 
 #include "Commands/TabulateCommand/TabulateCommand.h"
 

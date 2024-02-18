@@ -9,12 +9,11 @@
 // NOTE:  Consider using this command inline, rather than writing a subclass.
 // For more information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-ClosedCommand::ClosedCommand(SuperStructure* superStructure, Intake* intake, Storage* storage, Shooter* shooter) {
+ClosedCommand::ClosedCommand(SuperStructure* superStructure, Intake* intake, Storage* storage) {
   AddCommands(
     frc2::InstantCommand([=] {
       storage->setVoltage(0_V);
       intake->setVoltage(0_V);
-      shooter->setVelocityVoltage(50.0);
       superStructure->setTargetCoord(SuperStructureConstants::GroundGrabState);
     })
     );
