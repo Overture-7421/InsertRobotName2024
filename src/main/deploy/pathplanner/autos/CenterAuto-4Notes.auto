@@ -3,7 +3,7 @@
   "startingPose": {
     "position": {
       "x": 1.137922275844552,
-      "y": 4.043688087376175
+      "y": 4.3
     },
     "rotation": -45.0
   },
@@ -18,7 +18,7 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "parallel",
           "data": {
             "commands": [
               {
@@ -37,7 +37,7 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "parallel",
           "data": {
             "commands": [
               {
@@ -101,7 +101,7 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "parallel",
           "data": {
             "commands": [
               {
