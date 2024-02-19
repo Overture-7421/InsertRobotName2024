@@ -27,23 +27,23 @@ SuperStructure::SuperStructure() {
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 	upperMotor.setSensorPosition(convertAngleToFalconPos(getUpperAngle()));
 
-	SoftwareLimitSwitchConfigs lowerMotorSoftLimitConfig;
-	lowerMotorSoftLimitConfig.ForwardSoftLimitEnable = true;
-	lowerMotorSoftLimitConfig.ForwardSoftLimitThreshold = convertAngleToFalconPos(SuperStructureConstants::LowerAngleUpperLimit);
+	// SoftwareLimitSwitchConfigs lowerMotorSoftLimitConfig;
+	// lowerMotorSoftLimitConfig.ForwardSoftLimitEnable = true;
+	// lowerMotorSoftLimitConfig.ForwardSoftLimitThreshold = convertAngleToFalconPos(SuperStructureConstants::LowerAngleUpperLimit);
 
-	lowerMotorSoftLimitConfig.ReverseSoftLimitEnable = true;
-	lowerMotorSoftLimitConfig.ReverseSoftLimitThreshold = convertAngleToFalconPos(SuperStructureConstants::LowerAngleLowerLimit);
+	// lowerMotorSoftLimitConfig.ReverseSoftLimitEnable = true;
+	// lowerMotorSoftLimitConfig.ReverseSoftLimitThreshold = convertAngleToFalconPos(SuperStructureConstants::LowerAngleLowerLimit);
 
-	lowerLeftMotor.configureSoftwareLimitSwitch(lowerMotorSoftLimitConfig);
+	// lowerLeftMotor.configureSoftwareLimitSwitch(lowerMotorSoftLimitConfig);
 	
-	SoftwareLimitSwitchConfigs upperMotorSoftLimitConfig;
-	upperMotorSoftLimitConfig.ForwardSoftLimitEnable = true;
-	upperMotorSoftLimitConfig.ForwardSoftLimitThreshold = convertAngleToFalconPos(SuperStructureConstants::UpperAngleUpperLimit);
+	// SoftwareLimitSwitchConfigs upperMotorSoftLimitConfig;
+	// upperMotorSoftLimitConfig.ForwardSoftLimitEnable = true;
+	// upperMotorSoftLimitConfig.ForwardSoftLimitThreshold = convertAngleToFalconPos(SuperStructureConstants::UpperAngleUpperLimit);
 
-	upperMotorSoftLimitConfig.ReverseSoftLimitEnable = true;
-	upperMotorSoftLimitConfig.ReverseSoftLimitThreshold = convertAngleToFalconPos(SuperStructureConstants::UpperAngleLowerLimit);
+	// upperMotorSoftLimitConfig.ReverseSoftLimitEnable = true;
+	// upperMotorSoftLimitConfig.ReverseSoftLimitThreshold = convertAngleToFalconPos(SuperStructureConstants::UpperAngleLowerLimit);
 
-	upperMotor.configureSoftwareLimitSwitch(upperMotorSoftLimitConfig);
+	// upperMotor.configureSoftwareLimitSwitch(upperMotorSoftLimitConfig);
 
 	lowerLeftMotor.setContinuousWrap();
 	upperMotor.setContinuousWrap();
@@ -61,8 +61,8 @@ SuperStructure::SuperStructure() {
 	// upperMotor.setPIDValues(270.0, 0.0, 0.0, 0.0, 0.0);
 	// upperMotor.configureMotionMagic(1.0, 6.0, 0.0);
 
-	frc::SmartDashboard::PutData("SuperStructure/LowerPID", &lowerPID);
-	frc::SmartDashboard::PutData("SuperStructure/UpperPID", &upperPID);
+	// frc::SmartDashboard::PutData("SuperStructure/LowerPID", &lowerPID);
+	// frc::SmartDashboard::PutData("SuperStructure/UpperPID", &upperPID);
 
 }
 
@@ -126,14 +126,14 @@ void SuperStructure::Periodic() {
 		actualTarget.upperAngle = SuperStructureConstants::UpperAngleSafetyLimit;
 	}
 
-	frc::SmartDashboard::PutNumber("SuperStructure/Current/Lower", currentState.lowerAngle);
-	frc::SmartDashboard::PutNumber("SuperStructure/Current/Upper", currentState.upperAngle);
+	// frc::SmartDashboard::PutNumber("SuperStructure/Current/Lower", currentState.lowerAngle);
+	// frc::SmartDashboard::PutNumber("SuperStructure/Current/Upper", currentState.upperAngle);
 
-	frc::SmartDashboard::PutNumber("SuperStructure/DesiredTarget/Lower", targetState.lowerAngle);
-	frc::SmartDashboard::PutNumber("SuperStructure/DesiredTarget/Upper", targetState.upperAngle);
+	// frc::SmartDashboard::PutNumber("SuperStructure/DesiredTarget/Lower", targetState.lowerAngle);
+	// frc::SmartDashboard::PutNumber("SuperStructure/DesiredTarget/Upper", targetState.upperAngle);
 
-	frc::SmartDashboard::PutNumber("SuperStructure/ActualTarget/Lower", actualTarget.lowerAngle);
-	frc::SmartDashboard::PutNumber("SuperStructure/ActualTarget/Upper", actualTarget.upperAngle);
+	// frc::SmartDashboard::PutNumber("SuperStructure/ActualTarget/Lower", actualTarget.lowerAngle);
+	// frc::SmartDashboard::PutNumber("SuperStructure/ActualTarget/Upper", actualTarget.upperAngle);
 	
 	double voltageLowerOut = lowerPID.Calculate(units::degree_t(currentState.lowerAngle), units::degree_t(actualTarget.lowerAngle));
 	const auto lowerSetpoint = lowerPID.GetSetpoint();

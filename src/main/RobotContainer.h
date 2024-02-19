@@ -79,7 +79,7 @@ private:
 
 	// Mechanism Commands
 	frc2::Trigger ampM{ [this] {return opertr.GetLeftBumper();} };
-	frc2::Trigger sourceM{ [this] {return opertr.GetBButton();} };
+	frc2::Trigger spitM{ [this] {return opertr.GetBButton();} };
 	frc2::Trigger climbV{ [this] {return opertr.GetXButton();} };
 	frc2::Trigger climbM{ [this] {return opertr.GetYButton();} };
 	frc2::Trigger shootM{ [this] {return opertr.GetLeftTriggerAxis() > 0.1;} };

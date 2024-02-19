@@ -40,9 +40,9 @@ double Shooter::getLowerMotorCurrentVelocity() {
 
 // This method will be called once per scheduler run
 void Shooter::Periodic() {
-	frc::SmartDashboard::PutNumber("Shooter/DesiredSpeed", targetVel);
-	frc::SmartDashboard::PutNumber("Shooter/CurrentSpeed", getCurrentVelocity());
+	// frc::SmartDashboard::PutNumber("Shooter/DesiredSpeed", targetVel);
+	// frc::SmartDashboard::PutNumber("Shooter/CurrentSpeed", getCurrentVelocity());
 
-	frc::SmartDashboard::PutNumber("Shooter/Lower/CurrentSpeed", getLowerMotorCurrentVelocity());
-	frc::SmartDashboard::PutNumber("Shooter/Upper/CurrentSpeed", getUpperMotorCurrentVelocity());
+	// frc::SmartDashboard::PutNumber("Shooter/Lower/CurrentSpeed", getLowerMotorCurrentVelocity());
+	// frc::SmartDashboard::PutNumber("Shooter/Upper/CurrentSpeed", getUpperMotorCurrentVelocity());
 }

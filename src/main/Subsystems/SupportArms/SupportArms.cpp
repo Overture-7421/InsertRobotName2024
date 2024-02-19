@@ -55,7 +55,7 @@ void SupportArms::Periodic() {
 	setFalconTargetPos(m_TargetState, currentState);
 
 	// Debugging
-	frc::SmartDashboard::PutNumber("SupportArms/Current/Angle", currentState.lowerAngle);
-	frc::SmartDashboard::PutNumber("SupportArms/Current/Raw Encoder", lowerEncoder.GetAbsolutePosition());
-	frc::SmartDashboard::PutNumber("SupportArms/Current/Motor Position", lowerEncoder.GetAbsolutePosition());
+	// frc::SmartDashboard::PutNumber("SupportArms/Current/Angle", currentState.lowerAngle);
+	// frc::SmartDashboard::PutNumber("SupportArms/Current/Raw Encoder", lowerEncoder.GetAbsolutePosition());
+	// frc::SmartDashboard::PutNumber("SupportArms/Current/Motor Position", lowerEncoder.GetAbsolutePosition());
 }

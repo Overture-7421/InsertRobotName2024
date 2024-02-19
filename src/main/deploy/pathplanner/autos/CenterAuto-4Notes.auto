@@ -101,6 +101,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "VisionSpeakerCommand"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -111,22 +117,9 @@
                 }
               },
               {
-                "type": "sequential",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "VisionSpeakerCommand"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "ClosedCommand"
-                      }
-                    }
-                  ]
+                  "name": "GroundGrabCommand"
                 }
               }
             ]

@@ -17,8 +17,6 @@ frc2::CommandPtr GroundGrabCommand(SuperStructure* superStructure, Storage* stor
         return storage->isNoteOnForwardSensor();
       }
     ).AndThen(
-      frc2::cmd::Wait(0.01_s)
-    ).AndThen(
       [=]() {
         storage->setVoltage(0.0_V);
         intake->setVoltage(0.0_V);

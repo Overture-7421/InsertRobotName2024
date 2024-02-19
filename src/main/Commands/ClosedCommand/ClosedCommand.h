@@ -16,5 +16,5 @@ class ClosedCommand
     : public frc2::CommandHelper<frc2::SequentialCommandGroup,
                                  ClosedCommand> {
  public:
-  ClosedCommand(SuperStructure* superStructure, Intake* intake, Storage* storage);
+  ClosedCommand(SuperStructure* superStructure, Intake* intake, Storage* storage, Shooter* shooter);
 };
