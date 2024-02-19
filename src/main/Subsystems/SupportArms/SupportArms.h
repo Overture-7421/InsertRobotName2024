@@ -43,8 +43,12 @@ private:
 
 	//Encoders
 	OverDutyCycleEncoder lowerEncoder{ 6 };
-	double lowerOffset = -0.761712;
 
+	#ifdef __FRC_ROBORIO__
+	double lowerOffset = -0.761712;
+	#else
+	double lowerOffset = 0.0;
+	#endif
 
 	// LowerMotors
 	OverTalonFX lowerRightMotor{ 23, ControllerNeutralMode::Brake, true, "rio" };

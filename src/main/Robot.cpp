@@ -45,8 +45,8 @@ void Robot::RobotInit() {
 
   simDutyCycleEncoderManager->Init({
     {3, "Vantage7421/cancoders/chassis_arm_joint"}, 
-    {2, "Vantage7421/cancoders/arm_shooter_joint"},
-    {4, "Vantage7421/cancoders/chassis_supports_joint"},
+    {4, "Vantage7421/cancoders/arm_shooter_joint"},
+    {6, "Vantage7421/cancoders/chassis_supports_joint"},
   });
 
 #endif

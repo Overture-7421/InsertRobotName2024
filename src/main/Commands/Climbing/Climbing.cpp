@@ -6,9 +6,9 @@ pathplanner::PathConstraints pathfindingConstraints = pathplanner::PathConstrain
 	560_deg_per_s, 720_deg_per_s_sq);
 
 
-SuperStructureState superStructureStartingState{ 0, -60 };
-SuperStructureState superStructureTargetState{ 85, -90 };
-SuperStructureMoveByDistance::Profile superStructureProfile {superStructureStartingState, superStructureTargetState, 1_m};
+SuperStructureState superStructureStartingState{ -15, -60 };
+SuperStructureState superStructureTargetState{ 90, -180 };
+SuperStructureMoveByDistance::Profile superStructureProfile {superStructureStartingState, superStructureTargetState, 0.55_m};
 
 SupportArmsState supportArmsStartingState{ 0 };
 SupportArmsState supportArmsTargetState{ 110 };
@@ -31,11 +31,11 @@ frc2::CommandPtr GoToClimbingLocationOnTheFly(std::shared_ptr<pathplanner::PathP
 
 frc2::CommandPtr SetUpJoints(Chassis* chassis, SuperStructure* superStructure, SupportArms* supportArms, std::shared_ptr<pathplanner::PathPlannerPath> pathToFollow) {
 
-	auto lastPoint = pathToFollow->getAllPathPoints().at(pathToFollow->getAllPathPoints().size() - 1);
-	frc::Pose2d targetPos{ lastPoint.position, pathToFollow->getGoalEndState().getRotation() };
+	const auto& poses = pathToFollow->getPathPoses();
+	auto targetPos = poses[poses.size() - 1];
 
 	std::function<units::meter_t()> distanceFunction = [=]() {
-		if(shouldFlip()){
+		if(shouldFlip() && !pathToFollow->preventFlipping){
 			return getDistanceToChassis(chassis, pathplanner::GeometryUtil::flipFieldPose(targetPos));
 		}else{
 			return getDistanceToChassis(chassis, targetPos);
