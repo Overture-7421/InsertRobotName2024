@@ -11,18 +11,18 @@
 #define DEG_TO_RAD M_PI / 180.0
 
 SupportArms::SupportArms() {
-	// Configure Motors
-	lowerRightMotor.setSupplyCurrentLimit(true, 40, 60, 0.5);
-	lowerRightMotor.setSensorToMechanism(LOWER_GEAR_BOX_REDUCTION);
+	// // Configure Motors
+	// lowerRightMotor.setSupplyCurrentLimit(true, 40, 60, 0.5);
+	// lowerRightMotor.setSensorToMechanism(LOWER_GEAR_BOX_REDUCTION);
 
-	// COnfigure Motion Magic and PID
-	lowerRightMotor.setPIDValues(180, 0.0, 0.0, 0.0, 0.0);
-	lowerRightMotor.configureMotionMagic(3.0, 3.0, 0.0);
+	// // COnfigure Motion Magic and PID
+	// lowerRightMotor.setPIDValues(180, 0.0, 0.0, 0.0, 0.0);
+	// lowerRightMotor.configureMotionMagic(3.0, 3.0, 0.0);
 
-	std::this_thread::sleep_for(std::chrono::seconds(2));
-	lowerRightMotor.setSensorPosition(convertAngleToFalconPos(getLowerAngle()));
+	// std::this_thread::sleep_for(std::chrono::seconds(2));
+	// lowerRightMotor.setSensorPosition(convertAngleToFalconPos(getLowerAngle()));
 
-	setTargetCoord({ getLowerAngle() });
+	// setTargetCoord({ getLowerAngle() });
 }
 
 void SupportArms::setTargetCoord(SupportArmsState targetCoord) {
@@ -42,7 +42,7 @@ SupportArmsState SupportArms::getCurrentState() {
 }
 
 void SupportArms::setFalconTargetPos(SupportArmsState targetState, SupportArmsState currentState) {
-	lowerRightMotor.setMotionMagicPosition(convertAngleToFalconPos(targetState.lowerAngle), lowerFF.Calculate(units::degree_t(targetState.lowerAngle), units::radians_per_second_t(0)).value(), false);
+	// lowerRightMotor.setMotionMagicPosition(convertAngleToFalconPos(targetState.lowerAngle), lowerFF.Calculate(units::degree_t(targetState.lowerAngle), units::radians_per_second_t(0)).value(), false);
 }
 
 double SupportArms::convertAngleToFalconPos(double angle) {
@@ -51,8 +51,8 @@ double SupportArms::convertAngleToFalconPos(double angle) {
 
 // This method will be called once per scheduler run
 void SupportArms::Periodic() {
-	SupportArmsState currentState = getCurrentState();
-	setFalconTargetPos(m_TargetState, currentState);
+	// SupportArmsState currentState = getCurrentState();
+	// setFalconTargetPos(m_TargetState, currentState);
 
 	// Debugging
 	// frc::SmartDashboard::PutNumber("SupportArms/Current/Angle", currentState.lowerAngle);

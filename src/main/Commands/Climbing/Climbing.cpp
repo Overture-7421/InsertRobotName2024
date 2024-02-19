@@ -66,7 +66,7 @@ frc2::CommandPtr ClimbAtLocation(SuperStructure* superStructure, frc::XboxContro
 		frc2::cmd::RunOnce([=] {
 			superStructure->resetLowerMotionMagic();
 		}),
-		SuperStructureCommand(superStructure, { 85, -90 }).ToPtr()
+		SuperStructureCommand(superStructure, { 80, -100 }).ToPtr()
 	);
 }
 

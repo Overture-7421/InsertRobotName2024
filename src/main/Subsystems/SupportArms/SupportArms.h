@@ -51,7 +51,7 @@ private:
 	#endif
 
 	// LowerMotors
-	OverTalonFX lowerRightMotor{ 23, ControllerNeutralMode::Brake, true, "rio" };
+	// OverTalonFX lowerRightMotor{ 23, ControllerNeutralMode::Brake, true, "rio" };
 
 	// State
 	SupportArmsState m_TargetState{ getCurrentState() };
