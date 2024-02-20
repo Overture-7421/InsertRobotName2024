@@ -7,8 +7,8 @@ pathplanner::PathConstraints pathfindingConstraints = pathplanner::PathConstrain
 
 
 SuperStructureState superStructureStartingState{ -15, -60 };
-SuperStructureState superStructureTargetState{ 90, -180 };
-SuperStructureMoveByDistance::Profile superStructureProfile {superStructureStartingState, superStructureTargetState, 0.55_m};
+SuperStructureState superStructureTargetState{ 85, -90 };
+SuperStructureMoveByDistance::Profile superStructureProfile {superStructureStartingState, superStructureTargetState, 1.25_m};
 
 SupportArmsState supportArmsStartingState{ 0 };
 SupportArmsState supportArmsTargetState{ 110 };
