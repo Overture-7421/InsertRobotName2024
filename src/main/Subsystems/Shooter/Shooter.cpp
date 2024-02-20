@@ -13,8 +13,8 @@ Shooter::Shooter() {
 	lowerShooterMotor.setSensorToMechanism(ShooterConstants::UpperGearboxReduction);
 	lowerShooterMotor.setClosedLoopVoltageRamp(0.1);
 
-	upperShooterMotor.setPIDValues(0.071075, 0.0, 0.0, 0.0, 0.0);
-	lowerShooterMotor.setPIDValues(0.08259, 0.0, 0.0, 0.0, 0.0);
+	upperShooterMotor.setPIDValues(0.071075, 0.0, 0.0, upperFF.kS.value(), upperFF.kV.value());
+	lowerShooterMotor.setPIDValues(0.08259, 0.0, 0.0, lowerFF.kS.value(), lowerFF.kV.value());
 }
 
 void Shooter::setVelocityVoltage(double velocity) {
@@ -24,8 +24,8 @@ void Shooter::setVelocityVoltage(double velocity) {
 
 	targetVel = velocity;
 	lastTime = frc::Timer::GetFPGATimestamp().value();
-	upperShooterMotor.setVelocityVoltage(velocity, upperFF.Calculate(units::turns_per_second_t(velocity), units::turns_per_second_squared_t(accel)).value(), false);
-	lowerShooterMotor.setVelocityVoltage(velocity, lowerFF.Calculate(units::turns_per_second_t(velocity), units::turns_per_second_squared_t(accel)).value(), false);
+	upperShooterMotor.setVelocityVoltage(velocity, 0, false);
+	lowerShooterMotor.setVelocityVoltage(velocity, 0, false);
 }
 
 double Shooter::getCurrentVelocity() {
