@@ -61,8 +61,8 @@ SuperStructure::SuperStructure() {
 	// upperMotor.setPIDValues(270.0, 0.0, 0.0, 0.0, 0.0);
 	// upperMotor.configureMotionMagic(1.0, 6.0, 0.0);
 
-	// frc::SmartDashboard::PutData("SuperStructure/LowerPID", &lowerPID);
-	// frc::SmartDashboard::PutData("SuperStructure/UpperPID", &upperPID);
+	frc::SmartDashboard::PutData("SuperStructure/LowerPID", &lowerPID);
+	frc::SmartDashboard::PutData("SuperStructure/UpperPID", &upperPID);
 
 	upperPID.EnableContinuousInput(-180_deg, 180_deg);
 	lowerPID.EnableContinuousInput(-180_deg, 180_deg);
@@ -147,7 +147,7 @@ void SuperStructure::Periodic() {
 	upperMotor.SetVoltage(units::volt_t(voltageUpperOut) + upperFF.Calculate(lowerSetpoint.position + upperSetpoint.position + upperFFOffset, upperSetpoint.velocity));
 }
 
-void SuperStructure::setLowerMotionMagicProfile(double p, double motionMagicSpeed, double motionMagicAccel){
+void SuperStructure::setLowerMotionMagicProfile(double , double motionMagicSpeed, double motionMagicAccel){
 	// lowerLeftMotor.setPIDValues(p, 0.0, 0.0, 0.0, 0.0);
 	// lowerLeftMotor.configureMotionMagic(motionMagicSpeed, motionMagicAccel, 0.0);
 

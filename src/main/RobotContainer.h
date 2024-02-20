@@ -17,7 +17,6 @@
 #include "Subsystems/Intake/Intake.h"
 #include "Subsystems/SuperStructure/SuperStructure.h"
 #include "Subsystems/Storage/Storage.h"
-#include "Subsystems/SupportArms/SupportArms.h"
 #include "Subsystems/Shooter/Shooter.h"
 #include "Commands/ResetAngle/ResetAngle.h"
 
@@ -65,9 +64,6 @@ private:
 	// // Controllers
 	frc::XboxController driver{ 0 };
 	frc::XboxController opertr{ 1 };
-
-	// frc2::CommandXboxController characterization {5};
-
 
 	// Driver Commands
 	frc2::Trigger ampV{ [this] {return driver.GetLeftTriggerAxis() > 0.1;} };

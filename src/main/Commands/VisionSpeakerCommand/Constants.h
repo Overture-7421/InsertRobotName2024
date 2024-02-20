@@ -26,11 +26,11 @@ namespace VisionSpeakerCommandConstants {
 		{2.4_m, -23.0},
 		{2.9_m, -19.0},
 		{3.4_m, -16.0},
-		{3.9_m, -15.5},
-		{4.4_m, -13.0},
-		{4.9_m, -10.0},
+		{3.9_m, -14.0},
+		{4.4_m, -12.0},
+		{4.9_m, -11.0},
 		{5.4_m, -9.0},
-		{5.9_m, -7.6},
+		{5.9_m, -7.5},
 		{6.4_m, -6.7}
 	};
 
@@ -45,7 +45,7 @@ namespace VisionSpeakerCommandConstants {
 		{4.9_m, 135.0},
 		{5.4_m, 140.0},
 		{5.9_m, 145.0},
-		{6.4_m, 150.0}
+		{6.4_m, 160.0}
 	};
 
 	static const InterpolatingTable<units::meter_t, units::second_t> DistanceToShotTimeTable{
@@ -53,13 +53,13 @@ namespace VisionSpeakerCommandConstants {
 	  {1.9_m, 0.20_s},
 	  {2.4_m, 0.20_s},
 	  {2.9_m, 0.25_s},
-	  {3.4_m, 0.25_s},
-	  {3.9_m, 0.30_s},
+	  {3.4_m, 0.27_s},
+	  {3.9_m, 0.27_s},
 	  {4.4_m, 0.30_s},
-	  {4.9_m, 0.40_s},
+	  {4.9_m, 0.37_s},
 	  {5.4_m, 0.40_s},
-	  {5.9_m, 0.40_s},
-	  {6.4_m, 0.50_s}
+	  {5.9_m, 0.41_s},
+	  {6.4_m, 0.45_s}
 	};
 
 	static const frc::Translation2d TargetLocation = { 0.06_m, 5.55_m };
