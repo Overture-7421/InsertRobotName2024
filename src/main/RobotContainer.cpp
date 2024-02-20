@@ -62,6 +62,9 @@ void RobotContainer::ConfigureBindings() {
 		)
 	);
 
+	climbV.WhileTrue(AutoClimb(&chassis, &superStructure, &supportArms, &opertr));
+	climbV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+
 	shootM.WhileTrue(StorageCommand(&storage, StorageConstants::SpeakerScoreVolts).ToPtr());
 	shootM.OnFalse(StorageCommand(&storage, 0_V).ToPtr());
 
