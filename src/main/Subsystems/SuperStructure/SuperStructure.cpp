@@ -67,6 +67,9 @@ SuperStructure::SuperStructure() {
 	upperPID.EnableContinuousInput(-180_deg, 180_deg);
 	lowerPID.EnableContinuousInput(-180_deg, 180_deg);
 
+	upperPID.SetIZone(2);
+	lowerPID.SetIZone(2);
+
 }
 
 void SuperStructure::setTargetCoord(SuperStructureState targetState) {
