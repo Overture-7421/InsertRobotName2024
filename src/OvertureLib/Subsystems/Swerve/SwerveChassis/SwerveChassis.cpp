@@ -364,7 +364,6 @@ void SwerveChassis::shuffleboardPeriodic() {
 
 	// frc::SmartDashboard::PutNumber("Odometry/X", estimatedPos.X().value());
 	// frc::SmartDashboard::PutNumber("Odometry/Y", estimatedPos.Y().value());
-	// frc::SmartDashboard::PutNumber("Odometry/Pigeon", estimatedPos.Rotation().Degrees().value());
 }
 
 void SwerveChassis::Periodic() {
