@@ -51,7 +51,7 @@ public:
 	frc::ChassisSpeeds getFieldRelativeSpeeds();
 	ChassisAccels getFIeldRelativeAccels();
 
-	frc::Pose2d getOdometry();
+	const frc::Pose2d& getOdometry();
 	void resetOdometry(frc::Pose2d initPose);
 	const frc::SwerveDriveKinematics<4>& getKinematics();
 	void addVisionMeasurement(frc::Pose2d pose, units::second_t Latency);
@@ -82,6 +82,7 @@ protected:
 	std::array<frc::SwerveModulePosition, 4>* odometryPos;
 
 	frc::SwerveDrivePoseEstimator<4>* odometry;
+	frc::Pose2d latestPose;
 
 	frc::ChassisSpeeds desiredSpeeds;
 

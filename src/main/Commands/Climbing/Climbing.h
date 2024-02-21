@@ -19,7 +19,7 @@
 #include <vector>
 #include <utility>
 
-frc2::CommandPtr AutoClimb(Chassis* chassis, SuperStructure* superStructure, SupportArms* supportArms, frc::XboxController* controller);
+frc2::CommandPtr AutoClimb(Chassis* chassis, SuperStructure* superStructure, frc::XboxController* controller);
 
-frc2::CommandPtr ManualClimb(Chassis* chassis, SuperStructure* superStructure, SupportArms* supportArms, AprilTagCamera* aprilTagCamera, frc::XboxController* controller);
+frc2::CommandPtr ManualClimb(Chassis* chassis, SuperStructure* superStructure, AprilTagCamera* aprilTagCamera, frc::XboxController* controller);
 

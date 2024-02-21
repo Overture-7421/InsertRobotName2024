@@ -19,11 +19,7 @@ Shooter::Shooter() {
 
 void Shooter::setVelocityVoltage(double velocity) {
 	velocity = std::clamp(velocity, -ShooterConstants::MaxSpeed, ShooterConstants::MaxSpeed);
-
-	double accel = 0;
-
 	targetVel = velocity;
-	lastTime = frc::Timer::GetFPGATimestamp().value();
 	upperShooterMotor.setVelocityVoltage(velocity, 0, false);
 	lowerShooterMotor.setVelocityVoltage(velocity, 0, false);
 }

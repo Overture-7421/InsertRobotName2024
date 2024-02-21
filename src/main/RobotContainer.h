@@ -57,7 +57,6 @@ private:
 	AprilTagCamera aprilTagCamera{ &chassis };
 	Intake intake;
 	SuperStructure superStructure;
-	SupportArms supportArms;
 	Storage storage;
 	Shooter shooter;
 

@@ -213,8 +213,8 @@ ChassisAccels SwerveChassis::getFIeldRelativeAccels() {
  *
  * @return Pose2d object
  */
-frc::Pose2d SwerveChassis::getOdometry() {
-	return odometry->GetEstimatedPosition();
+const frc::Pose2d&  SwerveChassis::getOdometry() {
+	return latestPose;
 }
 
 /**
@@ -333,8 +333,9 @@ double SwerveChassis::getRoll() {
  */
 void SwerveChassis::updateOdometry() {
 	odometry->Update(pigeon->GetRotation2d(), getModulePosition());
+	latestPose = odometry->GetEstimatedPosition();
 	frc::ChassisSpeeds robotRelativeSpeed = getRobotRelativeSpeeds();
-	frc::Rotation2d robotHeading = getOdometry().Rotation();
+	frc::Rotation2d robotHeading = latestPose.Rotation();
 
 	fieldRelativeSpeed = frc::ChassisSpeeds::FromRobotRelativeSpeeds(robotRelativeSpeed, robotHeading);
 	fieldRelativeAccel = ChassisAccels(fieldRelativeSpeed, lastFieldRelativeSpeed);
@@ -358,10 +359,8 @@ void SwerveChassis::shuffleboardPeriodic() {
 	// frc::SmartDashboard::PutNumber("Odometry/SpeedX", fieldRelativeSpeed.vx.value());
 	// frc::SmartDashboard::PutNumber("Odometry/SpeedY", fieldRelativeSpeed.vy.value());
 	// frc::SmartDashboard::PutNumber("Odometry/SpeedOmega", fieldRelativeSpeed.omega.value());
-
-	auto estimatedPos = getOdometry();
-
-	field2d.SetRobotPose(estimatedPos);
+	
+	field2d.SetRobotPose(latestPose);
 
 	// frc::SmartDashboard::PutNumber("Odometry/X", estimatedPos.X().value());
 	// frc::SmartDashboard::PutNumber("Odometry/Y", estimatedPos.Y().value());
@@ -369,15 +368,14 @@ void SwerveChassis::shuffleboardPeriodic() {
 }
 
 void SwerveChassis::Periodic() {
-	if (headingOverride) {
+	updateOdometry();
 
-		double outOmega = headingController.Calculate(getOdometry().Rotation().Radians());
+	if (headingOverride) {
+		double outOmega = headingController.Calculate(latestPose.Rotation().Radians());
 		if (std::abs(outOmega) < 0.1 && desiredSpeeds.vx == 0_mps && desiredSpeeds.vy == 0_mps) {
 			outOmega = 0.0;
 		}
 		desiredSpeeds.omega = units::radians_per_second_t{ outOmega };
-
-
 		// frc::SmartDashboard::PutNumber("Odometry/HeadingTarget", headingTarget.Degrees().value());
 		// frc::SmartDashboard::PutNumber("Odometry/HeadingError", headingController.GetPositionError().value());
 	}
@@ -387,7 +385,5 @@ void SwerveChassis::Periodic() {
 	kinematics->DesaturateWheelSpeeds(&desiredStates, 5.39_mps);
 
 	setModuleStates(desiredStates);
-
-	updateOdometry();
 	shuffleboardPeriodic();
 }
