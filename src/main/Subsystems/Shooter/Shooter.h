@@ -41,7 +41,7 @@ private:
 	double lastTime = 0.0;
 
 	frc2::sysid::SysIdRoutine sysIdRoutine{
-	frc2::sysid::Config{0.5_V / 1_s, 3_V, 6_s,
+	frc2::sysid::Config{1_V / 1_s, 7_V, 10_s,
 						std::nullopt},
 	frc2::sysid::Mechanism{
 		[this](units::volt_t driveVoltage) {
