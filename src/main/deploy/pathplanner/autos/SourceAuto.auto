@@ -12,7 +12,13 @@
     "data": {
       "commands": [
         {
-          "type": "deadline",
+          "type": "named",
+          "data": {
+            "name": "VisionSpeakerCommand"
+          }
+        },
+        {
+          "type": "parallel",
           "data": {
             "commands": [
               {
@@ -22,31 +28,37 @@
                 }
               },
               {
-                "type": "sequential",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "VisionSpeakerCommand"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "GroundGrabCommand"
-                      }
-                    }
-                  ]
+                  "name": "GroundGrabCommand"
                 }
               }
             ]
           }
         },
         {
-          "type": "path",
+          "type": "deadline",
           "data": {
-            "pathName": "SourceAuto2"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "SourceAuto2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "VisionNoShoot"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.2
           }
         },
         {
@@ -56,7 +68,7 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "parallel",
           "data": {
             "commands": [
               {
@@ -75,9 +87,28 @@
           }
         },
         {
-          "type": "path",
+          "type": "deadline",
           "data": {
-            "pathName": "SourceAuto4"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "SourceAuto4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "VisionNoShoot"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.2
           }
         },
         {
@@ -87,7 +118,7 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "parallel",
           "data": {
             "commands": [
               {
@@ -109,6 +140,12 @@
           "type": "path",
           "data": {
             "pathName": "SourceAuto6"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.2
           }
         },
         {

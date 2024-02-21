@@ -16,12 +16,14 @@ RobotContainer::RobotContainer() {
 	pathplanner::NamedCommands::registerCommand("ShooterCommand", std::move(ShooterCommand(&shooter, 4.00).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("VisionNoShoot", std::move(VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter).ToPtr()));
 
+	center7NoteAuto = pathplanner::AutoBuilder::buildAuto("CenterAuto-7Notes");
 	center6NoteAuto = pathplanner::AutoBuilder::buildAuto("CenterAuto-6Notes");
 	center4NoteAuto = pathplanner::AutoBuilder::buildAuto("CenterAuto-4Notes");
 	ampAuto = pathplanner::AutoBuilder::buildAuto("AMPAuto");
 	sourceAuto = pathplanner::AutoBuilder::buildAuto("SourceAuto");
 
 	autoChooser.SetDefaultOption("None, null, nada", defaultNoneAuto.get());
+	autoChooser.AddOption("CenterAuto-7Notes", center7NoteAuto.get());
 	autoChooser.AddOption("CenterAuto-6Notes", center6NoteAuto.get());
 	autoChooser.AddOption("CenterAuto-4Notes", center4NoteAuto.get());
 	autoChooser.AddOption("AMPAuto", ampAuto.get());
@@ -37,7 +39,7 @@ void RobotContainer::ConfigureBindings() {
 	chassis.SetDefaultCommand(Drive(&chassis, &driver));
 	// shooter.SetDefaultCommand(ShooterDefaultCommand(&chassis, &shooter));
 
-	tabulate.ToggleOnTrue(TabulateCommand(&chassis, &superStructure, &shooter).ToPtr());
+	// tabulate.ToggleOnTrue(TabulateCommand(&chassis, &superStructure, &shooter).ToPtr());
 
 	zeroHeading.OnTrue(ResetAngle(&chassis).ToPtr());
 

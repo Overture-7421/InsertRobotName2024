@@ -13,8 +13,8 @@ Shooter::Shooter() {
 	lowerShooterMotor.setSensorToMechanism(ShooterConstants::UpperGearboxReduction);
 	lowerShooterMotor.setClosedLoopVoltageRamp(0.1);
 
-	upperShooterMotor.setPIDValues(0.071075, 0.0, 0.0, upperFF.kS.value(), upperFF.kV.value());
-	lowerShooterMotor.setPIDValues(0.08259, 0.0, 0.0, lowerFF.kS.value(), lowerFF.kV.value());
+	upperShooterMotor.setPIDValues(0.082625, 0.0, 0.0, upperFF.kS.value(), upperFF.kV.value());
+	lowerShooterMotor.setPIDValues(0.059977, 0.0, 0.0, lowerFF.kS.value(), lowerFF.kV.value());
 }
 
 void Shooter::setVelocityVoltage(double velocity) {
@@ -44,9 +44,9 @@ double Shooter::getLowerMotorCurrentVelocity() {
 
 // This method will be called once per scheduler run
 void Shooter::Periodic() {
-	// frc::SmartDashboard::PutNumber("Shooter/DesiredSpeed", targetVel);
-	// frc::SmartDashboard::PutNumber("Shooter/CurrentSpeed", getCurrentVelocity());
+	frc::SmartDashboard::PutNumber("Shooter/DesiredSpeed", targetVel);
+	frc::SmartDashboard::PutNumber("Shooter/CurrentSpeed", getCurrentVelocity());
 
-	// frc::SmartDashboard::PutNumber("Shooter/Lower/CurrentSpeed", getLowerMotorCurrentVelocity());
-	// frc::SmartDashboard::PutNumber("Shooter/Upper/CurrentSpeed", getUpperMotorCurrentVelocity());
+	frc::SmartDashboard::PutNumber("Shooter/Lower/CurrentSpeed", getLowerMotorCurrentVelocity());
+	frc::SmartDashboard::PutNumber("Shooter/Upper/CurrentSpeed", getUpperMotorCurrentVelocity());
 }

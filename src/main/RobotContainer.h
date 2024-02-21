@@ -64,7 +64,7 @@ private:
 	// // Controllers
 	frc::XboxController driver{ 0 };
 	frc::XboxController opertr{ 1 };
-
+	
 	// Driver Commands
 	frc2::Trigger ampV{ [this] {return driver.GetLeftTriggerAxis() > 0.1;} };
 	frc2::Trigger sourceV{ [this] {return driver.GetRightBumper();} };
@@ -88,6 +88,7 @@ private:
 	frc2::CommandPtr defaultNoneAuto = frc2::cmd::None();
 	frc2::CommandPtr center6NoteAuto = frc2::cmd::None();
 	frc2::CommandPtr center4NoteAuto = frc2::cmd::None();
+	frc2::CommandPtr center7NoteAuto = frc2::cmd::None();
 	frc2::CommandPtr ampAuto = frc2::cmd::None();
 	frc2::CommandPtr sourceAuto = frc2::cmd::None();
 

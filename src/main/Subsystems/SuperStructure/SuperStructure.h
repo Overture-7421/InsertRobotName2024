@@ -89,12 +89,12 @@ private:
 	SuperStructureState targetState;
 
 	//Feed Forward
-	frc::ArmFeedforward lowerFF {0.25_V, 0.4_V, 28_V / 1_tps, 0.9068_V / 1_tr_per_s_sq }; 
+	frc::ArmFeedforward lowerFF {0.25_V, 0.4_V, 30_V / 1_tps, 0.9068_V / 1_tr_per_s_sq }; 
 	frc::ArmFeedforward upperFF {0.6_V, 0.25_V, 7.5_V / 1_tps, 0.97016_V / 1_tr_per_s_sq}; 
 
 
-	frc::ProfiledPIDController<units::degrees> lowerPID {0.35, 0.5, 0.0, {360_deg_per_s * 4.0, 360_deg_per_s_sq * 1.5}, RobotConstants::LoopTime};
-	frc::ProfiledPIDController<units::degrees> upperPID {0.35, 0.5, 0.0, {360_deg_per_s * 4.0, 360_deg_per_s_sq * 2.0}, RobotConstants::LoopTime};
+	frc::ProfiledPIDController<units::degrees> lowerPID {0.35, 1.5, 0.0, {360_deg_per_s * 4.0, 360_deg_per_s_sq * 1.5}, RobotConstants::LoopTime};
+	frc::ProfiledPIDController<units::degrees> upperPID {0.35, 0.6, 0.0, {360_deg_per_s * 5.0, 360_deg_per_s_sq * 3.0}, RobotConstants::LoopTime};
 
 
 	units::turn_t upperFFOffset = 0.25_tr;
