@@ -12,6 +12,7 @@
 #include "main/Subsystems/Chassis/Chassis.h"
 
 #include "main/Commands/UtilityFunctions/UtilityFunctions.h"
+#include "main/Commands/VisionSpeakerCommand/Constants.h"
 
 class TabulateCommand
     : public frc2::CommandHelper<frc2::Command, TabulateCommand> {

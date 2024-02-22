@@ -19,9 +19,9 @@ void TabulateCommand::Initialize() {
   frc::SmartDashboard::PutNumber("Tabulate/ShooterVel", 0.0);
 
   if(shouldFlip()){
-    targetLocation = pathplanner::GeometryUtil::flipFieldPosition({0.06_m, 5.54_m});
+    targetLocation = pathplanner::GeometryUtil::flipFieldPosition(VisionSpeakerCommandConstants::TargetLocation);
   }else{
-    targetLocation = {0.06_m, 5.54_m};
+    targetLocation = VisionSpeakerCommandConstants::TargetLocation;
   }
 
   chassis->setHeadingOverride(true);

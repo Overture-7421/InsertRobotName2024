@@ -48,7 +48,7 @@ void VisionSpeakerCommand::Execute() {
 
 	frc::Translation2d chassisToTarget = speakerLoc - chassisLoc;
 	distance = chassisToTarget.Distance({ 0_m, 0_m });
-	angle = chassisToTarget.Angle().RotateBy({ -180_deg });
+	angle = chassisToTarget.Angle().RotateBy({ 180_deg });
 
 	chassis->setTargetHeading(angle);
 	double targetLowerAngle = VisionSpeakerCommandConstants::DistanceToLowerAngleTable[distance];
