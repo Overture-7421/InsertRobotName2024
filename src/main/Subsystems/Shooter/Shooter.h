@@ -35,8 +35,8 @@ private:
 	OverTalonFX upperShooterMotor{ 26, ControllerNeutralMode::Coast, false, "rio" };
 	OverTalonFX lowerShooterMotor{ 27, ControllerNeutralMode::Coast, false, "rio" };
 
-	frc::SimpleMotorFeedforward<units::turn> upperFF {0.29396_V, 0.053302_V / 1_tps, 0.0076834_V / 1_tr_per_s_sq};
-	frc::SimpleMotorFeedforward<units::turn	> lowerFF {0.32343_V, 0.051619_V / 1_tps, 0.0085733_V / 1_tr_per_s_sq};
+	frc::SimpleMotorFeedforward<units::turn> upperFF {0.29396_V, 0.050_V / 1_tps, 0.010231_V / 1_tr_per_s_sq};
+	frc::SimpleMotorFeedforward<units::turn	> lowerFF {0.28612_V, 0.050_V / 1_tps, 0.010231_V / 1_tr_per_s_sq};
 
 	double targetVel = 0.0;
 

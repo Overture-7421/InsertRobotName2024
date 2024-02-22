@@ -14,7 +14,7 @@ Shooter::Shooter() {
 	lowerShooterMotor.setClosedLoopVoltageRamp(0.1);
 
 	upperShooterMotor.setPIDValues(0.082625, 0.0, 0.0, upperFF.kS.value(), upperFF.kV.value());
-	lowerShooterMotor.setPIDValues(0.059977, 0.0, 0.0, lowerFF.kS.value(), lowerFF.kV.value());
+	lowerShooterMotor.setPIDValues(0.08176, 0.0, 0.0, lowerFF.kS.value(), lowerFF.kV.value());
 }
 
 void Shooter::setVelocityVoltage(double velocity) {
