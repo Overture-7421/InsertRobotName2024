@@ -14,7 +14,7 @@ ClosedCommand::ClosedCommand(SuperStructure* superStructure, Intake* intake, Sto
     frc2::InstantCommand([=] {
       storage->setVoltage(0_V);
       intake->setVoltage(0_V);
-      // shooter->setVelocityVoltage(50);
+      shooter->setVelocityVoltage(50);
       superStructure->setTargetCoord(SuperStructureConstants::GroundGrabState);
     })
     );

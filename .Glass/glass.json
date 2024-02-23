@@ -41,6 +41,7 @@
       "/SmartDashboard/Chassis/Odometry": "Field2d",
       "/SmartDashboard/Odometry": "Field2d",
       "/SmartDashboard/SuperStructure/LowerPID": "ProfiledPIDController",
+      "/SmartDashboard/SuperStructure/UpperPID": "ProfiledPIDController",
       "/SmartDashboard/SuperStructure/upperPID": "ProfiledPIDController"
     }
   },

@@ -53,12 +53,12 @@ private:
 	void ConfigureBindings();
 
 	// Subsystems
-	Chassis chassis;
 	AprilTagCamera aprilTagCamera{ &chassis };
 	Intake intake;
 	SuperStructure superStructure;
 	Storage storage;
 	Shooter shooter;
+	Chassis chassis;
 
 	// Controllers
 	frc::XboxController driver{ 0 };

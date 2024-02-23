@@ -39,7 +39,9 @@ void RobotContainer::ConfigureBindings() {
 	chassis.SetDefaultCommand(Drive(&chassis, &driver));
 	// shooter.SetDefaultCommand(ShooterDefaultCommand(&chassis, &shooter));
 
-	tabulate.ToggleOnTrue(TabulateCommand(&chassis, &superStructure, &shooter).ToPtr());
+	// tabulate.ToggleOnTrue(TabulateCommand(&chassis, &superStructure, &shooter).ToPtr());
+	tabulate.OnTrue(SuperStructureCommand(&superStructure, {0, -90}).ToPtr());
+	tabulate.OnFalse(SuperStructureCommand(&superStructure, {0, 0}).ToPtr());
 
 	zeroHeading.OnTrue(ResetAngle(&chassis).ToPtr());
 

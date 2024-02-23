@@ -63,7 +63,7 @@ void VisionSpeakerCommand::Execute() {
   bool lowerAngleInTolerance = std::abs(targetLowerAngle - superStructure->getLowerAngle()) < 0.7;
   bool upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 0.7;
   bool headingInTolerance = headingError < headingTolerance; 
-  bool shooterSpeedInTolerance = (targetShooterVelocity - 2.0 )< shooter->getCurrentVelocity(); 
+  bool shooterSpeedInTolerance = (targetShooterVelocity - 1.0 )< shooter->getCurrentVelocity(); 
 
   frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/LowerAngleReached", lowerAngleInTolerance);
   frc::SmartDashboard::PutNumber("VisionSpeakerCommand/Distance", distance.value());

@@ -18,7 +18,7 @@ frc2::CommandPtr VisionAmpCommand(SuperStructure* superStucture, Shooter* shoote
 
 	return frc2::cmd::Sequence(
 		frc2::cmd::Parallel(
-			pathplanner::AutoBuilder::pathfindToPoseFlipped({ 1.80_m, 7.60_m, {-90_deg} }, constraints),
+			pathplanner::AutoBuilder::pathfindToPoseFlipped({ 1.80_m, 7.55_m, {-90_deg} }, constraints),
 			SuperStructureCommand(superStucture, SuperStructureConstants::AmpState).ToPtr(),
 			ShooterCommand(shooter, ShooterConstants::AmpScoreSpeed).ToPtr()
 		),
