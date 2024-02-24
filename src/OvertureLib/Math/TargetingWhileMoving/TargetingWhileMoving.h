@@ -17,14 +17,14 @@
 typedef InterpolatingTable<units::meter_t, units::second_t> DistanceToTravelTimeTable;
 
 class TargetingWhileMoving {
- public:
-  TargetingWhileMoving(DistanceToTravelTimeTable distanceToTravelTime, units::second_t accelCompFactor = 0.01_s);
+public:
+	TargetingWhileMoving(DistanceToTravelTimeTable distanceToTravelTime, units::second_t accelCompFactor = 0.01_s);
 
-  void setTargetLocation(frc::Translation2d targetLocation);
+	void setTargetLocation(frc::Translation2d targetLocation);
 
-  frc::Translation2d getMovingTarget(const frc::Pose2d& robotPose, const frc::ChassisSpeeds& fieldRelativeSpeed, const ChassisAccels& fieldRelativeAccel);
- private:
-  frc::Translation2d targetLocation;
-  DistanceToTravelTimeTable distanceToTravelTime;
-  units::second_t accelCompFactor;
+	frc::Translation2d getMovingTarget(const frc::Pose2d& robotPose, const frc::ChassisSpeeds& fieldRelativeSpeed, const ChassisAccels& fieldRelativeAccel);
+private:
+	frc::Translation2d targetLocation;
+	DistanceToTravelTimeTable distanceToTravelTime;
+	units::second_t accelCompFactor;
 };

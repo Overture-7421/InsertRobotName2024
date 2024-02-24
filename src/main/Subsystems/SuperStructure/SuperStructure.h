@@ -68,13 +68,13 @@ private:
 	OverDutyCycleEncoder lowerEncoder{ 3 };
 	OverDutyCycleEncoder upperEncoder{ 4 };
 
-	#ifdef __FRC_ROBORIO__
-		double lowerOffset = -0.338472;
-		double upperOffset = -0.587237;
-	#else
-		double lowerOffset = 0;
-		double upperOffset = 0;
-	#endif
+#ifdef __FRC_ROBORIO__
+	double lowerOffset = -0.338472;
+	double upperOffset = -0.597391;
+#else
+	double lowerOffset = 0;
+	double upperOffset = 0;
+#endif
 
 
 	// LowerMotors
@@ -93,8 +93,8 @@ private:
 	frc::ArmFeedforward upperFF{ 0.6_V, 0.25_V, 7.5_V / 1_tps, 0.97016_V / 1_tr_per_s_sq };
 
 
-	frc::ProfiledPIDController<units::degrees> lowerPID{ 0.35, 1.5, 0.0, {360_deg_per_s * 4.0, 360_deg_per_s_sq * 1.25}, RobotConstants::LoopTime };
-	frc::ProfiledPIDController<units::degrees> upperPID{ 0.35, 0.6, 0.0, {360_deg_per_s * 5.0, 360_deg_per_s_sq * 2.0}, RobotConstants::LoopTime };
+	frc::ProfiledPIDController<units::degrees> lowerPID{ 0.35, 0.8, 0.0, {360_deg_per_s * 4.0, 360_deg_per_s_sq * 1.25}, RobotConstants::LoopTime };
+	frc::ProfiledPIDController<units::degrees> upperPID{ 0.35, 0.8, 0.0, {360_deg_per_s * 5.0, 360_deg_per_s_sq * 2.0}, RobotConstants::LoopTime };
 
 
 	units::turn_t upperFFOffset = 0.25_tr;
