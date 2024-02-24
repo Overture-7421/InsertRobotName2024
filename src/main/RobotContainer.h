@@ -71,13 +71,13 @@ private:
 	frc2::Trigger sourceV{ [this] {return driver.GetRightBumper();} };
 	frc2::Trigger speakerV{ [this] {return driver.GetRightTriggerAxis() > 0.1;} };	// TO GET TESTED
 	frc2::Trigger zeroHeading{ [this] {return driver.GetBackButton();} };
+	frc2::Trigger climbV{ [this] {return driver.GetYButton();} };
 
 	frc2::Trigger tabulate { [this] {return driver.GetAButton();}};
 
 	// Mechanism Commands
 	frc2::Trigger ampM{ [this] {return opertr.GetLeftBumper();} };
 	frc2::Trigger spitM{ [this] {return opertr.GetBButton();} };
-	frc2::Trigger climbV{ [this] {return opertr.GetXButton();} };
 	frc2::Trigger climbM{ [this] {return opertr.GetYButton();} };
 	frc2::Trigger shootM{ [this] {return opertr.GetLeftTriggerAxis() > 0.1;} };
 	frc2::Trigger speakerM{ [this] {return opertr.GetRightBumper();} };
