@@ -41,16 +41,16 @@ public:
 
 	frc2::CommandPtr sysIdQuasistaticUpper(frc2::sysid::Direction direction) {
 		return frc2::cmd::Sequence(
-			frc2::cmd::Run([this] {setTargetCoord({0, 0});}).WithTimeout(1.5_s),
+			frc2::cmd::Run([this] {setTargetCoord({ 0, 0 });}).WithTimeout(1.5_s),
 			sysIdRoutineUpper.Quasistatic(direction)
 		);
 	}
 
 	frc2::CommandPtr sysIdDynamicUpper(frc2::sysid::Direction direction) {
 		return frc2::cmd::Sequence(
-			frc2::cmd::Run([this] {setTargetCoord({0, 0});}).WithTimeout(1.5_s),
+			frc2::cmd::Run([this] {setTargetCoord({ 0, 0 });}).WithTimeout(1.5_s),
 			sysIdRoutineUpper.Dynamic(direction)
-		);	
+		);
 	}
 
 	SuperStructureState getCurrentState();
@@ -70,7 +70,7 @@ private:
 
 	#ifdef __FRC_ROBORIO__
 		double lowerOffset = -0.338472;
-		double upperOffset = -0.596330;
+		double upperOffset = -0.587237;
 	#else
 		double lowerOffset = 0;
 		double upperOffset = 0;
@@ -89,12 +89,12 @@ private:
 	SuperStructureState targetState;
 
 	//Feed Forward
-	frc::ArmFeedforward lowerFF {0.25_V, 0.4_V, 30_V / 1_tps, 0.9068_V / 1_tr_per_s_sq }; 
-	frc::ArmFeedforward upperFF {0.6_V, 0.25_V, 7.5_V / 1_tps, 0.97016_V / 1_tr_per_s_sq}; 
+	frc::ArmFeedforward lowerFF{ 0.25_V, 0.4_V, 30_V / 1_tps, 0.9068_V / 1_tr_per_s_sq };
+	frc::ArmFeedforward upperFF{ 0.6_V, 0.25_V, 7.5_V / 1_tps, 0.97016_V / 1_tr_per_s_sq };
 
 
-	frc::ProfiledPIDController<units::degrees> lowerPID {0.35, 1.5, 0.0, {360_deg_per_s * 4.0, 360_deg_per_s_sq * 1.25}, RobotConstants::LoopTime};
-	frc::ProfiledPIDController<units::degrees> upperPID {0.35, 0.6, 0.0, {360_deg_per_s * 5.0, 360_deg_per_s_sq * 2.0}, RobotConstants::LoopTime};
+	frc::ProfiledPIDController<units::degrees> lowerPID{ 0.35, 1.5, 0.0, {360_deg_per_s * 4.0, 360_deg_per_s_sq * 1.25}, RobotConstants::LoopTime };
+	frc::ProfiledPIDController<units::degrees> upperPID{ 0.35, 0.6, 0.0, {360_deg_per_s * 5.0, 360_deg_per_s_sq * 2.0}, RobotConstants::LoopTime };
 
 
 	units::turn_t upperFFOffset = 0.25_tr;
