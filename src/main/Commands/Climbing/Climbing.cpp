@@ -61,7 +61,7 @@ frc2::CommandPtr ClimbAtLocation(SuperStructure* superStructure, Shooter* shoote
 		WaitForButton(controller, checkpointButtonId),
 		ShooterCommand(shooter, ShooterConstants::IdleSpeed).ToPtr(),
 		StorageCommand(storage, 4_V).ToPtr(),
-		frc2::cmd::WaitUntil([=] { return !storage->isNoteOnForwardSensor();}),
+		frc2::cmd::WaitUntil([=] { return !storage->isNoteOnForwardSensor();}).WithTimeout(1_s),
 		frc2::cmd::Wait(storageTrapScoreWait),
 		SuperStructureCommand(superStructure, SuperStructureConstants::GroundGrabState).ToPtr()
 	);
