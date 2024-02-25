@@ -33,7 +33,7 @@ private:
 
 	/* Speed Constants */
 	double kMaxSpeed{ 5.39 };
-	double kMaxAngularSpeed{ 8.0 };
+	double kMaxAngularSpeed{ 7.0 };
 
 	int alliance = 1;
 

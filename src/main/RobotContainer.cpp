@@ -53,7 +53,7 @@ void RobotContainer::ConfigureBindings() {
 	ampM.WhileTrue(AmpCommand(&superStructure, &shooter).ToPtr());
 	ampM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	climbM.WhileTrue(ManualClimb(&chassis, &superStructure, &aprilTagCamera, &opertr));
+	climbM.WhileTrue(ManualClimb(&chassis, &superStructure, &aprilTagCamera, &storage, &shooter, &opertr));
 	climbM.OnFalse(
 		frc2::cmd::Parallel(
 			frc2::cmd::RunOnce([&] {
@@ -63,7 +63,7 @@ void RobotContainer::ConfigureBindings() {
 		)
 	);
 
-	climbV.WhileTrue(AutoClimb(&chassis, &superStructure, &opertr));
+	climbV.WhileTrue(AutoClimb(&chassis, &superStructure, &storage, &shooter, &opertr));
 	climbV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
 	shootM.WhileTrue(StorageCommand(&storage, StorageConstants::SpeakerScoreVolts).ToPtr());

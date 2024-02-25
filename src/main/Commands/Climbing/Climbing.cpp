@@ -1,4 +1,7 @@
 #include "Climbing.h"
+#include "main/Commands/StorageCommand/StorageCommand.h"
+#include "main/Commands/ShooterCommand/ShooterCommand.h"
+#include "main/Commands/ClosedCommand/ClosedCommand.h"
 #include <exception>
 
 pathplanner::PathConstraints pathfindingConstraints = pathplanner::PathConstraints(
@@ -11,9 +14,7 @@ SuperStructureState superStructureStartingState{ -15, -60 };
 SuperStructureState superStructureTargetState{ 85, -90 };
 SuperStructureMoveByDistance::Profile superStructureProfile {superStructureStartingState, superStructureTargetState, 1.25_m};
 
-SupportArmsState supportArmsStartingState{ 0 };
-SupportArmsState supportArmsTargetState{ 110 };
-SupportArmsMoveByDistance::Profile supportArmsProfile {supportArmsStartingState, supportArmsTargetState, 1_m};
+units::second_t storageTrapScoreWait = 1_s;
 
 frc2::CommandPtr GoToClimbingLocationPathFind(SuperStructure* superStructure, std::shared_ptr<pathplanner::PathPlannerPath> pathToFollow) {
 	return frc2::cmd::Sequence(
@@ -52,21 +53,21 @@ frc2::CommandPtr SetUpJoints(Chassis* chassis, SuperStructure* superStructure, s
 }
 
 
-frc2::CommandPtr ClimbAtLocation(SuperStructure* superStructure, frc::XboxController* controller) {
+frc2::CommandPtr ClimbAtLocation(SuperStructure* superStructure, Shooter* shooter, Storage* storage, frc::XboxController* controller) {
 	return frc2::cmd::Sequence(
-		frc2::cmd::RunOnce([=] {
-			superStructure->setLowerMotionMagicProfile(500, 1.0, 0.75);
-		}),
-		SuperStructureCommand(superStructure, { -30, 0 }).ToPtr(),
+		SuperStructureCommand(superStructure, SuperStructureConstants::GroundGrabState).ToPtr(),
 		WaitForButton(controller, checkpointButtonId),
-		frc2::cmd::RunOnce([=] {
-			superStructure->resetLowerMotionMagic();
-		}),
-		SuperStructureCommand(superStructure, { 80, -100 }).ToPtr()
+		SuperStructureCommand(superStructure, { 80, -100 }).ToPtr(),
+		WaitForButton(controller, checkpointButtonId),
+		ShooterCommand(shooter, ShooterConstants::IdleSpeed).ToPtr(),
+		StorageCommand(storage, 4_V).ToPtr(),
+		frc2::cmd::WaitUntil([=] { return !storage->isNoteOnForwardSensor();}),
+		frc2::cmd::Wait(storageTrapScoreWait),
+		SuperStructureCommand(superStructure, SuperStructureConstants::GroundGrabState).ToPtr()
 	);
 }
 
-frc2::CommandPtr AutoClimb(Chassis* chassis, SuperStructure* superStructure, frc::XboxController* controller) {
+frc2::CommandPtr AutoClimb(Chassis* chassis, SuperStructure* superStructure, Storage* storage, Shooter* shooter,  frc::XboxController* controller) {
 	static std::shared_ptr<pathplanner::PathPlannerPath> climbPathLeft = pathplanner::PathPlannerPath::fromPathFile("Climb Left");
 	static std::shared_ptr<pathplanner::PathPlannerPath> climbPathRight = pathplanner::PathPlannerPath::fromPathFile("Climb Right");
 	static std::shared_ptr<pathplanner::PathPlannerPath> climbPathBack = pathplanner::PathPlannerPath::fromPathFile("Climb Back");
@@ -77,26 +78,26 @@ frc2::CommandPtr AutoClimb(Chassis* chassis, SuperStructure* superStructure, frc
 			WaitForButton(controller, checkpointButtonId),
 			SetUpJoints(chassis, superStructure, climbPathLeft),
 			WaitForButton(controller, checkpointButtonId),
-			ClimbAtLocation(superStructure, controller)
+			ClimbAtLocation(superStructure, shooter, storage, controller)
 		) },
 		std::pair{ StageLocation::Right, frc2::cmd::Sequence(
 			GoToClimbingLocationPathFind(superStructure, climbPathRight),
 			WaitForButton(controller, checkpointButtonId),
 			SetUpJoints(chassis, superStructure, climbPathRight),
 			WaitForButton(controller, checkpointButtonId),
-			ClimbAtLocation(superStructure, controller)
+			ClimbAtLocation(superStructure, shooter, storage, controller)
 		) },
 		std::pair{ StageLocation::Back, frc2::cmd::Sequence(
 			GoToClimbingLocationPathFind(superStructure, climbPathBack),
 			WaitForButton(controller, checkpointButtonId),
 			SetUpJoints(chassis, superStructure, climbPathBack),
 			WaitForButton(controller, checkpointButtonId),
-			ClimbAtLocation(superStructure, controller)
+			ClimbAtLocation(superStructure, shooter, storage,controller)
 		) }
 	);
 };
 
-frc2::CommandPtr ManualClimb(Chassis* chassis, SuperStructure* superStructure, AprilTagCamera* aprilTagCamera, frc::XboxController* controller) {
+frc2::CommandPtr ManualClimb(Chassis* chassis, SuperStructure* superStructure, AprilTagCamera* aprilTagCamera, Storage* storage, Shooter* shooter, frc::XboxController* controller) {
 	static std::shared_ptr<pathplanner::PathPlannerPath> climbPathManual = pathplanner::PathPlannerPath::fromPathFile("Climb Manual");
 	climbPathManual->preventFlipping = true;
 
@@ -107,6 +108,6 @@ frc2::CommandPtr ManualClimb(Chassis* chassis, SuperStructure* superStructure, A
 		}),
 		SetUpJoints(chassis, superStructure, climbPathManual),
 		WaitForButton(controller, checkpointButtonId),
-		ClimbAtLocation(superStructure, controller)
+		ClimbAtLocation(superStructure, shooter, storage, controller)
 	);
 }

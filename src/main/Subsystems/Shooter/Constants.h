@@ -9,4 +9,5 @@ namespace ShooterConstants {
 	const static double ManualSpeakerSpeed = 100;
 
 	const static double MaxSpeed = 170;
+	const static double IdleSpeed = 50;
 };
