@@ -37,6 +37,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "VisionSpeakerCommand"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -53,12 +59,6 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "VisionSpeakerCommand"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
                         "name": "GroundGrabCommand"
                       }
                     }
@@ -66,6 +66,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "VisionSpeakerCommand"
           }
         },
         {
@@ -82,12 +88,6 @@
                 "type": "sequential",
                 "data": {
                   "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "VisionSpeakerCommand"
-                      }
-                    },
                     {
                       "type": "named",
                       "data": {
@@ -149,12 +149,6 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.2
           }
         },
         {

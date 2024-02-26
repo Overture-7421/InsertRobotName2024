@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.5247228667648325,
-        "y": 6.738829325819981
+        "x": 2.7194867201122306,
+        "y": 6.592756435809432
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.8193715712082534,
-        "y": 6.739671424436139
+        "x": 3.0141354245556515,
+        "y": 6.59359853442559
       },
       "isLocked": false,
       "linkedName": "Center3-4"
     },
     {
       "anchor": {
-        "x": 7.790112242136038,
-        "y": 7.424670370025476
+        "x": 7.7,
+        "y": 7.25
       },
       "prevControl": {
-        "x": 7.050009599415924,
-        "y": 7.171477360673859
+        "x": 6.877694989079185,
+        "y": 7.3328590785295455
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,14 +33,14 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 5.0,
-    "maxAcceleration": 6.0,
+    "maxAcceleration": 6.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
     "rotation": 0,
-    "rotateFast": false
+    "rotateFast": true
   },
   "reversed": false,
   "folder": "CenterAuto",
