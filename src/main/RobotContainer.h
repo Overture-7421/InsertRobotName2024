@@ -42,6 +42,7 @@
 
 #include "OvertureLib/Commands/Drive/Drive.h"
 #include "OvertureLib/Characterization/SysIDRoutineBot.h"
+#include "OvertureLib/Subsystems/LedsManager/LedsManager.h"
 
 class RobotContainer : public SysIDRoutineBot {
 public:
@@ -61,6 +62,8 @@ private:
 	Storage storage;
 	Shooter shooter;
 	Chassis chassis;
+
+	// LedsManager leds;
 
 	// Controllers
 	frc::XboxController driver{ 0 };
