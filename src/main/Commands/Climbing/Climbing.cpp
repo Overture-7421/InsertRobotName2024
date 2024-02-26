@@ -5,7 +5,7 @@
 #include <exception>
 
 pathplanner::PathConstraints pathfindingConstraints = pathplanner::PathConstraints(
-	2.0_mps, 3.0_mps_sq,
+	2.0_mps, 2.5_mps_sq,
 	560_deg_per_s, 720_deg_per_s_sq);
 
 int checkpointButtonId = frc::XboxController::Button::kBack;
@@ -21,9 +21,8 @@ frc2::CommandPtr GoToClimbingLocationPathFind(SuperStructure* superStructure, st
 			frc2::cmd::Deadline(
 				pathplanner::AutoBuilder::pathfindToPoseFlipped(pathToFollow->getStartingDifferentialPose(), pathfindingConstraints),
 				SuperStructureCommand(superStructure, superStructureStartingState).ToPtr()
-			),
-			frc2::cmd::Wait(0.5_s)
-		);
+			)
+	);
 }
 
 frc2::CommandPtr GoToClimbingLocationOnTheFly(std::shared_ptr<pathplanner::PathPlannerPath> pathToFollow) {
@@ -55,12 +54,12 @@ frc2::CommandPtr SetUpJoints(Chassis* chassis, SuperStructure* superStructure, s
 
 frc2::CommandPtr ClimbAtLocation(SuperStructure* superStructure, Shooter* shooter, Storage* storage, frc::XboxController* controller) {
 	return frc2::cmd::Sequence(
-		SuperStructureCommand(superStructure, SuperStructureConstants::GroundGrabState).ToPtr(),
+		SuperStructureCommand(superStructure, SuperStructureConstants::GroundGrabState).ToPtr().WithTimeout(1_s),
 		WaitForButton(controller, checkpointButtonId),
-		SuperStructureCommand(superStructure, { 80, -90 }).ToPtr(),
-		ShooterCommand(shooter, 30).ToPtr(),
+		SuperStructureCommand(superStructure, { 85, -80 }).ToPtr().WithTimeout(1_s),
+		frc2::cmd::RunOnce([=] { shooter->setIndividualVoltage(4.0, 2.0);}),
 		WaitForButton(controller, checkpointButtonId),
-		StorageCommand(storage, 3_V).ToPtr(),
+		StorageCommand(storage, 4_V).ToPtr(),
 		frc2::cmd::Wait(storageTrapScoreWait),
 		WaitForButton(controller, checkpointButtonId),
 		SuperStructureCommand(superStructure, SuperStructureConstants::GroundGrabState).ToPtr()

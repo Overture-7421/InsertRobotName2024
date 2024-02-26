@@ -24,6 +24,11 @@ void Shooter::setVelocityVoltage(double velocity) {
 	lowerShooterMotor.setVelocityVoltage(velocity, 0, false);
 }
 
+void Shooter::setIndividualVoltage(double upper, double lower) {
+	upperShooterMotor.SetVoltage(units::volt_t(upper));
+	lowerShooterMotor.SetVoltage(units::volt_t(lower));
+}
+
 double Shooter::getCurrentVelocity() {
 	return (getUpperMotorCurrentVelocity() + getLowerMotorCurrentVelocity()) / 2.0;
 }

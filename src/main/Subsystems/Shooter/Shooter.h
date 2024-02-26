@@ -16,8 +16,8 @@ class Shooter : public frc2::SubsystemBase {
 public:
 	Shooter();
 	void setVelocityVoltage(double velocity);
+	void setIndividualVoltage(double upper, double lower);
 	double getCurrentVelocity();
-	void setVoltage(units::volt_t voltage);
 	void Periodic() override;
 
 	frc2::CommandPtr sysIdQuasistatic(frc2::sysid::Direction direction) {
