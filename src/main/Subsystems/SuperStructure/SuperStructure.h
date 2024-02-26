@@ -55,7 +55,7 @@ public:
 
 	SuperStructureState getCurrentState();
 	void Periodic() override;
-
+	void shuffleboardPeriodic();
 
 private:
 	// double getLowerAngleThroughBore();
@@ -86,7 +86,8 @@ private:
 
 
 	// State
-	SuperStructureState targetState;
+	SuperStructureState targetState, actualTarget;
+	SuperStructureState currentState;
 
 	//Feed Forward
 	frc::ArmFeedforward lowerFF{ 0.25_V, 0.4_V, 30_V / 1_tps, 0.9068_V / 1_tr_per_s_sq };

@@ -12,8 +12,8 @@
 
 #include "Constants.h"
 
-class Chassis : public SwerveCharacterization {
-	// class Chassis : public SwerveChassis {
+// class Chassis : public SwerveCharacterization {
+class Chassis : public SwerveChassis {
 public:
 	Chassis();
 

@@ -19,6 +19,7 @@ public:
 	void setIndividualVoltage(double upper, double lower);
 	double getCurrentVelocity();
 	void Periodic() override;
+	void shuffleboardPeriodic();
 
 	frc2::CommandPtr sysIdQuasistatic(frc2::sysid::Direction direction) {
 		return sysIdRoutine.Quasistatic(direction);

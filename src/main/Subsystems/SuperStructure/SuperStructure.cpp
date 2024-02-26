@@ -121,8 +121,8 @@ double SuperStructure::convertAngleToFalconPos(double angle) {
 
 // This method will be called once per scheduler run
 void SuperStructure::Periodic() {
-	SuperStructureState currentState = getCurrentState();
-	SuperStructureState actualTarget = targetState;
+	currentState = getCurrentState();
+	actualTarget = targetState;
 
 	actualTarget.lowerAngle = std::clamp(actualTarget.lowerAngle, SuperStructureConstants::LowerAngleLowerLimit, SuperStructureConstants::LowerAngleUpperLimit);
 	actualTarget.upperAngle = std::clamp(actualTarget.upperAngle, SuperStructureConstants::UpperAngleLowerLimit, SuperStructureConstants::UpperAngleUpperLimit);
@@ -131,6 +131,16 @@ void SuperStructure::Periodic() {
 		actualTarget.upperAngle = SuperStructureConstants::UpperAngleSafetyLimit;
 	}
 
+	double voltageLowerOut = lowerPID.Calculate(units::degree_t(currentState.lowerAngle), units::degree_t(actualTarget.lowerAngle));
+	const auto lowerSetpoint = lowerPID.GetSetpoint();
+	lowerLeftMotor.SetVoltage(units::volt_t(voltageLowerOut) + lowerFF.Calculate(lowerSetpoint.position, lowerSetpoint.velocity));
+
+	double voltageUpperOut = upperPID.Calculate(units::degree_t(currentState.upperAngle), units::degree_t(actualTarget.upperAngle));
+	const auto upperSetpoint = upperPID.GetSetpoint();
+	upperMotor.SetVoltage(units::volt_t(voltageUpperOut) + upperFF.Calculate(lowerSetpoint.position + upperSetpoint.position + upperFFOffset, upperSetpoint.velocity));
+}
+
+void SuperStructure::shuffleboardPeriodic() {
 	frc::SmartDashboard::PutNumber("SuperStructure/Current/Lower", currentState.lowerAngle);
 	frc::SmartDashboard::PutNumber("SuperStructure/Current/Upper", currentState.upperAngle);
 
@@ -144,13 +154,6 @@ void SuperStructure::Periodic() {
 	// frc::SmartDashboard::PutNumber("SuperStructure/ActualTarget/Lower", actualTarget.lowerAngle);
 	//  frc::SmartDashboard::PutNumber("SuperStructure/ActualTarget/Upper", actualTarget.upperAngle);
 	
-	double voltageLowerOut = lowerPID.Calculate(units::degree_t(currentState.lowerAngle), units::degree_t(actualTarget.lowerAngle));
-	const auto lowerSetpoint = lowerPID.GetSetpoint();
-	lowerLeftMotor.SetVoltage(units::volt_t(voltageLowerOut) + lowerFF.Calculate(lowerSetpoint.position, lowerSetpoint.velocity));
-
-	double voltageUpperOut = upperPID.Calculate(units::degree_t(currentState.upperAngle), units::degree_t(actualTarget.upperAngle));
-	const auto upperSetpoint = upperPID.GetSetpoint();
-	upperMotor.SetVoltage(units::volt_t(voltageUpperOut) + upperFF.Calculate(lowerSetpoint.position + upperSetpoint.position + upperFFOffset, upperSetpoint.velocity));
 }
 
 void SuperStructure::setLowerMotionMagicProfile(double , double motionMagicSpeed, double motionMagicAccel){

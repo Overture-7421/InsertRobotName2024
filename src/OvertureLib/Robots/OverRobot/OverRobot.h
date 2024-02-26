@@ -13,7 +13,7 @@
 #ifdef __FRC_ROBORIO__
 class OverRobot : public frc::TimedRobot {
 public:
-    OverRobot(units::second_t period = RobotConstants::LoopTime) : frc::TimedRobot(period) {
+    OverRobot(units::second_t period = 20_ms) : frc::TimedRobot(period) {
 
     }
 };

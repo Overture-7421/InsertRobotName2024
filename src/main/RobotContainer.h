@@ -49,6 +49,8 @@ public:
 
 	frc2::Command* GetAutonomousCommand();
 	frc2::CommandPtr GetTeleopResetCommand();
+	void UpdateTelemetry();
+	
 private:
 	void ConfigureBindings();
 

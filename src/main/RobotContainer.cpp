@@ -99,3 +99,11 @@ frc2::CommandPtr RobotContainer::GetTeleopResetCommand() {
 	);
 	// return frc2::cmd::None();
 }
+
+
+void RobotContainer::UpdateTelemetry() {
+	superStructure.shuffleboardPeriodic();
+	chassis.shuffleboardPeriodic();
+	storage.shuffleboardPeriodic();
+	shooter.shuffleboardPeriodic();
+}

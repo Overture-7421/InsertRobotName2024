@@ -9,6 +9,10 @@
 void Robot::RobotInit() {
   m_teleopResetCommand = m_container.GetTeleopResetCommand();
 
+  AddPeriodic([&] {
+    frc2::CommandScheduler::GetInstance().Run();
+  }, RobotConstants::LoopTime, RobotConstants::TimingOffset);
+
 #ifndef __FRC_ROBORIO__
   simMotorManager->Init({
     {1, "Vantage7421/motors/SDS_Module_FL_rotation_joint"}, 
@@ -54,7 +58,7 @@ void Robot::RobotInit() {
 }
 
 void Robot::RobotPeriodic() {
-  frc2::CommandScheduler::GetInstance().Run();
+  m_container.UpdateTelemetry();
 }
 
 void Robot::DisabledInit() {
