@@ -14,12 +14,12 @@ void AprilTags::setCameraAndLayout(photon::PhotonCamera* camera, frc::AprilTagFi
 	m_TagLayout->SetOrigin(frc::AprilTagFieldLayout::OriginPosition::kBlueAllianceWallRightSide);
 
 	poseEstimatorSet = true;
-	poseEstimator = new photon::PhotonPoseEstimator{
+	poseEstimator = std::make_unique<photon::PhotonPoseEstimator> (
 		*m_TagLayout,
 		photon::PoseStrategy::MULTI_TAG_PNP_ON_COPROCESSOR,
 		std::move(photon::PhotonCamera{ APRILTAGS_CAMERA_NAME }),
 		*m_CameraToRobot
-	};
+	);
 }
 
 //Check if distance between robot and tag is less than a certain value ;)

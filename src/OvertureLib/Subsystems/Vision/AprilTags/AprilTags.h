@@ -40,7 +40,7 @@ private:
 	frc::AprilTagFieldLayout* m_TagLayout;
 	frc::Transform3d* m_CameraToRobot;
 
-	photon::PhotonPoseEstimator* poseEstimator;
+	std::unique_ptr<photon::PhotonPoseEstimator> poseEstimator;
 	bool poseEstimatorSet = false;
 
 protected:
