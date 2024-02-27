@@ -99,6 +99,6 @@ private:
 
 	bool headingOverride = false;
 
-	frc::ProfiledPIDController<units::radians> headingController{ 7.5, 0, 0.2, frc::TrapezoidProfile<units::radians>::Constraints{ 18_rad_per_s, 18_rad_per_s_sq * 6 }, RobotConstants::LoopTime };
+	frc::ProfiledPIDController<units::radians> headingController{ 11.0, 0.5, 0.2, frc::TrapezoidProfile<units::radians>::Constraints{ 18_rad_per_s, 18_rad_per_s_sq * 6 }, RobotConstants::LoopTime };
 	frc::Rotation2d headingTarget;
 };

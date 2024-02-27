@@ -31,6 +31,7 @@ SwerveModule::SwerveModule(int rotatorID, int wheelID, int canCoderID, double of
 	m_driveMotor->setSupplyCurrentLimit(true, 40, 60, 0.1);
 
 	m_turningMotor->setPositionUpdateFrequency(200_Hz);
+	m_canCoder->GetPosition().SetUpdateFrequency(200_Hz);
 	m_driveMotor->setVelocityUpdateFrequency(200_Hz);
 
 	setFFConstants(0_V, 0_V, 0_V);
@@ -121,7 +122,7 @@ double SwerveModule::getDistance() {
  * @return Ángulo del módulo
  */
 double SwerveModule::getAngle() {
-	return m_turningMotor->getPosition() * 360;
+	return m_canCoder->getSensorAbsolutePosition() * 360;
 }
 
 /**

@@ -14,7 +14,7 @@
 #include "RobotContainer.h"
 
 
-class Robot : public OverRobot {
+class Robot : public frc::TimedRobot {
 public:
 	void RobotInit() override;
 	void RobotPeriodic() override;

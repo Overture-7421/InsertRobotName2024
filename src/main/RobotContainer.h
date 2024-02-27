@@ -63,7 +63,9 @@ private:
 	Shooter shooter;
 	Chassis chassis;
 
-	// LedsManager leds;
+	LedsManager leds {0, 200, {
+		{"all", {0, 199}}
+	}};
 
 	// Controllers
 	frc::XboxController driver{ 0 };
@@ -87,6 +89,9 @@ private:
 	frc2::Trigger trapV{ [this] {return opertr.GetAButton();} };
 	frc2::Trigger closed{ [this] {return opertr.GetPOV() == 0;} };
 	frc2::Trigger intakeM{ [this] {return opertr.GetRightTriggerAxis() > 0.1;} };
+
+	// LED Triggers
+	frc2::Trigger noteOnStorage { [this] {return storage.isNoteOnForwardSensor();}};
 
 	//Autonomous
 	frc2::CommandPtr defaultNoneAuto = frc2::cmd::None();

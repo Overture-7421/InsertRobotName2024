@@ -45,9 +45,6 @@ SuperStructure::SuperStructure() {
 
 	// upperMotor.configureSoftwareLimitSwitch(upperMotorSoftLimitConfig);
 
-	lowerLeftMotor.setContinuousWrap();
-	upperMotor.setContinuousWrap();
-
 	setTargetCoord({ getLowerAngle(), getUpperAngle() });
 
 	// Configure Motion Magic and PID

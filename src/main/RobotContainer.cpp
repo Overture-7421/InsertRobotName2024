@@ -5,7 +5,8 @@
 #include "RobotContainer.h"
 
 #include <frc2/command/Commands.h>
-#include <iostream>
+#include "OvertureLib/Subsystems/LedsManager/Effects/BlinkEffect/BlinkEffect.h"
+#include "OvertureLib/Subsystems/LedsManager/Effects/StaticEffect/StaticEffect.h"
 
 RobotContainer::RobotContainer() {
 	pathplanner::NamedCommands::registerCommand("GroundGrabCommand", GroundGrabCommand(&superStructure, &storage, &intake).WithTimeout(3_s));
@@ -34,12 +35,19 @@ RobotContainer::RobotContainer() {
 }
 
 void RobotContainer::ConfigureBindings() {
+	noteOnStorage.WhileTrue(frc2::cmd::Sequence(
+		BlinkEffect(&leds, "all", {0, 255, 0}, 0.25_s, true).ToPtr().WithTimeout(0.5_s),
+		StaticEffect(&leds, "all", {0, 255, 0}, true).ToPtr()
+	));
+
+	leds.SetDefaultCommand(BlinkEffect(&leds, "all", {255, 0, 255}, 1_s, true));
+
 	chassis.SetDefaultCommand(Drive(&chassis, &driver));
 	// shooter.SetDefaultCommand(ShooterDefaultCommand(&chassis, &shooter));
 
 	// tabulate.ToggleOnTrue(TabulateCommand(&chassis, &superStructure, &shooter).ToPtr());
-	tabulate.OnTrue(SuperStructureCommand(&superStructure, { 0, -90 }).ToPtr());
-	tabulate.OnFalse(SuperStructureCommand(&superStructure, { 0, 0 }).ToPtr());
+	// tabulate.OnTrue(SuperStructureCommand(&superStructure, { 0, -90 }).ToPtr());
+	// tabulate.OnFalse(SuperStructureCommand(&superStructure, { 0, 0 }).ToPtr());
 
 	zeroHeading.OnTrue(ResetAngle(&chassis).ToPtr());
 

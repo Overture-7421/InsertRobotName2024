@@ -35,8 +35,9 @@ SwerveChassis::SwerveChassis() {
 	);
 
 	frc::SmartDashboard::PutData("Chassis/Odometry", &field2d);
-	// frc::SmartDashboard::PutData("Chassis/HeadingController", &headingController);
-
+	frc::SmartDashboard::PutData("Chassis/HeadingController", &headingController);
+	
+	headingController.SetIZone(3);
 	headingController.EnableContinuousInput(-1.0 * units::radian_t(M_PI), units::radian_t(M_PI));
 	pathplanner::PPHolonomicDriveController::setRotationTargetOverride([this]() { return getRotationTargetOverride(); });
 }
