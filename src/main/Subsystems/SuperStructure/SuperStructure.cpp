@@ -60,9 +60,9 @@ SuperStructure::SuperStructure() {
 	// upperMotor.configureMotionMagic(1.0, 6.0, 0.0);
 
 	frc::SmartDashboard::PutData("SuperStructure/LowerPID", &lowerPID);
-	// frc::SmartDashboard::PutData("SuperStructure/UpperPID", &upperPID);
+	frc::SmartDashboard::PutData("SuperStructure/UpperPID", &upperPID);
 
-	// upperPID.SetIZone(3);
+	upperPID.SetIZone(3);
 	lowerPID.SetIZone(3);
 }
 
@@ -134,23 +134,18 @@ void SuperStructure::Periodic() {
 	
 	double voltageLowerOut = lowerPID.Calculate(units::degree_t(currentState.lowerAngle), units::degree_t(actualTarget.lowerAngle));
 	const auto lowerSetpoint = lowerPID.GetSetpoint();
-
 	lowerLeftMotor.SetVoltage(units::volt_t(voltageLowerOut) + lowerFF.Calculate(lowerSetpoint.position, lowerSetpoint.velocity));
-
-
-	upperArmObserver.Correct(frc::Vectord<1>{upperMotor.GetMotorVoltage().GetValueAsDouble()}, frc::Vectord<1>{currentState.upperAngle * M_PI / 180.0});
+	
 	double voltageUpperOut = upperPID.Calculate(units::degree_t(currentState.upperAngle), units::degree_t(actualTarget.upperAngle));
 	const auto upperSetpoint = upperPID.GetSetpoint();
 	voltageUpperOut += upperFF.Calculate(lowerSetpoint.position + upperSetpoint.position + upperFFOffset, upperSetpoint.velocity).value();
 
-	upperArmObserver.Predict(frc::Vectord<1>{voltageUpperOut}, RobotConstants::LoopTime);
 	upperMotor.SetVoltage(units::volt_t(voltageUpperOut));
 }
 
 void SuperStructure::shuffleboardPeriodic() {
 	frc::SmartDashboard::PutNumber("SuperStructure/Current/Lower", currentState.lowerAngle);
 	frc::SmartDashboard::PutNumber("SuperStructure/Current/Upper", currentState.upperAngle);
-	frc::SmartDashboard::PutNumber("SuperStructure/Current/PredictedUpper", upperArmObserver.Xhat(0)  * 180.0 / M_PI);
 
 	frc::SmartDashboard::PutNumber("SuperStructure/Current/RawLower", lowerEncoder.GetAbsolutePosition());
 	frc::SmartDashboard::PutNumber("SuperStructure/Current/RawUpper", upperEncoder.GetAbsolutePosition());
