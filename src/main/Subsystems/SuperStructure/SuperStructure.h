@@ -7,6 +7,7 @@
 #include <frc2/command/SubsystemBase.h>
 #include <frc/controller/ArmFeedforward.h>
 #include <frc/controller/ProfiledPIDController.h>
+#include <frc/trajectory/TrapezoidProfile.h>
 
 #include <OvertureLib/MotorControllers/OverTalonFX/OverTalonFX.h>
 #include <OvertureLib/MotorControllers/ControllerNeutralMode/ControllerNeutralMode.h>
@@ -16,6 +17,12 @@
 #include <units/angular_velocity.h>
 #include <units/angular_acceleration.h>
 #include <units/angle.h>
+
+#include <numbers>
+#include <frc/estimator/KalmanFilter.h>
+#include <frc/controller/LinearQuadraticRegulator.h>
+#include <frc/system/LinearSystemLoop.h>
+#include <frc/system/plant/LinearSystemId.h>
 
 #include "Constants.h"
 #include "SuperStructureState.h"
@@ -59,7 +66,7 @@ public:
 
 private:
 	// double getLowerAngleThroughBore();
-	// double getUpperAngleThroughBore();
+	double getUpperAngleFalcon();
 
 	void setFalconTargetPos(SuperStructureState targetState, SuperStructureState currentState);
 	double convertAngleToFalconPos(double angle);
@@ -84,7 +91,6 @@ private:
 	// Upper Motors
 	OverTalonFX upperMotor{ 22, ControllerNeutralMode::Brake, true, "rio" };
 
-
 	// State
 	SuperStructureState targetState, actualTarget;
 	SuperStructureState currentState;
@@ -93,11 +99,15 @@ private:
 	frc::ArmFeedforward lowerFF{ 0.25_V, 0.4_V, 30_V / 1_tps, 0.9068_V / 1_tr_per_s_sq };
 	frc::ArmFeedforward upperFF{ 0.6_V, 0.25_V, 7.5_V / 1_tps, 0.97016_V / 1_tr_per_s_sq };
 
+	//Estimators
+	frc::LinearSystem<2, 1, 1> upperArmPlant = frc::LinearSystemId::IdentifyPositionSystem<units::radian>(upperFF.kV, upperFF.kA);
+	frc::KalmanFilter<2, 1, 1> upperArmObserver {upperArmPlant, {3.0, 3.0}, {0.01}, RobotConstants::LoopTime};
+	// frc::LinearQuadraticRegulator<2, 1> upperArmController { upperArmPlant, {0.1, 8.0}, {12.0}, RobotConstants::LoopTime};
+	// frc::LinearSystemLoop<2, 1, 1> upperArmLoop{upperArmPlant, upperArmController, upperArmObserver, 12_V, RobotConstants::LoopTime};
 
 	frc::ProfiledPIDController<units::degrees> lowerPID{ 0.35, 0.2, 0.0, {360_deg_per_s * 4.0, 360_deg_per_s_sq * 1.25}, RobotConstants::LoopTime };
 	frc::ProfiledPIDController<units::degrees> upperPID{ 0.35, 0.2, 0.01, {360_deg_per_s * 5.0, 360_deg_per_s_sq * 1.25}, RobotConstants::LoopTime };
-
-
+	
 	units::turn_t upperFFOffset = 0.25_tr;
 
 	double oldP = 0;

@@ -26,6 +26,7 @@ SuperStructure::SuperStructure() {
 	lowerLeftMotor.setSensorPosition(convertAngleToFalconPos(getLowerAngle()));
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 	upperMotor.setSensorPosition(convertAngleToFalconPos(getUpperAngle()));
+	upperMotor.GetPosition().SetUpdateFrequency(200_Hz);
 
 	// SoftwareLimitSwitchConfigs lowerMotorSoftLimitConfig;
 	// lowerMotorSoftLimitConfig.ForwardSoftLimitEnable = true;
@@ -59,9 +60,9 @@ SuperStructure::SuperStructure() {
 	// upperMotor.configureMotionMagic(1.0, 6.0, 0.0);
 
 	frc::SmartDashboard::PutData("SuperStructure/LowerPID", &lowerPID);
-	frc::SmartDashboard::PutData("SuperStructure/UpperPID", &upperPID);
+	// frc::SmartDashboard::PutData("SuperStructure/UpperPID", &upperPID);
 
-	upperPID.SetIZone(3);
+	// upperPID.SetIZone(3);
 	lowerPID.SetIZone(3);
 }
 
@@ -89,6 +90,12 @@ double SuperStructure::getLowerAngle(){
 
 double SuperStructure::getUpperAngle(){
 	double rawUpperEncoder = upperEncoder.GetAbsolutePosition() + upperOffset; // Goes from 0 to 1
+	double degrees = rawUpperEncoder * 360.0;
+	return -frc::InputModulus(degrees, -180.0, 180.0);
+}
+
+double SuperStructure::getUpperAngleFalcon() {
+	double rawUpperEncoder = upperMotor.GetPosition().GetValueAsDouble(); // Goes from 0 to 1
 	double degrees = rawUpperEncoder * 360.0;
 	return -frc::InputModulus(degrees, -180.0, 180.0);
 }
@@ -124,19 +131,26 @@ void SuperStructure::Periodic() {
 	if (currentState.lowerAngle < SuperStructureConstants::LowerAngleSafetyThreshold && actualTarget.upperAngle < SuperStructureConstants::UpperAngleSafetyLimit){
 		actualTarget.upperAngle = SuperStructureConstants::UpperAngleSafetyLimit;
 	}
-
+	
 	double voltageLowerOut = lowerPID.Calculate(units::degree_t(currentState.lowerAngle), units::degree_t(actualTarget.lowerAngle));
 	const auto lowerSetpoint = lowerPID.GetSetpoint();
+
 	lowerLeftMotor.SetVoltage(units::volt_t(voltageLowerOut) + lowerFF.Calculate(lowerSetpoint.position, lowerSetpoint.velocity));
 
+
+	upperArmObserver.Correct(frc::Vectord<1>{upperMotor.GetMotorVoltage().GetValueAsDouble()}, frc::Vectord<1>{currentState.upperAngle * M_PI / 180.0});
 	double voltageUpperOut = upperPID.Calculate(units::degree_t(currentState.upperAngle), units::degree_t(actualTarget.upperAngle));
 	const auto upperSetpoint = upperPID.GetSetpoint();
-	upperMotor.SetVoltage(units::volt_t(voltageUpperOut) + upperFF.Calculate(lowerSetpoint.position + upperSetpoint.position + upperFFOffset, upperSetpoint.velocity));
+	voltageUpperOut += upperFF.Calculate(lowerSetpoint.position + upperSetpoint.position + upperFFOffset, upperSetpoint.velocity).value();
+
+	upperArmObserver.Predict(frc::Vectord<1>{voltageUpperOut}, RobotConstants::LoopTime);
+	upperMotor.SetVoltage(units::volt_t(voltageUpperOut));
 }
 
 void SuperStructure::shuffleboardPeriodic() {
 	frc::SmartDashboard::PutNumber("SuperStructure/Current/Lower", currentState.lowerAngle);
 	frc::SmartDashboard::PutNumber("SuperStructure/Current/Upper", currentState.upperAngle);
+	frc::SmartDashboard::PutNumber("SuperStructure/Current/PredictedUpper", upperArmObserver.Xhat(0)  * 180.0 / M_PI);
 
 	frc::SmartDashboard::PutNumber("SuperStructure/Current/RawLower", lowerEncoder.GetAbsolutePosition());
 	frc::SmartDashboard::PutNumber("SuperStructure/Current/RawUpper", upperEncoder.GetAbsolutePosition());

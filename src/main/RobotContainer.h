@@ -63,8 +63,8 @@ private:
 	Shooter shooter;
 	Chassis chassis;
 
-	LedsManager leds {0, 200, {
-		{"all", {0, 199}}
+	LedsManager leds {0, 240, {
+		{"all", {0, 239}}
 	}};
 
 	// Controllers
