@@ -79,7 +79,7 @@ protected:
 
 	std::unique_ptr<frc::SwerveDriveKinematics<4>> kinematics;
 
-	std::unique_ptr<std::array<frc::SwerveModulePosition, 4>> odometryPos;
+	std::array<frc::SwerveModulePosition, 4> odometryPos;
 
 	std::unique_ptr<frc::SwerveDrivePoseEstimator<4>> odometry;
 	frc::Pose2d latestPose;

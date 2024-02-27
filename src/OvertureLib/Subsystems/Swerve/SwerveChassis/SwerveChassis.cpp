@@ -114,17 +114,15 @@ void SwerveChassis::setModules(SwerveModule* frontLeft, SwerveModule* frontRight
 
 	pigeon->SetYaw(0_deg);
 
-	odometryPos = std::make_unique<std::array<frc::SwerveModulePosition, 4>>(
-		frontLeftModule->getPosition(),
+	odometryPos = {frontLeftModule->getPosition(),
 			frontRightModule->getPosition(),
 			backLeftModule->getPosition(),
-			backRightModule->getPosition()
-	);
+			backRightModule->getPosition()};
 
 	odometry = std::make_unique<frc::SwerveDrivePoseEstimator<4>>(
 		*kinematics,
 			frc::Rotation2d{},
-			*odometryPos,
+			odometryPos,
 			frc::Pose2d{}
 	);
 
