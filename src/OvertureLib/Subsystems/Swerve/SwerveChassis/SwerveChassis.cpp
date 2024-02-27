@@ -76,7 +76,7 @@ void SwerveChassis::setHeadingOverride(bool headingOverride) {
  * @param positions The positions of the modules relative to the center of the robot.
  */
 void SwerveChassis::setModulePositions(std::array<frc::Translation2d, 4>* positions) {
-	kinematics = new frc::SwerveDriveKinematics<4>{ *positions };
+	kinematics = std::make_unique<frc::SwerveDriveKinematics<4>>(*positions);
 };
 
 /**
@@ -114,19 +114,19 @@ void SwerveChassis::setModules(SwerveModule* frontLeft, SwerveModule* frontRight
 
 	pigeon->SetYaw(0_deg);
 
-	odometryPos = new std::array<frc::SwerveModulePosition, 4>{
+	odometryPos = std::make_unique<std::array<frc::SwerveModulePosition, 4>>(
 		frontLeftModule->getPosition(),
 			frontRightModule->getPosition(),
 			backLeftModule->getPosition(),
 			backRightModule->getPosition()
-	};
+	);
 
-	odometry = new frc::SwerveDrivePoseEstimator<4>{
+	odometry = std::make_unique<frc::SwerveDrivePoseEstimator<4>>(
 		*kinematics,
 			frc::Rotation2d{},
 			*odometryPos,
 			frc::Pose2d{}
-	};
+	);
 
 }
 

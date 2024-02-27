@@ -77,11 +77,11 @@ protected:
 	SwerveModule* backLeftModule;
 	SwerveModule* backRightModule;
 
-	frc::SwerveDriveKinematics<4>* kinematics;
+	std::unique_ptr<frc::SwerveDriveKinematics<4>> kinematics;
 
-	std::array<frc::SwerveModulePosition, 4>* odometryPos;
+	std::unique_ptr<std::array<frc::SwerveModulePosition, 4>> odometryPos;
 
-	frc::SwerveDrivePoseEstimator<4>* odometry;
+	std::unique_ptr<frc::SwerveDrivePoseEstimator<4>> odometry;
 	frc::Pose2d latestPose;
 
 	frc::ChassisSpeeds desiredSpeeds;
