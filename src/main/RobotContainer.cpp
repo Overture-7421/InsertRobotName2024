@@ -36,11 +36,11 @@ RobotContainer::RobotContainer() {
 
 void RobotContainer::ConfigureBindings() {
 	noteOnStorage.WhileTrue(frc2::cmd::Sequence(
-		BlinkEffect(&leds, "all", {0, 255, 0}, 0.25_s, true).ToPtr().WithTimeout(0.5_s),
-		StaticEffect(&leds, "all", {0, 255, 0}, true).ToPtr()
+		BlinkEffect(&leds, "all", {0, 255, 0}, 0.25_s).ToPtr().WithTimeout(0.5_s),
+		StaticEffect(&leds, "all", {0, 255, 0}).ToPtr()
 	));
 
-	leds.SetDefaultCommand(BlinkEffect(&leds, "all", {255, 0, 255}, 1_s, true));
+	leds.SetDefaultCommand(BlinkEffect(&leds, "all", {255, 0, 255}, 1_s));
 
 	chassis.SetDefaultCommand(Drive(&chassis, &driver));
 	// shooter.SetDefaultCommand(ShooterDefaultCommand(&chassis, &shooter));

@@ -18,7 +18,7 @@
 class StaticEffect
     : public frc2::CommandHelper<frc2::Command, StaticEffect> {
  public:
-  StaticEffect(LedsManager* leds, LedStripName name, frc::Color8Bit color, bool addRequirement = false);
+  StaticEffect(LedsManager* leds, LedStripName name, frc::Color8Bit color, bool addRequirement = true);
 
   void Initialize() override;
 
