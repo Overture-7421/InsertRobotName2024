@@ -40,11 +40,11 @@ public:
 
 private:
 	//Declaration of motor controllers
-	OverTalonFX* m_driveMotor;
-	OverTalonFX* m_turningMotor;
+	std::unique_ptr<OverTalonFX> m_driveMotor;
+	std::unique_ptr<OverTalonFX> m_turningMotor;
 
 	//Declaration of sensors
-	OverCANCoder* m_canCoder;
+	std::unique_ptr<OverCANCoder> m_canCoder;
 
 	//FeedForward
 	std::shared_ptr<frc::SimpleMotorFeedforward<units::meters>> m_feedForward;

@@ -15,9 +15,9 @@
  * @param canBus     - Can Bus of the module
  */
 SwerveModule::SwerveModule(int rotatorID, int wheelID, int canCoderID, double offset, std::string moduleName, std::string canBus) : m_name(moduleName) {
-	m_driveMotor = new OverTalonFX(wheelID, ControllerNeutralMode::Brake, false, canBus);
-	m_turningMotor = new OverTalonFX(rotatorID, ControllerNeutralMode::Coast, true, canBus);
-	m_canCoder = new OverCANCoder(canCoderID, offset, canBus);
+	m_driveMotor = std::make_unique<OverTalonFX>(wheelID, ControllerNeutralMode::Brake, false, canBus);
+	m_turningMotor = std::make_unique<OverTalonFX>(rotatorID, ControllerNeutralMode::Coast, true, canBus);
+	m_canCoder = std::make_unique<OverCANCoder>(canCoderID, offset, canBus);
 	m_turningMotor->setContinuousWrap();
 	m_turningMotor->setFusedCANCoder(canCoderID);
 	m_turningMotor->setClosedLoopVoltageRamp(0.1);
