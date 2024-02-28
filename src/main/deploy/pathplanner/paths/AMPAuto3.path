@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.861889106933612,
-        "y": 6.271396077786225
+        "x": 4.248382968889307,
+        "y": 6.329825233790444
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.342094392373839,
-        "y": 6.651185591813652
+        "x": 6.439476319047538,
+        "y": 6.75830571115472
       },
       "isLocked": false,
       "linkedName": "AMP 2-3"
@@ -33,7 +33,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.0,
-    "maxAcceleration": 4.5,
+    "maxAcceleration": 6.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
