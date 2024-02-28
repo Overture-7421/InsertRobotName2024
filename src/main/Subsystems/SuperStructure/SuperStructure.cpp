@@ -26,7 +26,7 @@ SuperStructure::SuperStructure() {
 	lowerLeftMotor.setSensorPosition(convertAngleToFalconPos(getLowerAngle()));
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 	upperMotor.setSensorPosition(convertAngleToFalconPos(getUpperAngle()));
-	upperMotor.GetPosition().SetUpdateFrequency(200_Hz);
+	// upperMotor.GetPosition().SetUpdateFrequency(200_Hz);
 
 	// SoftwareLimitSwitchConfigs lowerMotorSoftLimitConfig;
 	// lowerMotorSoftLimitConfig.ForwardSoftLimitEnable = true;
@@ -36,7 +36,7 @@ SuperStructure::SuperStructure() {
 	// lowerMotorSoftLimitConfig.ReverseSoftLimitThreshold = convertAngleToFalconPos(SuperStructureConstants::LowerAngleLowerLimit);
 
 	// lowerLeftMotor.configureSoftwareLimitSwitch(lowerMotorSoftLimitConfig);
-	
+
 	// SoftwareLimitSwitchConfigs upperMotorSoftLimitConfig;
 	// upperMotorSoftLimitConfig.ForwardSoftLimitEnable = true;
 	// upperMotorSoftLimitConfig.ForwardSoftLimitThreshold = convertAngleToFalconPos(SuperStructureConstants::UpperAngleUpperLimit);
@@ -82,13 +82,13 @@ void SuperStructure::setTargetCoord(SuperStructureState targetState) {
 // 	return frc::InputModulus(degrees, -180.0, 180.0);
 // }
 
-double SuperStructure::getLowerAngle(){
+double SuperStructure::getLowerAngle() {
 	double rawLowerEncoder = lowerEncoder.GetAbsolutePosition() + lowerOffset; // Goes from 0 to 1
 	double degrees = rawLowerEncoder * 360.0;
 	return frc::InputModulus(degrees, -180.0, 180.0);
 }
 
-double SuperStructure::getUpperAngle(){
+double SuperStructure::getUpperAngle() {
 	double rawUpperEncoder = upperEncoder.GetAbsolutePosition() + upperOffset; // Goes from 0 to 1
 	double degrees = rawUpperEncoder * 360.0;
 	return -frc::InputModulus(degrees, -180.0, 180.0);
@@ -128,14 +128,14 @@ void SuperStructure::Periodic() {
 	actualTarget.lowerAngle = std::clamp(actualTarget.lowerAngle, SuperStructureConstants::LowerAngleLowerLimit, SuperStructureConstants::LowerAngleUpperLimit);
 	actualTarget.upperAngle = std::clamp(actualTarget.upperAngle, SuperStructureConstants::UpperAngleLowerLimit, SuperStructureConstants::UpperAngleUpperLimit);
 
-	if (currentState.lowerAngle < SuperStructureConstants::LowerAngleSafetyThreshold && actualTarget.upperAngle < SuperStructureConstants::UpperAngleSafetyLimit){
+	if (currentState.lowerAngle < SuperStructureConstants::LowerAngleSafetyThreshold && actualTarget.upperAngle < SuperStructureConstants::UpperAngleSafetyLimit) {
 		actualTarget.upperAngle = SuperStructureConstants::UpperAngleSafetyLimit;
 	}
-	
+
 	double voltageLowerOut = lowerPID.Calculate(units::degree_t(currentState.lowerAngle), units::degree_t(actualTarget.lowerAngle));
 	const auto lowerSetpoint = lowerPID.GetSetpoint();
 	lowerLeftMotor.SetVoltage(units::volt_t(voltageLowerOut) + lowerFF.Calculate(lowerSetpoint.position, lowerSetpoint.velocity));
-	
+
 	double voltageUpperOut = upperPID.Calculate(units::degree_t(currentState.upperAngle), units::degree_t(actualTarget.upperAngle));
 	const auto upperSetpoint = upperPID.GetSetpoint();
 	voltageUpperOut += upperFF.Calculate(lowerSetpoint.position + upperSetpoint.position + upperFFOffset, upperSetpoint.velocity).value();
@@ -156,10 +156,10 @@ void SuperStructure::shuffleboardPeriodic() {
 
 	// frc::SmartDashboard::PutNumber("SuperStructure/ActualTarget/Lower", actualTarget.lowerAngle);
 	//  frc::SmartDashboard::PutNumber("SuperStructure/ActualTarget/Upper", actualTarget.upperAngle);
-	
+
 }
 
-void SuperStructure::setLowerMotionMagicProfile(double , double motionMagicSpeed, double motionMagicAccel){
+void SuperStructure::setLowerMotionMagicProfile(double, double motionMagicSpeed, double motionMagicAccel) {
 	// lowerLeftMotor.setPIDValues(p, 0.0, 0.0, 0.0, 0.0);
 	// lowerLeftMotor.configureMotionMagic(motionMagicSpeed, motionMagicAccel, 0.0);
 
@@ -167,7 +167,7 @@ void SuperStructure::setLowerMotionMagicProfile(double , double motionMagicSpeed
 	// lowerRightMotor.setSupplyCurrentLimit(true, 50, 60, 0.5);
 }
 
-void SuperStructure::resetLowerMotionMagic(){
+void SuperStructure::resetLowerMotionMagic() {
 	// lowerLeftMotor.setPIDValues(oldP, 0.0, 0.0, 0.0, 0.0);
 	// lowerLeftMotor.configureMotionMagic(oldSpeed, oldAccel, 0.0);
 
