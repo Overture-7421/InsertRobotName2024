@@ -44,7 +44,7 @@ frc2::CommandPtr SetUpJoints(Chassis* chassis, SuperStructure* superStructure, S
 	};
 
 	return frc2::cmd::Sequence(
-		FreeSupportArms(supportArms, -20.00).ToPtr(),
+		FreeSupportArms(supportArms, 100.00).ToPtr(),
 		SuperStructureCommand(superStructure, superStructureStartingState).ToPtr(),
 		frc2::cmd::Deadline(
 			pathplanner::AutoBuilder::followPath(pathToFollow),
@@ -59,11 +59,11 @@ frc2::CommandPtr ClimbAtLocation(SuperStructure* superStructure, Shooter* shoote
 		SuperStructureCommand(superStructure, SuperStructureConstants::GroundGrabState).ToPtr().WithTimeout(1_s),
 		WaitForButton(controller, checkpointButtonId),
 		SuperStructureCommand(superStructure, { 85, -80 }).ToPtr().WithTimeout(1_s),
-		frc2::cmd::RunOnce([=] { shooter->setIndividualVoltage(4.0, 2.0);}),
+		frc2::cmd::RunOnce([=] { shooter->setIndividualVoltage(2.0, 4.0);}),
 		WaitForButton(controller, checkpointButtonId),
-		StorageCommand(storage, 4_V).ToPtr(),
+		StorageCommand(storage, 2_V).ToPtr(),
 		frc2::cmd::WaitUntil([=] {return !storage->isNoteOnForwardSensor();}),
-		frc2::cmd::RunOnce([=] { shooter->setIndividualVoltage(4.0, 0.0);}),
+		frc2::cmd::RunOnce([=] { shooter->setIndividualVoltage(0.0, 4.0);}),
 		WaitForButton(controller, checkpointButtonId),
 		SuperStructureCommand(superStructure, SuperStructureConstants::GroundGrabState).ToPtr()
 	);

@@ -7,6 +7,7 @@
 #include <frc2/command/Commands.h>
 #include "OvertureLib/Subsystems/LedsManager/Effects/BlinkEffect/BlinkEffect.h"
 #include "OvertureLib/Subsystems/LedsManager/Effects/StaticEffect/StaticEffect.h"
+#include "main/Commands/ServoDashboard/ServoDashboard.h"
 
 RobotContainer::RobotContainer() {
 
@@ -48,12 +49,14 @@ void RobotContainer::ConfigureBindings() {
 
 	chassis.SetDefaultCommand(Drive(&chassis, &driver));
 
-	supportArms.SetDefaultCommand(FreeSupportArms(&supportArms, -10.00).Repeatedly());
+	supportArms.SetDefaultCommand(FreeSupportArms(&supportArms, 50.00).Repeatedly());
 	// shooter.SetDefaultCommand(ShooterDefaultCommand(&chassis, &shooter));
 
 	// tabulate.ToggleOnTrue(TabulateCommand(&chassis, &superStructure, &shooter).ToPtr());
 	// tabulate.OnTrue(SuperStructureCommand(&superStructure, { 0, -90 }).ToPtr());
 	// tabulate.OnFalse(SuperStructureCommand(&superStructure, { 0, 0 }).ToPtr());
+
+	// tabulate.ToggleOnTrue(ServoDashboard(&supportArms).ToPtr());
 
 	zeroHeading.OnTrue(ResetAngle(&chassis).ToPtr());
 
