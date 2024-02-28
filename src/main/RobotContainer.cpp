@@ -9,9 +9,13 @@
 #include "OvertureLib/Subsystems/LedsManager/Effects/StaticEffect/StaticEffect.h"
 
 RobotContainer::RobotContainer() {
+
 	pathplanner::NamedCommands::registerCommand("GroundGrabCommand", GroundGrabCommand(&superStructure, &storage, &intake).WithTimeout(3_s));
 	pathplanner::NamedCommands::registerCommand("ClosedCommand", std::move(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr()));
-	pathplanner::NamedCommands::registerCommand("VisionSpeakerCommand", std::move(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &storage)).ToPtr());
+	pathplanner::NamedCommands::registerCommand("VisionSpeakerCommand", std::move(frc2::cmd::Sequence(
+		VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter).ToPtr().WithTimeout(0.1_s),
+		VisionSpeakerCommand(&chassis, &superStructure, &shooter, &storage).ToPtr()
+	)));
 	pathplanner::NamedCommands::registerCommand("VisionAmpCommand", std::move(VisionAmpCommand(&superStructure, &shooter, &storage)));
 	pathplanner::NamedCommands::registerCommand("StorageCommand", std::move(StorageCommand(&storage, 3_V).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("ShooterCommand", std::move(ShooterCommand(&shooter, 4.00).ToPtr()));
@@ -36,11 +40,11 @@ RobotContainer::RobotContainer() {
 
 void RobotContainer::ConfigureBindings() {
 	noteOnStorage.WhileTrue(frc2::cmd::Sequence(
-		BlinkEffect(&leds, "all", {0, 255, 0}, 0.25_s).ToPtr().WithTimeout(0.5_s),
-		StaticEffect(&leds, "all", {0, 255, 0}).ToPtr()
+		BlinkEffect(&leds, "all", { 0, 255, 0 }, 0.25_s).ToPtr().WithTimeout(0.5_s),
+		StaticEffect(&leds, "all", { 0, 255, 0 }).ToPtr()
 	));
 
-	leds.SetDefaultCommand(BlinkEffect(&leds, "all", {255, 0, 255}, 1_s));
+	leds.SetDefaultCommand(BlinkEffect(&leds, "all", { 255, 0, 255 }, 1_s));
 
 	chassis.SetDefaultCommand(Drive(&chassis, &driver));
 	// shooter.SetDefaultCommand(ShooterDefaultCommand(&chassis, &shooter));

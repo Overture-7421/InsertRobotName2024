@@ -36,7 +36,7 @@ SwerveChassis::SwerveChassis() {
 
 	frc::SmartDashboard::PutData("Chassis/Odometry", &field2d);
 	frc::SmartDashboard::PutData("Chassis/HeadingController", &headingController);
-	
+
 	headingController.SetIZone(3);
 	headingController.EnableContinuousInput(-1.0 * units::radian_t(M_PI), units::radian_t(M_PI));
 	pathplanner::PPHolonomicDriveController::setRotationTargetOverride([this]() { return getRotationTargetOverride(); });
@@ -114,16 +114,16 @@ void SwerveChassis::setModules(SwerveModule* frontLeft, SwerveModule* frontRight
 
 	pigeon->SetYaw(0_deg);
 
-	odometryPos = {frontLeftModule->getPosition(),
+	odometryPos = { frontLeftModule->getPosition(),
 			frontRightModule->getPosition(),
 			backLeftModule->getPosition(),
-			backRightModule->getPosition()};
+			backRightModule->getPosition() };
 
 	odometry = std::make_unique<frc::SwerveDrivePoseEstimator<4>>(
 		*kinematics,
-			frc::Rotation2d{},
-			odometryPos,
-			frc::Pose2d{}
+		frc::Rotation2d{},
+		odometryPos,
+		frc::Pose2d{}
 	);
 
 }
@@ -212,7 +212,7 @@ ChassisAccels SwerveChassis::getFIeldRelativeAccels() {
  *
  * @return Pose2d object
  */
-const frc::Pose2d&  SwerveChassis::getOdometry() {
+const frc::Pose2d& SwerveChassis::getOdometry() {
 	return latestPose;
 }
 
@@ -338,9 +338,9 @@ void SwerveChassis::updateOdometry() {
 
 	fieldRelativeSpeed = frc::ChassisSpeeds::FromRobotRelativeSpeeds(robotRelativeSpeed, robotHeading);
 	fieldRelativeAccel = ChassisAccels(fieldRelativeSpeed, lastFieldRelativeSpeed);
-	fieldRelativeAccel.ax = accelXFilter.Calculate(fieldRelativeAccel.ax);
-	fieldRelativeAccel.ay = accelYFilter.Calculate(fieldRelativeAccel.ay);
-	fieldRelativeAccel.omega = accelOmegaFilter.Calculate(fieldRelativeAccel.omega);
+	// fieldRelativeAccel.ax = accelXFilter.Calculate(fieldRelativeAccel.ax);
+	// fieldRelativeAccel.ay = accelYFilter.Calculate(fieldRelativeAccel.ay);
+	// fieldRelativeAccel.omega = accelOmegaFilter.Calculate(fieldRelativeAccel.omega);
 
 	lastFieldRelativeSpeed = fieldRelativeSpeed;
 }
@@ -358,7 +358,7 @@ void SwerveChassis::shuffleboardPeriodic() {
 	// frc::SmartDashboard::PutNumber("Odometry/SpeedX", fieldRelativeSpeed.vx.value());
 	// frc::SmartDashboard::PutNumber("Odometry/SpeedY", fieldRelativeSpeed.vy.value());
 	// frc::SmartDashboard::PutNumber("Odometry/SpeedOmega", fieldRelativeSpeed.omega.value());
-	
+
 	field2d.SetRobotPose(latestPose);
 
 	// frc::SmartDashboard::PutNumber("Odometry/X", estimatedPos.X().value());
