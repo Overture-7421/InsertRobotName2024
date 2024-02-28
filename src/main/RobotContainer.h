@@ -18,6 +18,7 @@
 #include "Subsystems/SuperStructure/SuperStructure.h"
 #include "Subsystems/Storage/Storage.h"
 #include "Subsystems/Shooter/Shooter.h"
+#include "Subsystems/SupportArms/SupportArms.h"
 #include "Commands/ResetAngle/ResetAngle.h"
 
 #include "Commands/SuperStructureMoveByDistance/SuperStructureMoveByDistance.h"
@@ -33,6 +34,7 @@
 #include "Commands/VisionSpeakerCommandNoShoot/VisionSpeakerCommandNoShoot.h"
 #include "Commands/ResetAngle/ResetAngle.h"
 #include "Commands/ShooterDefaultCommand/ShooterDefaultCommand.h"
+#include "Commands/FreeSupportArms/FreeSupportArms.h"
 
 #include "Commands/TabulateCommand/TabulateCommand.h"
 
@@ -62,6 +64,7 @@ private:
 	Storage storage;
 	Shooter shooter;
 	Chassis chassis;
+	SupportArms supportArms;
 
 	LedsManager leds {0, 240, {
 		{"all", {0, 239}}
@@ -77,7 +80,6 @@ private:
 	frc2::Trigger speakerV{ [this] {return driver.GetRightTriggerAxis() > 0.1;} };	// TO GET TESTED
 	frc2::Trigger zeroHeading{ [this] {return driver.GetBackButton();} };
 	frc2::Trigger climbV{ [this] {return driver.GetYButton();} };
-
 	frc2::Trigger tabulate{ [this] {return driver.GetAButton();} };
 
 	// Mechanism Commands

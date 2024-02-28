@@ -47,6 +47,8 @@ void RobotContainer::ConfigureBindings() {
 	leds.SetDefaultCommand(BlinkEffect(&leds, "all", { 255, 0, 255 }, 1_s));
 
 	chassis.SetDefaultCommand(Drive(&chassis, &driver));
+
+	supportArms.SetDefaultCommand(FreeSupportArms(&supportArms, -10.00).Repeatedly());
 	// shooter.SetDefaultCommand(ShooterDefaultCommand(&chassis, &shooter));
 
 	// tabulate.ToggleOnTrue(TabulateCommand(&chassis, &superStructure, &shooter).ToPtr());
@@ -65,7 +67,7 @@ void RobotContainer::ConfigureBindings() {
 	ampM.WhileTrue(AmpCommand(&superStructure, &shooter).ToPtr());
 	ampM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	climbM.WhileTrue(ManualClimb(&chassis, &superStructure, &aprilTagCamera, &storage, &shooter, &opertr));
+	climbM.WhileTrue(ManualClimb(&chassis, &superStructure, &supportArms, &aprilTagCamera, &storage, &shooter, &opertr));
 	climbM.OnFalse(
 		frc2::cmd::Parallel(
 			frc2::cmd::RunOnce([&] {
@@ -75,7 +77,7 @@ void RobotContainer::ConfigureBindings() {
 		)
 	);
 
-	climbV.WhileTrue(AutoClimb(&chassis, &superStructure, &storage, &shooter, &opertr));
+	climbV.WhileTrue(AutoClimb(&chassis, &superStructure, &supportArms, &storage, &shooter, &opertr));
 	climbV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
 	shootM.WhileTrue(StorageCommand(&storage, StorageConstants::SpeakerScoreVolts).ToPtr());
