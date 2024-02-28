@@ -36,7 +36,7 @@ using namespace frc;
 
 class OverRobot : public frc::IterativeRobotBase {
 public:
-    OverRobot(units::second_t period = RobotConstants::LoopTime);
+    OverRobot(units::second_t period = 20_ms);
     void StartCompetition() override;
     void EndCompetition() override;
     units::second_t GetSimulationTime();
