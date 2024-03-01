@@ -26,7 +26,7 @@ SuperStructure::SuperStructure() {
 	lowerLeftMotor.setSensorPosition(convertAngleToFalconPos(getLowerAngle()));
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 	upperMotor.setSensorPosition(convertAngleToFalconPos(getUpperAngle()));
-	// upperMotor.GetPosition().SetUpdateFrequency(200_Hz);
+	upperMotor.GetPosition().SetUpdateFrequency(100_Hz);
 
 	// SoftwareLimitSwitchConfigs lowerMotorSoftLimitConfig;
 	// lowerMotorSoftLimitConfig.ForwardSoftLimitEnable = true;
