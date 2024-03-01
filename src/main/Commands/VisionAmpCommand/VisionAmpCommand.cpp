@@ -10,7 +10,7 @@
 // For more information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 
-frc2::CommandPtr VisionAmpCommand(SuperStructure* superStucture, Shooter* shooter, Storage* storage) {
+frc2::CommandPtr VisionAmpCommand(SuperStructure* superStucture, Shooter* shooter) {
 
 	pathplanner::PathConstraints constraints = pathplanner::PathConstraints(
 		3.0_mps, 3.0_mps_sq,
@@ -18,11 +18,10 @@ frc2::CommandPtr VisionAmpCommand(SuperStructure* superStucture, Shooter* shoote
 
 	return frc2::cmd::Sequence(
 		frc2::cmd::Deadline(
-			pathplanner::AutoBuilder::pathfindToPoseFlipped({ 1.80_m, 7.57_m, {-90_deg} }, constraints),
+			pathplanner::AutoBuilder::pathfindToPoseFlipped({ 1.80_m, 7.59_m, {-90_deg} }, constraints),
 			SuperStructureCommand(superStucture, SuperStructureConstants::AmpState).ToPtr(),
 			ShooterCommand(shooter, ShooterConstants::AmpScoreSpeed).ToPtr()
 		),
-		AmpCommand(superStucture, shooter).ToPtr(),
-		StorageCommand(storage, StorageConstants::AmpScoreVolts).ToPtr()
+		AmpCommand(superStucture, shooter).ToPtr()
 	);
 };

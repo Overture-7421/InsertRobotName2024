@@ -18,6 +18,10 @@ Shooter::Shooter() {
 }
 
 void Shooter::setVelocityVoltage(double velocity) {
+	if(emergencyDisabled) {
+		return;
+	}
+
 	velocity = std::clamp(velocity, -ShooterConstants::MaxSpeed, ShooterConstants::MaxSpeed);
 	targetVel = velocity;
 	upperShooterMotor.setVelocityVoltage(velocity, 0, false);
@@ -25,8 +29,20 @@ void Shooter::setVelocityVoltage(double velocity) {
 }
 
 void Shooter::setIndividualVoltage(double upper, double lower) {
+	if(emergencyDisabled && upper != 0 && lower != 0) {
+		return;
+	}
+
 	upperShooterMotor.SetVoltage(units::volt_t(upper));
 	lowerShooterMotor.SetVoltage(units::volt_t(lower));
+}
+
+void Shooter::setEmergencyDisable(bool emergencyDisable) {
+	this->emergencyDisabled = emergencyDisable;
+}
+
+bool Shooter::isEmergencyDisabled() {
+	return emergencyDisabled;
 }
 
 double Shooter::getCurrentVelocity() {
@@ -45,6 +61,9 @@ double Shooter::getLowerMotorCurrentVelocity() {
 
 // This method will be called once per scheduler run
 void Shooter::Periodic() {
+	if(emergencyDisabled) {
+		setIndividualVoltage(0,0);
+	}
 }
 
 void Shooter::shuffleboardPeriodic() {
