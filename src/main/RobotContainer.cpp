@@ -17,7 +17,7 @@ RobotContainer::RobotContainer() {
 		VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter).ToPtr().WithTimeout(0.1_s),
 		VisionSpeakerCommand(&chassis, &superStructure, &shooter, &storage).ToPtr()
 	)));
-	pathplanner::NamedCommands::registerCommand("VisionAmpCommand", std::move(VisionAmpCommand(&superStructure, &shooter, &storage)));
+	pathplanner::NamedCommands::registerCommand("VisionAmpCommand", std::move(VisionAmpCommand(&superStructure, &shooter)));
 	pathplanner::NamedCommands::registerCommand("StorageCommand", std::move(StorageCommand(&storage, 3_V).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("ShooterCommand", std::move(ShooterCommand(&shooter, 4.00).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("VisionNoShoot", std::move(VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter).ToPtr()));
@@ -45,6 +45,32 @@ void RobotContainer::ConfigureBindings() {
 		StaticEffect(&leds, "all", { 0, 255, 0 }).ToPtr()
 	));
 
+	shooterEmergencyMode.WhileTrue(frc2::cmd::Sequence(
+		BlinkEffect(&leds, "all", { 255, 255, 0 }, 0.25_s).ToPtr().WithTimeout(0.5_s),
+		BlinkEffect(&leds, "all", { 255, 0, 0 }, 0.25_s).ToPtr().WithTimeout(0.5_s)
+	).Repeatedly());
+
+	shooterEmergencyMode.OnTrue(frc2::cmd::Sequence(
+		frc2::cmd::RunOnce([&] { 
+			driver.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 1.0);
+			opertr.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 1.0);
+		}),
+		frc2::cmd::Wait(0.25_s),
+		frc2::cmd::RunOnce([&] { 
+			driver.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.0);
+			opertr.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.0);
+		}),
+		frc2::cmd::RunOnce([&] { 
+			driver.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 1.0);
+			opertr.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 1.0);
+		}),
+		frc2::cmd::Wait(0.25_s),
+		frc2::cmd::RunOnce([&] { 
+			driver.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.0);
+			opertr.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.0);
+		})
+	));
+
 	leds.SetDefaultCommand(BlinkEffect(&leds, "all", { 255, 0, 255 }, 1_s));
 
 	chassis.SetDefaultCommand(Drive(&chassis, &driver));
@@ -60,7 +86,7 @@ void RobotContainer::ConfigureBindings() {
 
 	zeroHeading.OnTrue(ResetAngle(&chassis).ToPtr());
 
-	ampV.WhileTrue(VisionAmpCommand(&superStructure, &shooter, &storage));
+	ampV.WhileTrue(VisionAmpCommand(&superStructure, &shooter));
 	ampV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
 	speakerV.WhileTrue(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &opertr).ToPtr());
@@ -99,6 +125,10 @@ void RobotContainer::ConfigureBindings() {
 	speakerM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
 	closed.WhileTrue(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+
+	shooterEmergencyStop.ToggleOnTrue(frc2::cmd::RunOnce([&] {
+		shooter.setEmergencyDisable(!shooter.isEmergencyDisabled());
+	}));
 
 	intakeM.WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake));
 	intakeM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());

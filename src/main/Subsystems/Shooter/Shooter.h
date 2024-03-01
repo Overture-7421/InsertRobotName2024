@@ -17,6 +17,8 @@ public:
 	Shooter();
 	void setVelocityVoltage(double velocity);
 	void setIndividualVoltage(double upper, double lower);
+	void setEmergencyDisable(bool emergencyDisable);
+	bool isEmergencyDisabled();
 	double getCurrentVelocity();
 	void Periodic() override;
 	void shuffleboardPeriodic();
@@ -40,6 +42,8 @@ private:
 	frc::SimpleMotorFeedforward<units::turn	> lowerFF {0.28612_V, 0.050_V / 1_tps, 0.010231_V / 1_tr_per_s_sq};
 
 	double targetVel = 0.0;
+
+	bool emergencyDisabled = false;
 
 	frc2::sysid::SysIdRoutine sysIdRoutine{
 	frc2::sysid::Config{1_V / 1_s, 7_V, 10_s,

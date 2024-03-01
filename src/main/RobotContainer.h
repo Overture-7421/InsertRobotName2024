@@ -90,10 +90,13 @@ private:
 	frc2::Trigger speakerM{ [this] {return opertr.GetRightBumper();} };
 	frc2::Trigger trapV{ [this] {return opertr.GetAButton();} };
 	frc2::Trigger closed{ [this] {return opertr.GetPOV() == 0;} };
+	frc2::Trigger shooterEmergencyStop{ [this] {return opertr.GetPOV() == 180;} };
+
 	frc2::Trigger intakeM{ [this] {return opertr.GetRightTriggerAxis() > 0.1;} };
 
 	// LED Triggers
 	frc2::Trigger noteOnStorage { [this] {return storage.isNoteOnForwardSensor();}};
+	frc2::Trigger shooterEmergencyMode { [this] {return shooter.isEmergencyDisabled();}};
 
 	//Autonomous
 	frc2::CommandPtr defaultNoneAuto = frc2::cmd::None();
