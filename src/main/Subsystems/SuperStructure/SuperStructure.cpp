@@ -62,6 +62,9 @@ SuperStructure::SuperStructure() {
 	frc::SmartDashboard::PutData("SuperStructure/LowerPID", &lowerPID);
 	frc::SmartDashboard::PutData("SuperStructure/UpperPID", &upperPID);
 
+	upperPID.EnableContinuousInput(-180_deg, 180_deg);
+	lowerPID.EnableContinuousInput(-180_deg, 180_deg);
+
 	upperPID.SetIZone(3);
 	lowerPID.SetIZone(3);
 }
