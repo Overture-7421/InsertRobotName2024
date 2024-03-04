@@ -77,7 +77,7 @@ private:
 
 #ifdef __FRC_ROBORIO__
 	double lowerOffset = -0.338472;
-	double upperOffset = -0.782438;
+	double upperOffset = -0.785593;
 #else
 	double lowerOffset = 0;
 	double upperOffset = 0;
@@ -101,13 +101,13 @@ private:
 
 	//Estimators
 	frc::LinearSystem<2, 1, 1> upperArmPlant = frc::LinearSystemId::IdentifyPositionSystem<units::radian>(upperFF.kV, upperFF.kA);
-	frc::KalmanFilter<2, 1, 1> upperArmObserver {upperArmPlant, {3.0, 3.0}, {0.01}, RobotConstants::LoopTime};
+	frc::KalmanFilter<2, 1, 1> upperArmObserver{ upperArmPlant, {3.0, 3.0}, {0.01}, RobotConstants::LoopTime };
 	// frc::LinearQuadraticRegulator<2, 1> upperArmController { upperArmPlant, {0.1, 8.0}, {12.0}, RobotConstants::LoopTime};
 	// frc::LinearSystemLoop<2, 1, 1> upperArmLoop{upperArmPlant, upperArmController, upperArmObserver, 12_V, RobotConstants::LoopTime};
 
 	frc::ProfiledPIDController<units::degrees> lowerPID{ 0.35, 0.2, 0.0, {360_deg_per_s * 4.0, 360_deg_per_s_sq * 1.25}, RobotConstants::LoopTime };
-	frc::ProfiledPIDController<units::degrees> upperPID{ 0.35, 0.2, 0.01, {360_deg_per_s * 5.0, 360_deg_per_s_sq * 1.25}, RobotConstants::LoopTime };
-	
+	frc::ProfiledPIDController<units::degrees> upperPID{ 0.25, 0.3, 0.0, {360_deg_per_s * 5.0, 360_deg_per_s_sq * 1.25}, RobotConstants::LoopTime };
+
 	units::turn_t upperFFOffset = 0.25_tr;
 
 	double oldP = 0;

@@ -24,10 +24,10 @@
 #include "Constants.h"
 
 class VisionSpeakerCommand
-    : public frc2::CommandHelper<frc2::Command, VisionSpeakerCommand> {
- public:
-  VisionSpeakerCommand(Chassis* chassis, SuperStructure* SuperStructure, Shooter* shooter, frc::XboxController* joystick);
-  VisionSpeakerCommand(Chassis* chassis, SuperStructure* SuperStructure, Shooter* shooter, Storage* storage);
+	: public frc2::CommandHelper<frc2::Command, VisionSpeakerCommand> {
+public:
+	VisionSpeakerCommand(Chassis* chassis, SuperStructure* SuperStructure, Shooter* shooter, frc::XboxController* joystick);
+	VisionSpeakerCommand(Chassis* chassis, SuperStructure* SuperStructure, Shooter* shooter, Storage* storage);
 
 	void Initialize() override;
 
@@ -39,7 +39,7 @@ class VisionSpeakerCommand
 
 private:
 	frc::Timer Timer;
-	
+
 	SuperStructure* superStructure;
 	Chassis* chassis;
 	Shooter* shooter;

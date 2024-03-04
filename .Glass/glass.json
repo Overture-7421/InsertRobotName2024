@@ -49,6 +49,7 @@
     "visible": true
   },
   "NetworkTables Settings": {
+    "dsClient": false,
     "mode": "Client (NT4)",
     "serverTeam": "7421"
   },
@@ -62,7 +63,7 @@
             0.0,
             0.8500000238418579
           ],
-          "height": 0,
+          "height": -12,
           "series": [
             {
               "color": [

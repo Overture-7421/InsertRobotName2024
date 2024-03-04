@@ -51,24 +51,24 @@ void RobotContainer::ConfigureBindings() {
 	).Repeatedly());
 
 	shooterEmergencyMode.OnTrue(frc2::cmd::Sequence(
-		frc2::cmd::RunOnce([&] { 
-			driver.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 1.0);
-			opertr.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 1.0);
-		}),
+		frc2::cmd::RunOnce([&] {
+		driver.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 1.0);
+		opertr.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 1.0);
+	}),
 		frc2::cmd::Wait(0.25_s),
-		frc2::cmd::RunOnce([&] { 
-			driver.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.0);
-			opertr.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.0);
-		}),
-		frc2::cmd::RunOnce([&] { 
-			driver.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 1.0);
-			opertr.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 1.0);
-		}),
+		frc2::cmd::RunOnce([&] {
+		driver.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.0);
+		opertr.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.0);
+	}),
+		frc2::cmd::RunOnce([&] {
+		driver.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 1.0);
+		opertr.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 1.0);
+	}),
 		frc2::cmd::Wait(0.25_s),
-		frc2::cmd::RunOnce([&] { 
-			driver.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.0);
-			opertr.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.0);
-		})
+		frc2::cmd::RunOnce([&] {
+		driver.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.0);
+		opertr.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.0);
+	})
 	));
 
 	leds.SetDefaultCommand(BlinkEffect(&leds, "all", { 255, 0, 255 }, 1_s));
@@ -129,6 +129,11 @@ void RobotContainer::ConfigureBindings() {
 	shooterEmergencyStop.ToggleOnTrue(frc2::cmd::RunOnce([&] {
 		shooter.setEmergencyDisable(!shooter.isEmergencyDisabled());
 	}));
+
+
+	manualFrontalClimb.OnTrue(SuperStructureCommand(&superStructure, { 90, 0 }).ToPtr());
+	manualFrontalClimb.OnFalse(SuperStructureCommand(&superStructure, SuperStructureConstants::GroundGrabState).ToPtr());
+
 
 	intakeM.WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake));
 	intakeM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());

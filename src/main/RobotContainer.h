@@ -53,7 +53,7 @@ public:
 	frc2::Command* GetAutonomousCommand();
 	frc2::CommandPtr GetTeleopResetCommand();
 	void UpdateTelemetry();
-	
+
 private:
 	void ConfigureBindings();
 
@@ -66,9 +66,9 @@ private:
 	Chassis chassis;
 	SupportArms supportArms;
 
-	LedsManager leds {0, 240, {
+	LedsManager leds{ 0, 240, {
 		{"all", {0, 239}}
-	}};
+	} };
 
 	// Controllers
 	frc::XboxController driver{ 0 };
@@ -92,11 +92,13 @@ private:
 	frc2::Trigger closed{ [this] {return opertr.GetPOV() == 0;} };
 	frc2::Trigger shooterEmergencyStop{ [this] {return opertr.GetPOV() == 180;} };
 
+	frc2::Trigger manualFrontalClimb{ [this] {return opertr.GetPOV() == 90;} };
+
 	frc2::Trigger intakeM{ [this] {return opertr.GetRightTriggerAxis() > 0.1;} };
 
 	// LED Triggers
-	frc2::Trigger noteOnStorage { [this] {return storage.isNoteOnForwardSensor();}};
-	frc2::Trigger shooterEmergencyMode { [this] {return shooter.isEmergencyDisabled();}};
+	frc2::Trigger noteOnStorage{ [this] {return storage.isNoteOnForwardSensor();} };
+	frc2::Trigger shooterEmergencyMode{ [this] {return shooter.isEmergencyDisabled();} };
 
 	//Autonomous
 	frc2::CommandPtr defaultNoneAuto = frc2::cmd::None();
