@@ -26,7 +26,7 @@ bool SuperStructureCommand::IsFinished() {
 	double lowError = abs(targetState.lowerAngle - superStructure->getLowerAngle());
 	double upperError = abs(targetState.upperAngle - superStructure->getUpperAngle());
 
-	if (lowError <= 2 && upperError <= 2){
+	if (lowError <= 3 && upperError <= 3){
 		return true;
 	} else {
 		return false;

@@ -17,10 +17,10 @@ Chassis::Chassis() {
 	backLeft.setFFConstants(0.0089267_V, 1.8401_V, 0.77189_V);
 	backRight.setFFConstants(0.15117_V, 1.9912_V, 0.032941_V);
 #else
-	frontLeft.setFFConstants(0.26831_V, 1.9683_V, 0.1204_V);
-	frontRight.setFFConstants(0.26831_V, 1.9683_V, 0.1204_V);
-	backLeft.setFFConstants(0.26831_V, 1.9683_V, 0.1204_V);
-	backRight.setFFConstants(0.26831_V, 1.9683_V, 0.1204_V);
+	frontLeft.setFFConstants(0.22436_V, 2.0254_V, 0.2019_V);
+	frontRight.setFFConstants(0.22436_V, 2.0254_V, 0.2019_V);
+	backLeft.setFFConstants(0.22436_V, 2.0254_V, 0.2019_V);
+	backRight.setFFConstants(0.22436_V, 2.0254_V, 0.2019_V);
 #endif
 
 }

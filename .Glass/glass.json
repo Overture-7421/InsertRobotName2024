@@ -2,11 +2,17 @@
   "NetworkTables": {
     "transitory": {
       "SmartDashboard": {
+        "FrontRight": {
+          "open": true
+        },
         "SuperStructure": {
           "ActualTarget": {
             "open": true
           },
           "Current": {
+            "open": true
+          },
+          "DesiredTarget": {
             "open": true
           },
           "FalconTarget": {
@@ -31,13 +37,19 @@
     "types": {
       "/FMSInfo": "FMSInfo",
       "/SmartDashboard/Auto Chooser": "String Chooser",
-      "/SmartDashboard/Odometry": "Field2d"
+      "/SmartDashboard/Chassis/HeadingController": "ProfiledPIDController",
+      "/SmartDashboard/Chassis/Odometry": "Field2d",
+      "/SmartDashboard/Odometry": "Field2d",
+      "/SmartDashboard/SuperStructure/LowerPID": "ProfiledPIDController",
+      "/SmartDashboard/SuperStructure/UpperPID": "ProfiledPIDController",
+      "/SmartDashboard/SuperStructure/upperPID": "ProfiledPIDController"
     }
   },
   "NetworkTables Info": {
     "visible": true
   },
   "NetworkTables Settings": {
+    "dsClient": false,
     "mode": "Client (NT4)",
     "serverTeam": "7421"
   },
@@ -51,7 +63,7 @@
             0.0,
             0.8500000238418579
           ],
-          "height": 729,
+          "height": -12,
           "series": [
             {
               "color": [
@@ -60,7 +72,7 @@
                 0.6901960968971252,
                 1.0
               ],
-              "id": "NT:/SmartDashboard/SuperStructure/Current/Lower Encoder Position"
+              "id": "NT:/SmartDashboard/SuperStructure/Current/PredictedUpper"
             },
             {
               "color": [
@@ -69,32 +81,11 @@
                 0.32156863808631897,
                 1.0
               ],
-              "id": "NT:/SmartDashboard/SuperStructure/Current/Lower"
-            },
-            {
-              "color": [
-                0.3333333432674408,
-                0.658823549747467,
-                0.4078431725502014,
-                1.0
-              ],
               "id": "NT:/SmartDashboard/SuperStructure/Current/Upper"
-            },
-            {
-              "color": [
-                0.7686275243759155,
-                0.30588236451148987,
-                0.32156863808631897,
-                1.0
-              ],
-              "id": "NT:/SmartDashboard/SuperStructure/Current/Upper Encoder Position"
             }
           ]
         }
-      ],
-      "window": {
-        "visible": false
-      }
+      ]
     }
   }
 }

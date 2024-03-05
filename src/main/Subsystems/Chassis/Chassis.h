@@ -24,10 +24,10 @@ private:
 	SwerveModule frontLeft{ 1, 2, 9, -90, "FrontLeftModule", "OverCANivore" };
 	SwerveModule frontRight{ 3, 4, 10, -90, "FrontRightModule", "OverCANivore" };
 #else
-	SwerveModule backRight{ 1, 2, 9, -330.8203125, "BackRightModule", "OverCANivore" };
-	SwerveModule backLeft{ 3, 4, 10, -342.94921875, "BackLeftModule", "OverCANivore" };
-	SwerveModule frontLeft{ 5, 6, 11, -157.67578125, "FrontLeftModule", "OverCANivore" };
-	SwerveModule frontRight{ 7, 8, 12, -47.28515625, "FrontRightModule", "OverCANivore" };
+	SwerveModule backRight{ 1, 2, 9, 28.388671875, "BackRightModule", "OverCANivore" };
+	SwerveModule backLeft{ 3, 4, 10, 17.40234375, "BackLeftModule", "OverCANivore" };
+	SwerveModule frontLeft{ 5, 6, 11, -158.818359375, "FrontLeftModule", "OverCANivore" };
+	SwerveModule frontRight{ 7, 8, 12, -48.33984375, "FrontRightModule", "OverCANivore" };
 #endif
 
 

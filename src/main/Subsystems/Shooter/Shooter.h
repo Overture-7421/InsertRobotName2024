@@ -16,9 +16,12 @@ class Shooter : public frc2::SubsystemBase {
 public:
 	Shooter();
 	void setVelocityVoltage(double velocity);
+	void setIndividualVoltage(double upper, double lower);
+	void setEmergencyDisable(bool emergencyDisable);
+	bool isEmergencyDisabled();
 	double getCurrentVelocity();
-	void setVoltage(units::volt_t voltage);
 	void Periodic() override;
+	void shuffleboardPeriodic();
 
 	frc2::CommandPtr sysIdQuasistatic(frc2::sysid::Direction direction) {
 		return sysIdRoutine.Quasistatic(direction);
@@ -32,15 +35,18 @@ private:
 	double getUpperMotorCurrentVelocity();
 	double getLowerMotorCurrentVelocity();
 	
-	OverTalonFX upperShooterMotor{ 26, ControllerNeutralMode::Brake, false, "rio" };
-	OverTalonFX lowerShooterMotor{ 27, ControllerNeutralMode::Brake, false, "rio" };
+	OverTalonFX upperShooterMotor{ 26, ControllerNeutralMode::Coast, false, "rio" };
+	OverTalonFX lowerShooterMotor{ 27, ControllerNeutralMode::Coast, false, "rio" };
 
-	frc::SimpleMotorFeedforward<units::turn> upperFF {0.23595_V, 0.050_V / 1_tps, 0.0057865_V / 1_tr_per_s_sq};
-	frc::SimpleMotorFeedforward<units::turn> lowerFF {0.26217_V, 0.050_V / 1_tps, 0.0062472_V / 1_tr_per_s_sq};
-	double targetVel;
+	frc::SimpleMotorFeedforward<units::turn> upperFF {0.29396_V, 0.050_V / 1_tps, 0.010231_V / 1_tr_per_s_sq};
+	frc::SimpleMotorFeedforward<units::turn	> lowerFF {0.28612_V, 0.050_V / 1_tps, 0.010231_V / 1_tr_per_s_sq};
+
+	double targetVel = 0.0;
+
+	bool emergencyDisabled = false;
 
 	frc2::sysid::SysIdRoutine sysIdRoutine{
-	frc2::sysid::Config{0.5_V / 1_s, 3_V, 6_s,
+	frc2::sysid::Config{1_V / 1_s, 7_V, 10_s,
 						std::nullopt},
 	frc2::sysid::Mechanism{
 		[this](units::volt_t driveVoltage) {

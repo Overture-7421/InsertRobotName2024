@@ -6,7 +6,7 @@
 
 #include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
-#include "main/Subsystems/SupportArms/SupportArms.h"
+#include "OvertureLib/Subsystems/LedsManager/LedsManager.h"
 
 /**
  * An example command.
@@ -15,10 +15,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class SupportArmCommand
-    : public frc2::CommandHelper<frc2::Command, SupportArmCommand> {
+class BlinkEffect
+    : public frc2::CommandHelper<frc2::Command, BlinkEffect> {
  public:
-  SupportArmCommand(SupportArms* supportArms, SupportArmsState targetState);
+  BlinkEffect(LedsManager* leds, LedStripName name, frc::Color8Bit color, units::second_t period = 1_s, bool addRequirement = true);
 
   void Initialize() override;
 
@@ -27,10 +27,8 @@ class SupportArmCommand
   void End(bool interrupted) override;
 
   bool IsFinished() override;
-    
-  
-  private:
-    SupportArms* supportArms;
-  
-    SupportArmsState targetState;
+private:
+  units::second_t startTime, period;
+  std::span<frc::AddressableLED::LEDData> ledStrip;
+  frc::Color8Bit color;
 };

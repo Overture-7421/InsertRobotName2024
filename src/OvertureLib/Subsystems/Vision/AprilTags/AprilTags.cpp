@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "AprilTags.h"
+#include <iostream>
 
 AprilTags::AprilTags() {};
 void AprilTags::setCameraAndLayout(photon::PhotonCamera* camera, frc::AprilTagFieldLayout* tagLayout, frc::Transform3d* cameraToRobot) {
@@ -13,19 +14,19 @@ void AprilTags::setCameraAndLayout(photon::PhotonCamera* camera, frc::AprilTagFi
 	m_TagLayout->SetOrigin(frc::AprilTagFieldLayout::OriginPosition::kBlueAllianceWallRightSide);
 
 	poseEstimatorSet = true;
-	poseEstimator = new photon::PhotonPoseEstimator{
+	poseEstimator = std::make_unique<photon::PhotonPoseEstimator> (
 		*m_TagLayout,
 		photon::PoseStrategy::MULTI_TAG_PNP_ON_COPROCESSOR,
 		std::move(photon::PhotonCamera{ APRILTAGS_CAMERA_NAME }),
 		*m_CameraToRobot
-	};
+	);
 }
 
 //Check if distance between robot and tag is less than a certain value ;)
 bool AprilTags::checkTagDistance(const photon::PhotonPipelineResult& result, size_t numberOfTags, double distance) {
 
 	if (result.GetTargets().size() == numberOfTags) {
-		if (result.GetBestTarget().GetBestCameraToTarget().X().value() < distance) {
+		if (result.GetBestTarget().GetBestCameraToTarget().Translation().Distance({0_m, 0_m, 0_m}).value() < distance) {
 			return true;
 		}
 	}
@@ -51,9 +52,8 @@ void AprilTags::updateOdometry() {
 		return;
 	}
 	photon::PhotonPipelineResult pipelineResult = result.value();
-	
 
-	if (checkTagDistance(pipelineResult, 1, 2.5) || checkTagDistance(pipelineResult, 2, 6.00) || checkTagDistance(pipelineResult, 3, 8.00)) {
+	if (checkTagDistance(pipelineResult, 1, 3.5) || checkTagDistance(pipelineResult, 2, 6.0) || checkTagDistance(pipelineResult, 3, 8.0)) {
 		addMeasurementToChassis(pipelineResult);
 	}
 }

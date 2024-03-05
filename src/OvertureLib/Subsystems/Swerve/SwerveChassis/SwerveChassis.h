@@ -51,7 +51,7 @@ public:
 	frc::ChassisSpeeds getFieldRelativeSpeeds();
 	ChassisAccels getFIeldRelativeAccels();
 
-	frc::Pose2d getOdometry();
+	const frc::Pose2d& getOdometry();
 	void resetOdometry(frc::Pose2d initPose);
 	const frc::SwerveDriveKinematics<4>& getKinematics();
 	void addVisionMeasurement(frc::Pose2d pose, units::second_t Latency);
@@ -77,11 +77,12 @@ protected:
 	SwerveModule* backLeftModule;
 	SwerveModule* backRightModule;
 
-	frc::SwerveDriveKinematics<4>* kinematics;
+	std::unique_ptr<frc::SwerveDriveKinematics<4>> kinematics;
 
-	std::array<frc::SwerveModulePosition, 4>* odometryPos;
+	std::array<frc::SwerveModulePosition, 4> odometryPos;
 
-	frc::SwerveDrivePoseEstimator<4>* odometry;
+	std::unique_ptr<frc::SwerveDrivePoseEstimator<4>> odometry;
+	frc::Pose2d latestPose;
 
 	frc::ChassisSpeeds desiredSpeeds;
 
@@ -98,6 +99,6 @@ private:
 
 	bool headingOverride = false;
 
-	frc::ProfiledPIDController<units::radians> headingController{ 6.5, 0, 0.2, frc::TrapezoidProfile<units::radians>::Constraints{ 18_rad_per_s, 36_rad_per_s_sq }, RobotConstants::LoopTime };
+	frc::ProfiledPIDController<units::radians> headingController{ 11.0, 0.5, 0.3, frc::TrapezoidProfile<units::radians>::Constraints{ 18_rad_per_s, 18_rad_per_s_sq * 6 }, RobotConstants::LoopTime };
 	frc::Rotation2d headingTarget;
 };

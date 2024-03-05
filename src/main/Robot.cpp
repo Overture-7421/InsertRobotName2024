@@ -7,7 +7,13 @@
 #include <frc2/command/CommandScheduler.h>
 
 void Robot::RobotInit() {
-#ifndef __FRC_ROBORIO__
+  m_teleopResetCommand = m_container.GetTeleopResetCommand();
+
+  AddPeriodic([&] {
+    frc2::CommandScheduler::GetInstance().Run();
+  }, RobotConstants::LoopTime, RobotConstants::TimingOffset);
+
+  #ifndef __FRC_ROBORIO__
   simMotorManager->Init({
     {1, "Vantage7421/motors/SDS_Module_FL_rotation_joint"}, 
     {2, "Vantage7421/motors/SDS_Module_FL_wheel_joint"},
@@ -43,16 +49,15 @@ void Robot::RobotInit() {
 
   simDutyCycleEncoderManager->Init({
     {3, "Vantage7421/cancoders/chassis_arm_joint"}, 
-    {2, "Vantage7421/cancoders/arm_shooter_joint"},
-    {4, "Vantage7421/cancoders/chassis_supports_joint"},
+    {9, "Vantage7421/cancoders/arm_shooter_joint"},
+    {6, "Vantage7421/cancoders/chassis_supports_joint"},
   });
 
 #endif
-
 }
 
 void Robot::RobotPeriodic() {
-  frc2::CommandScheduler::GetInstance().Run();
+  m_container.UpdateTelemetry();
 }
 
 void Robot::DisabledInit() {
@@ -83,9 +88,9 @@ void Robot::TeleopInit() {
 
   if (m_autonomousCommand) {
     m_autonomousCommand->Cancel();
-    m_teleopResetCommand = m_container.GetTeleopResetCommand();
-    m_teleopResetCommand->Schedule();
   }
+  m_teleopResetCommand->Schedule();
+
 }
 
 void Robot::TeleopPeriodic() {

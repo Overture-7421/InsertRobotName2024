@@ -17,8 +17,8 @@
 #include "Subsystems/Intake/Intake.h"
 #include "Subsystems/SuperStructure/SuperStructure.h"
 #include "Subsystems/Storage/Storage.h"
-#include "Subsystems/SupportArms/SupportArms.h"
 #include "Subsystems/Shooter/Shooter.h"
+#include "Subsystems/SupportArms/SupportArms.h"
 #include "Commands/ResetAngle/ResetAngle.h"
 
 #include "Commands/SuperStructureMoveByDistance/SuperStructureMoveByDistance.h"
@@ -31,7 +31,10 @@
 #include "Commands/VisionAmpCommand/VisionAmpCommand.h"
 #include "Commands/VisionSourceGrabCommand/VisionSourceGrabCommand.h"
 #include "Commands/VisionSpeakerCommand/VisionSpeakerCommand.h"
+#include "Commands/VisionSpeakerCommandNoShoot/VisionSpeakerCommandNoShoot.h"
 #include "Commands/ResetAngle/ResetAngle.h"
+#include "Commands/ShooterDefaultCommand/ShooterDefaultCommand.h"
+#include "Commands/FreeSupportArms/FreeSupportArms.h"
 
 #include "Commands/TabulateCommand/TabulateCommand.h"
 
@@ -41,50 +44,69 @@
 
 #include "OvertureLib/Commands/Drive/Drive.h"
 #include "OvertureLib/Characterization/SysIDRoutineBot.h"
+#include "OvertureLib/Subsystems/LedsManager/LedsManager.h"
 
 class RobotContainer : public SysIDRoutineBot {
 public:
 	RobotContainer();
 
-	frc2::CommandPtr GetAutonomousCommand();
+	frc2::Command* GetAutonomousCommand();
 	frc2::CommandPtr GetTeleopResetCommand();
+	void UpdateTelemetry();
+
 private:
 	void ConfigureBindings();
 
 	// Subsystems
-	Chassis chassis;
 	AprilTagCamera aprilTagCamera{ &chassis };
 	Intake intake;
 	SuperStructure superStructure;
-	SupportArms supportArms;
 	Storage storage;
 	Shooter shooter;
+	Chassis chassis;
+	SupportArms supportArms;
 
-	// // Controllers
+	LedsManager leds{ 0, 240, {
+		{"all", {0, 239}}
+	} };
+
+	// Controllers
 	frc::XboxController driver{ 0 };
 	frc::XboxController opertr{ 1 };
 
-	// // Driver Commands
-	frc2::Trigger ampV{ [this] {return driver.GetLeftTriggerAxis() > 0.3;} };
+	// Driver Commands
+	frc2::Trigger ampV{ [this] {return driver.GetLeftTriggerAxis() > 0.1;} };
 	frc2::Trigger sourceV{ [this] {return driver.GetRightBumper();} };
-	frc2::Trigger speakerV{ [this] {return driver.GetRightTriggerAxis() > 0.3;} };	// TO GET TESTED
-	frc2::Trigger zeroHeading { [this] {return driver.GetBackButton();} };
+	frc2::Trigger speakerV{ [this] {return driver.GetRightTriggerAxis() > 0.1;} };	// TO GET TESTED
+	frc2::Trigger zeroHeading{ [this] {return driver.GetBackButton();} };
+	frc2::Trigger climbV{ [this] {return driver.GetYButton();} };
+	frc2::Trigger tabulate{ [this] {return driver.GetAButton();} };
 
-	// frc2::Trigger tabulate { [this] {return driver.GetAButton();}};
-
-	// // Mechanism Commands
+	// Mechanism Commands
 	frc2::Trigger ampM{ [this] {return opertr.GetLeftBumper();} };
-	frc2::Trigger sourceM{ [this] {return opertr.GetBButton();} };
-	frc2::Trigger climbV{ [this] {return opertr.GetXButton();} };
+	frc2::Trigger spitM{ [this] {return opertr.GetBButton();} };
 	frc2::Trigger climbM{ [this] {return opertr.GetYButton();} };
-	frc2::Trigger shootM{ [this] {return opertr.GetLeftTriggerAxis() > 0.3;} };
+	frc2::Trigger shootM{ [this] {return opertr.GetLeftTriggerAxis() > 0.1;} };
 	frc2::Trigger speakerM{ [this] {return opertr.GetRightBumper();} };
 	frc2::Trigger trapV{ [this] {return opertr.GetAButton();} };
 	frc2::Trigger closed{ [this] {return opertr.GetPOV() == 0;} };
-	frc2::Trigger intakeM{ [this] {return opertr.GetRightTriggerAxis() > 0.3;} };
+	frc2::Trigger shooterEmergencyStop{ [this] {return opertr.GetPOV() == 180;} };
+
+	frc2::Trigger manualFrontalClimb{ [this] {return opertr.GetPOV() == 90;} };
+
+	frc2::Trigger intakeM{ [this] {return opertr.GetRightTriggerAxis() > 0.1;} };
+
+	// LED Triggers
+	frc2::Trigger noteOnStorage{ [this] {return storage.isNoteOnForwardSensor();} };
+	frc2::Trigger shooterEmergencyMode{ [this] {return shooter.isEmergencyDisabled();} };
+
+	//Autonomous
+	frc2::CommandPtr defaultNoneAuto = frc2::cmd::None();
+	frc2::CommandPtr center4NoteAuto = frc2::cmd::None();
+	frc2::CommandPtr center7NoteAuto = frc2::cmd::None();
+	frc2::CommandPtr ampAuto = frc2::cmd::None();
+	frc2::CommandPtr sourceAuto = frc2::cmd::None();
 
 	//Auto Chooser
-	frc::SendableChooser<std::string> autoChooser;
-
-	double angleShooting;
+	frc::SendableChooser<frc2::Command*> autoChooser;
 };

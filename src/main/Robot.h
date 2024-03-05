@@ -32,7 +32,7 @@ public:
 	void TestExit() override;
 
 private:
-	std::optional<frc2::CommandPtr> m_autonomousCommand;
+	frc2::Command* m_autonomousCommand;
 	std::optional<frc2::CommandPtr> m_teleopResetCommand;
 
 	RobotContainer m_container;

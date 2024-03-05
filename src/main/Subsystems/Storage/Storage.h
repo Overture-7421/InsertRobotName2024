@@ -19,6 +19,7 @@ public:
 	bool isNoteOnForwardSensor();
 	bool isNoteOnBackSensor();
 	void Periodic() override;
+	void shuffleboardPeriodic();
 private:
 	OverTalonFX storageMotor{ 24, ControllerNeutralMode::Brake, false, "rio" };
 	frc::DigitalInput forwardSensor {2};

@@ -7,24 +7,47 @@
 Shooter::Shooter() {
 	upperShooterMotor.setSupplyCurrentLimit(true, 20, 25, 0.5);
 	upperShooterMotor.setSensorToMechanism(ShooterConstants::LowerGearboxReduction);
-	upperShooterMotor.setClosedLoopVoltageRamp(0.5);
+	upperShooterMotor.setClosedLoopVoltageRamp(0.1);
 
 	lowerShooterMotor.setSupplyCurrentLimit(true, 20, 25, 0.5);
 	lowerShooterMotor.setSensorToMechanism(ShooterConstants::UpperGearboxReduction);
-	lowerShooterMotor.setClosedLoopVoltageRamp(0.5);
+	lowerShooterMotor.setClosedLoopVoltageRamp(0.1);
 
-	upperShooterMotor.setPIDValues(0.010558, 0.0, 0.0, 0.0, 0.0);
-	lowerShooterMotor.setPIDValues(0.075634, 0.0, 0.0, 0.0, 0.0);
+	upperShooterMotor.setPIDValues(0.082625, 0.0, 0.0, upperFF.kS.value(), upperFF.kV.value());
+	lowerShooterMotor.setPIDValues(0.08176, 0.0, 0.0, lowerFF.kS.value(), lowerFF.kV.value());
 }
 
 void Shooter::setVelocityVoltage(double velocity) {
+	if (emergencyDisabled) {
+		return;
+	}
+
+	velocity = std::clamp(velocity, -ShooterConstants::MaxSpeed, ShooterConstants::MaxSpeed);
 	targetVel = velocity;
-	upperShooterMotor.setVelocityVoltage(velocity, upperFF.Calculate(units::turns_per_second_t(velocity)).value(), false);
-	lowerShooterMotor.setVelocityVoltage(velocity, lowerFF.Calculate(units::turns_per_second_t(velocity)).value(), false);
+	upperShooterMotor.setVelocityVoltage(velocity, 0, false);
+	lowerShooterMotor.setVelocityVoltage(velocity * .8, 0, false);
+}
+
+void Shooter::setIndividualVoltage(double upper, double lower) {
+	if (emergencyDisabled && upper != 0 && lower != 0) {
+		return;
+	}
+
+	upperShooterMotor.SetVoltage(units::volt_t(upper));
+	lowerShooterMotor.SetVoltage(units::volt_t(lower));
+}
+
+void Shooter::setEmergencyDisable(bool emergencyDisable) {
+	this->emergencyDisabled = emergencyDisable;
+}
+
+bool Shooter::isEmergencyDisabled() {
+	return emergencyDisabled;
 }
 
 double Shooter::getCurrentVelocity() {
-	return (getUpperMotorCurrentVelocity() + getLowerMotorCurrentVelocity()) / 2.0;
+	// return (getUpperMotorCurrentVelocity() + getLowerMotorCurrentVelocity()) / 2.0;
+	return getUpperMotorCurrentVelocity();
 }
 
 double Shooter::getUpperMotorCurrentVelocity() {
@@ -39,6 +62,12 @@ double Shooter::getLowerMotorCurrentVelocity() {
 
 // This method will be called once per scheduler run
 void Shooter::Periodic() {
+	if (emergencyDisabled) {
+		setIndividualVoltage(0, 0);
+	}
+}
+
+void Shooter::shuffleboardPeriodic() {
 	frc::SmartDashboard::PutNumber("Shooter/DesiredSpeed", targetVel);
 	frc::SmartDashboard::PutNumber("Shooter/CurrentSpeed", getCurrentVelocity());
 
