@@ -77,7 +77,7 @@ private:
 
 #ifdef __FRC_ROBORIO__
 	double lowerOffset = -0.338472;
-	double upperOffset = -0.785593;
+	double upperOffset = -0.23911290597782264;
 #else
 	double lowerOffset = 0;
 	double upperOffset = 0;
