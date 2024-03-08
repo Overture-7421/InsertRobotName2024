@@ -38,7 +38,7 @@ private:
 	int alliance = 1;
 
 	/* Constant */
-	units::meters_per_second_squared_t maxAcceleration{ 5.39 * 2 };
+	units::meters_per_second_squared_t maxAcceleration{ 5.39 * 2.5 };
 	units::radians_per_second_squared_t maxRotation{ 12.0 * 2 };
 
 	/* Limiters */
