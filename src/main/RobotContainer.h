@@ -27,6 +27,7 @@
 #include "Commands/SourceGrabCommand/SourceGrabCommand.h"
 #include "Commands/AmpCommand/AmpCommand.h"
 #include "Commands/ClosedCommand/ClosedCommand.h"
+#include "Commands/ClosedCommandSmooth/ClosedCommandSmooth.h"
 #include "Commands/SpeakerCommand/SpeakerCommand.h"
 #include "Commands/VisionAmpCommand/VisionAmpCommand.h"
 #include "Commands/VisionSourceGrabCommand/VisionSourceGrabCommand.h"
