@@ -12,11 +12,12 @@ void Storage::setVoltage(units::volt_t voltage) {
 	storageMotor.setVoltage(voltage, false);
 }
 
-bool Storage::isNoteOnForwardSensor(){
-	return !forwardSensor.Get();
+bool Storage::isNoteOnForwardSensor() {
+	// return !forwardSensor.Get();
+	return m_debouncer.Calculate(!forwardSensor.Get());
 }
 
-bool Storage::isNoteOnBackSensor(){
+bool Storage::isNoteOnBackSensor() {
 	return !backSensor.Get();
 }
 

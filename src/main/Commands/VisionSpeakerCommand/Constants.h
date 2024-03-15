@@ -21,17 +21,17 @@ namespace VisionSpeakerCommandConstants {
 	};
 
 	static const InterpolatingTable<units::meter_t, double> DistanceToUpperAngleTable{
-		{1.4_m, -35.0 + 1.50},
-		{1.9_m, -25.0 + 1.50},
-		{2.4_m, -18.5 + 1.50},
-		{2.9_m, -15.5 + 1.50},
-		{3.4_m, -12.5 + 1.50},
-		{3.9_m, -10.5 + 1.50},
-		{4.4_m, -9.0 + 1.50},
-		{4.9_m, -8.2 + 1.50},
-		{5.4_m, -7.2 + 1.50},
-		{5.9_m, -6.5 + 1.50},
-		{6.4_m, -6.0 + 1.50}
+		{1.4_m, -35.0 + 1.00},
+		{1.9_m, -25.0 + 1.00},
+		{2.4_m, -18.5 + 1.00},
+		{2.9_m, -15.5 + 1.00},
+		{3.4_m, -12.5 + 1.00},
+		{3.9_m, -10.5 + 1.00},
+		{4.4_m, -9.0 + 1.00},
+		{4.9_m, -8.2 + 1.00},
+		{5.4_m, -7.2 + 1.00},
+		{5.9_m, -6.5 + 1.00},
+		{6.4_m, -6.0 + 1.00}
 	};
 
 	static const InterpolatingTable<units::meter_t, double> DistanceToVelocityTable{
