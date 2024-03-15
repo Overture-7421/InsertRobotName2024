@@ -5,7 +5,7 @@
 #include "Storage.h"
 
 Storage::Storage() {
-	// storageMotor.setSupplyCurrentLimit(true, 20, 30, 0.5);
+	storageMotor.setSupplyCurrentLimit(true, 20, 30, 0.5);
 }
 
 void Storage::setVoltage(units::volt_t voltage) {
@@ -14,7 +14,7 @@ void Storage::setVoltage(units::volt_t voltage) {
 
 bool Storage::isNoteOnForwardSensor() {
 	// return !forwardSensor.Get();
-	return m_debouncer.Calculate(!forwardSensor.Get());
+	return noteOnForwardCache;
 }
 
 bool Storage::isNoteOnBackSensor() {
@@ -23,6 +23,7 @@ bool Storage::isNoteOnBackSensor() {
 
 // This method will be called once per scheduler run
 void Storage::Periodic() {
+	noteOnForwardCache = m_debouncer.Calculate(!forwardSensor.Get());
 	// frc::SmartDashboard::PutBoolean("Storage/NoteOnBack", isNoteOnBackSensor());
 }
 
