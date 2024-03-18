@@ -22,10 +22,10 @@ public:
 	void shuffleboardPeriodic();
 private:
 	OverTalonFX storageMotor{ 24, ControllerNeutralMode::Brake, false, "rio" };
-	
-	frc::DigitalInput forwardSensor{ 2 };
-	frc::DigitalInput backSensor{ 0 };
 
-	frc::Debouncer m_debouncer{ 20_ms, frc::Debouncer::DebounceType::kBoth };
+	frc::DigitalInput forwardSensor{ 0 }; //2
+	frc::DigitalInput backSensor{ 2 }; // 0
+
+	frc::Debouncer m_debouncer{ 35_ms, frc::Debouncer::DebounceType::kBoth };
 	bool noteOnForwardCache = false;
 };

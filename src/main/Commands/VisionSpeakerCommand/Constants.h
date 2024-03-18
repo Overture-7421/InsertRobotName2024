@@ -20,19 +20,35 @@ namespace VisionSpeakerCommandConstants {
 		{6.4_m, -15.0}
 	};
 
+	// Red Alliance
 	static const InterpolatingTable<units::meter_t, double> DistanceToUpperAngleTable{
-		{1.4_m, -35.0 + 1.25},
-		{1.9_m, -25.0 + 1.25},
-		{2.4_m, -18.5 + 1.25},
-		{2.9_m, -15.5 + 1.25},
-		{3.4_m, -12.5 + 1.25},
-		{3.9_m, -10.5 + 1.25},
-		{4.4_m, -9.0 + 1.25},
-		{4.9_m, -8.2 + 1.25},
-		{5.4_m, -7.2 + 1.25},
-		{5.9_m, -6.5 + 1.25},
-		{6.4_m, -6.0 + 1.25}
+		{1.4_m, -35.0 + 2.35},
+		{1.9_m, -25.0 + 2.35},
+		{2.4_m, -18.5 + 2.35},
+		{2.9_m, -15.5 + 2.35},
+		{3.4_m, -12.5 + 1.5},
+		{3.9_m, -10.5 + 1.5},
+		{4.4_m, -9.0 + 1.5},
+		{4.9_m, -8.2 + 1.5},
+		{5.4_m, -7.2 + 1.5},
+		{5.9_m, -6.5 + 1.5},
+		{6.4_m, -6.0 + 1.5}
 	};
+
+	// Blue Alliance
+	// static const InterpolatingTable<units::meter_t, double> DistanceToUpperAngleTable{
+	// 	{1.4_m, -35.0 + 1.75},
+	// 	{1.9_m, -25.0 + 1.75},
+	// 	{2.4_m, -18.5 + 1.75},
+	// 	{2.9_m, -15.5 + 1.75},
+	// 	{3.4_m, -12.5 + 1.5},
+	// 	{3.9_m, -10.5 + 1.5},
+	// 	{4.4_m, -9.0 + 1.5},
+	// 	{4.9_m, -8.2 + 1.5},
+	// 	{5.4_m, -7.2 + 1.5},
+	// 	{5.9_m, -6.5 + 1.5},
+	// 	{6.4_m, -6.0 + 1.5}
+	// };
 
 	static const InterpolatingTable<units::meter_t, double> DistanceToVelocityTable{
 		{1.4_m, 180.0},
