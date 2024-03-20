@@ -18,6 +18,6 @@ ClosedCommandSmooth::ClosedCommandSmooth(SuperStructure* superStructure, Intake*
 	}), frc2::SequentialCommandGroup(
 		frc2::InstantCommand([=] {superStructure->setTargetCoord({ superStructure->getCurrentState().lowerAngle, -7.0 });}),
 		frc2::WaitCommand(0.3_s),
-		frc2::InstantCommand([=] {superStructure->setTargetCoord({ -26,-7.0 });})
+		frc2::InstantCommand([=] {superStructure->setTargetCoord(SuperStructureConstants::SmoothCloseState);})
 	));
 }
