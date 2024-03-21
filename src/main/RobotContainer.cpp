@@ -17,6 +17,7 @@ RobotContainer::RobotContainer() {
 		VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter).ToPtr().WithTimeout(0.1_s),
 		VisionSpeakerCommand(&chassis, &superStructure, &shooter, &storage).ToPtr()
 	)));
+	pathplanner::NamedCommands::registerCommand("VisionShootNoDelay", std::move(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &storage).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("VisionAmpCommand", std::move(VisionAmpCommand(&superStructure, &shooter)));
 	pathplanner::NamedCommands::registerCommand("StorageCommand", std::move(StorageCommand(&storage, 3_V).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("ShooterCommand", std::move(ShooterCommand(&shooter, 4.00).ToPtr()));
