@@ -6,7 +6,7 @@
 
 #include <frc2/command/SubsystemBase.h>
 #include <frc/DigitalInput.h>
-
+#include <frc/filter/Debouncer.h>
 #include "OvertureLib/MotorControllers/OverTalonFX/OverTalonFX.h"
 #include "OvertureLib/MotorControllers/ControllerNeutralMode/ControllerNeutralMode.h"
 
@@ -22,6 +22,10 @@ public:
 	void shuffleboardPeriodic();
 private:
 	OverTalonFX storageMotor{ 24, ControllerNeutralMode::Brake, false, "rio" };
-	frc::DigitalInput forwardSensor {2};
-	frc::DigitalInput backSensor {0};
+
+	frc::DigitalInput forwardSensor{ 0 }; //2
+	frc::DigitalInput backSensor{ 2 }; // 0
+
+	frc::Debouncer m_debouncer{ 35_ms, frc::Debouncer::DebounceType::kBoth };
+	bool noteOnForwardCache = false;
 };

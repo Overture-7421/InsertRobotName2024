@@ -94,7 +94,7 @@ double SuperStructure::getLowerAngle() {
 double SuperStructure::getUpperAngle() {
 	double rawUpperEncoder = upperEncoder.GetAbsolutePosition() + upperOffset; // Goes from 0 to 1
 	double degrees = rawUpperEncoder * 360.0;
-	return -frc::InputModulus(degrees, -180.0, 180.0);
+	return frc::InputModulus(degrees, -180.0, 180.0);
 }
 
 double SuperStructure::getUpperAngleFalcon() {
@@ -154,11 +154,11 @@ void SuperStructure::shuffleboardPeriodic() {
 	frc::SmartDashboard::PutNumber("SuperStructure/Current/RawUpper", upperEncoder.GetAbsolutePosition());
 
 
-	// frc::SmartDashboard::PutNumber("SuperStructure/DesiredTarget/Lower", targetState.lowerAngle);
-	// frc::SmartDashboard::PutNumber("SuperStructure/DesiredTarget/Upper", targetState.upperAngle);
+	frc::SmartDashboard::PutNumber("SuperStructure/DesiredTarget/Lower", targetState.lowerAngle);
+	frc::SmartDashboard::PutNumber("SuperStructure/DesiredTarget/Upper", targetState.upperAngle);
 
-	// frc::SmartDashboard::PutNumber("SuperStructure/ActualTarget/Lower", actualTarget.lowerAngle);
-	//  frc::SmartDashboard::PutNumber("SuperStructure/ActualTarget/Upper", actualTarget.upperAngle);
+	frc::SmartDashboard::PutNumber("SuperStructure/ActualTarget/Lower", actualTarget.lowerAngle);
+	frc::SmartDashboard::PutNumber("SuperStructure/ActualTarget/Upper", actualTarget.upperAngle);
 
 }
 

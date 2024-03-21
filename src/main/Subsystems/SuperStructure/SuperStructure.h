@@ -77,7 +77,7 @@ private:
 
 #ifdef __FRC_ROBORIO__
 	double lowerOffset = -0.338472;
-	double upperOffset = -0.785593;
+	double upperOffset = -0.23911290597782264;
 #else
 	double lowerOffset = 0;
 	double upperOffset = 0;
@@ -105,7 +105,7 @@ private:
 	// frc::LinearQuadraticRegulator<2, 1> upperArmController { upperArmPlant, {0.1, 8.0}, {12.0}, RobotConstants::LoopTime};
 	// frc::LinearSystemLoop<2, 1, 1> upperArmLoop{upperArmPlant, upperArmController, upperArmObserver, 12_V, RobotConstants::LoopTime};
 
-	frc::ProfiledPIDController<units::degrees> lowerPID{ 0.35, 0.2, 0.0, {360_deg_per_s * 4.0, 360_deg_per_s_sq * 1.25}, RobotConstants::LoopTime };
+	frc::ProfiledPIDController<units::degrees> lowerPID{ 0.20, 0.25, 0.0, {360_deg_per_s * 4.0, 360_deg_per_s_sq * 1.25}, RobotConstants::LoopTime };
 	frc::ProfiledPIDController<units::degrees> upperPID{ 0.25, 0.3, 0.0, {360_deg_per_s * 5.0, 360_deg_per_s_sq * 1.25}, RobotConstants::LoopTime };
 
 	units::turn_t upperFFOffset = 0.25_tr;
