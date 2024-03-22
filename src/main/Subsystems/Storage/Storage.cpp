@@ -14,19 +14,23 @@ void Storage::setVoltage(units::volt_t voltage) {
 
 bool Storage::isNoteOnForwardSensor() {
 	// return !forwardSensor.Get();
-	return noteOnForwardCache;
+	//return noteOnForwardCache;
+	return IRvalue > 20;
 }
 
-bool Storage::isNoteOnBackSensor() {
-	return !backSensor.Get();
+bool Storage::isNoteOnBackSensor(){
+	return false;
 }
 
 // This method will be called once per scheduler run
 void Storage::Periodic() {
-	noteOnForwardCache = m_debouncer.Calculate(!forwardSensor.Get());
+	IRvalue = OverColorSensor.GetIR();
+
+	//noteOnForwardCache = m_debouncer.Calculate(!forwardSensor.Get());
 	// frc::SmartDashboard::PutBoolean("Storage/NoteOnBack", isNoteOnBackSensor());
 }
 
 void Storage::shuffleboardPeriodic() {
 	frc::SmartDashboard::PutBoolean("Storage/NoteOnForward", isNoteOnForwardSensor());
+
 }
