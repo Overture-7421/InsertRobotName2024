@@ -66,17 +66,7 @@ private:
 	// double getLowerAngleThroughBore();
 	double getUpperAngleFalcon();
 
-	void setFalconTargetPos(SuperStructureState targetState, SuperStructureState currentState);
 	double convertAngleToFalconPos(double angle);
-
-	//Encoders
-	OverDutyCycleEncoder upperEncoder{ 9 };
-
-#ifdef __FRC_ROBORIO__
-	double upperOffset = -0.23911290597782264;
-#else
-	double upperOffset = 0;
-#endif
 
 
 	// LowerMotors
@@ -88,7 +78,7 @@ private:
 
 	// Encoders
 	OverCANCoder lowerCANCoder{ 28, 0.286133_tr, "rio" };
-	// OverCANCoder upperCANCoder{ 1, 0, "rio" };
+	OverCANCoder upperCANCoder{ 29, 0_tr, "rio" };
 
 	// State
 	SuperStructureState targetState, actualTarget;
@@ -97,12 +87,6 @@ private:
 	//Feed Forward
 	frc::ArmFeedforward lowerFF{ 0.25_V, 0.4_V, 30_V / 1_tps, 0.9068_V / 1_tr_per_s_sq };
 	frc::ArmFeedforward upperFF{ 0.6_V, 0.25_V, 7.5_V / 1_tps, 0.97016_V / 1_tr_per_s_sq };
-
-	//Estimators
-	frc::ProfiledPIDController<units::degrees> upperPID{ 0.25, 0.3, 0.0, {360_deg_per_s * 5.0, 360_deg_per_s_sq * 1.25}, RobotConstants::LoopTime };
-
-	units::turn_t upperFFOffset = 0.25_tr;
-
 
 	frc2::sysid::SysIdRoutine sysIdRoutineLower{
 		frc2::sysid::Config{0.75_V / 1_s, 5_V, 10_s,
