@@ -22,9 +22,8 @@ SuperStructure::SuperStructure() {
 
 	upperMotor.setFusedCANCoder(upperCANCoder.GetDeviceID());
 	upperMotor.setSupplyCurrentLimit(true, 30, 40, 0.5);
-	upperMotor.setSensorToMechanism(SuperStructureConstants::UpperAngleGearRatio);
+	upperMotor.setRotorToSensorRatio(SuperStructureConstants::UpperAngleGearRatio);
 
-	std::this_thread::sleep_for(std::chrono::seconds(2));
 	lowerLeftMotor.setSensorPosition(convertAngleToFalconPos(getLowerAngle()));
 	upperMotor.setSensorPosition(convertAngleToFalconPos(getUpperAngle()));
 
@@ -83,13 +82,6 @@ double SuperStructure::getUpperAngle() {
 	double degrees = rawUpperEncoder * 360.0;
 	return frc::InputModulus(degrees, -180.0, 180.0);
 }
-
-double SuperStructure::getUpperAngleFalcon() {
-	double rawUpperEncoder = upperMotor.GetPosition().GetValueAsDouble(); // Goes from 0 to 1
-	double degrees = rawUpperEncoder * 360.0;
-	return -frc::InputModulus(degrees, -180.0, 180.0);
-}
-
 
 SuperStructureState SuperStructure::getCurrentState() {
 	SuperStructureState state;

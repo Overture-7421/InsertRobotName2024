@@ -63,9 +63,6 @@ public:
 	void shuffleboardPeriodic();
 
 private:
-	// double getLowerAngleThroughBore();
-	double getUpperAngleFalcon();
-
 	double convertAngleToFalconPos(double angle);
 
 
