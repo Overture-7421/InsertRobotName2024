@@ -87,7 +87,7 @@ private:
 	OverTalonFX upperMotor{ 22, ControllerNeutralMode::Brake, true, "rio" };
 
 	// Encoders
-	OverCANCoder lowerCANCoder{ 28, 0, "rio" };
+	OverCANCoder lowerCANCoder{ 28, 0.286133_tr, "rio" };
 	// OverCANCoder upperCANCoder{ 1, 0, "rio" };
 
 	// State
@@ -95,7 +95,7 @@ private:
 	SuperStructureState currentState;
 
 	//Feed Forward
-	// frc::ArmFeedforward lowerFF{ 0.25_V, 0.4_V, 30_V / 1_tps, 0.9068_V / 1_tr_per_s_sq };
+	frc::ArmFeedforward lowerFF{ 0.25_V, 0.4_V, 30_V / 1_tps, 0.9068_V / 1_tr_per_s_sq };
 	frc::ArmFeedforward upperFF{ 0.6_V, 0.25_V, 7.5_V / 1_tps, 0.97016_V / 1_tr_per_s_sq };
 
 	//Estimators

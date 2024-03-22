@@ -12,10 +12,10 @@
 SuperStructure::SuperStructure() {
 	// Configure Motors
 	lowerLeftMotor.setFusedCANCoder(lowerCANCoder.GetDeviceID());
-	lowerLeftMotor.setSupplyCurrentLimit(true, 30, 40, 0.5);
+	lowerLeftMotor.setSupplyCurrentLimit(true, 40, 80, 0.5);
 	lowerLeftMotor.setRotorToSensorRatio(SuperStructureConstants::LowerAngleGearRatio);
 
-	lowerRightMotor.setSupplyCurrentLimit(true, 30, 40, 0.5);
+	lowerRightMotor.setSupplyCurrentLimit(true, 40, 80, 0.5);
 	lowerRightMotor.setSensorToMechanism(SuperStructureConstants::LowerAngleGearRatio);
 
 	lowerRightMotor.setFollow(lowerLeftMotor.GetDeviceID(), true);
@@ -25,9 +25,7 @@ SuperStructure::SuperStructure() {
 
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 	lowerLeftMotor.setSensorPosition(convertAngleToFalconPos(getLowerAngle()));
-	std::this_thread::sleep_for(std::chrono::seconds(2));
 	upperMotor.setSensorPosition(convertAngleToFalconPos(getUpperAngle()));
-	upperMotor.GetPosition().SetUpdateFrequency(100_Hz);
 
 	SoftwareLimitSwitchConfigs lowerMotorSoftLimitConfig;
 	lowerMotorSoftLimitConfig.ForwardSoftLimitEnable = true;
@@ -50,8 +48,8 @@ SuperStructure::SuperStructure() {
 	setTargetCoord({ getLowerAngle(), getUpperAngle() });
 
 	// Configure Motion Magic and PID
-	lowerLeftMotor.setPIDValues(390.0, 0.0, 0.0, 0.0, 0.0);
-	lowerLeftMotor.configureMotionMagic(1.0, 3.0, 0.0);
+	lowerLeftMotor.setPIDValues(220.0, 240.0, 0.0, 0.0, 0.0);
+	lowerLeftMotor.configureMotionMagic(1.0, 6.0, 0.0);
 
 
 	// upperMotor.setPIDValues(270.0, 0.0, 0.0, 0.0, 0.0);
@@ -122,10 +120,9 @@ void SuperStructure::Periodic() {
 		actualTarget.upperAngle = SuperStructureConstants::UpperAngleSafetyLimit;
 	}
 
-	lowerLeftMotor.setMotionMagicPosition(convertAngleToFalconPos(actualTarget.lowerAngle), 0.0, false);
+	lowerLeftMotor.setMotionMagicPosition(convertAngleToFalconPos(actualTarget.lowerAngle), lowerFF.Calculate(units::radian_t(actualTarget.lowerAngle), 0_rad_per_s).value(), false);
 
 	double voltageUpperOut = upperPID.Calculate(units::degree_t(currentState.upperAngle), units::degree_t(actualTarget.upperAngle));
-	const auto upperSetpoint = upperPID.GetSetpoint();
 	// voltageUpperOut += upperFF.Calculate(lowerSetpoint.position + upperSetpoint.position + upperFFOffset, upperSetpoint.velocity).value();
 
 	upperMotor.SetVoltage(units::volt_t(voltageUpperOut));
@@ -136,6 +133,7 @@ void SuperStructure::shuffleboardPeriodic() {
 	frc::SmartDashboard::PutNumber("SuperStructure/Current/Upper", currentState.upperAngle);
 
 	frc::SmartDashboard::PutNumber("SuperStructure/Current/RawLower", lowerCANCoder.getSensorAbsolutePosition());
+	frc::SmartDashboard::PutNumber("SuperStructure/Current/LowerMotorPosition", lowerLeftMotor.GetPosition().GetValue().value());
 	frc::SmartDashboard::PutNumber("SuperStructure/Current/RawUpper", upperEncoder.GetAbsolutePosition());
 
 
@@ -143,6 +141,8 @@ void SuperStructure::shuffleboardPeriodic() {
 	frc::SmartDashboard::PutNumber("SuperStructure/DesiredTarget/Upper", targetState.upperAngle);
 
 	frc::SmartDashboard::PutNumber("SuperStructure/ActualTarget/Lower", actualTarget.lowerAngle);
+	frc::SmartDashboard::PutNumber("SuperStructure/ActualTarget/LowerMotor", convertAngleToFalconPos(actualTarget.lowerAngle));
+
 	frc::SmartDashboard::PutNumber("SuperStructure/ActualTarget/Upper", actualTarget.upperAngle);
 
 }
