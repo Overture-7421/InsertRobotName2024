@@ -11,11 +11,14 @@
 
 SuperStructure::SuperStructure() {
 	// Configure Motors
+	lowerLeftMotor.setSensorPosition(convertAngleToFalconPos(getLowerAngle()));
+	upperMotor.setSensorPosition(convertAngleToFalconPos(getUpperAngle()));
+
 	lowerLeftMotor.setFusedCANCoder(lowerCANCoder.GetDeviceID());
-	lowerLeftMotor.setSupplyCurrentLimit(true, 40, 80, 0.5);
+	lowerLeftMotor.setSupplyCurrentLimit(true, 30, 40, 0.5);
 	lowerLeftMotor.setRotorToSensorRatio(SuperStructureConstants::LowerAngleGearRatio);
 
-	lowerRightMotor.setSupplyCurrentLimit(true, 40, 80, 0.5);
+	lowerRightMotor.setSupplyCurrentLimit(true, 30, 40, 0.5);
 	lowerRightMotor.setSensorToMechanism(SuperStructureConstants::LowerAngleGearRatio);
 
 	lowerRightMotor.setFollow(lowerLeftMotor.GetDeviceID(), true);
@@ -23,9 +26,6 @@ SuperStructure::SuperStructure() {
 	upperMotor.setFusedCANCoder(upperCANCoder.GetDeviceID());
 	upperMotor.setSupplyCurrentLimit(true, 30, 40, 0.5);
 	upperMotor.setRotorToSensorRatio(SuperStructureConstants::UpperAngleGearRatio);
-
-	lowerLeftMotor.setSensorPosition(convertAngleToFalconPos(getLowerAngle()));
-	upperMotor.setSensorPosition(convertAngleToFalconPos(getUpperAngle()));
 
 	SoftwareLimitSwitchConfigs lowerMotorSoftLimitConfig;
 	lowerMotorSoftLimitConfig.ForwardSoftLimitEnable = true;
@@ -72,13 +72,13 @@ void SuperStructure::setTargetCoord(SuperStructureState targetState) {
 // }
 
 double SuperStructure::getLowerAngle() {
-	double rawLowerEncoder = lowerCANCoder.getSensorAbsolutePosition(); // Goes from 0 to 1
+	double rawLowerEncoder = lowerLeftMotor.getPosition(); // Goes from 0 to 1
 	double degrees = rawLowerEncoder * 360.0;
 	return frc::InputModulus(degrees, -180.0, 180.0);
 }
 
 double SuperStructure::getUpperAngle() {
-	double rawUpperEncoder = upperCANCoder.getSensorAbsolutePosition(); // Goes from 0 to 1
+	double rawUpperEncoder = upperMotor.getPosition(); // Goes from 0 to 1
 	double degrees = rawUpperEncoder * 360.0;
 	return frc::InputModulus(degrees, -180.0, 180.0);
 }
@@ -106,8 +106,8 @@ void SuperStructure::Periodic() {
 		actualTarget.upperAngle = SuperStructureConstants::UpperAngleSafetyLimit;
 	}
 
-	lowerLeftMotor.setMotionMagicPosition(convertAngleToFalconPos(actualTarget.lowerAngle), lowerFF.Calculate(units::radian_t(actualTarget.lowerAngle), 0_rad_per_s).value(), false);
-	upperMotor.setMotionMagicPosition(convertAngleToFalconPos(actualTarget.upperAngle), upperFF.Calculate(units::radian_t(actualTarget.upperAngle), 0_rad_per_s).value(), false);
+	lowerLeftMotor.setMotionMagicPosition(convertAngleToFalconPos(actualTarget.lowerAngle), lowerFF.Calculate(units::degree_t(actualTarget.lowerAngle), units::degrees_per_second_t(0)).value(), false);
+	upperMotor.setMotionMagicPosition(convertAngleToFalconPos(actualTarget.upperAngle), upperFF.Calculate(units::degree_t(actualTarget.upperAngle), units::degrees_per_second_t(0)).value(), false);
 }
 
 void SuperStructure::shuffleboardPeriodic() {

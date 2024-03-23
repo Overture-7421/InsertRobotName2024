@@ -24,8 +24,8 @@ void Shooter::setVelocityVoltage(double velocity) {
 
 	velocity = std::clamp(velocity, -ShooterConstants::MaxSpeed, ShooterConstants::MaxSpeed);
 	targetVel = velocity;
-	upperShooterMotor.setVelocityVoltage(velocity, 0, false);
-	lowerShooterMotor.setVelocityVoltage(velocity * .8, 0, false);
+	upperShooterMotor.setVelocityVoltage(velocity, 0, true);
+	lowerShooterMotor.setVelocityVoltage(velocity * .8, 0, true);
 }
 
 void Shooter::setIndividualVoltage(double upper, double lower) {

@@ -82,7 +82,7 @@ private:
 	SuperStructureState currentState;
 
 	//Feed Forward
-	frc::ArmFeedforward lowerFF{ 0.25_V, 0.4_V, 30_V / 1_tps, 0.9068_V / 1_tr_per_s_sq };
+	frc::ArmFeedforward lowerFF{ 0.25_V, 0.75_V, 30_V / 1_tps, 0.9068_V / 1_tr_per_s_sq };
 	frc::ArmFeedforward upperFF{ 0.6_V, 0.25_V, 7.5_V / 1_tps, 0.97016_V / 1_tr_per_s_sq };
 
 	frc2::sysid::SysIdRoutine sysIdRoutineLower{

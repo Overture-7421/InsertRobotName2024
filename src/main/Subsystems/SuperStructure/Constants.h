@@ -9,7 +9,7 @@ namespace SuperStructureConstants {
 	const static double LowerAngleUpperLimit = 90;
 
 	const static double UpperAngleLowerLimit = -130;
-	const static double UpperAngleUpperLimit = -0.75;
+	const static double UpperAngleUpperLimit = 0;
 
 	const static double LowerAngleSafetyThreshold = -25;
 	const static double UpperAngleSafetyLimit = -70;
