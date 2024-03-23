@@ -103,6 +103,7 @@ private:
 	wpi::log::StructLogEntry<frc::Pose2d> poseLog = wpi::log::StructLogEntry<frc::Pose2d>(log, "/swerve/pose");
 	wpi::log::StructLogEntry<frc::Pose2d> visionPoseLog = wpi::log::StructLogEntry<frc::Pose2d>(log, "/swerve/vision_pose");
 
+	bool hasFusedVisionPose = false;
 	bool headingOverride = false;
 
 	frc::ProfiledPIDController<units::radians> headingController{ 11.0, 0.5, 0.65, frc::TrapezoidProfile<units::radians>::Constraints{ 18_rad_per_s, 18_rad_per_s_sq * 6 }, RobotConstants::LoopTime };

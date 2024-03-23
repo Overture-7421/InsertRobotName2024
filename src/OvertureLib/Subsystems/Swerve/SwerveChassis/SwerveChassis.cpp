@@ -238,8 +238,17 @@ const frc::SwerveDriveKinematics<4>& SwerveChassis::getKinematics() {
  * @brief Updates odometry using vision
  */
 void SwerveChassis::addVisionMeasurement(frc::Pose2d pose, units::second_t timestamp) {
-	odometry->AddVisionMeasurement(pose, timestamp);
-	visionPoseLog.Append(pose);
+	if(latestPose.Translation().Distance(pose.Translation()) < 1_m) {
+		odometry->AddVisionMeasurement(pose, timestamp);
+		visionPoseLog.Append(pose);
+		hasFusedVisionPose = true;
+		return;
+	}
+
+	if(!hasFusedVisionPose){
+		resetOdometry(pose);
+		hasFusedVisionPose = true;
+	}
 }
 
 /**
