@@ -239,6 +239,7 @@ const frc::SwerveDriveKinematics<4>& SwerveChassis::getKinematics() {
  */
 void SwerveChassis::addVisionMeasurement(frc::Pose2d pose, units::second_t timestamp) {
 	odometry->AddVisionMeasurement(pose, timestamp);
+	visionPoseLog.Append(pose);
 }
 
 /**
@@ -360,7 +361,7 @@ void SwerveChassis::shuffleboardPeriodic() {
 	// frc::SmartDashboard::PutNumber("Odometry/SpeedOmega", fieldRelativeSpeed.omega.value());
 
 	field2d.SetRobotPose(latestPose);
-
+	poseLog.Append(latestPose);
 	// frc::SmartDashboard::PutNumber("Odometry/X", estimatedPos.X().value());
 	// frc::SmartDashboard::PutNumber("Odometry/Y", estimatedPos.Y().value());
 }

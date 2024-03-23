@@ -28,5 +28,8 @@ void Storage::Periodic() {
 }
 
 void Storage::shuffleboardPeriodic() {
+	noteOnForward.Append(isNoteOnForwardSensor());
+	voltage.Append(storageMotor.GetMotorVoltage().GetValueAsDouble());
+	current.Append(storageMotor.GetSupplyCurrent().GetValueAsDouble());
 	frc::SmartDashboard::PutBoolean("Storage/NoteOnForward", isNoteOnForwardSensor());
 }

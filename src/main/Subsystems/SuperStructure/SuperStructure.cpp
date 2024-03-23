@@ -11,8 +11,8 @@
 
 SuperStructure::SuperStructure() {
 	// Configure Motors
-	lowerLeftMotor.setSensorPosition(convertAngleToFalconPos(getLowerAngle()));
-	upperMotor.setSensorPosition(convertAngleToFalconPos(getUpperAngle()));
+	lowerLeftMotor.setSensorPosition(lowerCANCoder.getSensorAbsolutePosition());
+	upperMotor.setSensorPosition(upperCANCoder.getSensorAbsolutePosition());
 
 	lowerLeftMotor.setFusedCANCoder(lowerCANCoder.GetDeviceID());
 	lowerLeftMotor.setSupplyCurrentLimit(true, 30, 40, 0.5);
@@ -45,7 +45,7 @@ SuperStructure::SuperStructure() {
 
 	upperMotor.configureSoftwareLimitSwitch(upperMotorSoftLimitConfig);
 
-	setTargetCoord({ getLowerAngle(), getUpperAngle() });
+	setTargetCoord({ lowerCANCoder.getSensorAbsolutePosition() * 360.0, upperCANCoder.getSensorAbsolutePosition() * 360.0 });
 
 	// Configure Motion Magic and PID
 	lowerLeftMotor.setPIDValues(180.0, 240.0, 0.0, 0.0, 0.0);

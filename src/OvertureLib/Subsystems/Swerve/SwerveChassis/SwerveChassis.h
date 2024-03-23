@@ -30,6 +30,8 @@
 
 #include "OvertureLib/Robots/OverRobot/RobotConstants.h"
 
+#include <wpi/DataLog.h>
+#include <frc/DataLogManager.h>
 
 using namespace pathplanner;
 
@@ -96,6 +98,10 @@ private:
 	std::optional<frc::Rotation2d> getRotationTargetOverride();
 
 	frc::Field2d field2d;
+
+	wpi::log::DataLog& log = frc::DataLogManager::GetLog();
+	wpi::log::StructLogEntry<frc::Pose2d> poseLog = wpi::log::StructLogEntry<frc::Pose2d>(log, "/swerve/pose");
+	wpi::log::StructLogEntry<frc::Pose2d> visionPoseLog = wpi::log::StructLogEntry<frc::Pose2d>(log, "/swerve/vision_pose");
 
 	bool headingOverride = false;
 

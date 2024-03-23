@@ -10,7 +10,6 @@
 #include "main/Commands/ServoDashboard/ServoDashboard.h"
 
 RobotContainer::RobotContainer() {
-
 	pathplanner::NamedCommands::registerCommand("GroundGrabCommand", GroundGrabCommand(&superStructure, &storage, &intake).WithTimeout(3_s));
 	pathplanner::NamedCommands::registerCommand("ClosedCommand", std::move(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("VisionSpeakerCommand", std::move(frc2::cmd::Sequence(
@@ -165,5 +164,6 @@ void RobotContainer::UpdateTelemetry() {
 	superStructure.shuffleboardPeriodic();
 	chassis.shuffleboardPeriodic();
 	storage.shuffleboardPeriodic();
+	intake.shuffleboardPeriodic();
 	shooter.shuffleboardPeriodic();
 }

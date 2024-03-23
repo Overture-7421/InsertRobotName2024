@@ -12,6 +12,9 @@
 
 #include "Constants.h"
 
+#include <wpi/DataLog.h>
+#include <frc/DataLogManager.h>
+
 class Storage : public frc2::SubsystemBase {
 public:
 	Storage();
@@ -28,4 +31,10 @@ private:
 
 	frc::Debouncer m_debouncer{ 35_ms, frc::Debouncer::DebounceType::kBoth };
 	bool noteOnForwardCache = false;
+
+	wpi::log::DataLog& log = frc::DataLogManager::GetLog();
+	wpi::log::BooleanLogEntry noteOnForward = wpi::log::BooleanLogEntry(log, "/storage/note_on_forward");
+	wpi::log::DoubleLogEntry voltage = wpi::log::DoubleLogEntry(log, "/storage/voltage");
+	wpi::log::DoubleLogEntry current = wpi::log::DoubleLogEntry(log, "/storage/current");
+
 };

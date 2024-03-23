@@ -5,8 +5,10 @@
 #include "Robot.h"
 
 #include <frc2/command/CommandScheduler.h>
+#include <frc/DataLogManager.h>
 
 void Robot::RobotInit() {
+
   m_teleopResetCommand = m_container.GetTeleopResetCommand();
 
   AddPeriodic([&] {
@@ -85,7 +87,6 @@ void Robot::AutonomousExit() {
 }
 
 void Robot::TeleopInit() {
-
   if (m_autonomousCommand) {
     m_autonomousCommand->Cancel();
   }
