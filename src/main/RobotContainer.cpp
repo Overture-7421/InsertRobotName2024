@@ -91,7 +91,7 @@ void RobotContainer::ConfigureBindings() {
 	ampV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
 	speakerV.WhileTrue(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &opertr).ToPtr());
-	speakerV.OnFalse(ClosedCommandSmooth(&superStructure, &intake, &storage, &shooter).ToPtr());
+	speakerV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
 	// Operator 
 	ampM.WhileTrue(AmpCommand(&superStructure, &shooter).ToPtr());
@@ -130,7 +130,7 @@ void RobotContainer::ConfigureBindings() {
 	));
 
 	speakerM.WhileTrue(SpeakerCommand(&superStructure, &shooter).ToPtr());
-	speakerM.OnFalse(ClosedCommandSmooth(&superStructure, &intake, &storage, &shooter).ToPtr());
+	speakerM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
 	closed.WhileTrue(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 

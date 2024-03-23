@@ -48,10 +48,10 @@ SuperStructure::SuperStructure() {
 	setTargetCoord({ getLowerAngle(), getUpperAngle() });
 
 	// Configure Motion Magic and PID
-	lowerLeftMotor.setPIDValues(220.0, 240.0, 0.0, 0.0, 0.0);
+	lowerLeftMotor.setPIDValues(180.0, 240.0, 0.0, 0.0, 0.0);
 	lowerLeftMotor.configureMotionMagic(1.0, 6.0, 0.0);
 
-	upperMotor.setPIDValues(270.0, 0.0, 0.0, 0.0, 0.0);
+	upperMotor.setPIDValues(180.0, 240.0, 0.0, 0.0, 0.0);
 	upperMotor.configureMotionMagic(1.0, 6.0, 0.0);
 }
 
