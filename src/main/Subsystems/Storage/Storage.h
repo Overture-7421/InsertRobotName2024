@@ -23,6 +23,6 @@ public:
 	void shuffleboardPeriodic();
 private:
 	OverTalonFX storageMotor{ 24, ControllerNeutralMode::Brake, false, "rio" };
-	rev::ColorSensorV3 OverColorSensor{frc::I2C::Port::kOnboard};
+	rev::ColorSensorV3 colorSensor{frc::I2C::Port::kOnboard};
 	int IRvalue = 0;
 };
