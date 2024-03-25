@@ -11,7 +11,7 @@
 
 class SwerveCharacterization : public SwerveChassis {
 public:
-	SwerveCharacterization();
+	SwerveCharacterization(units::meters_per_second_t maxModuleSpeed, units::meter_t driveBaseRadius);
 
 	frc2::CommandPtr SysIdQuadstatic(frc2::sysid::Direction direction);
 	frc2::CommandPtr SysIdDinamic(frc2::sysid::Direction direction);

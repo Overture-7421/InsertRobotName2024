@@ -73,7 +73,7 @@ void RobotContainer::ConfigureBindings() {
 
 	leds.SetDefaultCommand(BlinkEffect(&leds, "all", { 255, 0, 255 }, 1_s));
 
-	chassis.SetDefaultCommand(Drive(&chassis, &driver));
+	chassis.SetDefaultCommand(Drive(ChassisConstants::MaxModuleSpeed, &chassis, &driver));
 
 	supportArms.SetDefaultCommand(FreeSupportArms(&supportArms, 50.00).Repeatedly());
 	// shooter.SetDefaultCommand(ShooterDefaultCommand(&chassis, &shooter));

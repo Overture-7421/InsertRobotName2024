@@ -7,7 +7,8 @@
 /**
 * @brief Builds an object of swerve chassis
 */
-SwerveChassis::SwerveChassis() {
+SwerveChassis::SwerveChassis(units::meters_per_second_t maxModuleSpeed, units::meter_t driveBaseRadius) {
+
 	AutoBuilder::configureHolonomic(
 		[this]() { return getOdometry(); },
 		[this](frc::Pose2d pose) { resetOdometry(pose); },
@@ -16,8 +17,8 @@ SwerveChassis::SwerveChassis() {
 		HolonomicPathFollowerConfig(
 			PIDConstants(5.0, 0.0, 0.0),
 			PIDConstants(5.0, 0.0, 0.0),
-			5.39_mps,
-			0.3732276_m,
+			maxModuleSpeed,
+			driveBaseRadius,
 			ReplanningConfig()
 		),
 		[]() {
@@ -203,7 +204,7 @@ frc::ChassisSpeeds SwerveChassis::getFieldRelativeSpeeds() {
 	return fieldRelativeSpeed;
 }
 
-ChassisAccels SwerveChassis::getFIeldRelativeAccels() {
+ChassisAccels SwerveChassis::getFieldRelativeAccels() {
 	return fieldRelativeAccel;
 }
 
@@ -238,17 +239,7 @@ const frc::SwerveDriveKinematics<4>& SwerveChassis::getKinematics() {
  * @brief Updates odometry using vision
  */
 void SwerveChassis::addVisionMeasurement(frc::Pose2d pose, units::second_t timestamp) {
-	if(latestPose.Translation().Distance(pose.Translation()) < 1_m) {
-		odometry->AddVisionMeasurement(pose, timestamp);
-		visionPoseLog.Append(pose);
-		hasFusedVisionPose = true;
-		return;
-	}
-
-	if(!hasFusedVisionPose){
-		resetOdometry(pose);
-		hasFusedVisionPose = true;
-	}
+	odometry->AddVisionMeasurement(pose, timestamp);
 }
 
 /**

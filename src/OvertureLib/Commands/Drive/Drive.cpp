@@ -5,9 +5,9 @@
 #include "Drive.h"
 #include <iostream>
 
-Drive::Drive(SwerveChassis* swerveChassis, frc::XboxController* controller) :
+Drive::Drive(units::meters_per_second_t maxModuleSpeed, SwerveChassis* swerveChassis, frc::XboxController* controller) :
 	m_swerveChassis(swerveChassis), joystick(controller) {
-	// Use addRequirements() here to declare subsystem dependencies.
+	kMaxModuleSpeed = maxModuleSpeed;
 	AddRequirements(m_swerveChassis);
 }
 
@@ -22,8 +22,8 @@ void Drive::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void Drive::Execute() {
-	units::meters_per_second_t xInput{ Utils::ApplyAxisFilter(-joystick->GetLeftY()) * kMaxSpeed};
-	units::meters_per_second_t yInput{ Utils::ApplyAxisFilter(-joystick->GetLeftX()) * kMaxSpeed};
+	units::meters_per_second_t xInput{ Utils::ApplyAxisFilter(-joystick->GetLeftY()) * kMaxModuleSpeed};
+	units::meters_per_second_t yInput{ Utils::ApplyAxisFilter(-joystick->GetLeftX()) * kMaxModuleSpeed};
 	units::radians_per_second_t rInput{ Utils::ApplyAxisFilter(-joystick->GetRightX()) * kMaxAngularSpeed};
 
 	if (joystick->GetLeftBumper()) {
