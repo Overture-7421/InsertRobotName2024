@@ -8,6 +8,7 @@
 #include <frc2/command/CommandHelper.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/XboxController.h>
+#include <frc/apriltag/AprilTagFieldLayout.h>
 
 #include <frc/Timer.h>
 
@@ -26,8 +27,8 @@
 class VisionSpeakerCommand
 	: public frc2::CommandHelper<frc2::Command, VisionSpeakerCommand> {
 public:
-	VisionSpeakerCommand(Chassis* chassis, SuperStructure* SuperStructure, Shooter* shooter, frc::XboxController* joystick);
-	VisionSpeakerCommand(Chassis* chassis, SuperStructure* SuperStructure, Shooter* shooter, Storage* storage);
+	VisionSpeakerCommand(Chassis* chassis, SuperStructure* SuperStructure, Shooter* shooter, const frc::AprilTagFieldLayout* layout, frc::XboxController* joystick);
+	VisionSpeakerCommand(Chassis* chassis, SuperStructure* SuperStructure, Shooter* shooter, const frc::AprilTagFieldLayout* layout, Storage* storage);
 
 	void Initialize() override;
 
@@ -46,6 +47,8 @@ private:
 	frc::XboxController* joystick = nullptr;
 	Storage* storage;
 
+	const frc::AprilTagFieldLayout* layout;
+
 	bool lowerAngleInTolerance;
 	bool upperAngleInTolerance;
 	bool headingInTolerance;
@@ -57,6 +60,4 @@ private:
 
 	units::meter_t distance = 0.0_m;
 	frc::Rotation2d angle;
-
-	frc::Field2d field;
 };

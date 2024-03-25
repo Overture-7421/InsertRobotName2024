@@ -77,6 +77,4 @@ namespace VisionSpeakerCommandConstants {
 	  {5.9_m, 0.48_s + 0.0_s},
 	  {6.4_m, 0.51_s + 0.0_s}
 	};
-
-	static const frc::Translation2d TargetLocation = { 0.0_m, 5.55_m };
 };

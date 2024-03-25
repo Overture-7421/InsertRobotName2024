@@ -109,6 +109,8 @@ private:
 	frc2::CommandPtr ampAuto = frc2::cmd::None();
 	frc2::CommandPtr sourceAuto = frc2::cmd::None();
 
+	frc2::CommandPtr ampAutoCenterRate = frc2::cmd::None();
+
 	//Auto Chooser
 	frc::SendableChooser<frc2::Command*> autoChooser;
 };

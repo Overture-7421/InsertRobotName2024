@@ -12,6 +12,8 @@
 class AprilTagCamera : public AprilTags {
 public:
 	AprilTagCamera(Chassis* chassis);
+
+	const frc::AprilTagFieldLayout& GetAprilTagLayout();
 private:
 
 	photon::PhotonCamera camera{ APRILTAGS_CAMERA_NAME };

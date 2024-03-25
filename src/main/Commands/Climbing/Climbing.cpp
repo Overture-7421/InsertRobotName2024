@@ -36,7 +36,7 @@ frc2::CommandPtr SetUpJoints(Chassis* chassis, SuperStructure* superStructure, S
 	auto targetPos = poses[poses.size() - 1];
 
 	std::function<units::meter_t()> distanceFunction = [=]() {
-		if (shouldFlip() && !pathToFollow->preventFlipping) {
+		if (isRedAlliance() && !pathToFollow->preventFlipping) {
 			return getDistanceToChassis(chassis, pathplanner::GeometryUtil::flipFieldPose(targetPos));
 		} else {
 			return getDistanceToChassis(chassis, targetPos);

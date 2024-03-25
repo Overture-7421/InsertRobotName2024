@@ -13,14 +13,14 @@ RobotContainer::RobotContainer() {
 	pathplanner::NamedCommands::registerCommand("GroundGrabCommand", GroundGrabCommand(&superStructure, &storage, &intake).WithTimeout(3_s));
 	pathplanner::NamedCommands::registerCommand("ClosedCommand", std::move(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("VisionSpeakerCommand", std::move(frc2::cmd::Sequence(
-		VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter).ToPtr().WithTimeout(0.1_s),
-		VisionSpeakerCommand(&chassis, &superStructure, &shooter, &storage).ToPtr()
+		VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter, &aprilTagCamera.GetAprilTagLayout()).ToPtr().WithTimeout(0.1_s),
+		VisionSpeakerCommand(&chassis, &superStructure, &shooter, &aprilTagCamera.GetAprilTagLayout(), &storage).ToPtr()
 	)));
-	pathplanner::NamedCommands::registerCommand("VisionShootNoDelay", std::move(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &storage).ToPtr()));
+	pathplanner::NamedCommands::registerCommand("VisionShootNoDelay", std::move(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &aprilTagCamera.GetAprilTagLayout(), &storage).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("VisionAmpCommand", std::move(VisionAmpCommand(&superStructure, &shooter)));
 	pathplanner::NamedCommands::registerCommand("StorageCommand", std::move(StorageCommand(&storage, 3_V).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("ShooterCommand", std::move(ShooterCommand(&shooter, 4.00).ToPtr()));
-	pathplanner::NamedCommands::registerCommand("VisionNoShoot", std::move(VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter).ToPtr()));
+	pathplanner::NamedCommands::registerCommand("VisionNoShoot", std::move(VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter, &aprilTagCamera.GetAprilTagLayout()).ToPtr()));
 
 	center7NoteAuto = pathplanner::AutoBuilder::buildAuto("CenterAuto-7Notes");
 	center5NoteAuto = pathplanner::AutoBuilder::buildAuto("CenterAuto-5Notes");
@@ -28,11 +28,69 @@ RobotContainer::RobotContainer() {
 	ampAuto = pathplanner::AutoBuilder::buildAuto("AMPAuto");
 	sourceAuto = pathplanner::AutoBuilder::buildAuto("SourceAuto");
 
+
+	ampAutoCenterRate = frc2::cmd::Sequence(
+		pathplanner::NamedCommands::getCommand("VisionSpeakerCommand"),
+		frc2::cmd::Parallel(
+			pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("AMPAuto1")),
+			pathplanner::NamedCommands::getCommand("GroundGrabCommand")
+		),
+		//Go back to shoot or grab next note if stolen
+		frc2::cmd::Either(
+			frc2::cmd::Sequence(
+				frc2::cmd::Deadline(
+					pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("AMPAuto2")),
+					pathplanner::NamedCommands::getCommand("VisionNoShoot")
+				),
+				pathplanner::NamedCommands::getCommand("VisionSpeakerCommand"),
+				frc2::cmd::Parallel(
+					pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("AMPAuto3")),
+					pathplanner::NamedCommands::getCommand("GroundGrabCommand")
+				)
+			),
+			frc2::cmd::Sequence(
+				frc2::cmd::Parallel(
+					pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("RaceAmpAuto_Stolen1")),
+					pathplanner::NamedCommands::getCommand("GroundGrabCommand")
+				)
+			),
+			[&] {return storage.isNoteOnForwardSensor();}
+		),
+		//Go back to shoot or grab next note if stolen
+		frc2::cmd::Either(
+			frc2::cmd::Sequence(
+				frc2::cmd::Deadline(
+					pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("AMPAuto4")),
+					pathplanner::NamedCommands::getCommand("VisionNoShoot")
+				),
+				pathplanner::NamedCommands::getCommand("VisionSpeakerCommand"),
+				frc2::cmd::Parallel(
+					pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("AMPAuto5")),
+					pathplanner::NamedCommands::getCommand("GroundGrabCommand")
+				)
+			),
+			frc2::cmd::Sequence(
+				frc2::cmd::Parallel(
+					pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("RaceAmpAuto_Stolen2")),
+					pathplanner::NamedCommands::getCommand("GroundGrabCommand")
+				)
+			),
+			[&] {return storage.isNoteOnForwardSensor();}
+		),
+		frc2::cmd::Deadline(
+			pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("AMPAuto6")),
+			pathplanner::NamedCommands::getCommand("VisionNoShoot")
+		),
+		pathplanner::NamedCommands::getCommand("VisionSpeakerCommand")
+	);
+
+
 	autoChooser.SetDefaultOption("None, null, nada", defaultNoneAuto.get());
 	autoChooser.AddOption("CenterAuto-7Notes", center7NoteAuto.get());
 	autoChooser.AddOption("CenterAuto-5Notes", center5NoteAuto.get());
 	autoChooser.AddOption("CenterAuto-4Notes", center4NoteAuto.get());
 	autoChooser.AddOption("AMPAuto", ampAuto.get());
+	autoChooser.AddOption("AMPAuto-Race", ampAutoCenterRate.get());
 	autoChooser.AddOption("SourceAuto", sourceAuto.get());
 
 	frc::SmartDashboard::PutData("Auto Chooser", &autoChooser);
@@ -91,7 +149,7 @@ void RobotContainer::ConfigureBindings() {
 	ampV.WhileTrue(VisionAmpCommand(&superStructure, &shooter));
 	ampV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	speakerV.WhileTrue(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &opertr).ToPtr());
+	speakerV.WhileTrue(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &aprilTagCamera.GetAprilTagLayout(), &opertr).ToPtr());
 	speakerV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
 	// Operator 

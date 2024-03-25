@@ -7,3 +7,8 @@ AprilTagCamera::AprilTagCamera(Chassis* chassis) {
     this->swerveChassis = chassis;
     setCameraAndLayout(&camera, &tagLayout, &cameraToRobot);
 }
+
+
+const frc::AprilTagFieldLayout& AprilTagCamera::GetAprilTagLayout() {
+    return tagLayout;
+}
