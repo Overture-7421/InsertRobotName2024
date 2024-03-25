@@ -23,12 +23,14 @@ RobotContainer::RobotContainer() {
 	pathplanner::NamedCommands::registerCommand("VisionNoShoot", std::move(VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter).ToPtr()));
 
 	center7NoteAuto = pathplanner::AutoBuilder::buildAuto("CenterAuto-7Notes");
+	center5NoteAuto = pathplanner::AutoBuilder::buildAuto("CenterAuto-5Notes");
 	center4NoteAuto = pathplanner::AutoBuilder::buildAuto("CenterAuto-4Notes");
 	ampAuto = pathplanner::AutoBuilder::buildAuto("AMPAuto");
 	sourceAuto = pathplanner::AutoBuilder::buildAuto("SourceAuto");
 
 	autoChooser.SetDefaultOption("None, null, nada", defaultNoneAuto.get());
 	autoChooser.AddOption("CenterAuto-7Notes", center7NoteAuto.get());
+	autoChooser.AddOption("CenterAuto-5Notes", center5NoteAuto.get());
 	autoChooser.AddOption("CenterAuto-4Notes", center4NoteAuto.get());
 	autoChooser.AddOption("AMPAuto", ampAuto.get());
 	autoChooser.AddOption("SourceAuto", sourceAuto.get());

@@ -104,6 +104,7 @@ private:
 	//Autonomous
 	frc2::CommandPtr defaultNoneAuto = frc2::cmd::None();
 	frc2::CommandPtr center4NoteAuto = frc2::cmd::None();
+	frc2::CommandPtr center5NoteAuto = frc2::cmd::None();
 	frc2::CommandPtr center7NoteAuto = frc2::cmd::None();
 	frc2::CommandPtr ampAuto = frc2::cmd::None();
 	frc2::CommandPtr sourceAuto = frc2::cmd::None();
