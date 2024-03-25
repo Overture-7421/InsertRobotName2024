@@ -41,7 +41,7 @@ void VisionSpeakerCommand::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void VisionSpeakerCommand::Execute() {
 	frc::Pose2d chassisPose = chassis->getOdometry();
-	frc::Translation2d speakerLoc = dynamicTarget.getMovingTarget(chassisPose, chassis->getFieldRelativeSpeeds(), chassis->getFIeldRelativeAccels());
+	frc::Translation2d speakerLoc = dynamicTarget.getMovingTarget(chassisPose, chassis->getFieldRelativeSpeeds(), chassis->getFieldRelativeAccels());
 	field.SetRobotPose({ speakerLoc, {0_deg} });
 
 	frc::Translation2d chassisLoc = chassisPose.Translation();
