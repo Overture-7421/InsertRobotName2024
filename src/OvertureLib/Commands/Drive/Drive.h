@@ -33,14 +33,14 @@ private:
 
 	/* Speed Constants */
 	units::meters_per_second_t kMaxModuleSpeed;
-	units::radians_per_second_t kMaxAngularSpeed{ 1_tps};
+	units::radians_per_second_t kMaxAngularSpeed{ 3_tps };
 
 	int alliance = 1;
 
 	/* Limiters */
-	frc::SlewRateLimiter<units::meters_per_second> xLimiter{ 10.0_mps_sq };
-	frc::SlewRateLimiter<units::meters_per_second> yLimiter{ 10.0_mps_sq };
-	frc::SlewRateLimiter<units::radians_per_second> rLimiter{ 1_tr_per_s_sq };
+	frc::SlewRateLimiter<units::meters_per_second> xLimiter{ 15.0_mps_sq };
+	frc::SlewRateLimiter<units::meters_per_second> yLimiter{ 15.0_mps_sq };
+	frc::SlewRateLimiter<units::radians_per_second> rLimiter{ 8_tr_per_s_sq };
 
 	/* Controller */
 	frc::XboxController* joystick;
