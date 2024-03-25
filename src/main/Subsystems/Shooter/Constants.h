@@ -11,3 +11,4 @@ namespace ShooterConstants {
 	const static double MaxSpeed = 180;
 	
 	const static double IdleSpeed = 60;
+};
