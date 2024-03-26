@@ -29,7 +29,7 @@ RobotContainer::RobotContainer() {
 	sourceAuto = pathplanner::AutoBuilder::buildAuto("SourceAuto");
 
 
-	ampAutoCenterRate = frc2::cmd::Sequence(
+	ampAutoCenterRace = frc2::cmd::Sequence(
 		pathplanner::NamedCommands::getCommand("VisionSpeakerCommand"),
 		frc2::cmd::Parallel(
 			pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("AMPAuto1")),
@@ -84,14 +84,69 @@ RobotContainer::RobotContainer() {
 		pathplanner::NamedCommands::getCommand("VisionSpeakerCommand")
 	);
 
+	sourceAutoCenterRace = frc2::cmd::Sequence(
+		pathplanner::NamedCommands::getCommand("VisionSpeakerCommand"),
+		frc2::cmd::Parallel(
+			pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("SourceAuto1")),
+			pathplanner::NamedCommands::getCommand("GroundGrabCommand")
+		),
+		//Go back to shoot or grab next note if stolen
+		frc2::cmd::Either(
+			frc2::cmd::Sequence(
+				frc2::cmd::Deadline(
+					pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("SourceAuto2")),
+					pathplanner::NamedCommands::getCommand("VisionNoShoot")
+				),
+				pathplanner::NamedCommands::getCommand("VisionSpeakerCommand"),
+				frc2::cmd::Parallel(
+					pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("SourceAuto3")),
+					pathplanner::NamedCommands::getCommand("GroundGrabCommand")
+				)
+			),
+			frc2::cmd::Sequence(
+				frc2::cmd::Parallel(
+					pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("SourceAutoStolen1")),
+					pathplanner::NamedCommands::getCommand("GroundGrabCommand")
+				)
+			),
+			[&] {return storage.isNoteOnForwardSensor();}
+		),
+		//Go back to shoot or grab next note if stolen
+		frc2::cmd::Either(
+			frc2::cmd::Sequence(
+				frc2::cmd::Deadline(
+					pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("SourceAuto4")),
+					pathplanner::NamedCommands::getCommand("VisionNoShoot")
+				),
+				pathplanner::NamedCommands::getCommand("VisionSpeakerCommand"),
+				frc2::cmd::Parallel(
+					pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("SourceAuto5")),
+					pathplanner::NamedCommands::getCommand("GroundGrabCommand")
+				)
+			),
+			frc2::cmd::Sequence(
+				frc2::cmd::Parallel(
+					pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("SourceAutoStolen2")),
+					pathplanner::NamedCommands::getCommand("GroundGrabCommand")
+				)
+			),
+			[&] {return storage.isNoteOnForwardSensor();}
+		),
+		frc2::cmd::Deadline(
+			pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("SourceAuto6")),
+			pathplanner::NamedCommands::getCommand("VisionNoShoot")
+		),
+		pathplanner::NamedCommands::getCommand("VisionSpeakerCommand")
+	);
 
 	autoChooser.SetDefaultOption("None, null, nada", defaultNoneAuto.get());
 	autoChooser.AddOption("CenterAuto-7Notes", center7NoteAuto.get());
 	autoChooser.AddOption("CenterAuto-5Notes", center5NoteAuto.get());
 	autoChooser.AddOption("CenterAuto-4Notes", center4NoteAuto.get());
 	autoChooser.AddOption("AMPAuto", ampAuto.get());
-	autoChooser.AddOption("AMPAuto-Race", ampAutoCenterRate.get());
+	autoChooser.AddOption("AMPAuto-Race", ampAutoCenterRace.get());
 	autoChooser.AddOption("SourceAuto", sourceAuto.get());
+	autoChooser.AddOption("SourceAuto-Race", sourceAutoCenterRace.get());
 
 	frc::SmartDashboard::PutData("Auto Chooser", &autoChooser);
 
