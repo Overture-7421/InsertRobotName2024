@@ -4,10 +4,11 @@
 
 #include "TabulateCommand.h"
 
-TabulateCommand::TabulateCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter) {
+TabulateCommand::TabulateCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, const frc::AprilTagFieldLayout* layout) {
   this->superStructure = superStructure;
   this->shooter = shooter;
   this->chassis = chassis;
+  this->layout = layout;
 
   AddRequirements({superStructure, shooter});
 }
@@ -18,11 +19,11 @@ void TabulateCommand::Initialize() {
   frc::SmartDashboard::PutNumber("Tabulate/UpperAngle", superStructure->getUpperAngle());
   frc::SmartDashboard::PutNumber("Tabulate/ShooterVel", 0.0);
 
-  if(shouldFlip()){
-    targetLocation = pathplanner::GeometryUtil::flipFieldPosition(VisionSpeakerCommandConstants::TargetLocation);
-  }else{
-    targetLocation = VisionSpeakerCommandConstants::TargetLocation;
-  }
+	if (isRedAlliance()) {
+		targetLocation = layout->GetTagPose(4).value().ToPose2d().Translation();
+	} else {
+		targetLocation = layout->GetTagPose(7).value().ToPose2d().Translation();
+	}
 
   chassis->setHeadingOverride(true);
 }

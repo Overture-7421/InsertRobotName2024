@@ -18,7 +18,7 @@
 class Drive
 	: public frc2::CommandHelper<frc2::Command, Drive> {
 public:
-	Drive(SwerveChassis* swerveChassis, frc::XboxController* controller);
+	Drive(units::meters_per_second_t maxModuleSpeed, SwerveChassis* swerveChassis, frc::XboxController* controller);
 
 	void Initialize() override;
 
@@ -32,19 +32,15 @@ private:
 	SwerveChassis* m_swerveChassis;
 
 	/* Speed Constants */
-	double kMaxSpeed{ 5.39 };
-	double kMaxAngularSpeed{ 7.0 };
+	units::meters_per_second_t kMaxModuleSpeed;
+	units::radians_per_second_t kMaxAngularSpeed{ 3_tps };
 
 	int alliance = 1;
 
-	/* Constant */
-	units::meters_per_second_squared_t maxAcceleration{ 5.39 * 2.5 };
-	units::radians_per_second_squared_t maxRotation{ 12.0 * 2 };
-
 	/* Limiters */
-	frc::SlewRateLimiter<units::meters_per_second> xLimiter{ maxAcceleration };
-	frc::SlewRateLimiter<units::meters_per_second> yLimiter{ maxAcceleration };
-	frc::SlewRateLimiter<units::radians_per_second> rLimiter{ maxRotation };
+	frc::SlewRateLimiter<units::meters_per_second> xLimiter{ 15.0_mps_sq };
+	frc::SlewRateLimiter<units::meters_per_second> yLimiter{ 15.0_mps_sq };
+	frc::SlewRateLimiter<units::radians_per_second> rLimiter{ 8_tr_per_s_sq };
 
 	/* Controller */
 	frc::XboxController* joystick;

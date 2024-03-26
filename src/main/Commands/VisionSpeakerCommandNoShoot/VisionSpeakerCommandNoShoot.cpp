@@ -6,21 +6,19 @@
 
 #include <frc/MathUtil.h>
 
-VisionSpeakerCommandNoShoot::VisionSpeakerCommandNoShoot(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter) {
+VisionSpeakerCommandNoShoot::VisionSpeakerCommandNoShoot(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, AprilTagCamera* tagCamera) {
 	// Use addRequirements() here to declare subsystem dependencies.
 	AddRequirements({ superStructure, shooter });
 	this->chassis = chassis;
 	this->superStructure = superStructure;
 	this->shooter = shooter;
+	this->tagCamera = tagCamera;
 }
 
 // Called when the command is initially scheduled.
 void VisionSpeakerCommandNoShoot::Initialize() {
-	if (shouldFlip()) {
-		targetLocation = pathplanner::GeometryUtil::flipFieldPosition(VisionSpeakerCommandConstants::TargetLocation);
-	} else {
-		targetLocation = VisionSpeakerCommandConstants::TargetLocation;
-	}
+
+	targetLocation = tagCamera->GetSpeakerLocation();
 
 	chassis->setHeadingOverride(true);
 }

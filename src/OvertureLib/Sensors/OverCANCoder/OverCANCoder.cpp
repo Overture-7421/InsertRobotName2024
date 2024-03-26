@@ -17,10 +17,10 @@
 *
 * @param bus    CAN Bus of the CANCoder
 */
-OverCANCoder::OverCANCoder(int _id, double offset, std::string _bus) : CANcoder(_id, _bus) {
+OverCANCoder::OverCANCoder(int _id, units::turn_t offset, std::string _bus) : CANcoder(_id, _bus) {
 	canCoderConfiguration.MagnetSensor.AbsoluteSensorRange = AbsoluteSensorRangeValue::Signed_PlusMinusHalf;
 	canCoderConfiguration.MagnetSensor.SensorDirection = SensorDirectionValue::CounterClockwise_Positive;
-	canCoderConfiguration.MagnetSensor.MagnetOffset = offset / 360;
+	canCoderConfiguration.MagnetSensor.MagnetOffset = offset.value();
 	GetConfigurator().Apply(canCoderConfiguration);
 
 #ifndef __FRC_ROBORIO__

@@ -30,12 +30,14 @@
 
 #include "OvertureLib/Robots/OverRobot/RobotConstants.h"
 
+#include <wpi/DataLog.h>
+#include <frc/DataLogManager.h>
 
 using namespace pathplanner;
 
 class SwerveChassis : public frc2::SubsystemBase {
 public:
-	SwerveChassis();
+	SwerveChassis(units::meters_per_second_t maxModuleSpeed, units::meter_t driveBaseRadius);
 	void setTargetHeading(frc::Rotation2d rotationTarget);
 	void setHeadingOverride(bool headingOverride);
 	void setModulePositions(std::array<frc::Translation2d, 4>* positions);
@@ -49,7 +51,7 @@ public:
 	void driveFieldRelative(frc::ChassisSpeeds speeds);
 	frc::ChassisSpeeds getRobotRelativeSpeeds();
 	frc::ChassisSpeeds getFieldRelativeSpeeds();
-	ChassisAccels getFIeldRelativeAccels();
+	ChassisAccels getFieldRelativeAccels();
 
 	const frc::Pose2d& getOdometry();
 	void resetOdometry(frc::Pose2d initPose);
@@ -97,8 +99,12 @@ private:
 
 	frc::Field2d field2d;
 
+	wpi::log::DataLog& log = frc::DataLogManager::GetLog();
+	wpi::log::StructLogEntry<frc::Pose2d> poseLog = wpi::log::StructLogEntry<frc::Pose2d>(log, "/swerve/pose");
+	wpi::log::StructLogEntry<frc::Pose2d> visionPoseLog = wpi::log::StructLogEntry<frc::Pose2d>(log, "/swerve/vision_pose");
+
 	bool headingOverride = false;
 
-	frc::ProfiledPIDController<units::radians> headingController{ 11.0, 0.5, 0.3, frc::TrapezoidProfile<units::radians>::Constraints{ 18_rad_per_s, 18_rad_per_s_sq * 6 }, RobotConstants::LoopTime };
+	frc::ProfiledPIDController<units::radians> headingController{ 11.0, 0.5, 0.65, frc::TrapezoidProfile<units::radians>::Constraints{ 18_rad_per_s, 18_rad_per_s_sq * 6 }, RobotConstants::LoopTime };
 	frc::Rotation2d headingTarget;
 };

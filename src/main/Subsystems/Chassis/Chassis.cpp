@@ -4,7 +4,7 @@
 
 #include "Chassis.h"
 
-Chassis::Chassis() {
+Chassis::Chassis() : SwerveChassis(ChassisConstants::MaxModuleSpeed, ChassisConstants::DriveBaseRadius) {
 	pigeon = &chassisPigeon;
 	setModulePositions(&modulePos);
 	setModules(&frontLeft, &frontRight, &backLeft, &backRight);

@@ -4,7 +4,9 @@
 
 #include "SwerveCharacterization.h"
 
-SwerveCharacterization::SwerveCharacterization() {};
+SwerveCharacterization::SwerveCharacterization(units::meters_per_second_t maxModuleSpeed, units::meter_t driveBaseRadius) : SwerveChassis(maxModuleSpeed, driveBaseRadius) {
+
+};
 
 /**
  * @brief Runs the SysId Quasisstatic command

@@ -4,18 +4,19 @@
 
 #include "ShooterDefaultCommand.h"
 
-ShooterDefaultCommand::ShooterDefaultCommand(Chassis* chassis, Shooter* shooter) {
+ShooterDefaultCommand::ShooterDefaultCommand(Chassis* chassis, Shooter* shooter, const frc::AprilTagFieldLayout* layout) {
   this->shooter = shooter;
   this->chassis = chassis;
+  this->layout = layout;
   AddRequirements({shooter});
 }
 
 // Called when the command is initially scheduled.
 void ShooterDefaultCommand::Initialize() {
-  if (shouldFlip()) {
-		targetLocation = pathplanner::GeometryUtil::flipFieldPosition(VisionSpeakerCommandConstants::TargetLocation);
+	if (isRedAlliance()) {
+		targetLocation = layout->GetTagPose(4).value().ToPose2d().Translation();
 	} else {
-		targetLocation = VisionSpeakerCommandConstants::TargetLocation;
+		targetLocation = layout->GetTagPose(7).value().ToPose2d().Translation();
 	}
 }
 

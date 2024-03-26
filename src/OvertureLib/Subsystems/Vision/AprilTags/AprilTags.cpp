@@ -41,6 +41,7 @@ void AprilTags::addMeasurementToChassis(const photon::PhotonPipelineResult& resu
 	if (poseResult.has_value()) {
 		frc::Pose2d poseTo2d = poseResult.value().estimatedPose.ToPose2d();
 		swerveChassis->addVisionMeasurement(poseTo2d, poseResult.value().timestamp);
+		poseLog.Append(poseTo2d);
 	}
 }
 

@@ -20,6 +20,6 @@ const std::vector<std::pair<StageLocation, frc::Pose2d>> redStageLocations{
 	{StageLocation::Back,  pathplanner::GeometryUtil::flipFieldPose(blueStageLocations[2].second)}
 };
 
-bool shouldFlip();
+bool isRedAlliance();
 units::length::meter_t getDistanceToChassis(Chassis* chassis, frc::Pose2d targetPose);
 StageLocation findClosestStageLocation(Chassis* chassis);

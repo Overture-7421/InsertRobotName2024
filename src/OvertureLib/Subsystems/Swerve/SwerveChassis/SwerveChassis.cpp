@@ -7,7 +7,8 @@
 /**
 * @brief Builds an object of swerve chassis
 */
-SwerveChassis::SwerveChassis() {
+SwerveChassis::SwerveChassis(units::meters_per_second_t maxModuleSpeed, units::meter_t driveBaseRadius) {
+
 	AutoBuilder::configureHolonomic(
 		[this]() { return getOdometry(); },
 		[this](frc::Pose2d pose) { resetOdometry(pose); },
@@ -16,8 +17,8 @@ SwerveChassis::SwerveChassis() {
 		HolonomicPathFollowerConfig(
 			PIDConstants(5.0, 0.0, 0.0),
 			PIDConstants(5.0, 0.0, 0.0),
-			5.39_mps,
-			0.3732276_m,
+			maxModuleSpeed,
+			driveBaseRadius,
 			ReplanningConfig()
 		),
 		[]() {
@@ -203,7 +204,7 @@ frc::ChassisSpeeds SwerveChassis::getFieldRelativeSpeeds() {
 	return fieldRelativeSpeed;
 }
 
-ChassisAccels SwerveChassis::getFIeldRelativeAccels() {
+ChassisAccels SwerveChassis::getFieldRelativeAccels() {
 	return fieldRelativeAccel;
 }
 
@@ -360,7 +361,7 @@ void SwerveChassis::shuffleboardPeriodic() {
 	// frc::SmartDashboard::PutNumber("Odometry/SpeedOmega", fieldRelativeSpeed.omega.value());
 
 	field2d.SetRobotPose(latestPose);
-
+	poseLog.Append(latestPose);
 	// frc::SmartDashboard::PutNumber("Odometry/X", estimatedPos.X().value());
 	// frc::SmartDashboard::PutNumber("Odometry/Y", estimatedPos.Y().value());
 }

@@ -14,3 +14,9 @@ void Intake::setVoltage(units::volt_t voltage) {
 
 // This method will be called once per scheduler run
 void Intake::Periodic() {}
+
+
+void Intake::shuffleboardPeriodic() {
+	voltage.Append(intakeMotor.GetMotorVoltage().GetValueAsDouble());
+	current.Append(intakeMotor.GetSupplyCurrent().GetValueAsDouble());
+}

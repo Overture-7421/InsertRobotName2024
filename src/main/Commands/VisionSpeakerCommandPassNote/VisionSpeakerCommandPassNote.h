@@ -19,17 +19,16 @@
 #include "main/Subsystems/SuperStructure/SuperStructure.h"
 #include "main/Subsystems/Shooter/Shooter.h"
 #include "main/Subsystems/Storage/Storage.h"
-#include "main/Subsystems/Vision/AprilTagCamera.h"
 
 #include "main/Commands/UtilityFunctions/UtilityFunctions.h"
 #include "main/Commands/StorageCommand/StorageCommand.h"
-#include "Constants.h"
 
-class VisionSpeakerCommand
-	: public frc2::CommandHelper<frc2::Command, VisionSpeakerCommand> {
+#include "main/Enums/PassNote.h"
+
+class VisionSpeakerCommandPassNote
+	: public frc2::CommandHelper<frc2::Command, VisionSpeakerCommandPassNote> {
 public:
-	VisionSpeakerCommand(Chassis* chassis, SuperStructure* SuperStructure, Shooter* shooter, AprilTagCamera* tagCamera, frc::XboxController* joystick);
-	VisionSpeakerCommand(Chassis* chassis, SuperStructure* SuperStructure, Shooter* shooter, AprilTagCamera* tagCamera, Storage* storage);
+	VisionSpeakerCommandPassNote(Chassis* chassis, SuperStructure* SuperStructure, Shooter* shooter, const frc::AprilTagFieldLayout* layout, Storage* storage, PassNote upOrDown);
 
 	void Initialize() override;
 
@@ -45,19 +44,19 @@ private:
 	SuperStructure* superStructure;
 	Chassis* chassis;
 	Shooter* shooter;
-	frc::XboxController* joystick = nullptr;
 	Storage* storage;
-	AprilTagCamera* tagCamera;
+
+	const frc::AprilTagFieldLayout* layout;
 
 	bool lowerAngleInTolerance;
 	bool upperAngleInTolerance;
 	bool headingInTolerance;
 	bool shooterSpeedInTolerance;
 
-	TargetingWhileMoving dynamicTarget{
-		VisionSpeakerCommandConstants::DistanceToShotTimeTable
-	};
+	PassNote upOrDown;
+	SuperStructureState targetState;
 
 	units::meter_t distance = 0.0_m;
 	frc::Rotation2d angle;
+	frc::Translation2d speakerLoc;
 };

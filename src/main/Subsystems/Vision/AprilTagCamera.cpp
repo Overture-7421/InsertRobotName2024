@@ -7,3 +7,11 @@ AprilTagCamera::AprilTagCamera(Chassis* chassis) {
     this->swerveChassis = chassis;
     setCameraAndLayout(&camera, &tagLayout, &cameraToRobot);
 }
+
+frc::Translation2d AprilTagCamera::GetSpeakerLocation() {
+    if (isRedAlliance()) {
+        return tagLayout.GetTagPose(4).value().ToPose2d().Translation();
+    } else {
+        return tagLayout.GetTagPose(7).value().ToPose2d().Translation();
+    }
+};

@@ -6,33 +6,31 @@
 
 #include <frc/MathUtil.h>
 
-VisionSpeakerCommand::VisionSpeakerCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, frc::XboxController* joystick) {
+VisionSpeakerCommand::VisionSpeakerCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, AprilTagCamera* tagCamera, frc::XboxController* joystick) {
 	// Use addRequirements() here to declare subsystem dependencies.
 	AddRequirements({ superStructure, shooter });
 	this->chassis = chassis;
 	this->superStructure = superStructure;
 	this->shooter = shooter;
 	this->joystick = joystick;
+	this->tagCamera= tagCamera;
 }
 
-VisionSpeakerCommand::VisionSpeakerCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, Storage* storage) {
+VisionSpeakerCommand::VisionSpeakerCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, AprilTagCamera* tagCamera, Storage* storage) {
 	// Use addRequirements() here to declare subsystem dependencies.
 	AddRequirements({ superStructure, shooter, storage });
 	this->chassis = chassis;
 	this->superStructure = superStructure;
 	this->shooter = shooter;
 	this->storage = storage;
+	this->tagCamera = tagCamera;
 }
 
 // Called when the command is initially scheduled.
 void VisionSpeakerCommand::Initialize() {
 	chassis->setHeadingOverride(true);
 
-	if (shouldFlip()) {
-		dynamicTarget.setTargetLocation(pathplanner::GeometryUtil::flipFieldPosition(VisionSpeakerCommandConstants::TargetLocation));
-	} else {
-		dynamicTarget.setTargetLocation(VisionSpeakerCommandConstants::TargetLocation);
-	}
+	dynamicTarget.setTargetLocation(tagCamera->GetSpeakerLocation());
 
 	Timer.Reset();
 	Timer.Stop();
@@ -41,8 +39,7 @@ void VisionSpeakerCommand::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void VisionSpeakerCommand::Execute() {
 	frc::Pose2d chassisPose = chassis->getOdometry();
-	frc::Translation2d speakerLoc = dynamicTarget.getMovingTarget(chassisPose, chassis->getFieldRelativeSpeeds(), chassis->getFIeldRelativeAccels());
-	field.SetRobotPose({ speakerLoc, {0_deg} });
+	frc::Translation2d speakerLoc = dynamicTarget.getMovingTarget(chassisPose, chassis->getFieldRelativeSpeeds(), chassis->getFieldRelativeAccels());
 
 	frc::Translation2d chassisLoc = chassisPose.Translation();
 

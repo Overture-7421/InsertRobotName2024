@@ -1,11 +1,14 @@
 #pragma once
 
 #include <units/length.h>
+#include <units/velocity.h>
 #include <frc/geometry/Translation2d.h>
 
 namespace ChassisConstants {
     const static double RotationGearRatio = 150.0 / 7.0;
     const static double DriveGearRatio =  5.9027777;
+    const static units::meters_per_second_t MaxModuleSpeed = 5.39_mps;
+    const static units::meter_t DriveBaseRadius = 0.3732276_m;
     const static units::meter_t WheelDiameter = 0.1016_m;
 
     const static frc::Translation2d FrontLeftModuleTranslation = {7.506890_in, 10.375_in};

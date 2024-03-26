@@ -42,6 +42,8 @@ private:
 
 	std::unique_ptr<photon::PhotonPoseEstimator> poseEstimator;
 	bool poseEstimatorSet = false;
+	wpi::log::DataLog& log = frc::DataLogManager::GetLog();
+	wpi::log::StructLogEntry<frc::Pose2d> poseLog = wpi::log::StructLogEntry<frc::Pose2d>(log, "/vision/pose");
 
 protected:
 	/* subsytem */

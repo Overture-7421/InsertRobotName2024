@@ -19,15 +19,15 @@ public:
 
 private:
 #ifndef __FRC_ROBORIO__
-	SwerveModule backRight{ 5, 6, 11, -90, "BackRightModule", "OverCANivore" };
-	SwerveModule backLeft{ 7, 8, 12, -90, "BackLeftModule", "OverCANivore" };
-	SwerveModule frontLeft{ 1, 2, 9, -90, "FrontLeftModule", "OverCANivore" };
-	SwerveModule frontRight{ 3, 4, 10, -90, "FrontRightModule", "OverCANivore" };
+	SwerveModule backRight{ 5, 6, 11, -90_deg, "BackRightModule", "OverCANivore" };
+	SwerveModule backLeft{ 7, 8, 12, -90_deg, "BackLeftModule", "OverCANivore" };
+	SwerveModule frontLeft{ 1, 2, 9, -90_deg, "FrontLeftModule", "OverCANivore" };
+	SwerveModule frontRight{ 3, 4, 10, -90_deg, "FrontRightModule", "OverCANivore" };
 #else
-	SwerveModule backRight{ 1, 2, 9, 28.388671875, "BackRightModule", "OverCANivore" };
-	SwerveModule backLeft{ 3, 4, 10, 17.40234375, "BackLeftModule", "OverCANivore" };
-	SwerveModule frontLeft{ 5, 6, 11, -158.818359375, "FrontLeftModule", "OverCANivore" };
-	SwerveModule frontRight{ 7, 8, 12, -48.33984375, "FrontRightModule", "OverCANivore" };
+	SwerveModule backRight{ 1, 2, 9, 28.388671875_deg, "BackRightModule", "OverCANivore" };
+	SwerveModule backLeft{ 3, 4, 10, 17.40234375_deg, "BackLeftModule", "OverCANivore" };
+	SwerveModule frontLeft{ 5, 6, 11, -158.818359375_deg, "FrontLeftModule", "OverCANivore" };
+	SwerveModule frontRight{ 7, 8, 12, -48.33984375_deg, "FrontRightModule", "OverCANivore" };
 #endif
 
 
