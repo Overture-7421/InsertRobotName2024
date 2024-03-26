@@ -19,6 +19,7 @@
 #include "main/Subsystems/SuperStructure/SuperStructure.h"
 #include "main/Subsystems/Shooter/Shooter.h"
 #include "main/Subsystems/Storage/Storage.h"
+#include "main/Subsystems/Vision/AprilTagCamera.h"
 
 #include "main/Commands/UtilityFunctions/UtilityFunctions.h"
 #include "main/Commands/StorageCommand/StorageCommand.h"
@@ -27,8 +28,8 @@
 class VisionSpeakerCommand
 	: public frc2::CommandHelper<frc2::Command, VisionSpeakerCommand> {
 public:
-	VisionSpeakerCommand(Chassis* chassis, SuperStructure* SuperStructure, Shooter* shooter, const frc::AprilTagFieldLayout* layout, frc::XboxController* joystick);
-	VisionSpeakerCommand(Chassis* chassis, SuperStructure* SuperStructure, Shooter* shooter, const frc::AprilTagFieldLayout* layout, Storage* storage);
+	VisionSpeakerCommand(Chassis* chassis, SuperStructure* SuperStructure, Shooter* shooter, AprilTagCamera* tagCamera, frc::XboxController* joystick);
+	VisionSpeakerCommand(Chassis* chassis, SuperStructure* SuperStructure, Shooter* shooter, AprilTagCamera* tagCamera, Storage* storage);
 
 	void Initialize() override;
 
@@ -46,8 +47,7 @@ private:
 	Shooter* shooter;
 	frc::XboxController* joystick = nullptr;
 	Storage* storage;
-
-	const frc::AprilTagFieldLayout* layout;
+	AprilTagCamera* tagCamera;
 
 	bool lowerAngleInTolerance;
 	bool upperAngleInTolerance;

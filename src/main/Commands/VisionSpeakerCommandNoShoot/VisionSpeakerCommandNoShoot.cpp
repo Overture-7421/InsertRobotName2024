@@ -6,22 +6,19 @@
 
 #include <frc/MathUtil.h>
 
-VisionSpeakerCommandNoShoot::VisionSpeakerCommandNoShoot(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, const frc::AprilTagFieldLayout* layout) {
+VisionSpeakerCommandNoShoot::VisionSpeakerCommandNoShoot(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, AprilTagCamera* tagCamera) {
 	// Use addRequirements() here to declare subsystem dependencies.
 	AddRequirements({ superStructure, shooter });
 	this->chassis = chassis;
 	this->superStructure = superStructure;
 	this->shooter = shooter;
-	this->layout = layout;
+	this->tagCamera = tagCamera;
 }
 
 // Called when the command is initially scheduled.
 void VisionSpeakerCommandNoShoot::Initialize() {
-	if (isRedAlliance()) {
-		targetLocation = layout->GetTagPose(4).value().ToPose2d().Translation();
-	} else {
-		targetLocation = layout->GetTagPose(7).value().ToPose2d().Translation();
-	}
+
+	targetLocation = tagCamera->GetSpeakerLocation();
 
 	chassis->setHeadingOverride(true);
 }

@@ -6,6 +6,8 @@
 
 #include "OvertureLib/Subsystems/Vision/AprilTags/AprilTags.h"
 #include "main/Subsystems/Chassis/Chassis.h"
+#include "main/Commands/UtilityFunctions/UtilityFunctions.h"
+
 
 
 
@@ -13,7 +15,8 @@ class AprilTagCamera : public AprilTags {
 public:
 	AprilTagCamera(Chassis* chassis);
 
-	const frc::AprilTagFieldLayout& GetAprilTagLayout();
+	frc::Translation2d GetSpeakerLocation();
+
 private:
 
 	photon::PhotonCamera camera{ APRILTAGS_CAMERA_NAME };

@@ -6,35 +6,31 @@
 
 #include <frc/MathUtil.h>
 
-VisionSpeakerCommand::VisionSpeakerCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, const frc::AprilTagFieldLayout* layout, frc::XboxController* joystick) {
+VisionSpeakerCommand::VisionSpeakerCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, AprilTagCamera* tagCamera, frc::XboxController* joystick) {
 	// Use addRequirements() here to declare subsystem dependencies.
 	AddRequirements({ superStructure, shooter });
 	this->chassis = chassis;
 	this->superStructure = superStructure;
 	this->shooter = shooter;
 	this->joystick = joystick;
-	this->layout = layout;
+	this->tagCamera= tagCamera;
 }
 
-VisionSpeakerCommand::VisionSpeakerCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, const frc::AprilTagFieldLayout* layout, Storage* storage) {
+VisionSpeakerCommand::VisionSpeakerCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, AprilTagCamera* tagCamera, Storage* storage) {
 	// Use addRequirements() here to declare subsystem dependencies.
 	AddRequirements({ superStructure, shooter, storage });
 	this->chassis = chassis;
 	this->superStructure = superStructure;
 	this->shooter = shooter;
 	this->storage = storage;
-	this->layout = layout;
+	this->tagCamera = tagCamera;
 }
 
 // Called when the command is initially scheduled.
 void VisionSpeakerCommand::Initialize() {
 	chassis->setHeadingOverride(true);
 
-	if (isRedAlliance()) {
-		dynamicTarget.setTargetLocation(layout->GetTagPose(4).value().ToPose2d().Translation());
-	} else {
-		dynamicTarget.setTargetLocation(layout->GetTagPose(7).value().ToPose2d().Translation());
-	}
+	dynamicTarget.setTargetLocation(tagCamera->GetSpeakerLocation());
 
 	Timer.Reset();
 	Timer.Stop();
