@@ -82,11 +82,11 @@ private:
 	SuperStructureState currentState;
 
 	//Feed Forward
-	frc::ArmFeedforward lowerFF{ 0.25_V, 0.75_V, 30_V / 1_tps, 0.9068_V / 1_tr_per_s_sq };
+	frc::ArmFeedforward lowerFF{ 0.61794_V, 0.50143_V, 18.063_V / 1_tps, 1.4638_V / 1_tr_per_s_sq };
 	frc::ArmFeedforward upperFF{ 0.6_V, 0.25_V, 7.5_V / 1_tps, 0.97016_V / 1_tr_per_s_sq };
 
 	frc2::sysid::SysIdRoutine sysIdRoutineLower{
-		frc2::sysid::Config{0.75_V / 1_s, 5_V, 10_s,
+		frc2::sysid::Config{2_V / 1_s, 7_V, 10_s,
 							std::nullopt},
 		frc2::sysid::Mechanism{
 			[this](units::volt_t driveVoltage) {
