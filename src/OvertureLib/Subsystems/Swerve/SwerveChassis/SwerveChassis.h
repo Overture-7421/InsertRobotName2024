@@ -96,6 +96,8 @@ protected:
 
 private:
 	std::optional<frc::Rotation2d> getRotationTargetOverride();
+	units::meters_per_second_t maxModuleSpeed;
+	units::meter_t driveBaseRadius;
 
 	frc::Field2d field2d;
 
