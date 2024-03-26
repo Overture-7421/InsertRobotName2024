@@ -151,6 +151,12 @@ void RobotContainer::ConfigureBindings() {
 	speakerV.WhileTrue(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &aprilTagCamera, &opertr).ToPtr());
 	speakerV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
+	passNoteHigh.WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &aprilTagCamera.GetAprilTagLayout(), &storage, PassNote::High).ToPtr());
+	passNoteHigh.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+
+	passNoteLow.WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &aprilTagCamera.GetAprilTagLayout(), &storage, PassNote::Low).ToPtr());
+	passNoteLow.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+
 	// Operator 
 	ampM.WhileTrue(AmpCommand(&superStructure, &shooter).ToPtr());
 	ampM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
