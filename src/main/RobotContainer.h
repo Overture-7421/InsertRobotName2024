@@ -84,7 +84,6 @@ private:
 	frc2::Trigger speakerV{ [this] {return driver.GetRightTriggerAxis() > 0.1;} };	// TO GET TESTED
 	frc2::Trigger zeroHeading{ [this] {return driver.GetBackButton();} };
 	frc2::Trigger climbV{ [this] {return driver.GetYButton();} };
-	frc2::Trigger tabulate{ [this] {return driver.GetAButton();} };
 	frc2::Trigger passNoteHigh{ [this] {return driver.GetXButton();} };
 	frc2::Trigger passNoteLow{ [this] {return driver.GetBButton();} };
 
