@@ -7,6 +7,7 @@
 #include <frc2/command/SubsystemBase.h>
 #include <frc/DigitalInput.h>
 #include <frc/filter/Debouncer.h>
+#include <rev/ColorSensorV3.h>
 #include "OvertureLib/MotorControllers/OverTalonFX/OverTalonFX.h"
 #include "OvertureLib/MotorControllers/ControllerNeutralMode/ControllerNeutralMode.h"
 
@@ -25,16 +26,12 @@ public:
 	void shuffleboardPeriodic();
 private:
 	OverTalonFX storageMotor{ 24, ControllerNeutralMode::Brake, false, "rio" };
+	rev::ColorSensorV3 colorSensor{frc::I2C::Port::kOnboard};
+	int IRvalue = 0;
 
-	frc::DigitalInput forwardSensor{ 0 }; //2
-	frc::DigitalInput backSensor{ 2 }; // 0
-
-	frc::Debouncer m_debouncer{ 35_ms, frc::Debouncer::DebounceType::kBoth };
-	bool noteOnForwardCache = false;
 
 	wpi::log::DataLog& log = frc::DataLogManager::GetLog();
 	wpi::log::BooleanLogEntry noteOnForward = wpi::log::BooleanLogEntry(log, "/storage/note_on_forward");
 	wpi::log::DoubleLogEntry voltage = wpi::log::DoubleLogEntry(log, "/storage/voltage");
 	wpi::log::DoubleLogEntry current = wpi::log::DoubleLogEntry(log, "/storage/current");
-
 };

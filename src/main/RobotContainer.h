@@ -36,6 +36,7 @@
 #include "Commands/ResetAngle/ResetAngle.h"
 #include "Commands/ShooterDefaultCommand/ShooterDefaultCommand.h"
 #include "Commands/FreeSupportArms/FreeSupportArms.h"
+#include "Commands/VisionSpeakerCommandPassNote/VisionSpeakerCommandPassNote.h"
 
 #include "Commands/TabulateCommand/TabulateCommand.h"
 
@@ -84,6 +85,8 @@ private:
 	frc2::Trigger zeroHeading{ [this] {return driver.GetBackButton();} };
 	frc2::Trigger climbV{ [this] {return driver.GetYButton();} };
 	frc2::Trigger tabulate{ [this] {return driver.GetAButton();} };
+	frc2::Trigger passNoteHigh{ [this] {return driver.GetXButton();} };
+	frc2::Trigger passNoteLow{ [this] {return driver.GetBButton();} };
 
 	// Mechanism Commands
 	frc2::Trigger ampM{ [this] {return opertr.GetLeftBumper();} };
