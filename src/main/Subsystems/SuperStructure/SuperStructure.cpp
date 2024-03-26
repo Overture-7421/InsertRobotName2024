@@ -48,10 +48,10 @@ SuperStructure::SuperStructure() {
 	setTargetCoord({ lowerCANCoder.getSensorAbsolutePosition() * 360.0, upperCANCoder.getSensorAbsolutePosition() * 360.0 });
 
 	// Configure Motion Magic and PID
-	lowerLeftMotor.setPIDValues(180.0, 240.0, 0.0, 0.0, 0.0);
+	lowerLeftMotor.setPIDValues(200.0, 80.0, 0.0, 0.0, 0.0);
 	lowerLeftMotor.configureMotionMagic(1.0, 6.0, 0.0);
 
-	upperMotor.setPIDValues(180.0, 240.0, 0.0, 0.0, 0.0);
+	upperMotor.setPIDValues(180.0, 80.0, 0.0, 0.0, 0.0);
 	upperMotor.configureMotionMagic(1.0, 6.0, 0.0);
 }
 
@@ -106,8 +106,8 @@ void SuperStructure::Periodic() {
 		actualTarget.upperAngle = SuperStructureConstants::UpperAngleSafetyLimit;
 	}
 
-	lowerLeftMotor.setMotionMagicPosition(convertAngleToFalconPos(actualTarget.lowerAngle), lowerFF.Calculate(units::degree_t(actualTarget.lowerAngle), units::degrees_per_second_t(0)).value(), false);
-	upperMotor.setMotionMagicPosition(convertAngleToFalconPos(actualTarget.upperAngle), upperFF.Calculate(units::degree_t(actualTarget.upperAngle), units::degrees_per_second_t(0)).value(), false);
+	lowerLeftMotor.setMotionMagicPosition(convertAngleToFalconPos(actualTarget.lowerAngle), 0, true);
+	upperMotor.setMotionMagicPosition(convertAngleToFalconPos(actualTarget.upperAngle), 0, true);
 }
 
 void SuperStructure::shuffleboardPeriodic() {

@@ -100,6 +100,12 @@ RobotContainer::RobotContainer() {
 }
 
 void RobotContainer::ConfigureBindings() {
+	// characterization.A().WhileTrue(superStructure.sysIdQuasistaticLower(frc2::sysid::Direction::kForward));
+	// characterization.B().WhileTrue(superStructure.sysIdQuasistaticLower(frc2::sysid::Direction::kReverse));
+	// characterization.Y().WhileTrue(superStructure.sysIdDynamicLower(frc2::sysid::Direction::kForward));
+	// characterization.X().WhileTrue(superStructure.sysIdDynamicLower(frc2::sysid::Direction::kReverse));
+
+	
 	noteOnStorage.WhileTrue(frc2::cmd::Sequence(
 		BlinkEffect(&leds, "all", { 0, 255, 0 }, 0.25_s).ToPtr().WithTimeout(0.5_s),
 		StaticEffect(&leds, "all", { 0, 255, 0 }).ToPtr()
@@ -136,13 +142,6 @@ void RobotContainer::ConfigureBindings() {
 	chassis.SetDefaultCommand(Drive(ChassisConstants::MaxModuleSpeed, &chassis, &driver));
 
 	supportArms.SetDefaultCommand(FreeSupportArms(&supportArms, 50.00).Repeatedly());
-	// shooter.SetDefaultCommand(ShooterDefaultCommand(&chassis, &shooter));
-
-	// tabulate.ToggleOnTrue(TabulateCommand(&chassis, &superStructure, &shooter).ToPtr());
-	// tabulate.OnTrue(SuperStructureCommand(&superStructure, { 0, -90 }).ToPtr());
-	// tabulate.OnFalse(SuperStructureCommand(&superStructure, { 0, 0 }).ToPtr());
-
-	// tabulate.ToggleOnTrue(ServoDashboard(&supportArms).ToPtr());
 
 	zeroHeading.OnTrue(ResetAngle(&chassis).ToPtr());
 
@@ -156,15 +155,15 @@ void RobotContainer::ConfigureBindings() {
 	ampM.WhileTrue(AmpCommand(&superStructure, &shooter).ToPtr());
 	ampM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	// climbM.WhileTrue(ManualClimb(&chassis, &superStructure, &supportArms, &aprilTagCamera, &storage, &shooter, &opertr));
-	// climbM.OnFalse(
-	// 	frc2::cmd::Parallel(
-	// 		frc2::cmd::RunOnce([&] {
-	// 	aprilTagCamera.setPoseEstimator(true);
-	// }),
-	// 		ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr()
-	// 	)
-	// );
+	climbM.WhileTrue(ManualClimb(&chassis, &superStructure, &supportArms, &aprilTagCamera, &storage, &shooter, &opertr));
+	climbM.OnFalse(
+		frc2::cmd::Parallel(
+			frc2::cmd::RunOnce([&] {
+		aprilTagCamera.setPoseEstimator(true);
+	}),
+			ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr()
+		)
+	);
 
 	ampM.WhileTrue(AmpCommand(&superStructure, &shooter).ToPtr());
 	ampM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
@@ -197,10 +196,8 @@ void RobotContainer::ConfigureBindings() {
 		shooter.setEmergencyDisable(!shooter.isEmergencyDisabled());
 	}));
 
-
 	manualFrontalClimb.OnTrue(SuperStructureCommand(&superStructure, { 90, 0 }).ToPtr());
 	manualFrontalClimb.OnFalse(SuperStructureCommand(&superStructure, SuperStructureConstants::GroundGrabState).ToPtr());
-
 
 	intakeM.WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake));
 	intakeM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());

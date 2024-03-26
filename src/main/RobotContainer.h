@@ -75,6 +75,8 @@ private:
 	frc::XboxController driver{ 0 };
 	frc::XboxController opertr{ 1 };
 
+	// frc2::CommandXboxController characterization {5};
+	
 	// Driver Commands
 	frc2::Trigger ampV{ [this] {return driver.GetLeftTriggerAxis() > 0.1;} };
 	frc2::Trigger sourceV{ [this] {return driver.GetRightBumper();} };
