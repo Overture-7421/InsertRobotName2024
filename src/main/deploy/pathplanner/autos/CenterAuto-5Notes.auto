@@ -24,7 +24,45 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "CenterAuto1-NEW"
+                  "pathName": "CenterAuto1-Alt"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "GroundGrabCommand"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "CenterAuto-Alt-Pt2"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "VisionSpeakerCommand"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "CenterAuto1-AltPt3"
                 }
               },
               {
@@ -90,56 +128,6 @@
           "type": "named",
           "data": {
             "name": "VisionSpeakerCommand"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "CenterAutAlternative"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "GroundGrabCommand"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "CenterAuto9-Alt"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "VisionNoShoot"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "VisionSpeakerCommand"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ClosedCommand"
           }
         }
       ]
