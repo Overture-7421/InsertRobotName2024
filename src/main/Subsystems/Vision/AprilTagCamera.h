@@ -20,7 +20,7 @@ public:
 private:
 
 	photon::PhotonCamera camera{ APRILTAGS_CAMERA_NAME };
-	frc::AprilTagFieldLayout tagLayout{ "/home/lvuser/7421-field.json" };
+	frc::AprilTagFieldLayout tagLayout{ "/home/lvuser/deploy/tag_layout/7421-field.json" };
 	frc::Transform3d cameraToRobot{ {-0.3686515106_m, 0_m, 0.3518230454_m}, {-179_deg, -23_deg, 179_deg} };
 };
 
