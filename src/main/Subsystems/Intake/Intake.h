@@ -21,7 +21,9 @@ public:
 	void shuffleboardPeriodic();
 
 private:
-	OverTalonFX intakeMotor{ 25, ControllerNeutralMode::Brake, true, "rio" };
+	OverTalonFX intakeMotorLeft{ 25, ControllerNeutralMode::Brake, true, "rio" };
+	OverTalonFX intakeMotorRight{ 30, ControllerNeutralMode::Brake, true, "rio" };
+
 
 	wpi::log::DataLog& log = frc::DataLogManager::GetLog();
 	wpi::log::DoubleLogEntry voltage = wpi::log::DoubleLogEntry(log, "/intake/voltage");
