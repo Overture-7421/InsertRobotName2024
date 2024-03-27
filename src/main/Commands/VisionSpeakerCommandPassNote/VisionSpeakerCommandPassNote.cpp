@@ -6,14 +6,14 @@
 
 #include <frc/MathUtil.h>
 
-VisionSpeakerCommandPassNote::VisionSpeakerCommandPassNote(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, AprilTagCamera* aprilTagCamera, Storage* storage, PassNote upOrDown) {
+VisionSpeakerCommandPassNote::VisionSpeakerCommandPassNote(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, AprilTagCamera* tagCamera, Storage* storage, PassNote upOrDown) {
 	// Use addRequirements() here to declare subsystem dependencies.
 	AddRequirements({ superStructure, shooter, storage });
 	this->chassis = chassis;
 	this->superStructure = superStructure;
 	this->shooter = shooter;
 	this->storage = storage;
-	this->layout = layout;
+	this->tagCamera = tagCamera;
 	this->upOrDown = upOrDown;
 }
 
@@ -22,12 +22,18 @@ void VisionSpeakerCommandPassNote::Initialize() {
 	chassis->setHeadingOverride(true);
 
 	if (isRedAlliance()) {
-		speakerLoc = { 1.01_m, 7.11_m };
-	} else {
 		speakerLoc = { 15.32_m, 7.11_m };
+	} else {
+		speakerLoc = { 1.01_m, 7.11_m };
 	}
 
-	targetState = upOrDown == PassNote::High ? SuperStructureConstants::HighPassingState : SuperStructureConstants::LowPassingState;
+	if(upOrDown == PassNote::High) {
+		targetState = SuperStructureConstants::HighPassingState;
+		targetShooterVelocity = 100.0;
+	}else{
+		targetState = SuperStructureConstants::LowPassingState;
+		targetShooterVelocity = 180.0;
+	}
 
 	Timer.Reset();
 	Timer.Stop();
@@ -47,7 +53,6 @@ void VisionSpeakerCommandPassNote::Execute() {
 	chassis->setTargetHeading(angle);
 	double targetLowerAngle = targetState.lowerAngle;
 	double targetUpperAngle = targetState.upperAngle;
-	double targetShooterVelocity = 180.0;
 	superStructure->setTargetCoord({ targetLowerAngle, targetUpperAngle });
 	shooter->setVelocityVoltage(targetShooterVelocity);
 

@@ -16,6 +16,10 @@ bool Storage::isNoteOnForwardSensor() {
 	// return !forwardSensor.Get();
 	//return noteOnForwardCache;
 	
+	if(IRvalue > 1000) {
+		return false;
+	}
+	
 	return IRvalue > StorageConstants::IRActivationThreshold;
 }
 
@@ -36,5 +40,6 @@ void Storage::shuffleboardPeriodic() {
 	voltage.Append(storageMotor.GetMotorVoltage().GetValueAsDouble());
 	current.Append(storageMotor.GetSupplyCurrent().GetValueAsDouble());
 	frc::SmartDashboard::PutBoolean("Storage/NoteOnForward", isNoteOnForwardSensor());
+	frc::SmartDashboard::PutNumber("Storage/IRValue", IRvalue);
 
 }

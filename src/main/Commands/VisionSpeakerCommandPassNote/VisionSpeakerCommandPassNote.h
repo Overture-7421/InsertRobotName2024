@@ -8,7 +8,6 @@
 #include <frc2/command/CommandHelper.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/XboxController.h>
-#include <frc/apriltag/AprilTagFieldLayout.h>
 
 #include <frc/Timer.h>
 
@@ -29,7 +28,7 @@
 class VisionSpeakerCommandPassNote
 	: public frc2::CommandHelper<frc2::Command, VisionSpeakerCommandPassNote> {
 public:
-	VisionSpeakerCommandPassNote(Chassis* chassis, SuperStructure* SuperStructure, Shooter* shooter, AprilTagCamera* aprilTagCamera, Storage* storage, PassNote upOrDown);
+	VisionSpeakerCommandPassNote(Chassis* chassis, SuperStructure* SuperStructure, Shooter* shooter, AprilTagCamera* tagCamera, Storage* storage, PassNote upOrDown);
 
 	void Initialize() override;
 
@@ -47,7 +46,7 @@ private:
 	Shooter* shooter;
 	Storage* storage;
 
-	const frc::AprilTagFieldLayout* layout;
+	AprilTagCamera* tagCamera;
 
 	bool lowerAngleInTolerance;
 	bool upperAngleInTolerance;
@@ -56,6 +55,7 @@ private:
 
 	PassNote upOrDown;
 	SuperStructureState targetState;
+	double targetShooterVelocity;
 
 	units::meter_t distance = 0.0_m;
 	frc::Rotation2d angle;

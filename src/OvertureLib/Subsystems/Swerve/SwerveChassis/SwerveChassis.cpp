@@ -38,6 +38,9 @@ SwerveChassis::SwerveChassis(units::meters_per_second_t maxModuleSpeed, units::m
 	frc::SmartDashboard::PutData("Chassis/Odometry", &field2d);
 	frc::SmartDashboard::PutData("Chassis/HeadingController", &headingController);
 
+	this->maxModuleSpeed = maxModuleSpeed;
+	this->driveBaseRadius = driveBaseRadius;
+
 	headingController.SetIZone(3);
 	headingController.EnableContinuousInput(-1.0 * units::radian_t(M_PI), units::radian_t(M_PI));
 	pathplanner::PPHolonomicDriveController::setRotationTargetOverride([this]() { return getRotationTargetOverride(); });
@@ -381,7 +384,7 @@ void SwerveChassis::Periodic() {
 
 	wpi::array<frc::SwerveModuleState, 4U> desiredStates = kinematics->ToSwerveModuleStates(desiredSpeeds);
 
-	kinematics->DesaturateWheelSpeeds(&desiredStates, 5.39_mps);
+	kinematics->DesaturateWheelSpeeds(&desiredStates, maxModuleSpeed);
 
 	setModuleStates(desiredStates);
 	shuffleboardPeriodic();
