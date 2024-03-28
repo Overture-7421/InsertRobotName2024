@@ -22,7 +22,7 @@ public:
 
 private:
 	OverTalonFX intakeMotorLeft{ 25, ControllerNeutralMode::Brake, true, "rio" };
-	OverTalonFX intakeMotorRight{ 30, ControllerNeutralMode::Brake, true, "rio" };
+	OverTalonFX intakeMotorRight{ 24, ControllerNeutralMode::Brake, true, "rio" };
 
 
 	wpi::log::DataLog& log = frc::DataLogManager::GetLog();
