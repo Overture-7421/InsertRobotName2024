@@ -52,7 +52,7 @@ void VisionSpeakerCommand::Execute() {
 	double targetUpperAngle = VisionSpeakerCommandConstants::DistanceToUpperAngleTable[distance];
 	double targetShooterVelocity = VisionSpeakerCommandConstants::DistanceToVelocityTable[distance];
 	superStructure->setTargetCoord({ targetLowerAngle, targetUpperAngle });
-	shooter->setVelocityVoltage(targetShooterVelocity);
+	shooter->setTargetVelocity(targetShooterVelocity);
 
 	units::degree_t headingTolerance = 2_deg + units::degree_t(std::clamp(1 - distance.value() / 6.0, 0.0, 1.0) * 8.0); // Heading tolerance extra of X deg when close, more precise when further back;
 	units::degree_t headingError = units::math::abs(frc::InputModulus(angle.Degrees() - chassisPose.Rotation().Degrees(), -180_deg, 180_deg));

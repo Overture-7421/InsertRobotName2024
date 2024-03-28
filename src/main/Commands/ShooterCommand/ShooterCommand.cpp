@@ -12,7 +12,7 @@ ShooterCommand::ShooterCommand(Shooter* shooter, double velocity) {
 
 // Called when the command is initially scheduled.
 void ShooterCommand::Initialize() {
-    shooter->setVelocityVoltage(velocity);
+    shooter->setTargetVelocity(velocity);
 }
 
 // Called repeatedly when this Command is scheduled to run

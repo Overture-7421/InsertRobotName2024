@@ -15,7 +15,7 @@ frc2::CommandPtr SourceGrabCommand(SuperStructure* superStructure, Shooter* shoo
       		}
 		).AndThen(
 			[=]() {
-				shooter->setVelocityVoltage(0.0);
+				shooter->setTargetVelocity(0.0);
 				storage->setVoltage(0.0_V);
 			}
 		)

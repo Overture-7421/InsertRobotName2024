@@ -49,12 +49,12 @@ void TabulateCommand::Execute() {
   double targetVel = frc::SmartDashboard::GetNumber("Tabulate/ShooterVel", 0.0);
 
   superStructure->setTargetCoord({lowerAngle, upperAngle});
-  shooter->setVelocityVoltage(targetVel);
+  shooter->setTargetVelocity(targetVel);
 }
 
 // Called once the command ends or is interrupted.
 void TabulateCommand::End(bool interrupted) {
-    shooter->setVelocityVoltage(0.0);
+    shooter->setTargetVelocity(0.0);
     chassis->setHeadingOverride(false);
 }
 

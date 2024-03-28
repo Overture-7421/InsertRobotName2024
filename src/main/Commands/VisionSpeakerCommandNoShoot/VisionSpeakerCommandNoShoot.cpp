@@ -38,7 +38,7 @@ void VisionSpeakerCommandNoShoot::Execute() {
 	double targetUpperAngle = VisionSpeakerCommandConstants::DistanceToUpperAngleTable[distance];
 	double targetShooterVelocity = VisionSpeakerCommandConstants::DistanceToVelocityTable[distance];
 	superStructure->setTargetCoord({ targetLowerAngle, targetUpperAngle });
-	shooter->setVelocityVoltage(targetShooterVelocity);
+	shooter->setTargetVelocity(targetShooterVelocity);
 }
 
 // Called once the command ends or is interrupted.

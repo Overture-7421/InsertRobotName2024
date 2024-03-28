@@ -29,7 +29,7 @@ void ShooterDefaultCommand::Execute() {
   auto distance = chassisToTarget.Distance({ 0_m, 0_m });
 
   double targetShooterVelocity = VisionSpeakerCommandConstants::DistanceToVelocityTable[distance];
-  shooter->setVelocityVoltage(targetShooterVelocity);
+  shooter->setTargetVelocity(targetShooterVelocity);
 }
 
 // Called once the command ends or is interrupted.
