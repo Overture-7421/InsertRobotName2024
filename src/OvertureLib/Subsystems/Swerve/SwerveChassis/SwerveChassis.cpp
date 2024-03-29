@@ -74,6 +74,14 @@ void SwerveChassis::setHeadingOverride(bool headingOverride) {
 	headingController.Reset(getOdometry().Rotation().Radians());
 }
 
+void SwerveChassis::setVyOverride(bool vyOverride) {
+	this->vyOverride = vyOverride;
+}
+
+void SwerveChassis::setVyTarget(units::meters_per_second_t vy) {
+	this->vyTarget = vy;
+}
+
 /**
  * @brief Sets the swerve module positions for the kinematics and odometry.
  *
@@ -380,6 +388,10 @@ void SwerveChassis::Periodic() {
 		desiredSpeeds.omega = units::radians_per_second_t{ outOmega };
 		// frc::SmartDashboard::PutNumber("Odometry/HeadingTarget", headingTarget.Degrees().value());
 		// frc::SmartDashboard::PutNumber("Odometry/HeadingError", headingController.GetPositionError().value());
+	}
+
+	if(vyOverride) {
+		desiredSpeeds.vy = vyTarget;
 	}
 
 	wpi::array<frc::SwerveModuleState, 4U> desiredStates = kinematics->ToSwerveModuleStates(desiredSpeeds);
