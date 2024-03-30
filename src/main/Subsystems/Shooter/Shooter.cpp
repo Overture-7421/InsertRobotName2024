@@ -13,7 +13,7 @@ Shooter::Shooter() {
 
 	rightShooterMotor.setFollow(leftShooterMotor.GetDeviceID(), true);
 
-	leftShooterMotor.setPIDValues(0.082625, 0.0, 0.0, shooterFF.kS.value(), shooterFF.kV.value());
+	leftShooterMotor.setPIDValues(0.10397, 0.0, 0.0, shooterFF.kS.value(), shooterFF.kV.value());
 }
 
 void Shooter::setTargetVelocity(double velocity) {

@@ -6,11 +6,11 @@
 
 Intake::Intake() {
 	intakeMotorLeft.setSupplyCurrentLimit(true, 20, 30, 0.5);
-	intakeMotorRight.setFollow(25, true);
+	intakeMotorRight.setFollow(25, false);
 }
 
 void Intake::setVoltage(units::volt_t voltage) {
-	intakeMotorLeft.setVoltage(voltage, false);
+	intakeMotorLeft.setVoltage(voltage, true);
 }
 
 // This method will be called once per scheduler run

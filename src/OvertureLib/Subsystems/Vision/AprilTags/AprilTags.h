@@ -18,7 +18,7 @@
 #ifndef __FRC_ROBORIO__
 	#define APRILTAGS_CAMERA_NAME "NetworkCamera"
 #else
-	#define APRILTAGS_CAMERA_NAME "Arducam_OV9281_USB_Camera"
+	#define APRILTAGS_CAMERA_NAME "Arducam_OV2311_USB_Camera"
 #endif
 
 class AprilTags : public frc2::SubsystemBase {

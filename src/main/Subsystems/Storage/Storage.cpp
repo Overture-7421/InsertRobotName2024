@@ -13,14 +13,14 @@ void Storage::setVoltage(units::volt_t voltage) {
 }
 
 bool Storage::isNoteOnForwardSensor() {
-	// return !forwardSensor.Get();
+	return !beamBreakSensor.Get();
 	//return noteOnForwardCache;
 	
-	if(IRvalue > 1000) {
-		return false;
-	}
+	// if(IRvalue > 1000) {
+	// 	return false;
+	// }
 	
-	return IRvalue > StorageConstants::IRActivationThreshold;
+	// return IRvalue > StorageConstants::IRActivationThreshold;
 }
 
 bool Storage::isNoteOnBackSensor(){
@@ -29,7 +29,7 @@ bool Storage::isNoteOnBackSensor(){
 
 // This method will be called once per scheduler run
 void Storage::Periodic() {
-	IRvalue = colorSensor.GetIR();
+	// IRvalue = colorSensor.GetIR();
 
 	//noteOnForwardCache = m_debouncer.Calculate(!forwardSensor.Get());
 	// frc::SmartDashboard::PutBoolean("Storage/NoteOnBack", isNoteOnBackSensor());
@@ -40,6 +40,6 @@ void Storage::shuffleboardPeriodic() {
 	voltage.Append(storageMotor.GetMotorVoltage().GetValueAsDouble());
 	current.Append(storageMotor.GetSupplyCurrent().GetValueAsDouble());
 	frc::SmartDashboard::PutBoolean("Storage/NoteOnForward", isNoteOnForwardSensor());
-	frc::SmartDashboard::PutNumber("Storage/IRValue", IRvalue);
+	// frc::SmartDashboard::PutNumber("Storage/IRValue", IRvalue);
 
 }

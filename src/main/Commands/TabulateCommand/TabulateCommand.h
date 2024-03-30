@@ -11,6 +11,7 @@
 #include "main/Subsystems/SuperStructure/SuperStructure.h"
 #include "main/Subsystems/Shooter/Shooter.h"
 #include "main/Subsystems/Chassis/Chassis.h"
+#include "main/Subsystems/Vision/AprilTagCamera.h"
 
 #include "main/Commands/UtilityFunctions/UtilityFunctions.h"
 #include "main/Commands/VisionSpeakerCommand/Constants.h"
@@ -18,7 +19,7 @@
 class TabulateCommand
     : public frc2::CommandHelper<frc2::Command, TabulateCommand> {
  public:
-  TabulateCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, const frc::AprilTagFieldLayout* layout);
+  TabulateCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, AprilTagCamera* tagCamera);
 
   void Initialize() override;
 
@@ -31,7 +32,6 @@ private:
   Chassis* chassis;
   SuperStructure* superStructure;
   Shooter* shooter;
-  const frc::AprilTagFieldLayout* layout;
-
+  AprilTagCamera* tagCamera;
   frc::Translation2d targetLocation;
 };
