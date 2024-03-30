@@ -9,7 +9,7 @@ frc2::CommandPtr AlignToTrackedObject(Chassis* chassis, photon::PhotonCamera* ca
 
     return frc2::cmd::RunOnce([chassis] {
         chassis->setVyOverride(true);
-    }).AndThen(frc2::cmd::Run([=] mutable {
+    }).AndThen(frc2::cmd::Run([=]() mutable{
 
        const auto result = camera->GetLatestResult();
        if(!result.HasTargets()){

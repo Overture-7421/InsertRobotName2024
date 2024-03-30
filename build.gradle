@@ -68,6 +68,25 @@ model {
         //     wpi.cpp.deps.wpilib(it)
         // }
 
+        rev2mdistancesensor(NativeLibrarySpec){
+            targetPlatform wpi.platforms.roborio
+            if (includeDesktopSupport) {
+                targetPlatform wpi.platforms.desktop
+            }
+
+            sources.cpp {
+                source {
+                    srcDir "libs/Rev2mDistanceSensor/cpp/"
+                    include "**/*.cpp"
+                }
+                exportedHeaders {
+                    srcDir "libs/Rev2mDistanceSensor/include/"
+                }
+            }
+            wpi.cpp.vendor.cpp(it)
+            wpi.cpp.deps.wpilib(it)
+        }
+
         frcUserProgram(NativeExecutableSpec) {
             targetPlatform wpi.platforms.roborio
             if (includeDesktopSupport) {
