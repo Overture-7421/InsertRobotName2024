@@ -6,6 +6,9 @@
 
 Storage::Storage() {
 	storageMotor.setSupplyCurrentLimit(true, 20, 30, 0.5);
+
+	distanceSensor.SetAutomaticMode(true);
+	distanceSensor.SetEnabled(true);
 }
 
 void Storage::setVoltage(units::volt_t voltage) {
@@ -13,14 +16,7 @@ void Storage::setVoltage(units::volt_t voltage) {
 }
 
 bool Storage::isNoteOnForwardSensor() {
-	return !beamBreakSensor.Get();
-	//return noteOnForwardCache;
-	
-	// if(IRvalue > 1000) {
-	// 	return false;
-	// }
-	
-	// return IRvalue > StorageConstants::IRActivationThreshold;
+	return lastRange > 0_mm && lastRange < StorageConstants::DistanceSensorActivationThreshold;
 }
 
 bool Storage::isNoteOnBackSensor(){
@@ -29,17 +25,19 @@ bool Storage::isNoteOnBackSensor(){
 
 // This method will be called once per scheduler run
 void Storage::Periodic() {
-	// IRvalue = colorSensor.GetIR();
-
-	//noteOnForwardCache = m_debouncer.Calculate(!forwardSensor.Get());
-	// frc::SmartDashboard::PutBoolean("Storage/NoteOnBack", isNoteOnBackSensor());
+	if(distanceSensor.IsRangeValid()){
+		lastRange = units::millimeter_t(distanceSensor.GetRange());
+	}else{
+		lastRange = -1_mm;
+	}
 }
 
 void Storage::shuffleboardPeriodic() {
 	noteOnForward.Append(isNoteOnForwardSensor());
 	voltage.Append(storageMotor.GetMotorVoltage().GetValueAsDouble());
 	current.Append(storageMotor.GetSupplyCurrent().GetValueAsDouble());
+	distance.Append(lastRange.value());
 	frc::SmartDashboard::PutBoolean("Storage/NoteOnForward", isNoteOnForwardSensor());
-	// frc::SmartDashboard::PutNumber("Storage/IRValue", IRvalue);
+	frc::SmartDashboard::PutNumber("Storage/DistanceSensor", lastRange.value());
 
 }

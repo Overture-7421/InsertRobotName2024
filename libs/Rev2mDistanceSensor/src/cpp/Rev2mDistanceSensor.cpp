@@ -50,7 +50,6 @@
 
 using namespace rev;
 
-constexpr int Rev2mDistanceSensorAddress = 0x53;
 constexpr units::time::second_t defaultMeasurementPeriod = 0.05_s;
 
 std::atomic<bool> Rev2mDistanceSensor::m_automaticEnabled{false};
@@ -70,17 +69,17 @@ void print_pal_state(VL53L0X_State PalState) {
     printf("Pal Status: %s\n", buf);
 }
 
-Rev2mDistanceSensor::Rev2mDistanceSensor(Port port, DistanceUnit units, RangeProfile profile)
+Rev2mDistanceSensor::Rev2mDistanceSensor(Port port, DistanceUnit units, RangeProfile profile, int sensorAddress)
     : m_port(static_cast<HAL_I2CPort>(port)) {
 
-    pDevice->I2cDevAddr = Rev2mDistanceSensorAddress;
+    pDevice->I2cDevAddr = sensorAddress;
     pDevice->port = m_port;
     m_units = units;
 
     int32_t status = 0;
     HAL_InitializeI2C(m_port, &status);
 
-    HAL_Report(HALUsageReporting::kResourceType_I2C, Rev2mDistanceSensorAddress);
+    HAL_Report(HALUsageReporting::kResourceType_I2C, sensorAddress);
 
     if(!Initialize(profile)) {
         wpi::SmallString<255> buf;

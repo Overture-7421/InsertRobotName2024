@@ -7,5 +7,6 @@ namespace StorageConstants {
 	const static units::volt_t SourceGrabVolts = -3_V;
 	const static units::volt_t AmpScoreVolts = 3_V;
 	const static units::volt_t SpeakerScoreVolts = 12_V;
-	const static double IRActivationThreshold = 20;
+	// const static double IRActivationThreshold = 20;
+	const static units::millimeter_t DistanceSensorActivationThreshold = 30_mm;
 };

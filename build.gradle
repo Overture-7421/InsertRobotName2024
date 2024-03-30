@@ -76,11 +76,11 @@ model {
 
             sources.cpp {
                 source {
-                    srcDir "libs/Rev2mDistanceSensor/cpp/"
-                    include "**/*.cpp"
+                    srcDir "libs/Rev2mDistanceSensor/src/cpp/"
+                    include "**/*.cpp", '**/*.c'
                 }
                 exportedHeaders {
-                    srcDir "libs/Rev2mDistanceSensor/include/"
+                    srcDir "libs/Rev2mDistanceSensor/src/include/"
                 }
             }
             wpi.cpp.vendor.cpp(it)
@@ -95,6 +95,7 @@ model {
 
             binaries.all {
                 cppCompiler.define('_USE_MATH_DEFINES')
+                lib library: 'rev2mdistancesensor', linkage: 'shared'
             }
 
             sources.cpp {

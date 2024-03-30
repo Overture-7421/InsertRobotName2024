@@ -8,6 +8,9 @@
 #include <frc/DigitalInput.h>
 #include <frc/filter/Debouncer.h>
 #include <rev/ColorSensorV3.h>
+#include <rev/Rev2mDistanceSensor.h>
+#include <units/length.h>
+
 #include "OvertureLib/MotorControllers/OverTalonFX/OverTalonFX.h"
 #include "OvertureLib/MotorControllers/ControllerNeutralMode/ControllerNeutralMode.h"
 
@@ -28,11 +31,14 @@ private:
 	OverTalonFX storageMotor{ 30, ControllerNeutralMode::Brake, false, "rio" };
 	// rev::ColorSensorV3 colorSensor{frc::I2C::Port::kOnboard};
 	// int IRvalue = 0;
-	frc::DigitalInput beamBreakSensor {1};
-
+	// frc::DigitalInput beamBreakSensor {1};
+	units::millimeter_t lastRange;
+	rev::Rev2mDistanceSensor distanceSensor {rev::Rev2mDistanceSensor::Port::kOnboard, rev::Rev2mDistanceSensor::DistanceUnit::kMilliMeters, rev::Rev2mDistanceSensor::RangeProfile::kHighSpeed};
 
 	wpi::log::DataLog& log = frc::DataLogManager::GetLog();
 	wpi::log::BooleanLogEntry noteOnForward = wpi::log::BooleanLogEntry(log, "/storage/note_on_forward");
 	wpi::log::DoubleLogEntry voltage = wpi::log::DoubleLogEntry(log, "/storage/voltage");
 	wpi::log::DoubleLogEntry current = wpi::log::DoubleLogEntry(log, "/storage/current");
+	wpi::log::DoubleLogEntry distance = wpi::log::DoubleLogEntry(log, "/storage/distance_sensor");
+
 };

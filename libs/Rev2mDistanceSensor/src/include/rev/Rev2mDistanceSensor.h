@@ -67,7 +67,7 @@ class Rev2mDistanceSensor{
          *                          kHighSpeed
          *                      Refer to data sheet for profile specific performance specs.
          */
-        Rev2mDistanceSensor(Port port, DistanceUnit units, RangeProfile profile = RangeProfile::kDefault);
+        Rev2mDistanceSensor(Port port, DistanceUnit units, RangeProfile profile = RangeProfile::kDefault, int sensorAddress = 0x52);
 
         ~Rev2mDistanceSensor();// override;
 
