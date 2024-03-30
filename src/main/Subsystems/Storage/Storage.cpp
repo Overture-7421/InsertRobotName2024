@@ -9,7 +9,6 @@ Storage::Storage() {
 
 	distanceSensor.SetAutomaticMode(true);
 	distanceSensor.SetEnabled(true);
-	distanceSensor.SetMeasurementPeriod(0.02_s);
 }
 
 void Storage::setVoltage(units::volt_t voltage) {
