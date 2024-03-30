@@ -5,7 +5,7 @@
 
 frc2::CommandPtr AlignToTrackedObject(Chassis* chassis, photon::PhotonCamera* camera) {
 
-    frc::ProfiledPIDController<units::degree> alignController {0.0, 0.0, 0.0, {0_deg_per_s, 0_deg_per_s_sq}};
+    frc::ProfiledPIDController<units::degree> alignController {0.0, 0.0, 0.0, {0_deg_per_s, 0_deg_per_s_sq}, RobotConstants::LoopTime};
 
     return frc2::cmd::RunOnce([chassis] {
         chassis->setVyOverride(true);

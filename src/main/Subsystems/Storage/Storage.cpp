@@ -9,6 +9,7 @@ Storage::Storage() {
 
 	distanceSensor.SetAutomaticMode(true);
 	distanceSensor.SetEnabled(true);
+	distanceSensor.SetMeasurementPeriod(0.02_s);
 }
 
 void Storage::setVoltage(units::volt_t voltage) {
@@ -16,7 +17,7 @@ void Storage::setVoltage(units::volt_t voltage) {
 }
 
 bool Storage::isNoteOnForwardSensor() {
-	return lastRange > 0_mm && lastRange < StorageConstants::DistanceSensorActivationThreshold;
+	return lastRange < StorageConstants::DistanceSensorActivationThreshold;
 }
 
 bool Storage::isNoteOnBackSensor(){
@@ -27,8 +28,6 @@ bool Storage::isNoteOnBackSensor(){
 void Storage::Periodic() {
 	if(distanceSensor.IsRangeValid()){
 		lastRange = units::millimeter_t(distanceSensor.GetRange());
-	}else{
-		lastRange = -1_mm;
 	}
 }
 
