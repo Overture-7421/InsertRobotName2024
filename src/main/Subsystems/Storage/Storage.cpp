@@ -36,6 +36,5 @@ void Storage::shuffleboardPeriodic() {
 	current.Append(storageMotor.GetSupplyCurrent().GetValueAsDouble());
 	distance.Append(lastRange.value());
 	frc::SmartDashboard::PutBoolean("Storage/NoteOnForward", isNoteOnForwardSensor());
-	frc::SmartDashboard::PutNumber("Storage/DistanceSensor", lastRange.value());
-
+	frc::SmartDashboard::PutNumber("Storage/DistanceSensor", lastRange.value() / 10.0);
 }

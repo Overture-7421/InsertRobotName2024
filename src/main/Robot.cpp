@@ -8,7 +8,6 @@
 #include <frc/DataLogManager.h>
 
 void Robot::RobotInit() {
-
   m_teleopResetCommand = m_container.GetTeleopResetCommand();
 
   AddPeriodic([&] {

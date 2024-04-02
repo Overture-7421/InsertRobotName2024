@@ -29,11 +29,11 @@ public:
 	void shuffleboardPeriodic();
 private:
 	OverTalonFX storageMotor{ 30, ControllerNeutralMode::Brake, false, "rio" };
-	// rev::ColorSensorV3 colorSensor{frc::I2C::Port::kOnboard};
+	rev::ColorSensorV3 colorSensor{frc::I2C::Port::kMXP};
 	// int IRvalue = 0;
 	// frc::DigitalInput beamBreakSensor {1};
 	units::millimeter_t lastRange;
-	rev::Rev2mDistanceSensor distanceSensor {rev::Rev2mDistanceSensor::Port::kOnboard, rev::Rev2mDistanceSensor::DistanceUnit::kMilliMeters, rev::Rev2mDistanceSensor::RangeProfile::kHighSpeed};
+	rev::Rev2mDistanceSensor distanceSensor {rev::Rev2mDistanceSensor::Port::kMXP, rev::Rev2mDistanceSensor::DistanceUnit::kMilliMeters, rev::Rev2mDistanceSensor::RangeProfile::kHighSpeed};
 
 	wpi::log::DataLog& log = frc::DataLogManager::GetLog();
 	wpi::log::BooleanLogEntry noteOnForward = wpi::log::BooleanLogEntry(log, "/storage/note_on_forward");

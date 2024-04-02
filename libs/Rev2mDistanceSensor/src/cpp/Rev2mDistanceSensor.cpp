@@ -50,6 +50,7 @@
 
 using namespace rev;
 
+constexpr int Rev2mDistanceSensorAddress = 0x29 << 1;
 constexpr units::time::second_t defaultMeasurementPeriod = 0.05_s;
 
 std::atomic<bool> Rev2mDistanceSensor::m_automaticEnabled{false};
@@ -69,23 +70,23 @@ void print_pal_state(VL53L0X_State PalState) {
     printf("Pal Status: %s\n", buf);
 }
 
-Rev2mDistanceSensor::Rev2mDistanceSensor(Port port, DistanceUnit units, RangeProfile profile, int sensorAddress)
+Rev2mDistanceSensor::Rev2mDistanceSensor(Port port, DistanceUnit units, RangeProfile profile)
     : m_port(static_cast<HAL_I2CPort>(port)) {
 
-    pDevice->I2cDevAddr = sensorAddress;
+    pDevice->I2cDevAddr = Rev2mDistanceSensorAddress;
     pDevice->port = m_port;
     m_units = units;
 
     int32_t status = 0;
     HAL_InitializeI2C(m_port, &status);
 
-    HAL_Report(HALUsageReporting::kResourceType_I2C, sensorAddress);
+    HAL_Report(HALUsageReporting::kResourceType_I2C, Rev2mDistanceSensorAddress);
 
     if(!Initialize(profile)) {
         wpi::SmallString<255> buf;
         wpi::raw_svector_ostream errorString{buf};
         errorString << "Error initializing Rev 2M device on port " 
-                    << fmt::format("%s", port == Port::kMXP ? "MXP" : "Onboard")
+                    << fmt::format("{}", port == Port::kMXP ? "MXP" : "Onboard")
                     << ". Please check your connections.";
 
         FRC_ReportError(frc::err::Error, "{}", errorString.str());
@@ -200,7 +201,7 @@ bool Rev2mDistanceSensor::Initialize(RangeProfile profile) {
     if((I2C_status = ValidateI2C()) != VALIDATE_I2C_SUCCESS) {
         wpi::SmallString<255> buf;
         wpi::raw_svector_ostream errorString{buf};
-        errorString << "Error " << fmt::format("0x%08X", I2C_status)
+        errorString << "Error " << fmt::format("{:#08X}", I2C_status)
                     << ": Could not communicate with Rev 2M sensor over I2C.";
 
         FRC_ReportError(frc::err::Error, "{}" ,errorString.str());
@@ -287,36 +288,54 @@ bool Rev2mDistanceSensor::Initialize(RangeProfile profile) {
 int32_t Rev2mDistanceSensor::ValidateI2C(void) {
     uint8_t reg = 0xC0, res[2];
 
-    if(HAL_TransactionI2C(pDevice->port, pDevice->I2cDevAddr >> 1, &reg, 1, res, 1) < 0)
+    if(HAL_TransactionI2C(pDevice->port, pDevice->I2cDevAddr >> 1, &reg, 1, res, 1) < 0){
+        printf("Here1\n");
         return VALIDATE_I2C_HAL_ERR | (1 << 24);
+    }
 
-    if(*res != 0xEE)
+    if(*res != 0xEE){
+        printf("Here2\n");
         return VALIDATE_I2C_PARAM_ERR | (((uint32_t) reg) << 8) | (((uint32_t) res[0]) << 16);
+    }
 
     reg = 0xC1;
-    if(HAL_TransactionI2C(pDevice->port, pDevice->I2cDevAddr >> 1, &reg, 1, res, 1) < 0)
+    if(HAL_TransactionI2C(pDevice->port, pDevice->I2cDevAddr >> 1, &reg, 1, res, 1) < 0){
+        printf("Here3\n");
         return VALIDATE_I2C_HAL_ERR | (1 << 25);
+    }
 
-    if(*res != 0xAA)
+    if(*res != 0xAA){
+        printf("Here4\n");
         return VALIDATE_I2C_PARAM_ERR | (((uint32_t) reg) << 8) | (((uint32_t) res[0]) << 16);
+    }
 
     reg = 0xC2;
-    if(HAL_TransactionI2C(pDevice->port, pDevice->I2cDevAddr >> 1, &reg, 1, res, 1) < 0)
+    if(HAL_TransactionI2C(pDevice->port, pDevice->I2cDevAddr >> 1, &reg, 1, res, 1) < 0){
+        printf("Here5\n");
         return VALIDATE_I2C_HAL_ERR | (1 << 26);
+    }
 
-    if(*res != 0x10)
+    if(*res != 0x10){
+        printf("Here6\n");
         return VALIDATE_I2C_PARAM_ERR | (((uint32_t) reg) << 8) | (((uint32_t) res[0]) << 16);
+    }
 
     reg = 0x51;
-    if(HAL_TransactionI2C(pDevice->port, pDevice->I2cDevAddr >> 1, &reg, 1, res, 2) < 0)
+    if(HAL_TransactionI2C(pDevice->port, pDevice->I2cDevAddr >> 1, &reg, 1, res, 2) < 0){
+        printf("Here7\n");
         return VALIDATE_I2C_HAL_ERR | (1 << 27);
+    }
 
     reg = 0x61;
-    if(HAL_TransactionI2C(pDevice->port, pDevice->I2cDevAddr >> 1, &reg, 1, res, 2) < 0)
+    if(HAL_TransactionI2C(pDevice->port, pDevice->I2cDevAddr >> 1, &reg, 1, res, 2) < 0){
+        printf("Here8\n");
         return VALIDATE_I2C_HAL_ERR | (1 << 28);
+    }
 
-    if((res[0] != 0x00) || (res[1] != 0x00))
+    if((res[0] != 0x00) || (res[1] != 0x00)){
+        printf("Here9\n");
         return VALIDATE_I2C_PARAM_ERR | (((uint32_t) reg) << 8) | (((uint32_t) res[0]) << 16) | (((uint32_t) res[1]) << 24);
+    }
 
     return VALIDATE_I2C_SUCCESS;
 }
