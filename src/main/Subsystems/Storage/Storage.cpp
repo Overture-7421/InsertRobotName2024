@@ -34,7 +34,7 @@ void Storage::Periodic() {
 	}
 
 	timeSinceLastReading = currentTime - timeLastReading;
-	isDistanceSensorConnected = timeSinceLastReading < StorageConstants::DistanceSensorAvailableTimeTolerance;
+	isDistanceSensorConnected = timeSinceLastReading > StorageConstants::DistanceSensorAvailableTimeTolerance;
 }
 
 void Storage::shuffleboardPeriodic() {
