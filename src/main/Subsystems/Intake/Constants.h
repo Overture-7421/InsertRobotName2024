@@ -3,5 +3,5 @@
 #include <units/voltage.h>
 
 namespace IntakeConstants {
-	const static units::volt_t GroundGrabVolts = 8_V;
+	const static units::volt_t GroundGrabVolts = 10_V;
 };

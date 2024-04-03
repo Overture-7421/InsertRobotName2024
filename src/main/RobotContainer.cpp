@@ -21,6 +21,7 @@ RobotContainer::RobotContainer() {
 	pathplanner::NamedCommands::registerCommand("StorageCommand", std::move(StorageCommand(&storage, 3_V).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("ShooterCommand", std::move(ShooterCommand(&shooter, 4.00).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("VisionNoShoot", std::move(VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter, &mainCamera).ToPtr()));
+	pathplanner::NamedCommands::registerCommand("AlignToNote", std::move(AlignToTrackedObject(&chassis, &objectCamera)));
 
 	center7NoteAuto = pathplanner::AutoBuilder::buildAuto("CenterAuto-7Notes");
 	center5NoteAuto = pathplanner::AutoBuilder::buildAuto("CenterAuto-5Notes");
@@ -213,7 +214,7 @@ void RobotContainer::ConfigureBindings() {
 	passNoteLow.WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &mainCamera, &storage, PassNote::Low).ToPtr());
 	passNoteLow.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	objectDetect.WhileTrue(AlignToTrackedObject(&chassis, &objectCamera));
+	// objectDetect.WhileTrue(AlignToTrackedObject(&chassis, &objectCamera));
 
 	// Operator 
 	ampM.WhileTrue(AmpCommand(&superStructure, &shooter).ToPtr());

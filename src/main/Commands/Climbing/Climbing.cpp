@@ -59,13 +59,11 @@ frc2::CommandPtr ClimbAtLocation(SuperStructure* superStructure, Shooter* shoote
 		SuperStructureCommand(superStructure, SuperStructureConstants::GroundGrabState).ToPtr().WithTimeout(1_s),
 		WaitForButton(controller, checkpointButtonId),
 		SuperStructureCommand(superStructure, { 87, -82 }).ToPtr().WithTimeout(1_s),
-		frc2::cmd::RunOnce([=] { shooter->setVoltage(7.0);}),
+		frc2::cmd::RunOnce([=] { shooter->setVoltage(6.0);}),
 		WaitForButton(controller, checkpointButtonId),
-		StorageCommand(storage, 3_V).ToPtr(),
-		frc2::cmd::WaitUntil([=] {return !storage->isNoteOnForwardSensor();}),
-		WaitForButton(controller, checkpointButtonId),
-		SuperStructureCommand(superStructure, SuperStructureConstants::GroundGrabState).ToPtr(),
-		frc2::cmd::RunOnce([=] { shooter->setVoltage(0.0);})
+		StorageCommand(storage, 8_V).ToPtr()
+		// SuperStructureCommand(superStructure, SuperStructureConstants::GroundGrabState).ToPtr(),
+		// frc2::cmd::RunOnce([=] { shooter->setVoltage(0.0);})
 	);
 }
 

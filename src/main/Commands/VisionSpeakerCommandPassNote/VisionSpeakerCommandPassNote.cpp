@@ -29,10 +29,10 @@ void VisionSpeakerCommandPassNote::Initialize() {
 
 	if(upOrDown == PassNote::High) {
 		targetState = SuperStructureConstants::HighPassingState;
-		targetShooterVelocity = 100.0;
+		targetShooterVelocity = 80.0;
 	}else{
 		targetState = SuperStructureConstants::LowPassingState;
-		targetShooterVelocity = 180.0;
+		targetShooterVelocity = 100.0;
 	}
 
 	Timer.Reset();

@@ -29,7 +29,7 @@ public:
 	void shuffleboardPeriodic();
 private:
 	OverTalonFX storageMotor{ 30, ControllerNeutralMode::Brake, false, "rio" };
-	rev::ColorSensorV3 colorSensor{frc::I2C::Port::kMXP};
+	// rev::ColorSensorV3 colorSensor{frc::I2C::Port::kMXP};
 	// int IRvalue = 0;
 	// frc::DigitalInput beamBreakSensor {1};
 	units::millimeter_t lastRange;

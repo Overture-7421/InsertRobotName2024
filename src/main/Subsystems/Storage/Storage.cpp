@@ -16,7 +16,8 @@ void Storage::setVoltage(units::volt_t voltage) {
 }
 
 bool Storage::isNoteOnForwardSensor() {
-	return lastRange < StorageConstants::DistanceSensorActivationThreshold;
+	// return lastRange < StorageConstants::DistanceSensorActivationThreshold;
+	return false;
 }
 
 bool Storage::isNoteOnBackSensor(){
@@ -25,8 +26,9 @@ bool Storage::isNoteOnBackSensor(){
 
 // This method will be called once per scheduler run
 void Storage::Periodic() {
-	if(distanceSensor.IsRangeValid()){
-		lastRange = units::millimeter_t(distanceSensor.GetRange());
+	auto currentRange = units::millimeter_t(distanceSensor.GetRange());
+	if(currentRange > 0_m) {
+		lastRange = currentRange;
 	}
 }
 
