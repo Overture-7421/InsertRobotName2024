@@ -15,37 +15,32 @@
 
 #include "OvertureLib/Subsystems/Swerve/SwerveChassis/SwerveChassis.h"
 
-#ifndef __FRC_ROBORIO__
-	#define APRILTAGS_CAMERA_NAME "NetworkCamera"
-#else
-	#define APRILTAGS_CAMERA_NAME "Arducam_OV2311_USB_Camera"
-#endif
-
 class AprilTags : public frc2::SubsystemBase {
 public:
-	AprilTags();
-	void setCameraAndLayout(photon::PhotonCamera* camera, frc::AprilTagFieldLayout* tagLayout, frc::Transform3d* cameraToRobot);
-	bool checkTagDistance(const photon::PhotonPipelineResult& result, size_t numberOfTags, double distance);
+	struct Config {
+		std::string cameraName;		
+		frc::Transform3d cameraToRobot;
+		units::meter_t singleTagValidDistance = 3.5_m;
+		units::meter_t doubleTagValidDistance = 6.0_m;
+		units::meter_t tripleTagValidDistance = 8.0_m;
+	};
+
+	AprilTags(frc::AprilTagFieldLayout* tagLayout, SwerveChassis* chassis, Config config);
+	bool checkTagDistance(const photon::PhotonPipelineResult& result, size_t numberOfTags, units::meter_t distance);
 	void addMeasurementToChassis(const photon::PhotonPipelineResult& result);
 	void updateOdometry();
 	std::optional<photon::EstimatedRobotPose> update(const photon::PhotonPipelineResult& result);
 	std::optional<photon::PhotonPipelineResult> getCameraResult();
-	bool isPoseEstimatorSet();
-	void setPoseEstimator(bool set);
 	void Periodic() override;
 
 private:
 	/* PhotonVision */
-	photon::PhotonCamera* m_Camera;
-	frc::AprilTagFieldLayout* m_TagLayout;
-	frc::Transform3d* m_CameraToRobot;
-
+	std::unique_ptr<photon::PhotonCamera> camera;
 	std::unique_ptr<photon::PhotonPoseEstimator> poseEstimator;
-	bool poseEstimatorSet = false;
+
+	frc::AprilTagFieldLayout* tagLayout;
+	SwerveChassis* chassis;
+	Config config;
 	wpi::log::DataLog& log = frc::DataLogManager::GetLog();
 	wpi::log::StructLogEntry<frc::Pose2d> poseLog = wpi::log::StructLogEntry<frc::Pose2d>(log, "/vision/pose");
-
-protected:
-	/* subsytem */
-	SwerveChassis* swerveChassis;
 };

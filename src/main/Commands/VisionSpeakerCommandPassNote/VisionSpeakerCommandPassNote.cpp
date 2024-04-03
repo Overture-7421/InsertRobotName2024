@@ -6,26 +6,20 @@
 
 #include <frc/MathUtil.h>
 
-VisionSpeakerCommandPassNote::VisionSpeakerCommandPassNote(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, AprilTagCamera* tagCamera, Storage* storage, PassNote upOrDown) {
-	// Use addRequirements() here to declare subsystem dependencies.
+VisionSpeakerCommandPassNote::VisionSpeakerCommandPassNote(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, TargetProvider* targetProvider, Storage* storage, PassNote upOrDown) {
 	AddRequirements({ superStructure, shooter, storage });
 	this->chassis = chassis;
 	this->superStructure = superStructure;
 	this->shooter = shooter;
 	this->storage = storage;
-	this->tagCamera = tagCamera;
+	this->targetProvider = targetProvider;
 	this->upOrDown = upOrDown;
 }
 
 // Called when the command is initially scheduled.
 void VisionSpeakerCommandPassNote::Initialize() {
 	chassis->setHeadingOverride(true);
-
-	if (isRedAlliance()) {
-		speakerLoc = { 15.32_m, 7.11_m };
-	} else {
-		speakerLoc = { 1.01_m, 7.11_m };
-	}
+	passLocation = targetProvider->GetPassLocation();
 
 	if(upOrDown == PassNote::High) {
 		targetState = SuperStructureConstants::HighPassingState;
@@ -42,11 +36,10 @@ void VisionSpeakerCommandPassNote::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void VisionSpeakerCommandPassNote::Execute() {
 	frc::Pose2d chassisPose = chassis->getOdometry();
-	frc::Translation2d speakerLoc = this->speakerLoc;
 
 	frc::Translation2d chassisLoc = chassisPose.Translation();
 
-	frc::Translation2d chassisToTarget = speakerLoc - chassisLoc;
+	frc::Translation2d chassisToTarget = passLocation - chassisLoc;
 	distance = chassisToTarget.Distance({ 0_m, 0_m });
 	angle = chassisToTarget.Angle().RotateBy({ 180_deg });
 

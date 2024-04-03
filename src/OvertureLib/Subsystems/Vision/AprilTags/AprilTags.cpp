@@ -5,28 +5,23 @@
 #include "AprilTags.h"
 #include <iostream>
 
-AprilTags::AprilTags() {};
-void AprilTags::setCameraAndLayout(photon::PhotonCamera* camera, frc::AprilTagFieldLayout* tagLayout, frc::Transform3d* cameraToRobot) {
-	this->m_Camera = camera;
-	this->m_TagLayout = tagLayout;
-	this->m_CameraToRobot = cameraToRobot;
+AprilTags::AprilTags(frc::AprilTagFieldLayout* tagLayout, SwerveChassis* chassis, Config config) {
+	this->config = config;
+	this->tagLayout = tagLayout;
+	this->chassis = chassis;
 	
-	m_TagLayout->SetOrigin(frc::AprilTagFieldLayout::OriginPosition::kBlueAllianceWallRightSide);
-
-	poseEstimatorSet = true;
+	camera = std::make_unique<photon::PhotonCamera>(this->config.cameraName);
 	poseEstimator = std::make_unique<photon::PhotonPoseEstimator> (
-		*m_TagLayout,
+		*this->tagLayout,
 		photon::PoseStrategy::MULTI_TAG_PNP_ON_COPROCESSOR,
-		std::move(photon::PhotonCamera{ APRILTAGS_CAMERA_NAME }),
-		*m_CameraToRobot
+		this->config.cameraToRobot
 	);
-}
+};
 
 //Check if distance between robot and tag is less than a certain value ;)
-bool AprilTags::checkTagDistance(const photon::PhotonPipelineResult& result, size_t numberOfTags, double distance) {
-
+bool AprilTags::checkTagDistance(const photon::PhotonPipelineResult& result, size_t numberOfTags, units::meter_t distance) {
 	if (result.GetTargets().size() == numberOfTags) {
-		if (result.GetBestTarget().GetBestCameraToTarget().Translation().Distance({0_m, 0_m, 0_m}).value() < distance) {
+		if (result.GetBestTarget().GetBestCameraToTarget().Translation().Distance({0_m, 0_m, 0_m}) < distance) {
 			return true;
 		}
 	}
@@ -40,13 +35,12 @@ void AprilTags::addMeasurementToChassis(const photon::PhotonPipelineResult& resu
 
 	if (poseResult.has_value()) {
 		frc::Pose2d poseTo2d = poseResult.value().estimatedPose.ToPose2d();
-		swerveChassis->addVisionMeasurement(poseTo2d, poseResult.value().timestamp);
+		chassis->addVisionMeasurement(poseTo2d, poseResult.value().timestamp);
 		poseLog.Append(poseTo2d);
 	}
 }
 
 //Update odometry with vision :0
-
 void AprilTags::updateOdometry() {
 	std::optional<photon::PhotonPipelineResult> result = getCameraResult();
 	if(!result.has_value()) {
@@ -54,7 +48,7 @@ void AprilTags::updateOdometry() {
 	}
 	photon::PhotonPipelineResult pipelineResult = result.value();
 
-	if (checkTagDistance(pipelineResult, 1, 3.5) || checkTagDistance(pipelineResult, 2, 6.0) || checkTagDistance(pipelineResult, 3, 8.0)) {
+	if (checkTagDistance(pipelineResult, 1, config.singleTagValidDistance) || checkTagDistance(pipelineResult, 2, config.doubleTagValidDistance) || checkTagDistance(pipelineResult, 3, config.tripleTagValidDistance)) {
 		addMeasurementToChassis(pipelineResult);
 	}
 }
@@ -66,23 +60,11 @@ std::optional<photon::EstimatedRobotPose> AprilTags::update(const photon::Photon
 
 //Get PhotonPipeResult from PhotonVision
 std::optional<photon::PhotonPipelineResult> AprilTags::getCameraResult() {
-	return m_Camera->GetLatestResult();
-}
-
-//Check if poseEstimator is set
-bool AprilTags::isPoseEstimatorSet() {
-	return poseEstimatorSet;
-}
-
-void AprilTags::setPoseEstimator(bool set) {
-	poseEstimatorSet = set;
+	return camera->GetLatestResult();
 }
 
 void AprilTags::Periodic() {
-	// frc::SmartDashboard::PutBoolean("Set Camara", isPoseEstimatorSet());
-	if (isPoseEstimatorSet()) {
-		updateOdometry();
-	}
+	updateOdometry();
 }
 
 

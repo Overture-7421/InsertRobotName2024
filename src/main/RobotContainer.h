@@ -13,7 +13,7 @@
 #include <pathplanner/lib/auto/NamedCommands.h>
 
 #include "Subsystems/Chassis/Chassis.h"
-#include "Subsystems/Vision/AprilTagCamera.h"
+#include "Subsystems/Targeting/TargetProvider.h"
 #include "Subsystems/Intake/Intake.h"
 #include "Subsystems/SuperStructure/SuperStructure.h"
 #include "Subsystems/Storage/Storage.h"
@@ -46,6 +46,7 @@
 #include "OvertureLib/Commands/Drive/Drive.h"
 #include "OvertureLib/Characterization/SysIDRoutineBot.h"
 #include "OvertureLib/Subsystems/LedsManager/LedsManager.h"
+#include "OvertureLib/Subsystems/Vision/AprilTags/AprilTags.h"
 
 class RobotContainer : public SysIDRoutineBot {
 public:
@@ -59,15 +60,19 @@ private:
 	void ConfigureBindings();
 
 	// Subsystems
-	AprilTagCamera mainCamera{ &chassis };
-	// AprilTagCamera secondaryCamera{ &chassis };
-	photon::PhotonCamera objectCamera{ "USB_Camera-B4.09.24.1" };
 	Intake intake;
 	SuperStructure superStructure;
 	Storage storage;
 	Shooter shooter;
 	Chassis chassis;
 	SupportArms supportArms;
+
+	//Vision
+	frc::AprilTagFieldLayout tagLayout{ "/home/lvuser/deploy/tag_layout/7421-field.json" };
+	AprilTags shooterCamera {&tagLayout, &chassis, {"Arducam_OV2311_USB_Camera", { {-0.3686515106_m, 0_m, 0.3518230454_m}, {-180_deg, -23_deg, 180_deg} }}};
+	AprilTags frontRightSwerveModuleCamera {&tagLayout, &chassis, {"Arducam_OV9281_USB_Camera", { {6.433997_in, -10.746927_in, 8.52786_in}, {0_deg, -28.125_deg, -30_deg} }}};
+	photon::PhotonCamera noteTrackingCamera{ "USB_Camera-B4.09.24.1" };
+	TargetProvider targetProvider {&tagLayout};
 
 	LedsManager leds{ 0, 240, {
 		{"all", {0, 239}}

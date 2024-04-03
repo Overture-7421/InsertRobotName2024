@@ -4,11 +4,11 @@
 
 #include "TabulateCommand.h"
 
-TabulateCommand::TabulateCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, AprilTagCamera* tagCamera) {
+TabulateCommand::TabulateCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, TargetProvider* targetProvider) {
   this->superStructure = superStructure;
   this->shooter = shooter;
   this->chassis = chassis;
-  this->tagCamera = tagCamera;
+  this->targetProvider = targetProvider;
 
   AddRequirements({superStructure, shooter});
 }
@@ -19,7 +19,7 @@ void TabulateCommand::Initialize() {
   frc::SmartDashboard::PutNumber("Tabulate/UpperAngle", superStructure->getUpperAngle());
   frc::SmartDashboard::PutNumber("Tabulate/ShooterVel", 0.0);
 
-	targetLocation = tagCamera->GetSpeakerLocation();
+	targetLocation = targetProvider->GetSpeakerLocation();
 
   chassis->setHeadingOverride(true);
 }
