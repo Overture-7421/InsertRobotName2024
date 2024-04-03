@@ -4,13 +4,10 @@
 
 #include "SourceAutoCenterRace.h"
 
-#include "main/Commands/SpeakerCommand/SpeakerCommand.h"
-#include "main/Commands/VisionAmpCommand/VisionAmpCommand.h"
-#include "main/Commands/VisionSourceGrabCommand/VisionSourceGrabCommand.h"
-#include "main/Commands/VisionSpeakerCommand/VisionSpeakerCommand.h"
-#include "main/Commands/VisionSpeakerCommandNoShoot/VisionSpeakerCommandNoShoot.h"
+#include <pathplanner/lib/auto/NamedCommands.h>
+#include <pathplanner/lib/auto/AutoBuilder.h>
 
-frc2::CommandPtr SourceAutoCenterRace(Chassis* chassis, Storage* storage, Shooter* shooter) {
+frc2::CommandPtr SourceAutoCenterRace(Storage* storage) {
 
     return frc2::cmd::Sequence(
 		pathplanner::NamedCommands::getCommand("VisionSpeakerCommand"),

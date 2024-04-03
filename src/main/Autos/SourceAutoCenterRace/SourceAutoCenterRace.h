@@ -5,12 +5,6 @@
 #pragma once
 
 #include <frc2/command/CommandPtr.h>
-
-#include <pathplanner/lib/auto/NamedCommands.h>
-
-#include "main/Subsystems/Shooter/Shooter.h"
 #include "main/Subsystems/Storage/Storage.h"
-#include "main/Subsystems/Chassis/Chassis.h"
-#include "main/Subsystems/Vision/AprilTagCamera.h"
 
-frc2::CommandPtr SourceAutoCenterRace(Chassis* chassis, Storage* storage, Shooter* shooter);
+frc2::CommandPtr SourceAutoCenterRace(Storage* storage);

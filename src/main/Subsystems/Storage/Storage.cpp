@@ -16,20 +16,25 @@ void Storage::setVoltage(units::volt_t voltage) {
 }
 
 bool Storage::isNoteOnForwardSensor() {
-	// return lastRange < StorageConstants::DistanceSensorActivationThreshold;
-	return false;
-}
-
-bool Storage::isNoteOnBackSensor(){
-	return false;
-}
-
-// This method will be called once per scheduler run
-void Storage::Periodic() {
-	auto currentRange = units::millimeter_t(distanceSensor.GetRange());
-	if(currentRange > 0_m) {
-		lastRange = currentRange;
+	if(isSensorAvailable()) {
+		return lastRange < StorageConstants::DistanceSensorActivationThreshold;
 	}
+	return false;
+}
+
+bool Storage::isSensorAvailable() {
+	return isDistanceSensorConnected;
+}
+
+void Storage::Periodic() {
+	const auto currentTime = frc::Timer::GetFPGATimestamp();
+	if(distanceSensor.IsRangeValid()){
+		auto currentRange = units::millimeter_t(distanceSensor.GetRange());
+		timeLastReading = currentTime;
+	}
+
+	timeSinceLastReading = currentTime - timeLastReading;
+	isDistanceSensorConnected = timeSinceLastReading < StorageConstants::DistanceSensorAvailableTimeTolerance;
 }
 
 void Storage::shuffleboardPeriodic() {

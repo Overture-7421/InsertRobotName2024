@@ -8,6 +8,8 @@
 #include "OvertureLib/Subsystems/LedsManager/Effects/BlinkEffect/BlinkEffect.h"
 #include "OvertureLib/Subsystems/LedsManager/Effects/StaticEffect/StaticEffect.h"
 #include "main/Commands/ServoDashboard/ServoDashboard.h"
+#include "main/Autos/AmpAutoCenterRace/AmpAutoCenterRace.h"
+#include "main/Autos/SourceAutoCenterRace/SourceAutoCenterRace.h"
 
 RobotContainer::RobotContainer() {
 	pathplanner::NamedCommands::registerCommand("GroundGrabCommand", GroundGrabCommand(&superStructure, &storage, &intake).WithTimeout(3_s));
@@ -30,115 +32,8 @@ RobotContainer::RobotContainer() {
 	sourceAuto = pathplanner::AutoBuilder::buildAuto("SourceAuto");
 
 
-	ampAutoCenterRace = frc2::cmd::Sequence(
-		pathplanner::NamedCommands::getCommand("VisionSpeakerCommand"),
-		frc2::cmd::Parallel(
-			pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("AMPAuto1")),
-			pathplanner::NamedCommands::getCommand("GroundGrabCommand")
-		),
-		//Go back to shoot or grab next note if stolen
-		frc2::cmd::Either(
-			frc2::cmd::Sequence(
-				frc2::cmd::Deadline(
-					pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("AMPAuto2")),
-					pathplanner::NamedCommands::getCommand("VisionNoShoot")
-				),
-				pathplanner::NamedCommands::getCommand("VisionSpeakerCommand"),
-				frc2::cmd::Parallel(
-					pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("AMPAuto3")),
-					pathplanner::NamedCommands::getCommand("GroundGrabCommand")
-				)
-			),
-			frc2::cmd::Sequence(
-				frc2::cmd::Parallel(
-					pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("RaceAmpAuto_Stolen1")),
-					pathplanner::NamedCommands::getCommand("GroundGrabCommand")
-				)
-			),
-			[&] {return storage.isNoteOnForwardSensor();}
-		),
-		//Go back to shoot or grab next note if stolen
-		frc2::cmd::Either(
-			frc2::cmd::Sequence(
-				frc2::cmd::Deadline(
-					pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("AMPAuto4")),
-					pathplanner::NamedCommands::getCommand("VisionNoShoot")
-				),
-				pathplanner::NamedCommands::getCommand("VisionSpeakerCommand"),
-				frc2::cmd::Parallel(
-					pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("AMPAuto5")),
-					pathplanner::NamedCommands::getCommand("GroundGrabCommand")
-				)
-			),
-			frc2::cmd::Sequence(
-				frc2::cmd::Parallel(
-					pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("RaceAmpAuto_Stolen2")),
-					pathplanner::NamedCommands::getCommand("GroundGrabCommand")
-				)
-			),
-			[&] {return storage.isNoteOnForwardSensor();}
-		),
-		frc2::cmd::Deadline(
-			pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("AMPAuto6")),
-			pathplanner::NamedCommands::getCommand("VisionNoShoot")
-		),
-		pathplanner::NamedCommands::getCommand("VisionSpeakerCommand")
-	);
-
-	sourceAutoCenterRace = frc2::cmd::Sequence(
-		pathplanner::NamedCommands::getCommand("VisionSpeakerCommand"),
-		frc2::cmd::Parallel(
-			pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("SourceAuto1")),
-			pathplanner::NamedCommands::getCommand("GroundGrabCommand")
-		),
-		//Go back to shoot or grab next note if stolen
-		frc2::cmd::Either(
-			frc2::cmd::Sequence(
-				frc2::cmd::Deadline(
-					pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("SourceAuto2")),
-					pathplanner::NamedCommands::getCommand("VisionNoShoot")
-				),
-				pathplanner::NamedCommands::getCommand("VisionSpeakerCommand"),
-				frc2::cmd::Parallel(
-					pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("SourceAuto3")),
-					pathplanner::NamedCommands::getCommand("GroundGrabCommand")
-				)
-			),
-			frc2::cmd::Sequence(
-				frc2::cmd::Parallel(
-					pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("SourceAutoStolen1")),
-					pathplanner::NamedCommands::getCommand("GroundGrabCommand")
-				)
-			),
-			[&] {return storage.isNoteOnForwardSensor();}
-		),
-		//Go back to shoot or grab next note if stolen
-		frc2::cmd::Either(
-			frc2::cmd::Sequence(
-				frc2::cmd::Deadline(
-					pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("SourceAuto4")),
-					pathplanner::NamedCommands::getCommand("VisionNoShoot")
-				),
-				pathplanner::NamedCommands::getCommand("VisionSpeakerCommand"),
-				frc2::cmd::Parallel(
-					pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("SourceAuto5")),
-					pathplanner::NamedCommands::getCommand("GroundGrabCommand")
-				)
-			),
-			frc2::cmd::Sequence(
-				frc2::cmd::Parallel(
-					pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("SourceAutoStolen2")),
-					pathplanner::NamedCommands::getCommand("GroundGrabCommand")
-				)
-			),
-			[&] {return storage.isNoteOnForwardSensor();}
-		),
-		frc2::cmd::Deadline(
-			pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("SourceAuto6")),
-			pathplanner::NamedCommands::getCommand("VisionNoShoot")
-		),
-		pathplanner::NamedCommands::getCommand("VisionSpeakerCommand")
-	);
+	ampAutoCenterRace = AmpAutoCenterRace(&storage);
+	sourceAutoCenterRace = SourceAutoCenterRace(&storage);
 
 	autoChooser.SetDefaultOption("None, null, nada", defaultNoneAuto.get());
 	autoChooser.AddOption("CenterAuto-7Notes", center7NoteAuto.get());
@@ -156,21 +51,20 @@ RobotContainer::RobotContainer() {
 }
 
 void RobotContainer::ConfigureBindings() {
-	// characterization.A().WhileTrue(shooter.sysIdQuasistatic(frc2::sysid::Direction::kForward));
-	// characterization.B().WhileTrue(shooter.sysIdQuasistatic(frc2::sysid::Direction::kReverse));
-	// characterization.Y().WhileTrue(shooter.sysIdDynamic(frc2::sysid::Direction::kForward));
-	// characterization.X().WhileTrue(shooter.sysIdDynamic(frc2::sysid::Direction::kReverse));
-
-
 	noteOnStorage.WhileTrue(frc2::cmd::Sequence(
 		BlinkEffect(&leds, "all", { 0, 255, 0 }, 0.25_s).ToPtr().WithTimeout(0.5_s),
 		StaticEffect(&leds, "all", { 0, 255, 0 }).ToPtr()
 	).IgnoringDisable(true));
 
+	storageSensorEmergencyMode.WhileTrue(frc2::cmd::Sequence(
+		BlinkEffect(&leds, "all", { 0, 0, 255 }, 0.25_s).ToPtr().WithTimeout(0.5_s),
+		BlinkEffect(&leds, "all", { 0, 0, 125 }, 0.25_s).ToPtr().WithTimeout(0.5_s)
+	).Repeatedly().IgnoringDisable(true));
+
 	shooterEmergencyMode.WhileTrue(frc2::cmd::Sequence(
 		BlinkEffect(&leds, "all", { 255, 255, 0 }, 0.25_s).ToPtr().WithTimeout(0.5_s),
 		BlinkEffect(&leds, "all", { 255, 0, 0 }, 0.25_s).ToPtr().WithTimeout(0.5_s)
-	).Repeatedly());
+	).Repeatedly().IgnoringDisable(true));
 
 	shooterEmergencyMode.OnTrue(frc2::cmd::Sequence(
 		frc2::cmd::RunOnce([&] {
@@ -201,7 +95,7 @@ void RobotContainer::ConfigureBindings() {
 
 	zeroHeading.OnTrue(ResetAngle(&chassis).ToPtr());
 
-	tabulate.ToggleOnTrue(TabulateCommand(&chassis, &superStructure, &shooter, &mainCamera).ToPtr());
+	// tabulate.ToggleOnTrue(TabulateCommand(&chassis, &superStructure, &shooter, &mainCamera).ToPtr());
 	ampV.WhileTrue(VisionAmpCommand(&superStructure, &shooter));
 	ampV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
@@ -278,7 +172,6 @@ frc2::CommandPtr RobotContainer::GetTeleopResetCommand() {
 		ShooterCommand(&shooter, 0).ToPtr(),
 		IntakeCommand(&intake, 0_V).ToPtr()
 	);
-	// return frc2::cmd::None();
 }
 
 

@@ -6,6 +6,7 @@
 
 Intake::Intake() {
 	intakeMotorLeft.setSupplyCurrentLimit(true, 20, 30, 0.5);
+	intakeMotorRight.setSupplyCurrentLimit(true, 20, 30, 0.5);
 	intakeMotorRight.setFollow(25, false);
 }
 

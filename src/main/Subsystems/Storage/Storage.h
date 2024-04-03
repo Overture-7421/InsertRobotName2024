@@ -24,7 +24,7 @@ public:
 	Storage();
 	void setVoltage(units::volt_t voltage);
 	bool isNoteOnForwardSensor();
-	bool isNoteOnBackSensor();
+	bool isSensorAvailable();
 	void Periodic() override;
 	void shuffleboardPeriodic();
 private:
@@ -33,7 +33,9 @@ private:
 	// int IRvalue = 0;
 	// frc::DigitalInput beamBreakSensor {1};
 	units::millimeter_t lastRange;
+	units::second_t timeLastReading, timeSinceLastReading;
 	rev::Rev2mDistanceSensor distanceSensor {rev::Rev2mDistanceSensor::Port::kMXP, rev::Rev2mDistanceSensor::DistanceUnit::kMilliMeters, rev::Rev2mDistanceSensor::RangeProfile::kHighSpeed};
+	bool isDistanceSensorConnected = true;
 
 	wpi::log::DataLog& log = frc::DataLogManager::GetLog();
 	wpi::log::BooleanLogEntry noteOnForward = wpi::log::BooleanLogEntry(log, "/storage/note_on_forward");

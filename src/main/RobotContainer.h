@@ -24,13 +24,11 @@
 #include "Commands/SuperStructureMoveByDistance/SuperStructureMoveByDistance.h"
 
 #include "Commands/GroundGrabCommand/GroundGrabCommand.h"
-#include "Commands/SourceGrabCommand/SourceGrabCommand.h"
 #include "Commands/AmpCommand/AmpCommand.h"
 #include "Commands/ClosedCommand/ClosedCommand.h"
 #include "Commands/ClosedCommandSmooth/ClosedCommandSmooth.h"
 #include "Commands/SpeakerCommand/SpeakerCommand.h"
 #include "Commands/VisionAmpCommand/VisionAmpCommand.h"
-#include "Commands/VisionSourceGrabCommand/VisionSourceGrabCommand.h"
 #include "Commands/VisionSpeakerCommand/VisionSpeakerCommand.h"
 #include "Commands/VisionSpeakerCommandNoShoot/VisionSpeakerCommandNoShoot.h"
 #include "Commands/ResetAngle/ResetAngle.h"
@@ -89,9 +87,7 @@ private:
 	frc2::Trigger climbV{ [this] {return driver.GetYButton();} };
 	frc2::Trigger passNoteHigh{ [this] {return driver.GetXButton();} };
 	frc2::Trigger passNoteLow{ [this] {return driver.GetBButton();} };
-	frc2::Trigger tabulate{ [this] {return driver.GetAButton();} };
-
-	frc2::Trigger objectDetect{ [this] {return driver.GetPOV() == 0;} };
+	// frc2::Trigger tabulate{ [this] {return driver.GetAButton();} };
 
 	// Mechanism Commands
 	frc2::Trigger ampM{ [this] {return opertr.GetLeftBumper();} };
@@ -110,6 +106,7 @@ private:
 	// LED Triggers
 	frc2::Trigger noteOnStorage{ [this] {return storage.isNoteOnForwardSensor();} };
 	frc2::Trigger shooterEmergencyMode{ [this] {return shooter.isEmergencyDisabled();} };
+	frc2::Trigger storageSensorEmergencyMode{ [this] {return !storage.isSensorAvailable();} };
 
 	//Autonomous
 	frc2::CommandPtr defaultNoneAuto = frc2::cmd::None();
