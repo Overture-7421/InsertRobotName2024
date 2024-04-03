@@ -29,7 +29,7 @@ bool Storage::isSensorAvailable() {
 void Storage::Periodic() {
 	const auto currentTime = frc::Timer::GetFPGATimestamp();
 	if(distanceSensor.IsRangeValid()){
-		auto currentRange = units::millimeter_t(distanceSensor.GetRange());
+		lastRange = units::millimeter_t(distanceSensor.GetRange());
 		timeLastReading = currentTime;
 	}
 
