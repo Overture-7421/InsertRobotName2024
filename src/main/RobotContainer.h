@@ -39,6 +39,7 @@
 #include "Commands/VisionSpeakerCommandPassNote/VisionSpeakerCommandPassNote.h"
 
 #include "Commands/TabulateCommand/TabulateCommand.h"
+#include "Commands/AlignToTrackedObject/AlignToTrackedObject.h"
 
 
 #include "Commands/Climbing/Climbing.h"
@@ -60,7 +61,9 @@ private:
 	void ConfigureBindings();
 
 	// Subsystems
-	AprilTagCamera aprilTagCamera{ &chassis };
+	AprilTagCamera mainCamera{ &chassis };
+	// AprilTagCamera secondaryCamera{ &chassis };
+	photon::PhotonCamera objectCamera{ "USB_Camera-B4.09.24.1" };
 	Intake intake;
 	SuperStructure superStructure;
 	Storage storage;
@@ -77,7 +80,7 @@ private:
 	frc::XboxController opertr{ 1 };
 
 	// frc2::CommandXboxController characterization {5};
-	
+
 	// Driver Commands
 	frc2::Trigger ampV{ [this] {return driver.GetLeftTriggerAxis() > 0.1;} };
 	frc2::Trigger sourceV{ [this] {return driver.GetRightBumper();} };
@@ -87,6 +90,8 @@ private:
 	frc2::Trigger passNoteHigh{ [this] {return driver.GetXButton();} };
 	frc2::Trigger passNoteLow{ [this] {return driver.GetBButton();} };
 	frc2::Trigger tabulate{ [this] {return driver.GetAButton();} };
+
+	frc2::Trigger objectDetect{ [this] {return driver.GetPOV() == 0;} };
 
 	// Mechanism Commands
 	frc2::Trigger ampM{ [this] {return opertr.GetLeftBumper();} };

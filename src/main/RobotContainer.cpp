@@ -13,14 +13,14 @@ RobotContainer::RobotContainer() {
 	pathplanner::NamedCommands::registerCommand("GroundGrabCommand", GroundGrabCommand(&superStructure, &storage, &intake).WithTimeout(3_s));
 	pathplanner::NamedCommands::registerCommand("ClosedCommand", std::move(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("VisionSpeakerCommand", std::move(frc2::cmd::Sequence(
-		VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter, &aprilTagCamera).ToPtr().WithTimeout(0.1_s),
-		VisionSpeakerCommand(&chassis, &superStructure, &shooter, &aprilTagCamera, &storage).ToPtr()
+		VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter, &mainCamera).ToPtr().WithTimeout(0.1_s),
+		VisionSpeakerCommand(&chassis, &superStructure, &shooter, &mainCamera, &storage).ToPtr()
 	)));
-	pathplanner::NamedCommands::registerCommand("VisionShootNoDelay", std::move(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &aprilTagCamera, &storage).ToPtr()));
+	pathplanner::NamedCommands::registerCommand("VisionShootNoDelay", std::move(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &mainCamera, &storage).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("VisionAmpCommand", std::move(VisionAmpCommand(&superStructure, &shooter)));
 	pathplanner::NamedCommands::registerCommand("StorageCommand", std::move(StorageCommand(&storage, 3_V).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("ShooterCommand", std::move(ShooterCommand(&shooter, 4.00).ToPtr()));
-	pathplanner::NamedCommands::registerCommand("VisionNoShoot", std::move(VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter, &aprilTagCamera).ToPtr()));
+	pathplanner::NamedCommands::registerCommand("VisionNoShoot", std::move(VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter, &mainCamera).ToPtr()));
 
 	center7NoteAuto = pathplanner::AutoBuilder::buildAuto("CenterAuto-7Notes");
 	center5NoteAuto = pathplanner::AutoBuilder::buildAuto("CenterAuto-5Notes");
@@ -160,7 +160,7 @@ void RobotContainer::ConfigureBindings() {
 	// characterization.Y().WhileTrue(shooter.sysIdDynamic(frc2::sysid::Direction::kForward));
 	// characterization.X().WhileTrue(shooter.sysIdDynamic(frc2::sysid::Direction::kReverse));
 
-	
+
 	noteOnStorage.WhileTrue(frc2::cmd::Sequence(
 		BlinkEffect(&leds, "all", { 0, 255, 0 }, 0.25_s).ToPtr().WithTimeout(0.5_s),
 		StaticEffect(&leds, "all", { 0, 255, 0 }).ToPtr()
@@ -200,28 +200,30 @@ void RobotContainer::ConfigureBindings() {
 
 	zeroHeading.OnTrue(ResetAngle(&chassis).ToPtr());
 
-	tabulate.ToggleOnTrue(TabulateCommand(&chassis, &superStructure, &shooter, &aprilTagCamera).ToPtr());
+	tabulate.ToggleOnTrue(TabulateCommand(&chassis, &superStructure, &shooter, &mainCamera).ToPtr());
 	ampV.WhileTrue(VisionAmpCommand(&superStructure, &shooter));
 	ampV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	speakerV.WhileTrue(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &aprilTagCamera, &opertr).ToPtr());
+	speakerV.WhileTrue(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &mainCamera, &opertr).ToPtr());
 	speakerV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	passNoteHigh.WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &aprilTagCamera, &storage, PassNote::High).ToPtr());
+	passNoteHigh.WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &mainCamera, &storage, PassNote::High).ToPtr());
 	passNoteHigh.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	passNoteLow.WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &aprilTagCamera, &storage, PassNote::Low).ToPtr());
+	passNoteLow.WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &mainCamera, &storage, PassNote::Low).ToPtr());
 	passNoteLow.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+
+	objectDetect.WhileTrue(AlignToTrackedObject(&chassis, &objectCamera));
 
 	// Operator 
 	ampM.WhileTrue(AmpCommand(&superStructure, &shooter).ToPtr());
 	ampM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	climbM.WhileTrue(ManualClimb(&chassis, &superStructure, &supportArms, &aprilTagCamera, &storage, &shooter, &opertr));
+	climbM.WhileTrue(ManualClimb(&chassis, &superStructure, &supportArms, &mainCamera, &storage, &shooter, &opertr));
 	climbM.OnFalse(
 		frc2::cmd::Parallel(
 			frc2::cmd::RunOnce([&] {
-		aprilTagCamera.setPoseEstimator(true);
+		mainCamera.setPoseEstimator(true);
 	}),
 			ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr()
 		)
