@@ -18,7 +18,7 @@
 #include "main/Subsystems/SuperStructure/SuperStructure.h"
 #include "main/Subsystems/Shooter/Shooter.h"
 #include "main/Subsystems/Storage/Storage.h"
-#include "main/Subsystems/Vision/AprilTagCamera.h"
+#include "main/Subsystems/Targeting/TargetProvider.h"
 
 #include "main/Commands/UtilityFunctions/UtilityFunctions.h"
 #include "main/Commands/StorageCommand/StorageCommand.h"
@@ -28,7 +28,7 @@
 class VisionSpeakerCommandPassNote
 	: public frc2::CommandHelper<frc2::Command, VisionSpeakerCommandPassNote> {
 public:
-	VisionSpeakerCommandPassNote(Chassis* chassis, SuperStructure* SuperStructure, Shooter* shooter, AprilTagCamera* tagCamera, Storage* storage, PassNote upOrDown);
+	VisionSpeakerCommandPassNote(Chassis* chassis, SuperStructure* SuperStructure, Shooter* shooter, TargetProvider* targetProvider, Storage* storage, PassNote upOrDown);
 
 	void Initialize() override;
 
@@ -46,7 +46,7 @@ private:
 	Shooter* shooter;
 	Storage* storage;
 
-	AprilTagCamera* tagCamera;
+	TargetProvider* targetProvider;
 
 	bool lowerAngleInTolerance;
 	bool upperAngleInTolerance;
@@ -59,5 +59,5 @@ private:
 
 	units::meter_t distance = 0.0_m;
 	frc::Rotation2d angle;
-	frc::Translation2d speakerLoc;
+	frc::Translation2d passLocation;
 };
