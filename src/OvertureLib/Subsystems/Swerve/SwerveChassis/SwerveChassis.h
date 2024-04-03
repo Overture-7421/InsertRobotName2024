@@ -59,6 +59,7 @@ public:
 	void resetOdometry(frc::Pose2d initPose);
 	const frc::SwerveDriveKinematics<4>& getKinematics();
 	void addVisionMeasurement(frc::Pose2d pose, units::second_t Latency);
+	void setAcceptingVisionMeasurements(bool acceptVisionMeasurements);
 	void resetAngle(double angle = 0);
 
 	void setModuleStates(wpi::array<frc::SwerveModuleState, 4> desiredStates);
@@ -113,4 +114,6 @@ private:
 
 	bool vyOverride = false;
 	units::meters_per_second_t vyTarget;
+
+	bool acceptVisionMeasurements = true;
 };

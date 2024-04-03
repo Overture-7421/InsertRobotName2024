@@ -250,7 +250,13 @@ const frc::SwerveDriveKinematics<4>& SwerveChassis::getKinematics() {
  * @brief Updates odometry using vision
  */
 void SwerveChassis::addVisionMeasurement(frc::Pose2d pose, units::second_t timestamp) {
-	odometry->AddVisionMeasurement(pose, timestamp);
+	if(acceptVisionMeasurements) {
+		odometry->AddVisionMeasurement(pose, timestamp);
+	}
+}
+
+void SwerveChassis::setAcceptingVisionMeasurements(bool acceptVisionMeasurements) {
+	this->acceptVisionMeasurements = acceptVisionMeasurements;
 }
 
 /**

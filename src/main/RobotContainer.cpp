@@ -15,15 +15,15 @@ RobotContainer::RobotContainer() {
 	pathplanner::NamedCommands::registerCommand("GroundGrabCommand", GroundGrabCommand(&superStructure, &storage, &intake).WithTimeout(3_s));
 	pathplanner::NamedCommands::registerCommand("ClosedCommand", std::move(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("VisionSpeakerCommand", std::move(frc2::cmd::Sequence(
-		VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter, &mainCamera).ToPtr().WithTimeout(0.1_s),
-		VisionSpeakerCommand(&chassis, &superStructure, &shooter, &mainCamera, &storage).ToPtr()
+		VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter, &targetProvider).ToPtr().WithTimeout(0.1_s),
+		VisionSpeakerCommand(&chassis, &superStructure, &shooter, &targetProvider, &storage).ToPtr()
 	)));
-	pathplanner::NamedCommands::registerCommand("VisionShootNoDelay", std::move(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &mainCamera, &storage).ToPtr()));
+	pathplanner::NamedCommands::registerCommand("VisionShootNoDelay", std::move(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &targetProvider, &storage).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("VisionAmpCommand", std::move(VisionAmpCommand(&superStructure, &shooter)));
 	pathplanner::NamedCommands::registerCommand("StorageCommand", std::move(StorageCommand(&storage, 3_V).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("ShooterCommand", std::move(ShooterCommand(&shooter, 4.00).ToPtr()));
-	pathplanner::NamedCommands::registerCommand("VisionNoShoot", std::move(VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter, &mainCamera).ToPtr()));
-	pathplanner::NamedCommands::registerCommand("AlignToNote", std::move(AlignToTrackedObject(&chassis, &objectCamera)));
+	pathplanner::NamedCommands::registerCommand("VisionNoShoot", std::move(VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter, &targetProvider).ToPtr()));
+	pathplanner::NamedCommands::registerCommand("AlignToNote", std::move(AlignToTrackedObject(&chassis, &noteTrackingCamera)));
 
 	center7NoteAuto = pathplanner::AutoBuilder::buildAuto("CenterAuto-7Notes");
 	center5NoteAuto = pathplanner::AutoBuilder::buildAuto("CenterAuto-5Notes");
@@ -99,13 +99,13 @@ void RobotContainer::ConfigureBindings() {
 	ampV.WhileTrue(VisionAmpCommand(&superStructure, &shooter));
 	ampV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	speakerV.WhileTrue(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &mainCamera, &opertr).ToPtr());
+	speakerV.WhileTrue(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &targetProvider, &opertr).ToPtr());
 	speakerV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	passNoteHigh.WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &mainCamera, &storage, PassNote::High).ToPtr());
+	passNoteHigh.WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &targetProvider, &storage, PassNote::High).ToPtr());
 	passNoteHigh.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	passNoteLow.WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &mainCamera, &storage, PassNote::Low).ToPtr());
+	passNoteLow.WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &targetProvider, &storage, PassNote::Low).ToPtr());
 	passNoteLow.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
 	// objectDetect.WhileTrue(AlignToTrackedObject(&chassis, &objectCamera));
@@ -114,11 +114,11 @@ void RobotContainer::ConfigureBindings() {
 	ampM.WhileTrue(AmpCommand(&superStructure, &shooter).ToPtr());
 	ampM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	climbM.WhileTrue(ManualClimb(&chassis, &superStructure, &supportArms, &mainCamera, &storage, &shooter, &opertr));
+	climbM.WhileTrue(ManualClimb(&chassis, &superStructure, &supportArms, &storage, &shooter, &opertr));
 	climbM.OnFalse(
 		frc2::cmd::Parallel(
 			frc2::cmd::RunOnce([&] {
-		mainCamera.setPoseEstimator(true);
+		chassis.setAcceptingVisionMeasurements(true);
 	}),
 			ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr()
 		)

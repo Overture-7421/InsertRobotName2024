@@ -6,31 +6,31 @@
 
 #include <frc/MathUtil.h>
 
-VisionSpeakerCommand::VisionSpeakerCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, AprilTagCamera* tagCamera, frc::XboxController* joystick) {
+VisionSpeakerCommand::VisionSpeakerCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, TargetProvider* targetProvider, frc::XboxController* joystick) {
 	// Use addRequirements() here to declare subsystem dependencies.
 	AddRequirements({ superStructure, shooter });
 	this->chassis = chassis;
 	this->superStructure = superStructure;
 	this->shooter = shooter;
 	this->joystick = joystick;
-	this->tagCamera= tagCamera;
+	this->targetProvider = targetProvider;
 }
 
-VisionSpeakerCommand::VisionSpeakerCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, AprilTagCamera* tagCamera, Storage* storage) {
+VisionSpeakerCommand::VisionSpeakerCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, TargetProvider* targetProvider, Storage* storage) {
 	// Use addRequirements() here to declare subsystem dependencies.
 	AddRequirements({ superStructure, shooter, storage });
 	this->chassis = chassis;
 	this->superStructure = superStructure;
 	this->shooter = shooter;
 	this->storage = storage;
-	this->tagCamera = tagCamera;
+	this->targetProvider = targetProvider;
 }
 
 // Called when the command is initially scheduled.
 void VisionSpeakerCommand::Initialize() {
 	chassis->setHeadingOverride(true);
 
-	dynamicTarget.setTargetLocation(tagCamera->GetSpeakerLocation());
+	dynamicTarget.setTargetLocation(targetProvider->GetSpeakerLocation());
 
 	Timer.Reset();
 	Timer.Stop();

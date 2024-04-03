@@ -13,12 +13,12 @@
 #include "main/Subsystems/Shooter/Shooter.h"
 #include "main/Commands/VisionSpeakerCommand/Constants.h"
 #include "main/Commands/UtilityFunctions/UtilityFunctions.h"
-#include "main/Subsystems/Vision/AprilTagCamera.h"
+#include "main/Subsystems/Targeting/TargetProvider.h"
 
 class VisionSpeakerCommandNoShoot
 	: public frc2::CommandHelper<frc2::Command, VisionSpeakerCommandNoShoot> {
 public:
-	VisionSpeakerCommandNoShoot(Chassis* chassis, SuperStructure* SuperStructure, Shooter* shooter, AprilTagCamera* tagCamera);
+	VisionSpeakerCommandNoShoot(Chassis* chassis, SuperStructure* SuperStructure, Shooter* shooter, TargetProvider* targetProvider);
 
 	void Initialize() override;
 
@@ -32,7 +32,7 @@ private:
 	SuperStructure* superStructure;
 	Chassis* chassis;
 	Shooter* shooter;
-	AprilTagCamera* tagCamera;
+	TargetProvider* targetProvider;
 	
 
 	frc::Translation2d targetLocation;

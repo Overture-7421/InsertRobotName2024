@@ -97,13 +97,13 @@ frc2::CommandPtr AutoClimb(Chassis* chassis, SuperStructure* superStructure, Sup
 	);
 };
 
-frc2::CommandPtr ManualClimb(Chassis* chassis, SuperStructure* superStructure, SupportArms* supportArms, AprilTagCamera* aprilTagCamera, Storage* storage, Shooter* shooter, frc::XboxController* controller) {
+frc2::CommandPtr ManualClimb(Chassis* chassis, SuperStructure* superStructure, SupportArms* supportArms, Storage* storage, Shooter* shooter, frc::XboxController* controller) {
 	static std::shared_ptr<pathplanner::PathPlannerPath> climbPathManual = pathplanner::PathPlannerPath::fromPathFile("Climb Manual");
 	climbPathManual->preventFlipping = true;
 
 	return frc2::cmd::Sequence(
-		frc2::cmd::RunOnce([=]() {
-		aprilTagCamera->setPoseEstimator(false);
+	frc2::cmd::RunOnce([=]() {
+		chassis->setAcceptingVisionMeasurements(false);
 		chassis->resetOdometry(climbPathManual->getStartingDifferentialPose());
 	}),
 		SetUpJoints(chassis, superStructure, supportArms, climbPathManual),
