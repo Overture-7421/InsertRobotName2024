@@ -11,7 +11,7 @@ Storage::Storage() {
 }
 
 void Storage::setVoltage(units::volt_t voltage) {
-	storageMotor.setVoltage(voltage, false);
+	storageMotor.setVoltage(voltage, true);
 }
 
 bool Storage::isNoteOnForwardSensor() {
@@ -45,5 +45,5 @@ void Storage::shuffleboardPeriodic() {
 	distance.Append(lastRange.value());
 	sensorAvailable.Append(isSensorAvailable());
 	frc::SmartDashboard::PutBoolean("Storage/NoteOnForward", isNoteOnForwardSensor());
-	frc::SmartDashboard::PutNumber("Storage/DistanceSensor", lastRange.value() * 100);
+	frc::SmartDashboard::PutNumber("Storage/DistanceSensor", lastRange.value());
 }
