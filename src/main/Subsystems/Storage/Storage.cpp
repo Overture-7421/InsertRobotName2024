@@ -7,6 +7,7 @@
 
 Storage::Storage() {
 	storageMotor.setSupplyCurrentLimit(true, 20, 30, 0.5);
+	distanceSensor.SetAutomaticMode(true);
 }
 
 void Storage::setVoltage(units::volt_t voltage) {
