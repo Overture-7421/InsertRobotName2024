@@ -92,7 +92,7 @@ private:
 	frc2::Trigger climbV{ [this] {return driver.GetYButton();} };
 	frc2::Trigger passNoteHigh{ [this] {return driver.GetXButton();} };
 	frc2::Trigger passNoteLow{ [this] {return driver.GetBButton();} };
-	// frc2::Trigger tabulate{ [this] {return driver.GetAButton();} };
+	//frc2::Trigger tabulate{ [this] {return driver.GetAButton();} };
 
 	// Mechanism Commands
 	frc2::Trigger ampM{ [this] {return opertr.GetLeftBumper();} };

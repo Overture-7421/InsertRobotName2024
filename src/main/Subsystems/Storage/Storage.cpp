@@ -28,13 +28,14 @@ bool Storage::isSensorAvailable() {
 
 void Storage::Periodic() {
 	const auto currentTime = frc::Timer::GetFPGATimestamp();
-	if(distanceSensor.IsRangeValid()){
-		lastRange = units::millimeter_t(distanceSensor.GetRange());
+	lastRange = units::millimeter_t(distanceSensor.GetRange());
+
+	if(lastRange > 0_mm) {
 		timeLastReading = currentTime;
 	}
 
 	timeSinceLastReading = currentTime - timeLastReading;
-	isDistanceSensorConnected = timeSinceLastReading > StorageConstants::DistanceSensorAvailableTimeTolerance;
+	isDistanceSensorConnected = timeSinceLastReading < StorageConstants::DistanceSensorAvailableTimeTolerance;
 }
 
 void Storage::shuffleboardPeriodic() {

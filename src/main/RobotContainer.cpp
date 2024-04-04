@@ -95,7 +95,7 @@ void RobotContainer::ConfigureBindings() {
 
 	zeroHeading.OnTrue(ResetAngle(&chassis).ToPtr());
 
-	// tabulate.ToggleOnTrue(TabulateCommand(&chassis, &superStructure, &shooter, &mainCamera).ToPtr());
+	//tabulate.ToggleOnTrue(TabulateCommand(&chassis, &superStructure, &shooter, &targetProvider).ToPtr());
 	ampV.WhileTrue(VisionAmpCommand(&superStructure, &shooter));
 	ampV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
@@ -108,9 +108,9 @@ void RobotContainer::ConfigureBindings() {
 	passNoteLow.WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &targetProvider, &storage, PassNote::Low).ToPtr());
 	passNoteLow.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	// objectDetect.WhileTrue(AlignToTrackedObject(&chassis, &objectCamera));
+	//objectDetect.WhileTrue(AlignToTrackedObject(&chassis, &objectCamera));
 
-	// Operator 
+	//Operator 
 	ampM.WhileTrue(AmpCommand(&superStructure, &shooter).ToPtr());
 	ampM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 

@@ -9,6 +9,7 @@ namespace VisionSpeakerCommandConstants {
 	static const InterpolatingTable<units::meter_t, double> DistanceToLowerAngleTable{
 		{1.66_m, -12.0},
 		{1.9_m, -12.0},
+		{2.4_m, -12.0}, 
 		{2.9_m, -12.0},
 		{3.4_m, -12.0},
 		{2.4_m, -12.0},
@@ -16,22 +17,21 @@ namespace VisionSpeakerCommandConstants {
 		{4.4_m, -12.0},
 		{4.9_m, -12.0},
 		{5.4_m, -12.0},
-		{5.9_m, -12.0},
-		{6.4_m, -12.0}
+		{5.9_m, -12.0}
 	};
 
 	// Red Alliance
 	static const InterpolatingTable<units::meter_t, double> DistanceToUpperAngleTable{
 		{1.66_m, -29.0},
 		{1.9_m, -27.0},
-		{2.4_m, -22.5},
-		{2.9_m, -16.0},
-		{3.4_m, -13.0},
-		{3.9_m, -8.5},
+		{2.4_m, -19.0},
+		{2.9_m, -14.5},
+		{3.4_m, -10.75},
+		{3.9_m, -8.0},
 		{4.4_m, -7.0},
-		{4.9_m, -6.0},
-		{5.4_m, -4.0},
-		{5.9_m, -3.0}
+		{4.9_m, -4.5},
+		{5.4_m, -3.0},
+		{5.9_m, -2.0}
 	};
 
 	// Blue Alliance
@@ -59,20 +59,19 @@ namespace VisionSpeakerCommandConstants {
 		{4.4_m, 140.0},
 		{4.9_m, 140.0},
 		{5.4_m, 140.0},
-		{5.9_m, 140.0},
-		{6.4_m, 140.0}
+		{5.9_m, 140.0}
 	};
 
 	static const InterpolatingTable<units::meter_t, units::second_t> DistanceToShotTimeTable{
-	  {1.66_m, 0.14_s},
-	  {1.9_m, 0.13_s},
-	  {2.4_m, 0.14_s},
-	  {2.9_m, 0.14_s},
-	  {3.4_m, 0.14_s},
-	  {3.9_m, 0.19_s},
-	  {4.4_m, 0.22_s},
-	  {4.9_m, 0.23_s},
-	  {5.4_m, 0.29_s},
-	  {5.9_m, 0.32_s}
+	  {1.66_m, 0.15_s},
+	  {1.9_m, 0.155_s},
+	  {2.4_m, 0.16_s}, 
+	  {2.9_m, 0.19_s}, 
+	  {3.4_m, 0.20_s}, 
+	  {3.9_m, 0.24_s},
+	  {4.4_m, 0.25_s},
+	  {4.9_m, 0.28_s},
+	  {5.4_m, 0.35_s},
+	  {5.9_m, 0.36_s}
 	};
 };

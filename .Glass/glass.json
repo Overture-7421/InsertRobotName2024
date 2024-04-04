@@ -5,6 +5,9 @@
         "FrontRight": {
           "open": true
         },
+        "Storage": {
+          "open": true
+        },
         "SuperStructure": {
           "Current": {
             "open": true
@@ -17,8 +20,7 @@
               "open": true
             },
             "open": true
-          },
-          "open": true
+          }
         },
         "SupportArms": {
           "Current": {
@@ -57,7 +59,7 @@
             0.0,
             0.8500000238418579
           ],
-          "height": 709,
+          "height": 0,
           "series": [
             {
               "color": [
