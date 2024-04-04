@@ -6,7 +6,7 @@
 
 #include <frc2/command/SubsystemBase.h>
 #include <frc/DigitalInput.h>
-#include <frc/filter/Debouncer.h>
+#include <frc/DigitalOutput.h>
 #include <rev/ColorSensorV3.h>
 #include <rev/Rev2mDistanceSensor.h>
 #include <units/length.h>
@@ -18,11 +18,8 @@
 
 #include <wpi/DataLog.h>
 #include <frc/DataLogManager.h>
+#include <frc/Ultrasonic.h>
 
-#include <frc/SerialPort.h>
-
-
-#define BUFFER_SIZE 255
 class Storage : public frc2::SubsystemBase {
 public:
 	Storage();
@@ -35,22 +32,19 @@ private:
 	OverTalonFX storageMotor{ 30, ControllerNeutralMode::Brake, false, "rio" };
 	// rev::ColorSensorV3 colorSensor{frc::I2C::Port::kMXP};
 	// int IRvalue = 0;
-	frc::DigitalInput beamBreakSensor {5};
-	// units::volt_t lastVolts;
-	// units::millimeter_t lastRange;
-	// units::second_t timeLastReading, timeSinceLastReading;
-	// rev::Rev2mDistanceSensor distanceSensor {rev::Rev2mDistanceSensor::Port::kMXP, rev::Rev2mDistanceSensor::DistanceUnit::kMilliMeters, rev::Rev2mDistanceSensor::RangeProfile::kHighSpeed};
+	frc::DigitalInput echoPin {25}; // 10-25 are on the MXP port, DIO15  
+	frc::DigitalOutput pingPin {24}; //10-25 are on the MXP port, DIO14
+	frc::Ultrasonic distanceSensor {pingPin, echoPin};
 
-	
-	// char buffer[BUFFER_SIZE] = {0};
-	// frc::SerialPort distanceSensorPort {9600, frc::SerialPort::Port::kOnboard, 8, frc::SerialPort::Parity::kParity_Even, frc::SerialPort::kStopBits_Two};
-
-	// bool isDistanceSensorConnected = true;
+	units::centimeter_t lastRange;
+	units::second_t timeLastReading, timeSinceLastReading;
+	bool isDistanceSensorConnected = true;
 
 	wpi::log::DataLog& log = frc::DataLogManager::GetLog();
 	wpi::log::BooleanLogEntry noteOnForward = wpi::log::BooleanLogEntry(log, "/storage/note_on_forward");
 	wpi::log::DoubleLogEntry voltage = wpi::log::DoubleLogEntry(log, "/storage/voltage");
 	wpi::log::DoubleLogEntry current = wpi::log::DoubleLogEntry(log, "/storage/current");
 	wpi::log::DoubleLogEntry distance = wpi::log::DoubleLogEntry(log, "/storage/distance_sensor");
+	wpi::log::BooleanLogEntry sensorAvailable = wpi::log::BooleanLogEntry(log, "/storage/sensor_available");
 
 };
