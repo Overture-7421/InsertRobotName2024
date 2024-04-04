@@ -15,7 +15,7 @@ RobotContainer::RobotContainer() {
 	pathplanner::NamedCommands::registerCommand("GroundGrabCommand", GroundGrabCommand(&superStructure, &storage, &intake).WithTimeout(3_s));
 	pathplanner::NamedCommands::registerCommand("ClosedCommand", std::move(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("VisionSpeakerCommand", std::move(frc2::cmd::Sequence(
-		VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter, &targetProvider).ToPtr().WithTimeout(0.1_s),
+		VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter, &targetProvider).ToPtr().WithTimeout(0.2_s),
 		VisionSpeakerCommand(&chassis, &superStructure, &shooter, &targetProvider, &storage).ToPtr()
 	)));
 	pathplanner::NamedCommands::registerCommand("VisionShootNoDelay", std::move(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &targetProvider, &storage).ToPtr()));

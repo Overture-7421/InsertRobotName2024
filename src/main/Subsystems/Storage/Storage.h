@@ -19,6 +19,10 @@
 #include <wpi/DataLog.h>
 #include <frc/DataLogManager.h>
 
+#include <frc/SerialPort.h>
+
+
+#define BUFFER_SIZE 255
 class Storage : public frc2::SubsystemBase {
 public:
 	Storage();
@@ -31,11 +35,17 @@ private:
 	OverTalonFX storageMotor{ 30, ControllerNeutralMode::Brake, false, "rio" };
 	// rev::ColorSensorV3 colorSensor{frc::I2C::Port::kMXP};
 	// int IRvalue = 0;
-	// frc::DigitalInput beamBreakSensor {1};
-	units::millimeter_t lastRange;
-	units::second_t timeLastReading, timeSinceLastReading;
-	rev::Rev2mDistanceSensor distanceSensor {rev::Rev2mDistanceSensor::Port::kMXP, rev::Rev2mDistanceSensor::DistanceUnit::kMilliMeters, rev::Rev2mDistanceSensor::RangeProfile::kHighSpeed};
-	bool isDistanceSensorConnected = true;
+	frc::DigitalInput beamBreakSensor {5};
+	// units::volt_t lastVolts;
+	// units::millimeter_t lastRange;
+	// units::second_t timeLastReading, timeSinceLastReading;
+	// rev::Rev2mDistanceSensor distanceSensor {rev::Rev2mDistanceSensor::Port::kMXP, rev::Rev2mDistanceSensor::DistanceUnit::kMilliMeters, rev::Rev2mDistanceSensor::RangeProfile::kHighSpeed};
+
+	
+	// char buffer[BUFFER_SIZE] = {0};
+	// frc::SerialPort distanceSensorPort {9600, frc::SerialPort::Port::kOnboard, 8, frc::SerialPort::Parity::kParity_Even, frc::SerialPort::kStopBits_Two};
+
+	// bool isDistanceSensorConnected = true;
 
 	wpi::log::DataLog& log = frc::DataLogManager::GetLog();
 	wpi::log::BooleanLogEntry noteOnForward = wpi::log::BooleanLogEntry(log, "/storage/note_on_forward");
