@@ -101,8 +101,11 @@ private:
 	frc2::Trigger shootM{ [this] {return opertr.GetLeftTriggerAxis() > 0.1;} };
 	frc2::Trigger speakerM{ [this] {return opertr.GetRightBumper();} };
 	frc2::Trigger trapV{ [this] {return opertr.GetAButton();} };
-	frc2::Trigger closed{ [this] {return opertr.GetPOV() == 0;} };
-	frc2::Trigger shooterEmergencyStop{ [this] {return opertr.GetPOV() == 180;} };
+
+
+	frc2::Trigger increaseUpperAngleOffset{ [this] {return opertr.GetPOV() == 0;} };
+	frc2::Trigger decreaseUpperAngleOffset{ [this] {return opertr.GetPOV() == 180;} };
+	frc2::Trigger resetUpperAngleOffset{ [this] {return opertr.GetPOV() == 270;} };
 
 	frc2::Trigger manualFrontalClimb{ [this] {return opertr.GetPOV() == 90;} };
 
@@ -110,7 +113,7 @@ private:
 
 	// LED Triggers
 	frc2::Trigger noteOnStorage{ [this] {return storage.isNoteOnForwardSensor();} };
-	frc2::Trigger shooterEmergencyMode{ [this] {return shooter.isEmergencyDisabled();} };
+	// frc2::Trigger shooterEmergencyMode{ [this] {return shooter.isEmergencyDisabled();} };
 	frc2::Trigger storageSensorEmergencyMode{ [this] {return !storage.isSensorAvailable();} };
 
 	//Autonomous

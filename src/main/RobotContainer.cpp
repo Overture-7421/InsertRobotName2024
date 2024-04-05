@@ -61,31 +61,31 @@ void RobotContainer::ConfigureBindings() {
 		BlinkEffect(&leds, "all", { 0, 0, 125 }, 0.25_s).ToPtr().WithTimeout(0.5_s)
 	).Repeatedly().IgnoringDisable(true));
 
-	shooterEmergencyMode.WhileTrue(frc2::cmd::Sequence(
-		BlinkEffect(&leds, "all", { 255, 255, 0 }, 0.25_s).ToPtr().WithTimeout(0.5_s),
-		BlinkEffect(&leds, "all", { 255, 0, 0 }, 0.25_s).ToPtr().WithTimeout(0.5_s)
-	).Repeatedly().IgnoringDisable(true));
+	// shooterEmergencyMode.WhileTrue(frc2::cmd::Sequence(
+	// 	BlinkEffect(&leds, "all", { 255, 255, 0 }, 0.25_s).ToPtr().WithTimeout(0.5_s),
+	// 	BlinkEffect(&leds, "all", { 255, 0, 0 }, 0.25_s).ToPtr().WithTimeout(0.5_s)
+	// ).Repeatedly().IgnoringDisable(true));
 
-	shooterEmergencyMode.OnTrue(frc2::cmd::Sequence(
-		frc2::cmd::RunOnce([&] {
-		driver.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 1.0);
-		opertr.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 1.0);
-	}),
-		frc2::cmd::Wait(0.25_s),
-		frc2::cmd::RunOnce([&] {
-		driver.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.0);
-		opertr.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.0);
-	}),
-		frc2::cmd::RunOnce([&] {
-		driver.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 1.0);
-		opertr.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 1.0);
-	}),
-		frc2::cmd::Wait(0.25_s),
-		frc2::cmd::RunOnce([&] {
-		driver.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.0);
-		opertr.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.0);
-	})
-	));
+	// shooterEmergencyMode.OnTrue(frc2::cmd::Sequence(
+	// 	frc2::cmd::RunOnce([&] {
+	// 	driver.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 1.0);
+	// 	opertr.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 1.0);
+	// }),
+	// 	frc2::cmd::Wait(0.25_s),
+	// 	frc2::cmd::RunOnce([&] {
+	// 	driver.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.0);
+	// 	opertr.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.0);
+	// }),
+	// 	frc2::cmd::RunOnce([&] {
+	// 	driver.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 1.0);
+	// 	opertr.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 1.0);
+	// }),
+	// 	frc2::cmd::Wait(0.25_s),
+	// 	frc2::cmd::RunOnce([&] {
+	// 	driver.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.0);
+	// 	opertr.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.0);
+	// })
+	// ));
 
 	leds.SetDefaultCommand(BlinkEffect(&leds, "all", { 255, 0, 255 }, 1_s).IgnoringDisable(true));
 
@@ -149,11 +149,39 @@ void RobotContainer::ConfigureBindings() {
 	speakerM.WhileTrue(SpeakerCommand(&superStructure, &shooter).ToPtr());
 	speakerM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	closed.WhileTrue(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	shooterEmergencyStop.ToggleOnTrue(frc2::cmd::RunOnce([&] {
-		shooter.setEmergencyDisable(!shooter.isEmergencyDisabled());
-	}));
+	increaseUpperAngleOffset.OnTrue(
+		frc2::cmd::Parallel(
+			frc2::cmd::RunOnce([] {
+				VisionSpeakerCommand::SetUpperAngleOffset(VisionSpeakerCommand::GetUpperAngleOffset() + 0.5);
+			}),
+			BlinkEffect(&leds, "all", { 255, 0, 0 }, 0.05_s).WithTimeout(0.2_s)
+		)
+	);
+
+	decreaseUpperAngleOffset.OnTrue(
+		frc2::cmd::Parallel(
+			frc2::cmd::RunOnce([] {
+				VisionSpeakerCommand::SetUpperAngleOffset(VisionSpeakerCommand::GetUpperAngleOffset() - 0.5);
+			}),
+			BlinkEffect(&leds, "all", {0, 255, 255 }, 0.05_s).WithTimeout(0.2_s)
+		)
+	);
+
+	resetUpperAngleOffset.OnTrue(
+		frc2::cmd::Parallel(
+			frc2::cmd::RunOnce([] {
+				VisionSpeakerCommand::ResetUpperAngleOffset();
+			}),
+			BlinkEffect(&leds, "all", {255, 255, 255 }, 0.05_s).WithTimeout(0.2_s)
+		)
+	);
+
+	// closed.WhileTrue(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+
+	// shooterEmergencyStop.ToggleOnTrue(frc2::cmd::RunOnce([&] {
+	// 	shooter.setEmergencyDisable(!shooter.isEmergencyDisabled());
+	// }));
 
 	manualFrontalClimb.OnTrue(SuperStructureCommand(&superStructure, { 90, 0 }).ToPtr());
 	manualFrontalClimb.OnFalse(SuperStructureCommand(&superStructure, SuperStructureConstants::GroundGrabState).ToPtr());

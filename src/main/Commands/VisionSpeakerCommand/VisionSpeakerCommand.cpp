@@ -4,6 +4,8 @@
 
 #include "VisionSpeakerCommand.h"
 
+double VisionSpeakerCommand::UPPER_ANGLE_OFFSET = 0.0;
+
 #include <frc/MathUtil.h>
 
 VisionSpeakerCommand::VisionSpeakerCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, TargetProvider* targetProvider, frc::XboxController* joystick) {
@@ -31,6 +33,7 @@ void VisionSpeakerCommand::Initialize() {
 	chassis->setHeadingOverride(true);
 
 	dynamicTarget.setTargetLocation(targetProvider->GetSpeakerLocation());
+	storage->setVoltage(0_V);
 
 	Timer.Reset();
 	Timer.Stop();
@@ -49,7 +52,8 @@ void VisionSpeakerCommand::Execute() {
 
 	chassis->setTargetHeading(angle);
 	double targetLowerAngle = VisionSpeakerCommandConstants::DistanceToLowerAngleTable[distance];
-	double targetUpperAngle = VisionSpeakerCommandConstants::DistanceToUpperAngleTable[distance];
+	double upperAngleOffset = GetUpperAngleOffset();
+	double targetUpperAngle = VisionSpeakerCommandConstants::DistanceToUpperAngleTable[distance] + upperAngleOffset;
 	double targetShooterVelocity = VisionSpeakerCommandConstants::DistanceToVelocityTable[distance];
 	superStructure->setTargetCoord({ targetLowerAngle, targetUpperAngle });
 	shooter->setTargetVelocity(targetShooterVelocity);
@@ -73,8 +77,10 @@ void VisionSpeakerCommand::Execute() {
 	frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/LowerAngleReached", lowerAngleInTolerance);
 	frc::SmartDashboard::PutNumber("VisionSpeakerCommand/Distance", distance.value());
 	frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/UpperAngleReached", upperAngleInTolerance);
+	frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/UpperAngleOffset", upperAngleOffset);
 	frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/HeadingReached", headingInTolerance);
 	frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/ShooterReached", shooterSpeedInTolerance);
+	upperAngleOffsetLog.Append(upperAngleOffset);
 
 	if (lowerAngleInTolerance && upperAngleInTolerance && headingInTolerance && shooterSpeedInTolerance) {
 		if (joystick == nullptr) {
@@ -108,3 +114,16 @@ bool VisionSpeakerCommand::IsFinished() {
 
 	return false;
 }
+
+
+void VisionSpeakerCommand::SetUpperAngleOffset(double offset) {
+	VisionSpeakerCommand::UPPER_ANGLE_OFFSET = offset;
+};
+
+double VisionSpeakerCommand::GetUpperAngleOffset() {
+	return 	VisionSpeakerCommand::UPPER_ANGLE_OFFSET;
+};
+
+void VisionSpeakerCommand::ResetUpperAngleOffset() {
+	VisionSpeakerCommand::UPPER_ANGLE_OFFSET = 0.0;
+};

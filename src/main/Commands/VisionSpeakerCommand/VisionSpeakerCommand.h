@@ -9,6 +9,7 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/XboxController.h>
 #include <frc/apriltag/AprilTagFieldLayout.h>
+#include <wpi/DataLog.h>
 
 #include <frc/Timer.h>
 
@@ -39,6 +40,11 @@ public:
 
 	bool IsFinished() override;
 
+
+	static void SetUpperAngleOffset(double offset);
+	static double GetUpperAngleOffset();
+	static void ResetUpperAngleOffset();
+
 private:
 	frc::Timer Timer;
 
@@ -60,4 +66,9 @@ private:
 
 	units::meter_t distance = 0.0_m;
 	frc::Rotation2d angle;
+
+	static double UPPER_ANGLE_OFFSET;
+	
+	wpi::log::DataLog& log = frc::DataLogManager::GetLog();
+	wpi::log::DoubleLogEntry upperAngleOffsetLog = wpi::log::DoubleLogEntry(log, "/vision_speaker_command/upper_angle_offset");
 };
