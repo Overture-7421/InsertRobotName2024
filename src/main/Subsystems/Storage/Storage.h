@@ -32,8 +32,8 @@ private:
 	OverTalonFX storageMotor{ 30, ControllerNeutralMode::Brake, false, "rio" };
 	// rev::ColorSensorV3 colorSensor{frc::I2C::Port::kMXP};
 	// int IRvalue = 0;
-	frc::DigitalInput echoPin {5}; // 10-25 are on the MXP port, DIO15  
-	frc::DigitalOutput pingPin {6}; //10-25 are on the MXP port, DIO14
+	frc::DigitalInput echoPin {5};
+	frc::DigitalOutput pingPin {6};
 	frc::Ultrasonic distanceSensor {pingPin, echoPin};
 
 	units::centimeter_t lastRange;
