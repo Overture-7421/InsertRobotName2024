@@ -22,7 +22,7 @@ namespace VisionSpeakerCommandConstants {
 
 	// Red Alliance
 	static const InterpolatingTable<units::meter_t, double> DistanceToUpperAngleTable{
-		{1.66_m, -29.0},
+		{1.66_m, -33.0},
 		{1.9_m, -27.0},
 		{2.4_m, -19.0},
 		{2.9_m, -14.5},
