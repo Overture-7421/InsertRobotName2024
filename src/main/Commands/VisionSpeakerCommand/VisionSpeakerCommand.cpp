@@ -7,7 +7,7 @@
 const double UPPER_ANGLE_BLUE_DEFAULT_OFFSET = 0.0;
 const double UPPER_ANGLE_RED_DEFAULT_OFFSET = 0.0;
 
-double UPPER_ANGLE_OFFSET = 0.0;
+double VisionSpeakerCommand::UPPER_ANGLE_OFFSET = 0.0;
 
 #include <frc/MathUtil.h>
 
@@ -36,7 +36,10 @@ void VisionSpeakerCommand::Initialize() {
 	chassis->setHeadingOverride(true);
 
 	dynamicTarget.setTargetLocation(targetProvider->GetSpeakerLocation());
-	storage->setVoltage(0_V);
+
+	if(storage != nullptr) {
+		storage->setVoltage(0_V);
+	}
 
 	Timer.Reset();
 	Timer.Stop();
@@ -60,9 +63,10 @@ void VisionSpeakerCommand::Execute() {
 	distance = chassisToTarget.Distance({ 0_m, 0_m });
 	angle = chassisToTarget.Angle().RotateBy({ 180_deg });
 
+	double upperAngleOffset = GetUpperAngleOffset();
+
 	chassis->setTargetHeading(angle);
 	double targetLowerAngle = VisionSpeakerCommandConstants::DistanceToLowerAngleTable[distance];
-	double upperAngleOffset = UPPER_ANGLE_OFFSET;
 	double targetUpperAngle = VisionSpeakerCommandConstants::DistanceToUpperAngleTable[distance] + upperAngleOffset;
 	double targetShooterVelocity = VisionSpeakerCommandConstants::DistanceToVelocityTable[distance];
 	superStructure->setTargetCoord({ targetLowerAngle, targetUpperAngle });
@@ -127,13 +131,13 @@ bool VisionSpeakerCommand::IsFinished() {
 
 
 void VisionSpeakerCommand::SetUpperAngleOffset(double offset) {
-	UPPER_ANGLE_OFFSET = offset;
+	VisionSpeakerCommand::UPPER_ANGLE_OFFSET = offset;
 };
 
 double VisionSpeakerCommand::GetUpperAngleOffset() {
-	return UPPER_ANGLE_OFFSET;
+	return VisionSpeakerCommand::UPPER_ANGLE_OFFSET;
 };
 
 void VisionSpeakerCommand::ResetUpperAngleOffset() {
-	UPPER_ANGLE_OFFSET = 0.0;
+	VisionSpeakerCommand::UPPER_ANGLE_OFFSET = 0.0;
 };

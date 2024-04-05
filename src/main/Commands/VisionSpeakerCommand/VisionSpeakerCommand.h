@@ -66,6 +66,9 @@ private:
 
 	units::meter_t distance = 0.0_m;
 	frc::Rotation2d angle;
+
+	static double UPPER_ANGLE_OFFSET;
+	
 	wpi::log::DataLog& log = frc::DataLogManager::GetLog();
 	wpi::log::DoubleLogEntry upperAngleOffsetLog = wpi::log::DoubleLogEntry(log, "/vision_speaker_command/upper_angle_offset");
 };

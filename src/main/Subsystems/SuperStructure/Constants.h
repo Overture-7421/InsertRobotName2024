@@ -19,6 +19,6 @@ namespace SuperStructureConstants {
 	const static SuperStructureState ManualSpeakerState = { -12.0, -35.0 };
 	const static SuperStructureState AmpState = { 65.0, -30.0 };
 	const static SuperStructureState SmoothCloseState = { -26.0, -7.0 };
-	const static SuperStructureState HighPassingState = { -12.0, -35.0 };
+	const static SuperStructureState HighPassingState = { -12.0, -38.0 };
 	const static SuperStructureState LowPassingState = { -4.0, -5.0 };
 };
