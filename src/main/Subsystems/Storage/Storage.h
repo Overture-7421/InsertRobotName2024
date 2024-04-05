@@ -19,6 +19,7 @@
 #include <wpi/DataLog.h>
 #include <frc/DataLogManager.h>
 #include <frc/Ultrasonic.h>
+#include <frc/filter/Debouncer.h>
 
 class Storage : public frc2::SubsystemBase {
 public:
@@ -36,9 +37,12 @@ private:
 	frc::DigitalOutput pingPin {6}; //10-25 are on the MXP port, DIO14
 	frc::Ultrasonic distanceSensor {pingPin, echoPin};
 
+	frc::Debouncer debounce {10_ms};
+
 	units::centimeter_t lastRange;
 	units::second_t timeLastReading, timeSinceLastReading;
 	bool isDistanceSensorConnected = true;
+	bool isNoteOnStorage = false;
 
 	wpi::log::DataLog& log = frc::DataLogManager::GetLog();
 	wpi::log::BooleanLogEntry noteOnForward = wpi::log::BooleanLogEntry(log, "/storage/note_on_forward");

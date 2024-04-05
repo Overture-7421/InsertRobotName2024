@@ -13,9 +13,10 @@
 
 RobotContainer::RobotContainer() {
 	pathplanner::NamedCommands::registerCommand("GroundGrabCommand", GroundGrabCommand(&superStructure, &storage, &intake).WithTimeout(3_s));
+	pathplanner::NamedCommands::registerCommand("GroundGrabCommandLT", GroundGrabCommand(&superStructure, &storage, &intake).WithTimeout(10_s));
 	pathplanner::NamedCommands::registerCommand("ClosedCommand", std::move(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("VisionSpeakerCommand", std::move(frc2::cmd::Sequence(
-		VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter, &targetProvider).ToPtr().WithTimeout(0.2_s),
+		VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter, &targetProvider).ToPtr().WithTimeout(0.5_s),
 		VisionSpeakerCommand(&chassis, &superStructure, &shooter, &targetProvider, &storage).ToPtr()
 	)));
 	pathplanner::NamedCommands::registerCommand("VisionShootNoDelay", std::move(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &targetProvider, &storage).ToPtr()));
@@ -30,7 +31,6 @@ RobotContainer::RobotContainer() {
 	center4NoteAuto = pathplanner::AutoBuilder::buildAuto("CenterAuto-4Notes");
 	ampAuto = pathplanner::AutoBuilder::buildAuto("AMPAuto");
 	sourceAuto = pathplanner::AutoBuilder::buildAuto("SourceAuto");
-
 
 	ampAutoCenterRace = AmpAutoCenterRace(&storage);
 	sourceAutoCenterRace = SourceAutoCenterRace(&storage);
