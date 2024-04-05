@@ -153,7 +153,7 @@ void RobotContainer::ConfigureBindings() {
 	increaseUpperAngleOffset.OnTrue(
 		frc2::cmd::Parallel(
 			frc2::cmd::RunOnce([] {
-				VisionSpeakerCommand::SetUpperAngleOffset(VisionSpeakerCommand::GetUpperAngleOffset() + 0.5);
+				VisionSpeakerCommand::SetUpperAngleOffset(VisionSpeakerCommand::GetUpperAngleOffset() - 0.5);
 			}),
 			BlinkEffect(&leds, "all", { 255, 0, 0 }, 0.05_s).WithTimeout(0.2_s)
 		)
@@ -162,7 +162,7 @@ void RobotContainer::ConfigureBindings() {
 	decreaseUpperAngleOffset.OnTrue(
 		frc2::cmd::Parallel(
 			frc2::cmd::RunOnce([] {
-				VisionSpeakerCommand::SetUpperAngleOffset(VisionSpeakerCommand::GetUpperAngleOffset() - 0.5);
+				VisionSpeakerCommand::SetUpperAngleOffset(VisionSpeakerCommand::GetUpperAngleOffset() + 0.5);
 			}),
 			BlinkEffect(&leds, "all", {0, 255, 255 }, 0.05_s).WithTimeout(0.2_s)
 		)
