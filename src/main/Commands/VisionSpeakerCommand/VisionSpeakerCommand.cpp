@@ -7,7 +7,7 @@
 const double UPPER_ANGLE_BLUE_DEFAULT_OFFSET = 0.0;
 const double UPPER_ANGLE_RED_DEFAULT_OFFSET =  0.0;
 
-double VisionSpeakerCommand::UPPER_ANGLE_OFFSET = 0.0;
+double UPPER_ANGLE_OFFSET = 0.0;
 
 #include <frc/MathUtil.h>
 
@@ -127,13 +127,13 @@ bool VisionSpeakerCommand::IsFinished() {
 
 
 void VisionSpeakerCommand::SetUpperAngleOffset(double offset) {
-	VisionSpeakerCommand::UPPER_ANGLE_OFFSET = offset;
+	UPPER_ANGLE_OFFSET = offset;
 };
 
 double VisionSpeakerCommand::GetUpperAngleOffset() {
-	return 	VisionSpeakerCommand::UPPER_ANGLE_OFFSET;
+	return UPPER_ANGLE_OFFSET;
 };
 
 void VisionSpeakerCommand::ResetUpperAngleOffset() {
-	VisionSpeakerCommand::UPPER_ANGLE_OFFSET = 0.0;
+	UPPER_ANGLE_OFFSET = 0.0;
 };
