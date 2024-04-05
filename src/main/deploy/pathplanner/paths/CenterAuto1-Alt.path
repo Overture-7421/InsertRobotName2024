@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 3.0003800949114017,
+        "x": 4.101198730214863,
         "y": 4.836575493407763
       },
       "prevControl": {
-        "x": 2.6238690594424603,
-        "y": 4.8684017407700235
+        "x": 2.2856791054251016,
+        "y": 4.836575493407763
       },
       "nextControl": {
-        "x": 5.6402017269271525,
-        "y": 4.613432986713005
+        "x": 5.506499115708643,
+        "y": 4.836575493407763
       },
       "isLocked": false,
       "linkedName": null
@@ -36,8 +36,8 @@
         "y": 4.122214464115091
       },
       "prevControl": {
-        "x": 4.522788845862998,
-        "y": 3.8879977331994606
+        "x": 4.675029720958157,
+        "y": 3.7591785311958636
       },
       "nextControl": null,
       "isLocked": false,
@@ -49,7 +49,7 @@
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 1.75,
+      "waypointRelativePos": 1.7,
       "command": {
         "type": "sequential",
         "data": {
@@ -74,7 +74,7 @@
   "goalEndState": {
     "velocity": 0.0,
     "rotation": 0.0,
-    "rotateFast": false
+    "rotateFast": true
   },
   "reversed": false,
   "folder": "CenterAuto",

@@ -20,7 +20,7 @@ frc2::CommandPtr GroundGrabCommand(SuperStructure* superStructure, Storage* stor
 		// .AndThen(
 		// 	frc2::cmd::WaitUntil(0.02_s)
 		// )
-		.AndThen(
+		.FinallyDo(
 			[=]() {
 		storage->setVoltage(0.0_V);
 		intake->setVoltage(0.0_V);

@@ -38,7 +38,7 @@ void Storage::Periodic() {
 
 	timeSinceLastReading = currentTime - timeLastReading;
 	isDistanceSensorConnected = timeSinceLastReading < StorageConstants::DistanceSensorAvailableTimeTolerance;
-	isNoteOnStorage = debounce.Calculate(lastRange < StorageConstants::DistanceSensorActivationThreshold);
+	isNoteOnStorage = lastRange < StorageConstants::DistanceSensorActivationThreshold;
 }
 
 void Storage::shuffleboardPeriodic() {
@@ -48,5 +48,5 @@ void Storage::shuffleboardPeriodic() {
 	distance.Append(lastRange.value());
 	sensorAvailable.Append(isSensorAvailable());
 	frc::SmartDashboard::PutBoolean("Storage/NoteOnForward", isNoteOnForwardSensor());
-	frc::SmartDashboard::PutNumber("Storage/DistanceSensor", lastRange.value());
+	// frc::SmartDashboard::PutNumber("Storage/DistanceSensor", lastRange.value());
 }

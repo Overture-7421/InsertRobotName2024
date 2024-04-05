@@ -58,7 +58,15 @@ void VisionSpeakerCommand::Execute() {
 	units::degree_t headingError = units::math::abs(frc::InputModulus(angle.Degrees() - chassisPose.Rotation().Degrees(), -180_deg, 180_deg));
 
 	bool lowerAngleInTolerance = std::abs(targetLowerAngle - superStructure->getLowerAngle()) < 1.0;
-	bool upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 1.0;
+
+	bool upperAngleInTolerance = false;
+
+	if(joystick == nullptr) {
+		upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 0.5;
+	}else{
+		upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 1.5;
+	}
+
 	bool headingInTolerance = headingError < headingTolerance;
 	bool shooterSpeedInTolerance = (targetShooterVelocity - 2.0) < shooter->getCurrentVelocity();
 

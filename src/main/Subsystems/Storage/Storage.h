@@ -37,8 +37,6 @@ private:
 	frc::DigitalOutput pingPin {6};
 	frc::Ultrasonic distanceSensor {pingPin, echoPin};
 
-	frc::Debouncer debounce {10_ms};
-
 	units::centimeter_t lastRange;
 	units::second_t timeLastReading, timeSinceLastReading;
 	bool isDistanceSensorConnected = true;
