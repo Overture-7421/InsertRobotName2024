@@ -4,6 +4,9 @@
 
 #include "VisionSpeakerCommand.h"
 
+const double UPPER_ANGLE_BLUE_DEFAULT_OFFSET = 0.0;
+const double UPPER_ANGLE_RED_DEFAULT_OFFSET =  0.0;
+
 double VisionSpeakerCommand::UPPER_ANGLE_OFFSET = 0.0;
 
 #include <frc/MathUtil.h>
@@ -37,6 +40,13 @@ void VisionSpeakerCommand::Initialize() {
 
 	Timer.Reset();
 	Timer.Stop();
+
+
+	if(isRedAlliance()) {
+		VisionSpeakerCommand::SetUpperAngleOffset(UPPER_ANGLE_RED_DEFAULT_OFFSET);
+	}else{
+		VisionSpeakerCommand::SetUpperAngleOffset(UPPER_ANGLE_BLUE_DEFAULT_OFFSET);
+	}
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -66,7 +76,7 @@ void VisionSpeakerCommand::Execute() {
 	bool upperAngleInTolerance = false;
 
 	if(joystick == nullptr) {
-		upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 0.5;
+		upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 0.75;
 	}else{
 		upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 1.5;
 	}
