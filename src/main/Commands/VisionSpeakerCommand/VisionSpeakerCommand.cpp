@@ -5,7 +5,7 @@
 #include "VisionSpeakerCommand.h"
 
 const double UPPER_ANGLE_BLUE_DEFAULT_OFFSET = 0.0;
-const double UPPER_ANGLE_RED_DEFAULT_OFFSET =  0.0;
+const double UPPER_ANGLE_RED_DEFAULT_OFFSET = 0.0;
 
 double UPPER_ANGLE_OFFSET = 0.0;
 
@@ -42,9 +42,9 @@ void VisionSpeakerCommand::Initialize() {
 	Timer.Stop();
 
 
-	if(isRedAlliance()) {
+	if (isRedAlliance()) {
 		VisionSpeakerCommand::SetUpperAngleOffset(UPPER_ANGLE_RED_DEFAULT_OFFSET);
-	}else{
+	} else {
 		VisionSpeakerCommand::SetUpperAngleOffset(UPPER_ANGLE_BLUE_DEFAULT_OFFSET);
 	}
 }
@@ -62,7 +62,7 @@ void VisionSpeakerCommand::Execute() {
 
 	chassis->setTargetHeading(angle);
 	double targetLowerAngle = VisionSpeakerCommandConstants::DistanceToLowerAngleTable[distance];
-	double upperAngleOffset = GetUpperAngleOffset();
+	double upperAngleOffset = UPPER_ANGLE_OFFSET;
 	double targetUpperAngle = VisionSpeakerCommandConstants::DistanceToUpperAngleTable[distance] + upperAngleOffset;
 	double targetShooterVelocity = VisionSpeakerCommandConstants::DistanceToVelocityTable[distance];
 	superStructure->setTargetCoord({ targetLowerAngle, targetUpperAngle });
@@ -75,9 +75,9 @@ void VisionSpeakerCommand::Execute() {
 
 	bool upperAngleInTolerance = false;
 
-	if(joystick == nullptr) {
+	if (joystick == nullptr) {
 		upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 0.75;
-	}else{
+	} else {
 		upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 1.5;
 	}
 
