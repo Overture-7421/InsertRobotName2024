@@ -25,6 +25,10 @@ RobotContainer::RobotContainer() {
 	pathplanner::NamedCommands::registerCommand("ShooterCommand", std::move(ShooterCommand(&shooter, 4.00).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("VisionNoShoot", std::move(VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter, &targetProvider).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("AlignToNote", std::move(AlignToTrackedObject(&chassis, &noteTrackingCamera)));
+	pathplanner::NamedCommands::registerCommand("Shoot", std::move(StorageCommand(&storage, StorageConstants::SpeakerScoreVolts).ToPtr().Repeatedly().WithTimeout(0.2_s)));
+	pathplanner::NamedCommands::registerCommand("Start", std::move(ShooterCommand(&shooter, 115).ToPtr()));
+	pathplanner::NamedCommands::registerCommand("StartV2", std::move(ShooterCommand(&shooter, 70).ToPtr()));
+
 
 	center7NoteAuto = pathplanner::AutoBuilder::buildAuto("CenterAuto-7Notes");
 	center5NoteAuto = pathplanner::AutoBuilder::buildAuto("CenterAuto-5Notes");
@@ -35,6 +39,8 @@ RobotContainer::RobotContainer() {
 	ampAutoCenterRace = AmpAutoCenterRace(&storage);
 	sourceAutoCenterRace = SourceAutoCenterRace(&storage);
 
+	testingAuto = pathplanner::AutoBuilder::buildAuto("Testing");
+
 	autoChooser.SetDefaultOption("None, null, nada", defaultNoneAuto.get());
 	autoChooser.AddOption("CenterAuto-7Notes", center7NoteAuto.get());
 	autoChooser.AddOption("CenterAuto-5Notes", center5NoteAuto.get());
@@ -43,6 +49,8 @@ RobotContainer::RobotContainer() {
 	autoChooser.AddOption("AMPAuto-Race", ampAutoCenterRace.get());
 	autoChooser.AddOption("SourceAuto", sourceAuto.get());
 	autoChooser.AddOption("SourceAuto-Race", sourceAutoCenterRace.get());
+	autoChooser.AddOption("Testing", testingAuto.get());
+
 
 	frc::SmartDashboard::PutData("Auto Chooser", &autoChooser);
 
@@ -167,15 +175,15 @@ void RobotContainer::ConfigureBindings() {
 	decreaseUpperAngleOffset.OnTrue(
 		frc2::cmd::RunOnce([] {
 			VisionSpeakerCommand::SetUpperAngleOffset(VisionSpeakerCommand::GetUpperAngleOffset() + 0.5);
-		})	
+		})
 	);
 
 	resetUpperAngleOffset.OnTrue(
 		frc2::cmd::Parallel(
 			frc2::cmd::RunOnce([] {
-				VisionSpeakerCommand::ResetUpperAngleOffset();
-			}),
-			BlinkEffect(&leds, "all", {255, 255, 255 }, 0.05_s).WithTimeout(0.2_s)
+		VisionSpeakerCommand::ResetUpperAngleOffset();
+	}),
+			BlinkEffect(&leds, "all", { 255, 255, 255 }, 0.05_s).WithTimeout(0.2_s)
 		)
 	);
 
