@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.26,
-      "y": 6.43
+      "x": 1.2320437765048688,
+      "y": 7.3075620045634055
     },
     "rotation": 35.0
   },
@@ -56,12 +56,6 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "VisionSpeakerCommand"
@@ -106,12 +100,6 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "VisionSpeakerCommand"
@@ -153,12 +141,6 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.2
           }
         },
         {

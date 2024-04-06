@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.7014690709810814,
-        "y": 6.262700287580591
+        "x": 4.429102153496745,
+        "y": 6.464381773271393
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.906347432843503,
-        "y": 3.9680626347214707
+        "x": 4.633980515359167,
+        "y": 4.169744120412273
       },
       "isLocked": false,
       "linkedName": "AMP 4-5"
     },
     {
       "anchor": {
-        "x": 8.281967377058862,
-        "y": 4.122214464115091
+        "x": 8.211702357784173,
+        "y": 4.087081954477746
       },
       "prevControl": {
-        "x": 6.82733100783567,
-        "y": 4.170019415216323
+        "x": 6.7570659885609805,
+        "y": 4.134886905578978
       },
       "nextControl": null,
       "isLocked": false,
@@ -41,9 +41,27 @@
     }
   ],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "Align",
+      "waypointRelativePos": 0.55,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AlignToNote"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
-    "maxVelocity": 4.0,
+    "maxVelocity": 4.5,
     "maxAcceleration": 5.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0

@@ -34,7 +34,7 @@ frc2::CommandPtr SourceAutoCenterRace(Storage* storage) {
 					pathplanner::NamedCommands::getCommand("GroundGrabCommand")
 				)
 			),
-			[&] {return storage->isNoteOnForwardSensor();}
+			[=] {return storage->isNoteOnForwardSensor();}
 		),
 		//Go back to shoot or grab next note if stolen
 		frc2::cmd::Either(
@@ -55,7 +55,7 @@ frc2::CommandPtr SourceAutoCenterRace(Storage* storage) {
 					pathplanner::NamedCommands::getCommand("GroundGrabCommand")
 				)
 			),
-			[&] {return storage->isNoteOnForwardSensor();}
+			[=] {return storage->isNoteOnForwardSensor();}
 		),
 		frc2::cmd::Deadline(
 			pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("SourceAuto6")),

@@ -7,11 +7,12 @@
 
 Storage::Storage() {
 	storageMotor.setSupplyCurrentLimit(true, 20, 30, 0.5);
-	distanceSensor.SetAutomaticMode(true);
+	distanceSensorL.SetAutomaticMode(true);
+	distanceSensorR.SetAutomaticMode(true);
 }
 
 void Storage::setVoltage(units::volt_t voltage) {
-	storageMotor.setVoltage(voltage, false);
+	storageMotor.setVoltage(voltage, true);
 }
 
 bool Storage::isNoteOnForwardSensor() {
@@ -27,26 +28,36 @@ bool Storage::isSensorAvailable() {
 
 void Storage::Periodic() {
 	const auto currentTime = frc::Timer::GetFPGATimestamp();
-	const auto currentRange = distanceSensor.GetRange();
+	const auto currentRangeL = distanceSensorL.GetRange();
+	const auto currentRangeR = distanceSensorR.GetRange();
 
-	if(currentRange > 1_cm) {
-		if(currentRange != lastRange) {
+	if(currentRangeL > 1_cm) {
+		if(currentRangeL != lastRangeL) {
 			timeLastReading = currentTime;
 		}
-		lastRange = currentRange;
+		lastRangeL = currentRangeL;
+	}
+
+	if(currentRangeR > 1_cm) {
+		if(currentRangeR != lastRangeR) {
+			timeLastReading = currentTime;
+		}
+		lastRangeR = currentRangeR;
 	}
 
 	timeSinceLastReading = currentTime - timeLastReading;
 	isDistanceSensorConnected = timeSinceLastReading < StorageConstants::DistanceSensorAvailableTimeTolerance;
-	isNoteOnStorage = lastRange < StorageConstants::DistanceSensorActivationThreshold;
+	isNoteOnStorage = lastRangeL < StorageConstants::DistanceSensorActivationThreshold || lastRangeR < StorageConstants::DistanceSensorActivationThreshold;
 }
 
 void Storage::shuffleboardPeriodic() {
 	noteOnForward.Append(isNoteOnForwardSensor());
 	voltage.Append(storageMotor.GetMotorVoltage().GetValueAsDouble());
 	current.Append(storageMotor.GetSupplyCurrent().GetValueAsDouble());
-	distance.Append(lastRange.value());
+	distanceL.Append(lastRangeL.value());
+	distanceR.Append(lastRangeR.value());
 	sensorAvailable.Append(isSensorAvailable());
 	frc::SmartDashboard::PutBoolean("Storage/NoteOnForward", isNoteOnForwardSensor());
-	// frc::SmartDashboard::PutNumber("Storage/DistanceSensor", lastRange.value());
+	frc::SmartDashboard::PutNumber("Storage/DistanceSensorL", lastRangeL.value());
+	frc::SmartDashboard::PutNumber("Storage/DistanceSensorR", lastRangeR.value());
 }

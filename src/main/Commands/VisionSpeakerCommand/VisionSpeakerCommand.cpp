@@ -123,7 +123,7 @@ void VisionSpeakerCommand::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool VisionSpeakerCommand::IsFinished() {
-	if (joystick == nullptr && Timer.Get() > 0.2_s) {
+	if (joystick == nullptr && Timer.Get() > 0.3_s) {
 		return true;
 	}
 
