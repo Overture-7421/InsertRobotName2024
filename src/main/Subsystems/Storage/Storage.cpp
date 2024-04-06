@@ -11,7 +11,7 @@ Storage::Storage() {
 }
 
 void Storage::setVoltage(units::volt_t voltage) {
-	storageMotor.setVoltage(voltage, true);
+	storageMotor.setVoltage(voltage, false);
 }
 
 bool Storage::isNoteOnForwardSensor() {

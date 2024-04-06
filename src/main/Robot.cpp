@@ -91,6 +91,7 @@ void Robot::TeleopInit() {
   }
   m_teleopResetCommand->Schedule();
 
+  VisionSpeakerCommand::LoadAllianceOffset();
 }
 
 void Robot::TeleopPeriodic() {

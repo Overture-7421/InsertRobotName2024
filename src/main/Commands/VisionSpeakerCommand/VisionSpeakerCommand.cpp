@@ -43,8 +43,9 @@ void VisionSpeakerCommand::Initialize() {
 
 	Timer.Reset();
 	Timer.Stop();
+}
 
-
+void VisionSpeakerCommand::LoadAllianceOffset() {
 	if (isRedAlliance()) {
 		VisionSpeakerCommand::SetUpperAngleOffset(UPPER_ANGLE_RED_DEFAULT_OFFSET);
 	} else {
@@ -55,7 +56,7 @@ void VisionSpeakerCommand::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void VisionSpeakerCommand::Execute() {
 	frc::Pose2d chassisPose = chassis->getOdometry();
-	frc::Translation2d speakerLoc = dynamicTarget.getMovingTarget(chassisPose, chassis->getFieldRelativeSpeeds(), chassis->getFieldRelativeAccels());
+frc::Translation2d speakerLoc = dynamicTarget.getMovingTarget(chassisPose, chassis->getFieldRelativeSpeeds(), {0_mps_sq, 0_mps_sq, 0_rad_per_s_sq});
 
 	frc::Translation2d chassisLoc = chassisPose.Translation();
 
@@ -91,7 +92,7 @@ void VisionSpeakerCommand::Execute() {
 	frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/LowerAngleReached", lowerAngleInTolerance);
 	frc::SmartDashboard::PutNumber("VisionSpeakerCommand/Distance", distance.value());
 	frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/UpperAngleReached", upperAngleInTolerance);
-	frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/UpperAngleOffset", upperAngleOffset);
+	frc::SmartDashboard::PutNumber("VisionSpeakerCommand/UpperAngleOffset", upperAngleOffset);
 	frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/HeadingReached", headingInTolerance);
 	frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/ShooterReached", shooterSpeedInTolerance);
 	upperAngleOffsetLog.Append(upperAngleOffset);

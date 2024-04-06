@@ -11,7 +11,7 @@ Intake::Intake() {
 }
 
 void Intake::setVoltage(units::volt_t voltage) {
-	intakeMotorLeft.setVoltage(voltage, true);
+	intakeMotorLeft.setVoltage(voltage, false);
 }
 
 // This method will be called once per scheduler run

@@ -45,6 +45,8 @@ public:
 	static double GetUpperAngleOffset();
 	static void ResetUpperAngleOffset();
 
+	static void LoadAllianceOffset();
+
 private:
 	frc::Timer Timer;
 
