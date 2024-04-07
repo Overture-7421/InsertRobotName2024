@@ -3,6 +3,11 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "TargetProvider.h"
+
+#include <pathplanner/lib/util/GeometryUtil.h>
+
+const frc::Translation2d PassLocation { 1.01_m, 7.11_m };
+
 TargetProvider::TargetProvider(frc::AprilTagFieldLayout* tagLayout) {
     this->tagLayout = tagLayout;
 }
@@ -17,9 +22,9 @@ frc::Translation2d TargetProvider::GetSpeakerLocation() {
 
 frc::Translation2d 	TargetProvider::GetPassLocation() {
 	if (isRedAlliance()) {
-		return { 15.32_m, 7.11_m };
+		return pathplanner::GeometryUtil::flipFieldPosition(PassLocation);
 	} else {
-		return { 1.01_m, 7.11_m };
+		return PassLocation;
 	}
 }
 

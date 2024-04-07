@@ -10,9 +10,9 @@
 frc2::CommandPtr AmpAutoCenterRace(Storage* storage) {
     return frc2::cmd::Sequence(
 		pathplanner::NamedCommands::getCommand("VisionSpeakerCommand"),
-		frc2::cmd::Parallel(
+		frc2::cmd::Deadline(
 			pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("AMPAuto1")),
-			pathplanner::NamedCommands::getCommand("GroundGrabCommandLT")
+			pathplanner::NamedCommands::getCommand("GroundGrabCommandNT")
 		),
 		//Go back to shoot or grab next note if stolen
 		frc2::cmd::Either(
@@ -22,15 +22,15 @@ frc2::CommandPtr AmpAutoCenterRace(Storage* storage) {
 					pathplanner::NamedCommands::getCommand("VisionNoShoot")
 				),
 				pathplanner::NamedCommands::getCommand("VisionSpeakerCommand"),
-				frc2::cmd::Parallel(
+				frc2::cmd::Deadline(
 					pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("AMPAuto3")),
-					pathplanner::NamedCommands::getCommand("GroundGrabCommandLT")
+					pathplanner::NamedCommands::getCommand("GroundGrabCommandNT")
 				)
 			),
 			frc2::cmd::Sequence(
-				frc2::cmd::Parallel(
+				frc2::cmd::Deadline(
 					pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("RaceAmpAuto_Stolen1")),
-					pathplanner::NamedCommands::getCommand("GroundGrabCommand")
+					pathplanner::NamedCommands::getCommand("GroundGrabCommandNT")
 				)
 			),
 			[=] {return storage->isNoteOnForwardSensor();}
@@ -43,15 +43,15 @@ frc2::CommandPtr AmpAutoCenterRace(Storage* storage) {
 					pathplanner::NamedCommands::getCommand("VisionNoShoot")
 				),
 				pathplanner::NamedCommands::getCommand("VisionSpeakerCommand"),
-				frc2::cmd::Parallel(
+				frc2::cmd::Deadline(
 					pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("AMPAuto5")),
-					pathplanner::NamedCommands::getCommand("GroundGrabCommandLT")
+					pathplanner::NamedCommands::getCommand("GroundGrabCommandNT")
 				)
 			),
 			frc2::cmd::Sequence(
-				frc2::cmd::Parallel(
+				frc2::cmd::Deadline(
 					pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("RaceAmpAuto_Stolen2")),
-					pathplanner::NamedCommands::getCommand("GroundGrabCommand")
+					pathplanner::NamedCommands::getCommand("GroundGrabCommandNT")
 				)
 			),
 			[=] {return storage->isNoteOnForwardSensor();}
@@ -60,7 +60,7 @@ frc2::CommandPtr AmpAutoCenterRace(Storage* storage) {
 			pathplanner::AutoBuilder::followPath(pathplanner::PathPlannerPath::fromPathFile("AMPAuto6")),
 			pathplanner::NamedCommands::getCommand("VisionNoShoot")
 		),
-		pathplanner::NamedCommands::getCommand("VisionSpeakerCommand")
+		pathplanner::NamedCommands::getCommand("GroundGrabCommandNT")
 	);
 }
 
