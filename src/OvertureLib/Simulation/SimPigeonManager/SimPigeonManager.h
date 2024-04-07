@@ -5,7 +5,7 @@
 #pragma once
 #include <networktables/NetworkTableEntry.h>
 #include <networktables/NetworkTableInstance.h>
-#include "OvertureLib/Sensors/OverPigeon/OverPigeon.h"
+#include "Sensors/OverPigeon/OverPigeon.h"
 
 class SimPigeonManager {
  public:

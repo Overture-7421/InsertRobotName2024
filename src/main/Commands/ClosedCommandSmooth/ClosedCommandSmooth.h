@@ -7,10 +7,10 @@
 #include <frc2/command/CommandHelper.h>
 #include <frc2/command/SequentialCommandGroup.h>
 
-#include "main/Commands/SuperStructureCommand/SuperStructureCommand.h"
-#include "main/Commands/IntakeCommand/IntakeCommand.h"
-#include "main/Commands/StorageCommand/StorageCommand.h"
-#include "main/Commands/ShooterCommand/ShooterCommand.h"
+#include "Commands/SuperStructureCommand/SuperStructureCommand.h"
+#include "Commands/IntakeCommand/IntakeCommand.h"
+#include "Commands/StorageCommand/StorageCommand.h"
+#include "Commands/ShooterCommand/ShooterCommand.h"
 
 class ClosedCommandSmooth
 	: public frc2::CommandHelper<frc2::SequentialCommandGroup,

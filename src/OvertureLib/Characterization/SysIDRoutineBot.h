@@ -7,9 +7,9 @@
 #include <frc2/command/CommandPtr.h>
 #include <frc2/command/button/CommandXboxController.h>
 
-#include "OvertureLib/Subsystems/Swerve/SwerveCharacterization/SwerveCharacterization.h"
+#include "Subsystems/Swerve/SwerveCharacterization/SwerveCharacterization.h"
 
-#include "OvertureLib/Commands/Drive/Drive.h"
+#include "Commands/Drive/Drive.h"
 
 class SysIDRoutineBot {
 public:

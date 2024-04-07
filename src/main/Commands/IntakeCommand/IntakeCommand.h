@@ -8,8 +8,8 @@
 #include <frc2/command/CommandHelper.h>
 #include <frc/XboxController.h>
 
-#include "OvertureLib/Math/Utils.h"
-#include "main/Subsystems/Intake/Intake.h"
+#include "Math/Utils.h"
+#include "Subsystems/Intake/Intake.h"
 
 class IntakeCommand
     : public frc2::CommandHelper<frc2::Command, IntakeCommand> {

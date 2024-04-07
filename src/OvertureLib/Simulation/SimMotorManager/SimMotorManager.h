@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "OvertureLib/MotorControllers/OverTalonFX/OverTalonFX.h"
+#include "MotorControllers/OverTalonFX/OverTalonFX.h"
 #include <map>
 
 #include <networktables/NetworkTable.h>

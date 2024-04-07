@@ -13,17 +13,17 @@
 
 #include <frc/Timer.h>
 
-#include "OvertureLib/Math/InterpolatingTable/InterpolatingTable.h"
-#include "OvertureLib/Math/Utils.h"
-#include "OvertureLib/Math/TargetingWhileMoving/TargetingWhileMoving.h"
-#include "main/Subsystems/Chassis/Chassis.h"
-#include "main/Subsystems/SuperStructure/SuperStructure.h"
-#include "main/Subsystems/Shooter/Shooter.h"
-#include "main/Subsystems/Storage/Storage.h"
-#include "main/Subsystems/Targeting/TargetProvider.h"
+#include "Math/InterpolatingTable/InterpolatingTable.h"
+#include "Math/Utils.h"
+#include "Math/TargetingWhileMoving/TargetingWhileMoving.h"
+#include "Subsystems/Chassis/Chassis.h"
+#include "Subsystems/SuperStructure/SuperStructure.h"
+#include "Subsystems/Shooter/Shooter.h"
+#include "Subsystems/Storage/Storage.h"
+#include "Subsystems/Targeting/TargetProvider.h"
 
-#include "main/Commands/UtilityFunctions/UtilityFunctions.h"
-#include "main/Commands/StorageCommand/StorageCommand.h"
+#include "Commands/UtilityFunctions/UtilityFunctions.h"
+#include "Commands/StorageCommand/StorageCommand.h"
 #include "Constants.h"
 
 class VisionSpeakerCommand

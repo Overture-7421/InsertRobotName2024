@@ -7,7 +7,7 @@
 #include <frc/DataLogManager.h>
 #include <fmt/format.h>
 
-#include "OvertureLib/Subsystems/Swerve/SwerveChassis/SwerveChassis.h"
+#include "Subsystems/Swerve/SwerveChassis/SwerveChassis.h"
 
 class SwerveCharacterization : public SwerveChassis {
 public:

@@ -7,7 +7,7 @@
 #include <networktables/NetworkTableInstance.h>
 #include <frc/simulation/DutyCycleEncoderSim.h>
 
-#include "OvertureLib/Sensors/OverDutyCycleEncoder/OverDutyCycleEncoder.h"
+#include "Sensors/OverDutyCycleEncoder/OverDutyCycleEncoder.h"
 
 typedef std::string NTDutyCycleEncoderName;
 

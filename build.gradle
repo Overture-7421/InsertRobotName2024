@@ -68,7 +68,7 @@ model {
         //     wpi.cpp.deps.wpilib(it)
         // }
 
-        rev2mdistancesensor(NativeLibrarySpec){
+        overturelib(NativeLibrarySpec){
             targetPlatform wpi.platforms.roborio
             if (includeDesktopSupport) {
                 targetPlatform wpi.platforms.desktop
@@ -76,11 +76,11 @@ model {
 
             sources.cpp {
                 source {
-                    srcDir "libs/Rev2mDistanceSensor/src/cpp/"
+                    srcDir "src/OvertureLib"
                     include "**/*.cpp", '**/*.c'
                 }
                 exportedHeaders {
-                    srcDir "libs/Rev2mDistanceSensor/src/include/"
+                    srcDir "src/OvertureLib"
                 }
             }
             wpi.cpp.vendor.cpp(it)
@@ -95,16 +95,16 @@ model {
 
             binaries.all {
                 cppCompiler.define('_USE_MATH_DEFINES')
-                lib library: 'rev2mdistancesensor', linkage: 'shared'
+                lib library: 'overturelib', linkage: 'shared'
             }
 
             sources.cpp {
                 source {
-                    srcDir 'src'
+                    srcDir 'src/main'
                     include '**/*.cpp', '**/*.cc'
                 }
                 exportedHeaders {
-                    srcDir 'src'
+                    srcDir 'src/main'
                 }
             }
 

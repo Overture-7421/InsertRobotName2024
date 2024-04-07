@@ -7,12 +7,10 @@
 #include <frc2/command/SubsystemBase.h>
 #include <frc/DigitalInput.h>
 #include <frc/DigitalOutput.h>
-#include <rev/ColorSensorV3.h>
-#include <rev/Rev2mDistanceSensor.h>
 #include <units/length.h>
 
-#include "OvertureLib/MotorControllers/OverTalonFX/OverTalonFX.h"
-#include "OvertureLib/MotorControllers/ControllerNeutralMode/ControllerNeutralMode.h"
+#include "MotorControllers/OverTalonFX/OverTalonFX.h"
+#include "MotorControllers/ControllerNeutralMode/ControllerNeutralMode.h"
 
 #include "Constants.h"
 

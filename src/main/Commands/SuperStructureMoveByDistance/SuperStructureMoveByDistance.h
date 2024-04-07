@@ -7,8 +7,8 @@
 #include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
 
-#include "main/Subsystems/Chassis/Chassis.h"
-#include "main/Subsystems/SuperStructure/SuperStructure.h"
+#include "Subsystems/Chassis/Chassis.h"
+#include "Subsystems/SuperStructure/SuperStructure.h"
 
 
 class SuperStructureMoveByDistance

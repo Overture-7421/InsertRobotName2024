@@ -1,8 +1,8 @@
 #include "Climbing.h"
-#include "main/Commands/StorageCommand/StorageCommand.h"
-#include "main/Commands/ShooterCommand/ShooterCommand.h"
-#include "main/Commands/ClosedCommand/ClosedCommand.h"
-#include "main/Commands/FreeSupportArms/FreeSupportArms.h"
+#include "Commands/StorageCommand/StorageCommand.h"
+#include "Commands/ShooterCommand/ShooterCommand.h"
+#include "Commands/ClosedCommand/ClosedCommand.h"
+#include "Commands/FreeSupportArms/FreeSupportArms.h"
 #include <exception>
 
 pathplanner::PathConstraints pathfindingConstraints = pathplanner::PathConstraints(

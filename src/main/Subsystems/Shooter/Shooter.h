@@ -8,8 +8,8 @@
 #include <frc2/command/sysid/SysIdRoutine.h>
 #include <frc/controller/SimpleMotorFeedforward.h>
 
-#include "OvertureLib/MotorControllers/OverTalonFX/OverTalonFX.h"
-#include "OvertureLib/MotorControllers/ControllerNeutralMode/ControllerNeutralMode.h"
+#include "MotorControllers/OverTalonFX/OverTalonFX.h"
+#include "MotorControllers/ControllerNeutralMode/ControllerNeutralMode.h"
 #include "Constants.h"
 
 class Shooter : public frc2::SubsystemBase {

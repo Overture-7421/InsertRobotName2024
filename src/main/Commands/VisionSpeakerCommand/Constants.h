@@ -3,7 +3,7 @@
 #include <units/length.h>
 #include <units/time.h>
 #include <frc/geometry/Translation2d.h>
-#include "OvertureLib/Math/InterpolatingTable/InterpolatingTable.h"
+#include "Math/InterpolatingTable/InterpolatingTable.h"
 
 namespace VisionSpeakerCommandConstants {
 	static const InterpolatingTable<units::meter_t, double> DistanceToLowerAngleTable{

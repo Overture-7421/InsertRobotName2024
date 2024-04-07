@@ -9,9 +9,9 @@
 #include <frc/apriltag/AprilTagFieldLayout.h>
 #include <pathplanner/lib/util/GeometryUtil.h>
 
-#include "main/Subsystems/Shooter/Shooter.h"
-#include "main/Commands/VisionSpeakerCommand/Constants.h"
-#include "main/Commands/UtilityFunctions/UtilityFunctions.h"
+#include "Subsystems/Shooter/Shooter.h"
+#include "Commands/VisionSpeakerCommand/Constants.h"
+#include "Commands/UtilityFunctions/UtilityFunctions.h"
 
 class ShooterDefaultCommand
     : public frc2::CommandHelper<frc2::Command, ShooterDefaultCommand> {

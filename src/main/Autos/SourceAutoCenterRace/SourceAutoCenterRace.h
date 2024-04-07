@@ -5,6 +5,6 @@
 #pragma once
 
 #include <frc2/command/CommandPtr.h>
-#include "main/Subsystems/Storage/Storage.h"
+#include "Subsystems/Storage/Storage.h"
 
 frc2::CommandPtr SourceAutoCenterRace(Storage* storage);

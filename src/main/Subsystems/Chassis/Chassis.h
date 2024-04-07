@@ -6,9 +6,9 @@
 
 #include <frc/smartdashboard/SmartDashboard.h>
 
-#include <OvertureLib/Subsystems/Swerve/SwerveCharacterization/SwerveCharacterization.h>
-#include <OvertureLib/Subsystems/Swerve/SwerveChassis/SwerveChassis.h>
-#include <OvertureLib/Subsystems/Swerve/SwerveModule/SwerveModule.h>
+#include <Subsystems/Swerve/SwerveCharacterization/SwerveCharacterization.h>
+#include <Subsystems/Swerve/SwerveChassis/SwerveChassis.h>
+#include <Subsystems/Swerve/SwerveModule/SwerveModule.h>
 
 #include "Constants.h"
 

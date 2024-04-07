@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "main/Enums/StageLocation.h"
-#include "main/Subsystems/Chassis/Chassis.h"
+#include "Enums/StageLocation.h"
+#include "Subsystems/Chassis/Chassis.h"
 #include <frc/DriverStation.h>
 
 const std::vector<std::pair<StageLocation, frc::Pose2d>> blueStageLocations{

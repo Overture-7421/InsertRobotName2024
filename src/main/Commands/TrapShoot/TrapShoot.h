@@ -6,13 +6,13 @@
 
 #include <pathplanner/lib/auto/AutoBuilder.h>
 #include <frc/XboxController.h>
-#include "main/Subsystems/Chassis/Chassis.h"
-#include "main/Subsystems/SuperStructure/SuperStructure.h"
-#include "main/Subsystems/SupportArms/SupportArms.h"
-#include "main/Subsystems/Shooter/Shooter.h"
-#include "main/Subsystems/Storage/Storage.h"
-#include "main/Commands/UtilityFunctions/UtilityFunctions.h"
-#include "main/Enums/StageLocation.h"
+#include "Subsystems/Chassis/Chassis.h"
+#include "Subsystems/SuperStructure/SuperStructure.h"
+#include "Subsystems/SupportArms/SupportArms.h"
+#include "Subsystems/Shooter/Shooter.h"
+#include "Subsystems/Storage/Storage.h"
+#include "Commands/UtilityFunctions/UtilityFunctions.h"
+#include "Enums/StageLocation.h"
 
 #include <vector>
 #include <utility>

@@ -11,8 +11,8 @@
 #include <units/velocity.h>
 #include <map>
 
-#include "OvertureLib/Math/ChassisAccels.h"
-#include "OvertureLib/Math/InterpolatingTable/InterpolatingTable.h"
+#include "Math/ChassisAccels.h"
+#include "Math/InterpolatingTable/InterpolatingTable.h"
 
 typedef InterpolatingTable<units::meter_t, units::second_t> DistanceToTravelTimeTable;
 

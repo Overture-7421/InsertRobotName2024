@@ -5,11 +5,11 @@
 #include "RobotContainer.h"
 
 #include <frc2/command/Commands.h>
-#include "OvertureLib/Subsystems/LedsManager/Effects/BlinkEffect/BlinkEffect.h"
-#include "OvertureLib/Subsystems/LedsManager/Effects/StaticEffect/StaticEffect.h"
-#include "main/Commands/ServoDashboard/ServoDashboard.h"
-#include "main/Autos/AmpAutoCenterRace/AmpAutoCenterRace.h"
-#include "main/Autos/SourceAutoCenterRace/SourceAutoCenterRace.h"
+#include "Subsystems/LedsManager/Effects/BlinkEffect/BlinkEffect.h"
+#include "Subsystems/LedsManager/Effects/StaticEffect/StaticEffect.h"
+#include "Commands/ServoDashboard/ServoDashboard.h"
+#include "Autos/AmpAutoCenterRace/AmpAutoCenterRace.h"
+#include "Autos/SourceAutoCenterRace/SourceAutoCenterRace.h"
 
 RobotContainer::RobotContainer() {
 	pathplanner::NamedCommands::registerCommand("GroundGrabCommand", GroundGrabCommand(&superStructure, &storage, &intake).WithTimeout(3_s));

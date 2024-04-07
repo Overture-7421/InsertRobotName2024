@@ -3,7 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #pragma once
-#include "OvertureLib/Sensors/OverCANCoder/OverCANCoder.h"
+#include "Sensors/OverCANCoder/OverCANCoder.h"
 #include <map>
 
 #include <networktables/NetworkTable.h>

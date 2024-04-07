@@ -43,10 +43,10 @@
 #include "Commands/Climbing/Climbing.h"
 #include "Commands/TrapShoot/TrapShoot.h"
 
-#include "OvertureLib/Commands/Drive/Drive.h"
-#include "OvertureLib/Characterization/SysIDRoutineBot.h"
-#include "OvertureLib/Subsystems/LedsManager/LedsManager.h"
-#include "OvertureLib/Subsystems/Vision/AprilTags/AprilTags.h"
+#include "Commands/Drive/Drive.h"
+#include "Characterization/SysIDRoutineBot.h"
+#include "Subsystems/LedsManager/LedsManager.h"
+#include "Subsystems/Vision/AprilTags/AprilTags.h"
 
 class RobotContainer : public SysIDRoutineBot {
 public:
