@@ -55,6 +55,8 @@ void Robot::RobotInit() {
   });
 
 #endif
+
+photon::PhotonCamera::SetVersionCheckEnabled(false);
 }
 
 void Robot::RobotPeriodic() {

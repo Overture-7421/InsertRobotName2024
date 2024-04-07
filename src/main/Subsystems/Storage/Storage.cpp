@@ -7,8 +7,8 @@
 
 Storage::Storage() {
 	storageMotor.setSupplyCurrentLimit(true, 20, 30, 0.5);
-	distanceSensorL.SetAutomaticMode(true);
-	distanceSensorR.SetAutomaticMode(true);
+	// distanceSensorL.SetAutomaticMode(true);
+	// distanceSensorR.SetAutomaticMode(true);
 }
 
 void Storage::setVoltage(units::volt_t voltage) {
@@ -23,41 +23,49 @@ bool Storage::isNoteOnForwardSensor() {
 }
 
 bool Storage::isSensorAvailable() {
-	return isDistanceSensorConnected;
+	return true;
 }
 
 void Storage::Periodic() {
-	const auto currentTime = frc::Timer::GetFPGATimestamp();
-	const auto currentRangeL = distanceSensorL.GetRange();
-	const auto currentRangeR = distanceSensorR.GetRange();
+	// const auto currentTime = frc::Timer::GetFPGATimestamp();
+	// const auto currentRangeL = distanceSensorL.GetRange();
+	// const auto currentRangeR = distanceSensorR.GetRange();
 
-	if(currentRangeL > 1_cm) {
-		if(currentRangeL != lastRangeL) {
-			timeLastReading = currentTime;
-		}
-		lastRangeL = currentRangeL;
-	}
+	// if(currentRangeL > 1_cm) {
+	// 	if(currentRangeL != lastRangeL) {
+	// 		timeLastReading = currentTime;
+	// 	}
+	// 	lastRangeL = currentRangeL;
+	// }
 
-	if(currentRangeR > 1_cm) {
-		if(currentRangeR != lastRangeR) {
-			timeLastReading = currentTime;
-		}
-		lastRangeR = currentRangeR;
-	}
+	// if(currentRangeR > 1_cm) {
+	// 	if(currentRangeR != lastRangeR) {
+	// 		timeLastReading = currentTime;
+	// 	}
+	// 	lastRangeR = currentRangeR;
+	// }
 
-	timeSinceLastReading = currentTime - timeLastReading;
-	isDistanceSensorConnected = timeSinceLastReading < StorageConstants::DistanceSensorAvailableTimeTolerance;
-	isNoteOnStorage = lastRangeL < StorageConstants::DistanceSensorActivationThreshold || lastRangeR < StorageConstants::DistanceSensorActivationThreshold;
+	// timeSinceLastReading = currentTime - timeLastReading;
+	// isDistanceSensorConnected = timeSinceLastReading < StorageConstants::DistanceSensorAvailableTimeTolerance;
+	// isNoteOnStorage = lastRangeL < StorageConstants::DistanceSensorActivationThreshold || lastRangeR < StorageConstants::DistanceSensorActivationThreshold;
+	beamBreak1Cache = !beamBreak1.Get();
+	beamBreak2Cache = !beamBreak2.Get();
+	isNoteOnStorage = beamBreak1Cache || beamBreak2Cache;
 }
 
 void Storage::shuffleboardPeriodic() {
 	noteOnForward.Append(isNoteOnForwardSensor());
 	voltage.Append(storageMotor.GetMotorVoltage().GetValueAsDouble());
 	current.Append(storageMotor.GetSupplyCurrent().GetValueAsDouble());
-	distanceL.Append(lastRangeL.value());
-	distanceR.Append(lastRangeR.value());
-	sensorAvailable.Append(isSensorAvailable());
+	beamBreak1Log.Append(beamBreak1Cache);
+	beamBreak2Log.Append(beamBreak2Cache);
+	// distanceL.Append(lastRangeL.value());
+	// distanceR.Append(lastRangeR.value());
+	// sensorAvailable.Append(isSensorAvailable());
 	frc::SmartDashboard::PutBoolean("Storage/NoteOnForward", isNoteOnForwardSensor());
-	frc::SmartDashboard::PutNumber("Storage/DistanceSensorL", lastRangeL.value());
-	frc::SmartDashboard::PutNumber("Storage/DistanceSensorR", lastRangeR.value());
+	frc::SmartDashboard::PutBoolean("Storage/BeamBreak1", beamBreak1Cache);
+	frc::SmartDashboard::PutBoolean("Storage/BeamBreak2", beamBreak2Cache);
+
+	// frc::SmartDashboard::PutNumber("Storage/DistanceSensorL", lastRangeL.value());
+	// frc::SmartDashboard::PutNumber("Storage/DistanceSensorR", lastRangeR.value());
 }

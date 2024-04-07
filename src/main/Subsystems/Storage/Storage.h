@@ -31,27 +31,20 @@ public:
 	void shuffleboardPeriodic();
 private:
 	OverTalonFX storageMotor{ 30, ControllerNeutralMode::Brake, false, "rio" };
-	// rev::ColorSensorV3 colorSensor{frc::I2C::Port::kMXP};
-	// int IRvalue = 0;
-	frc::DigitalInput echoPinL {5};
-	frc::DigitalOutput pingPinL {6};
-	frc::Ultrasonic distanceSensorL {pingPinL, echoPinL};
+	bool isNoteOnStorage = false, beamBreak1Cache = false, beamBreak2Cache = false;
 
-	frc::DigitalInput echoPinR {7};
-	frc::DigitalOutput pingPinR {8};
-	frc::Ultrasonic distanceSensorR {pingPinR, echoPinR};
-
-	units::centimeter_t lastRangeL, lastRangeR;
-	units::second_t timeLastReading, timeSinceLastReading;
-	bool isDistanceSensorConnected = true;
-	bool isNoteOnStorage = false;
+	frc::DigitalInput beamBreak1 {5};
+	frc::DigitalInput beamBreak2 {6};
 
 	wpi::log::DataLog& log = frc::DataLogManager::GetLog();
 	wpi::log::BooleanLogEntry noteOnForward = wpi::log::BooleanLogEntry(log, "/storage/note_on_forward");
+	wpi::log::BooleanLogEntry beamBreak1Log = wpi::log::BooleanLogEntry(log, "/storage/beam_break_1");
+	wpi::log::BooleanLogEntry beamBreak2Log = wpi::log::BooleanLogEntry(log, "/storage/beam_break_2");
+
 	wpi::log::DoubleLogEntry voltage = wpi::log::DoubleLogEntry(log, "/storage/voltage");
 	wpi::log::DoubleLogEntry current = wpi::log::DoubleLogEntry(log, "/storage/current");
-	wpi::log::DoubleLogEntry distanceL = wpi::log::DoubleLogEntry(log, "/storage/distance_sensor_left");
-	wpi::log::DoubleLogEntry distanceR = wpi::log::DoubleLogEntry(log, "/storage/distance_sensor_right");
-	wpi::log::BooleanLogEntry sensorAvailable = wpi::log::BooleanLogEntry(log, "/storage/sensor_available");
+	// wpi::log::DoubleLogEntry distanceL = wpi::log::DoubleLogEntry(log, "/storage/distance_sensor_left");
+	// wpi::log::DoubleLogEntry distanceR = wpi::log::DoubleLogEntry(log, "/storage/distance_sensor_right");
+	// wpi::log::BooleanLogEntry sensorAvailable = wpi::log::BooleanLogEntry(log, "/storage/sensor_available");
 
 };
