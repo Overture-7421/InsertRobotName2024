@@ -76,11 +76,11 @@ model {
 
             sources.cpp {
                 source {
-                    srcDir "src/OvertureLib"
+                    srcDir "libs/overturelib"
                     include "**/*.cpp", '**/*.c'
                 }
                 exportedHeaders {
-                    srcDir "src/OvertureLib"
+                    srcDir "libs/overturelib"
                 }
             }
             wpi.cpp.vendor.cpp(it)
