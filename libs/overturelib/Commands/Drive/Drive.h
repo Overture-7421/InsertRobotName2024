@@ -40,7 +40,7 @@ private:
 	/* Limiters */
 	frc::SlewRateLimiter<units::meters_per_second> xLimiter{ 15.0_mps_sq };
 	frc::SlewRateLimiter<units::meters_per_second> yLimiter{ 15.0_mps_sq };
-	frc::SlewRateLimiter<units::radians_per_second> rLimiter{ 8_tr_per_s_sq };
+	frc::SlewRateLimiter<units::radians_per_second> rLimiter{ 18_tr_per_s_sq };
 
 	/* Controller */
 	frc::XboxController* joystick;

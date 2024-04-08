@@ -13,7 +13,7 @@
 
 RobotContainer::RobotContainer() {
 	pathplanner::NamedCommands::registerCommand("GroundGrabCommand", GroundGrabCommand(&superStructure, &storage, &intake).WithTimeout(3_s));
-	pathplanner::NamedCommands::registerCommand("GroundGrabCommandLT", GroundGrabCommand(&superStructure, &storage, &intake).WithTimeout(10_s));
+	pathplanner::NamedCommands::registerCommand("GroundGrabCommandLT", GroundGrabCommand(&superStructure, &storage, &intake).WithTimeout(5_s));
 	pathplanner::NamedCommands::registerCommand("GroundGrabCommandNT", GroundGrabCommand(&superStructure, &storage, &intake));
 
 	pathplanner::NamedCommands::registerCommand("ClosedCommand", std::move(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr()));
@@ -200,6 +200,18 @@ void RobotContainer::ConfigureBindings() {
 
 	intakeM.WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake));
 	intakeM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+
+	intakeMIgnoreSensor.WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake, true));
+	intakeMIgnoreSensor.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+
+	tabulate.OnTrue(frc2::cmd::RunOnce([&] {
+		chassis.setHeadingOverride(true);
+		chassis.setTargetHeading({-90_deg});
+	}));
+
+	tabulate.OnFalse(frc2::cmd::RunOnce([&] {
+		chassis.setHeadingOverride(false);
+	}));
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

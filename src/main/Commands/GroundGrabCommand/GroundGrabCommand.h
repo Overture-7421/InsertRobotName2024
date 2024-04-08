@@ -11,4 +11,4 @@
 #include "Commands/StorageCommand/StorageCommand.h"
 #include "Commands/IntakeCommand/IntakeCommand.h"
 
-frc2::CommandPtr GroundGrabCommand(SuperStructure* superStructure, Storage* storage, Intake* intake);
+frc2::CommandPtr GroundGrabCommand(SuperStructure* superStructure, Storage* storage, Intake* intake, bool ignoreSensor = false);

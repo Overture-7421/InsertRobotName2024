@@ -5,7 +5,18 @@
 #include "GroundGrabCommand.h"
 
 
-frc2::CommandPtr GroundGrabCommand(SuperStructure* superStructure, Storage* storage, Intake* intake) {
+frc2::CommandPtr GroundGrabCommand(SuperStructure* superStructure, Storage* storage, Intake* intake, bool ignoreSensor) {
+
+	if(ignoreSensor) {
+		return frc2::cmd::Sequence(
+			SuperStructureCommand(superStructure, SuperStructureConstants::GroundGrabState).ToPtr(),
+			frc2::cmd::Parallel(
+				IntakeCommand(intake, IntakeConstants::GroundGrabVolts).ToPtr(),
+				StorageCommand(storage, StorageConstants::GroundGrabVolts).ToPtr()
+			)
+		);
+	}
+
 
 	return frc2::cmd::Sequence(
 		SuperStructureCommand(superStructure, SuperStructureConstants::GroundGrabState).ToPtr(),
@@ -14,17 +25,17 @@ frc2::CommandPtr GroundGrabCommand(SuperStructure* superStructure, Storage* stor
 			StorageCommand(storage, StorageConstants::GroundGrabVolts).ToPtr()
 		).Repeatedly().Until(
 			[=]() {
-		return storage->isNoteOnForwardSensor();
-	}
+				return storage->isNoteOnForwardSensor();
+			}
 		)
 		// .AndThen(
 		// 	frc2::cmd::WaitUntil(0.02_s)
 		// )
 		.FinallyDo(
 			[=]() {
-		storage->setVoltage(0.0_V);
-		intake->setVoltage(0.0_V);
-	}
+				storage->setVoltage(0.0_V);
+				intake->setVoltage(0.0_V);
+			}
 		)
 		);
 }

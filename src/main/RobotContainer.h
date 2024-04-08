@@ -92,7 +92,7 @@ private:
 	frc2::Trigger climbV{ [this] {return driver.GetYButton();} };
 	frc2::Trigger passNoteHigh{ [this] {return driver.GetXButton();} };
 	frc2::Trigger passNoteLow{ [this] {return driver.GetBButton();} };
-	//frc2::Trigger tabulate{ [this] {return driver.GetAButton();} };
+	frc2::Trigger tabulate{ [this] {return driver.GetAButton();} };
 
 	// Mechanism Commands
 	frc2::Trigger ampM{ [this] {return opertr.GetLeftBumper();} };
@@ -100,7 +100,7 @@ private:
 	frc2::Trigger climbM{ [this] {return opertr.GetYButton();} };
 	frc2::Trigger shootM{ [this] {return opertr.GetLeftTriggerAxis() > 0.1;} };
 	frc2::Trigger speakerM{ [this] {return opertr.GetRightBumper();} };
-	frc2::Trigger trapV{ [this] {return opertr.GetAButton();} };
+	frc2::Trigger intakeMIgnoreSensor{ [this] {return opertr.GetAButton();} };
 
 
 	frc2::Trigger increaseUpperAngleOffset{ [this] {return opertr.GetPOV() == 0;} };

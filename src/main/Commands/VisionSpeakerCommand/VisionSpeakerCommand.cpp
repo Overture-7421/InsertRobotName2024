@@ -83,7 +83,7 @@ frc::Translation2d speakerLoc = dynamicTarget.getMovingTarget(chassisPose, chass
 	if (joystick == nullptr) {
 		upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 0.75;
 	} else {
-		upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 1.5;
+		upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 3;
 	}
 
 	bool headingInTolerance = headingError < headingTolerance;
