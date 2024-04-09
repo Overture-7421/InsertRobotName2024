@@ -15,8 +15,8 @@ SwerveChassis::SwerveChassis(units::meters_per_second_t maxModuleSpeed, units::m
 		[this]() { return getRobotRelativeSpeeds(); },
 		[this](frc::ChassisSpeeds speeds) { driveRobotRelative(speeds); },
 		HolonomicPathFollowerConfig(
-			PIDConstants(5.0, 0.0, 0.0),
-			PIDConstants(5.0, 0.0, 0.0),
+			PIDConstants(6.5, 0.0, 0.0),
+			PIDConstants(6.5, 0.0, 0.0),
 			maxModuleSpeed,
 			driveBaseRadius,
 			ReplanningConfig()

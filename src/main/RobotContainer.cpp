@@ -46,12 +46,12 @@ RobotContainer::RobotContainer() {
 	autoChooser.SetDefaultOption("None, null, nada", defaultNoneAuto.get());
 	autoChooser.AddOption("CenterAuto-7Notes", center7NoteAuto.get());
 	autoChooser.AddOption("CenterAuto-5Notes", center5NoteAuto.get());
-	autoChooser.AddOption("CenterAuto-4Notes", center4NoteAuto.get());
-	autoChooser.AddOption("AMPAuto", ampAuto.get());
+	// autoChooser.AddOption("CenterAuto-4Notes", center4NoteAuto.get());
+	// autoChooser.AddOption("AMPAuto", ampAuto.get());
 	autoChooser.AddOption("AMPAuto-Race", ampAutoCenterRace.get());
-	autoChooser.AddOption("SourceAuto", sourceAuto.get());
+	// autoChooser.AddOption("SourceAuto", sourceAuto.get());
 	autoChooser.AddOption("SourceAuto-Race", sourceAutoCenterRace.get());
-	autoChooser.AddOption("Testing", testingAuto.get());
+	// autoChooser.AddOption("Testing", testingAuto.get());
 
 
 	frc::SmartDashboard::PutData("Auto Chooser", &autoChooser);
@@ -70,6 +70,11 @@ void RobotContainer::ConfigureBindings() {
 		BlinkEffect(&leds, "all", { 0, 0, 255 }, 0.25_s).ToPtr().WithTimeout(0.5_s),
 		BlinkEffect(&leds, "all", { 0, 0, 125 }, 0.25_s).ToPtr().WithTimeout(0.5_s)
 	).Repeatedly().IgnoringDisable(true));
+
+
+	intakeMotorActive.WhileTrue(
+		BlinkEffect(&leds, "all", { 255, 0, 255 }, 0.1_s).ToPtr().Repeatedly()
+	);
 
 	// shooterEmergencyMode.WhileTrue(frc2::cmd::Sequence(
 	// 	BlinkEffect(&leds, "all", { 255, 255, 0 }, 0.25_s).ToPtr().WithTimeout(0.5_s),

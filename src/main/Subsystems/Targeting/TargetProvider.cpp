@@ -7,6 +7,7 @@
 #include <pathplanner/lib/util/GeometryUtil.h>
 
 const frc::Translation2d PassLocation { 1.01_m, 7.11_m };
+const frc::Translation2d SpeakerTargetOffset {0_m, 0_m};
 
 TargetProvider::TargetProvider(frc::AprilTagFieldLayout* tagLayout) {
     this->tagLayout = tagLayout;
@@ -14,9 +15,9 @@ TargetProvider::TargetProvider(frc::AprilTagFieldLayout* tagLayout) {
 
 frc::Translation2d TargetProvider::GetSpeakerLocation() {
     if (isRedAlliance()) {
-        return tagLayout->GetTagPose(4).value().ToPose2d().Translation();
+        return tagLayout->GetTagPose(4).value().ToPose2d().Translation() + SpeakerTargetOffset;
     } else {
-        return tagLayout->GetTagPose(7).value().ToPose2d().Translation();
+        return tagLayout->GetTagPose(7).value().ToPose2d().Translation() - SpeakerTargetOffset;
     }
 };
 

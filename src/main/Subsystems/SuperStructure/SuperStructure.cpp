@@ -51,8 +51,8 @@ SuperStructure::SuperStructure() {
 	lowerLeftMotor.setPIDValues(200.0, 70.0, 0.0, 0.0, 0.0);
 	lowerLeftMotor.configureMotionMagic(1.5, 6.0, 0.0);
 
-	upperMotor.setPIDValues(200.0, 70.0, 0.0, 0.0, 0.0);
-	upperMotor.configureMotionMagic(1.0, 6.0, 0.0);
+	upperMotor.setPIDValues(220.0, 70.0, 0.0, 0.0, 0.0);
+	upperMotor.configureMotionMagic(1.5, 6.0, 0.0);
 }
 
 void SuperStructure::setTargetCoord(SuperStructureState targetState) {

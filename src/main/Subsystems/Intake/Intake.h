@@ -17,6 +17,7 @@ class Intake : public frc2::SubsystemBase {
 public:
 	Intake();
 	void setVoltage(units::volt_t voltage);
+	double getVoltage();
 	void Periodic() override;
 	void shuffleboardPeriodic();
 
@@ -27,5 +28,6 @@ private:
 
 	wpi::log::DataLog& log = frc::DataLogManager::GetLog();
 	wpi::log::DoubleLogEntry voltage = wpi::log::DoubleLogEntry(log, "/intake/voltage");
-	wpi::log::DoubleLogEntry current = wpi::log::DoubleLogEntry(log, "/intake/current");
+	wpi::log::DoubleLogEntry currentLeft = wpi::log::DoubleLogEntry(log, "/intake/current_left");
+	wpi::log::DoubleLogEntry currentRight = wpi::log::DoubleLogEntry(log, "/intake/current_right");
 };

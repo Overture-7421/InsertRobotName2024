@@ -122,7 +122,7 @@ double SwerveModule::getDistance() {
  * @return Ángulo del módulo
  */
 double SwerveModule::getAngle() {
-	return m_driveMotor->getPosition() * 360;
+	return m_canCoder->getSensorAbsolutePosition() * 360;
 }
 
 /**
@@ -188,9 +188,9 @@ void SwerveModule::setVoltages() {
 }
 
 void SwerveModule::Periodic() {
-	frc::SmartDashboard::PutNumber(m_name + "/Speed", getSpeed());
-	frc::SmartDashboard::PutNumber(m_name + "/Target", m_state.angle.Degrees().value());
-	frc::SmartDashboard::PutNumber(m_name + "/Angle", getAngle());
-	frc::SmartDashboard::PutNumber(m_name + "/Distance", getDistance());
+	// frc::SmartDashboard::PutNumber(m_name + "/Speed", getSpeed());
+	// frc::SmartDashboard::PutNumber(m_name + "/Target", m_state.angle.Degrees().value());
+	// frc::SmartDashboard::PutNumber(m_name + "/Angle", getAngle());
+	// frc::SmartDashboard::PutNumber(m_name + "/Distance", getDistance());
 
 }

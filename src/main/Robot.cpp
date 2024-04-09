@@ -57,6 +57,7 @@ void Robot::RobotInit() {
 #endif
 
 photon::PhotonCamera::SetVersionCheckEnabled(false);
+frc::DriverStation::SilenceJoystickConnectionWarning(true);
 }
 
 void Robot::RobotPeriodic() {

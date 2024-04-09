@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.967256485097374,
-        "y": 4.6795141434829635
+        "x": 1.8367662781837197,
+        "y": 4.075798477178349
       },
       "isLocked": false,
       "linkedName": "Center 1-2"
     },
     {
       "anchor": {
-        "x": 2.60221165235483,
-        "y": 5.539225686154654
+        "x": 2.702258241725786,
+        "y": 5.470202196218345
       },
       "prevControl": {
-        "x": 1.8815853949694565,
-        "y": 5.529487493487284
+        "x": 1.1443727073500651,
+        "y": 4.527777613694761
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,7 +30,25 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "Align",
+      "waypointRelativePos": 0.55,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AlignToNote"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 4.0,
     "maxAcceleration": 7.0,
@@ -39,8 +57,8 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
-    "rotateFast": false
+    "rotation": 25.0,
+    "rotateFast": true
   },
   "reversed": false,
   "folder": "CenterAuto",

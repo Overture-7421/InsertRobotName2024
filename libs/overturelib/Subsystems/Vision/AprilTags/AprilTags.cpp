@@ -20,6 +20,10 @@ AprilTags::AprilTags(frc::AprilTagFieldLayout* tagLayout, SwerveChassis* chassis
 
 //Check if distance between robot and tag is less than a certain value ;)
 bool AprilTags::checkTagDistance(const photon::PhotonPipelineResult& result, size_t numberOfTags, units::meter_t distance) {
+	if(numberOfTags >= 4) {
+		return true;
+	}
+
 	if (result.GetTargets().size() == numberOfTags) {
 		if (result.GetBestTarget().GetBestCameraToTarget().Translation().Distance({0_m, 0_m, 0_m}) < distance) {
 			return true;

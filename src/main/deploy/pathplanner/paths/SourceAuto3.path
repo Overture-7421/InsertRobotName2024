@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.05268759175008,
-        "y": 3.0597685637980683
+        "x": 1.9329320519106157,
+        "y": 3.970016126078764
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.964885635799347,
-        "y": 1.1407412410200541
+        "x": 4.18859516988521,
+        "y": 0.600886757512574
       },
       "isLocked": false,
       "linkedName": "Source 2-3"
     },
     {
       "anchor": {
-        "x": 7.771719193314521,
-        "y": 2.4314749207533106
+        "x": 8.097158147804668,
+        "y": 2.3255813953488373
       },
       "prevControl": {
-        "x": 5.821462332755819,
-        "y": 1.266538278541467
+        "x": 7.125883833163015,
+        "y": 2.1332498478950446
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,17 +30,35 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "Align",
+      "waypointRelativePos": 0.65,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AlignToNote"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
-    "maxVelocity": 4.0,
+    "maxVelocity": 5.0,
     "maxAcceleration": 6.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
-    "rotateFast": false
+    "rotation": 15.333284793053496,
+    "rotateFast": true
   },
   "reversed": false,
   "folder": "SourceAuto",

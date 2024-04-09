@@ -11,7 +11,11 @@ Intake::Intake() {
 }
 
 void Intake::setVoltage(units::volt_t voltage) {
-	intakeMotorLeft.setVoltage(voltage, false);
+	intakeMotorLeft.setVoltage(voltage, true);
+}
+
+double Intake::getVoltage(){
+	return intakeMotorLeft.GetMotorVoltage().GetValueAsDouble();
 }
 
 // This method will be called once per scheduler run
@@ -20,5 +24,10 @@ void Intake::Periodic() {}
 
 void Intake::shuffleboardPeriodic() {
 	voltage.Append(intakeMotorLeft.GetMotorVoltage().GetValueAsDouble());
-	current.Append(intakeMotorLeft.GetSupplyCurrent().GetValueAsDouble());
+	currentLeft.Append(intakeMotorLeft.GetSupplyCurrent().GetValueAsDouble());
+	currentRight.Append(intakeMotorRight.GetSupplyCurrent().GetValueAsDouble());
+
+	frc::SmartDashboard::PutNumber("Intake/CurrentLeft", intakeMotorLeft.GetSupplyCurrent().GetValueAsDouble());
+	frc::SmartDashboard::PutNumber("Intake/CurrentRight", intakeMotorRight.GetSupplyCurrent().GetValueAsDouble());
+	
 }
