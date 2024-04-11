@@ -61,8 +61,9 @@ frc2::CommandPtr ClimbAtLocation(SuperStructure* superStructure, Shooter* shoote
 		SuperStructureCommand(superStructure, { 87, -82 }).ToPtr().WithTimeout(1_s),
 		frc2::cmd::RunOnce([=] { shooter->setVoltage(6.0);}),
 		WaitForButton(controller, checkpointButtonId),
-		StorageCommand(storage, 8_V).ToPtr()
-		// SuperStructureCommand(superStructure, SuperStructureConstants::GroundGrabState).ToPtr(),
+		StorageCommand(storage, 8_V).ToPtr(),
+		WaitForButton(controller, checkpointButtonId),
+		SuperStructureCommand(superStructure, SuperStructureConstants::ClimbEndState).ToPtr()
 		// frc2::cmd::RunOnce([=] { shooter->setVoltage(0.0);})
 	);
 }
