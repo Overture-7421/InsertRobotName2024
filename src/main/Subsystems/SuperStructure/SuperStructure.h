@@ -71,11 +71,11 @@ private:
 	OverTalonFX lowerLeftMotor{ 21, ControllerNeutralMode::Brake, true, "rio" };
 
 	// Upper Motors
-	OverTalonFX upperMotor{ 22, ControllerNeutralMode::Brake, true, "rio" };
+	OverTalonFX upperMotor{ 22, ControllerNeutralMode::Brake, false, "rio" };
 
 	// Encoders
 	OverCANCoder lowerCANCoder{ 28, 0.289307_tr, "rio" };
-	OverCANCoder upperCANCoder{ 29, 0.077880859375_tr, "rio" }; //-0.077637
+	OverCANCoder upperCANCoder{ 29, 0.075195_tr, "rio" };
 
 	// State
 	SuperStructureState targetState, actualTarget;
