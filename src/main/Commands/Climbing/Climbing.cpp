@@ -48,7 +48,7 @@ frc2::CommandPtr SetUpJoints(Chassis* chassis, SuperStructure* superStructure, S
 		frc2::cmd::Deadline(
 			pathplanner::AutoBuilder::followPath(pathToFollow),
 			SuperStructureMoveByDistance(superStructure, superStructureProfile, distanceFunction).ToPtr(),
-			FreeSupportArms(supportArms, 100.00).ToPtr().Repeatedly() //Desired
+			FreeSupportArms(supportArms, 130.00).ToPtr().Repeatedly() //Desired
 		)
 	);
 }
