@@ -3,7 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "VisionSpeakerCommandNoShoot.h"
-
+#include "Commands/VisionSpeakerCommand/VisionSpeakerCommand.h"
 #include <frc/MathUtil.h>
 
 VisionSpeakerCommandNoShoot::VisionSpeakerCommandNoShoot(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, TargetProvider* targetProvider) {
@@ -35,7 +35,7 @@ void VisionSpeakerCommandNoShoot::Execute() {
 
 	chassis->setTargetHeading(angle);
 	double targetLowerAngle = VisionSpeakerCommandConstants::DistanceToLowerAngleTable[distance];
-	double targetUpperAngle = VisionSpeakerCommandConstants::DistanceToUpperAngleTable[distance];
+	double targetUpperAngle = VisionSpeakerCommandConstants::DistanceToUpperAngleTable[distance] + VisionSpeakerCommand::GetUpperAngleOffset();
 	double targetShooterVelocity = VisionSpeakerCommandConstants::DistanceToVelocityTable[distance];
 	superStructure->setTargetCoord({ targetLowerAngle, targetUpperAngle });
 	shooter->setTargetVelocity(targetShooterVelocity);
