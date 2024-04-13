@@ -62,7 +62,7 @@ frc2::CommandPtr ClimbAtLocation(SuperStructure* superStructure, Shooter* shoote
 		frc2::cmd::RunOnce([=] { shooter->setVoltage(6.0);}),
 		WaitForButton(controller, checkpointButtonId),
 		StorageCommand(storage, 8_V).ToPtr(),
-		frc2::cmd::Wait(2_s),
+		frc2::cmd::Wait(0.5_s),
 		WaitForButton(controller, checkpointButtonId),
 		SuperStructureCommand(superStructure, SuperStructureConstants::ClimbEndState).ToPtr()
 		// frc2::cmd::RunOnce([=] { shooter->setVoltage(0.0);})
@@ -90,12 +90,19 @@ frc2::CommandPtr AutoClimb(Chassis* chassis, SuperStructure* superStructure, Sup
 			ClimbAtLocation(superStructure, shooter, storage, controller)
 		) },
 		std::pair{ StageLocation::Back, frc2::cmd::Sequence(
+			frc2::cmd::RunOnce([=]() {
+				chassis->setAcceptingVisionMeasurements(false);
+			}),
 			GoToClimbingLocationPathFind(superStructure, climbPathBack),
 			WaitForButton(controller, checkpointButtonId),
 			SetUpJoints(chassis, superStructure, supportArms, climbPathBack),
 			WaitForButton(controller, checkpointButtonId),
 			ClimbAtLocation(superStructure, shooter, storage,controller)
 		) }
+	).FinallyDo(
+		[=]() {
+		chassis->setAcceptingVisionMeasurements(true);
+	}
 	);
 };
 
