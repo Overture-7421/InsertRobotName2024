@@ -31,8 +31,8 @@ private:
 	OverTalonFX storageMotor{ 30, ControllerNeutralMode::Brake, false, "rio" };
 	bool isNoteOnStorage = false, beamBreak1Cache = false, beamBreak2Cache = false;
 
-	frc::DigitalInput beamBreak1 {5};
-	frc::DigitalInput beamBreak2 {6};
+	frc::DigitalInput beamBreak1 {7};
+	frc::DigitalInput beamBreak2 {8};
 
 	wpi::log::DataLog& log = frc::DataLogManager::GetLog();
 	wpi::log::BooleanLogEntry noteOnForward = wpi::log::BooleanLogEntry(log, "/storage/note_on_forward");
