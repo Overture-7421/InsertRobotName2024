@@ -75,7 +75,7 @@ private:
 
 	// Encoders
 	OverCANCoder lowerCANCoder{ 28, 0.289307_tr, "rio" };
-	OverCANCoder upperCANCoder{ 29, 0.075195_tr, "rio" };
+	OverCANCoder upperCANCoder{ 29, 0.082031_tr, "rio" };
 
 	// State
 	SuperStructureState targetState, actualTarget;
