@@ -106,9 +106,7 @@ void RobotContainer::ConfigureBindings() {
 
 	chassis.SetDefaultCommand(Drive(ChassisConstants::MaxModuleSpeed, &chassis, &driver));
 
-	supportArms.SetDefaultCommand(FreeSupportArms(&supportArms, 20.00).Repeatedly()); //Default
-
-
+	supportArms.SetDefaultCommand(FreeSupportArms(&supportArms, 25.00).Repeatedly()); //Default
 
 	zeroHeading.OnTrue(ResetAngle(&chassis).ToPtr());
 

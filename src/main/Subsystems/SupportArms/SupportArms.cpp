@@ -5,7 +5,6 @@
 #include "SupportArms.h"
 
 SupportArms::SupportArms(){
-
 };
 
 void SupportArms::SetAngle(double angle) {
@@ -13,5 +12,4 @@ void SupportArms::SetAngle(double angle) {
 };
 
 void SupportArms::Periodic(){
-
 };
