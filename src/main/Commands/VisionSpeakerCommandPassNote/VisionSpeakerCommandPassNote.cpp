@@ -23,7 +23,7 @@ void VisionSpeakerCommandPassNote::Initialize() {
 
 	if(upOrDown == PassNote::High) {
 		targetState = SuperStructureConstants::HighPassingState;
-		targetShooterVelocity = 70.0;
+		targetShooterVelocity = 60.0;
 	}else{
 		targetState = SuperStructureConstants::LowPassingState;
 		targetShooterVelocity = 100.0;
