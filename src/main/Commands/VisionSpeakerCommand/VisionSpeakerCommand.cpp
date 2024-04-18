@@ -4,8 +4,8 @@
 
 #include "VisionSpeakerCommand.h"
 
-const double UPPER_ANGLE_BLUE_DEFAULT_OFFSET = 0.0;
-const double UPPER_ANGLE_RED_DEFAULT_OFFSET = 0.5;
+const double UPPER_ANGLE_BLUE_DEFAULT_OFFSET = -1.0;
+const double UPPER_ANGLE_RED_DEFAULT_OFFSET = -1.0;
 
 double VisionSpeakerCommand::UPPER_ANGLE_OFFSET = 0.0;
 
@@ -14,7 +14,7 @@ double VisionSpeakerCommand::UPPER_ANGLE_OFFSET = 0.0;
 VisionSpeakerCommand::VisionSpeakerCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, TargetProvider* targetProvider, frc::XboxController* joystick) {
 	// Use addRequirements() here to declare subsystem dependencies.
 	AddRequirements({ superStructure, shooter });
-	
+
 	this->chassis = chassis;
 	this->superStructure = superStructure;
 	this->shooter = shooter;
@@ -38,7 +38,7 @@ void VisionSpeakerCommand::Initialize() {
 
 	dynamicTarget.setTargetLocation(targetProvider->GetSpeakerLocation());
 
-	if(storage != nullptr) {
+	if (storage != nullptr) {
 		storage->setVoltage(0_V);
 	}
 
@@ -57,7 +57,7 @@ void VisionSpeakerCommand::LoadAllianceOffset() {
 // Called repeatedly when this Command is scheduled to run
 void VisionSpeakerCommand::Execute() {
 	frc::Pose2d chassisPose = chassis->getOdometry();
-frc::Translation2d speakerLoc = dynamicTarget.getMovingTarget(chassisPose, chassis->getFieldRelativeSpeeds(), chassis->getFieldRelativeAccels());
+	frc::Translation2d speakerLoc = dynamicTarget.getMovingTarget(chassisPose, chassis->getFieldRelativeSpeeds(), chassis->getFieldRelativeAccels());
 
 	frc::Translation2d chassisLoc = chassisPose.Translation();
 
