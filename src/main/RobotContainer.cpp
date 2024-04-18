@@ -123,7 +123,7 @@ void RobotContainer::ConfigureBindings() {
 	passNoteLow.WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &targetProvider, &storage, PassNote::Low).ToPtr());
 	passNoteLow.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	//objectDetect.WhileTrue(AlignToTrackedObject(&chassis, &objectCamera));
+	tabulate.WhileTrue(AlignToTrackedObject(&chassis, &noteTrackingCamera));
 
 	//Operator 
 	ampM.WhileTrue(AmpCommand(&superStructure, &shooter).ToPtr());
@@ -171,18 +171,18 @@ void RobotContainer::ConfigureBindings() {
 
 	increaseUpperAngleOffset.OnTrue(
 		frc2::cmd::RunOnce([] {
-			VisionSpeakerCommand::SetUpperAngleOffset(VisionSpeakerCommand::GetUpperAngleOffset() - 0.5);
-		})
+		VisionSpeakerCommand::SetUpperAngleOffset(VisionSpeakerCommand::GetUpperAngleOffset() - 0.5);
+	})
 	);
 
 	decreaseUpperAngleOffset.OnTrue(
-		BlinkEffect(&leds, "all", {0, 255, 255 }, 0.05_s).WithTimeout(0.2_s)
+		BlinkEffect(&leds, "all", { 0, 255, 255 }, 0.05_s).WithTimeout(0.2_s)
 	);
 
 	decreaseUpperAngleOffset.OnTrue(
 		frc2::cmd::RunOnce([] {
-			VisionSpeakerCommand::SetUpperAngleOffset(VisionSpeakerCommand::GetUpperAngleOffset() + 0.5);
-		})
+		VisionSpeakerCommand::SetUpperAngleOffset(VisionSpeakerCommand::GetUpperAngleOffset() + 0.5);
+	})
 	);
 
 	resetUpperAngleOffset.OnTrue(
@@ -209,14 +209,14 @@ void RobotContainer::ConfigureBindings() {
 	intakeMIgnoreSensor.WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake, true));
 	intakeMIgnoreSensor.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	tabulate.OnTrue(frc2::cmd::RunOnce([&] {
-		chassis.setHeadingOverride(true);
-		chassis.setTargetHeading({-90_deg});
-	}));
+	// tabulate.OnTrue(frc2::cmd::RunOnce([&] {
+	// 	chassis.setHeadingOverride(true);
+	// 	chassis.setTargetHeading({ -90_deg });
+	// }));
 
-	tabulate.OnFalse(frc2::cmd::RunOnce([&] {
-		chassis.setHeadingOverride(false);
-	}));
+	// tabulate.OnFalse(frc2::cmd::RunOnce([&] {
+	// 	chassis.setHeadingOverride(false);
+	// }));
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
