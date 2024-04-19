@@ -5,7 +5,7 @@ namespace SuperStructureConstants {
 	const static double LowerAngleGearRatio = 172.8;
 	const static double UpperAngleGearRatio = 90.0;
 
-	const static double LowerAngleLowerLimit = -31;
+	const static double LowerAngleLowerLimit = -33;
 	const static double LowerAngleUpperLimit = 90;
 
 	const static double UpperAngleLowerLimit = -130;
