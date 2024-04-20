@@ -78,6 +78,8 @@ void Robot::AutonomousInit() {
 	if (m_autonomousCommand) {
 		m_autonomousCommand->Schedule();
 	}
+
+	VisionSpeakerCommand::LoadAllianceOffset();
 }
 
 void Robot::AutonomousPeriodic() {}
@@ -89,8 +91,6 @@ void Robot::TeleopInit() {
 		m_autonomousCommand->Cancel();
 	}
 	m_teleopResetCommand->Schedule();
-
-	//   VisionSpeakerCommand::LoadAllianceOffset();
 }
 
 void Robot::TeleopPeriodic() {}

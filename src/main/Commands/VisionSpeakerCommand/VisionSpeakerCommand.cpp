@@ -4,10 +4,10 @@
 
 #include "VisionSpeakerCommand.h"
 
-const double UPPER_ANGLE_BLUE_DEFAULT_OFFSET = -0.5;
-const double UPPER_ANGLE_RED_DEFAULT_OFFSET = -0.5;
+const double UPPER_ANGLE_BLUE_DEFAULT_OFFSET = -1.75;
+const double UPPER_ANGLE_RED_DEFAULT_OFFSET = -0.75;
 
-double VisionSpeakerCommand::UPPER_ANGLE_OFFSET = -0.5;
+double UPPER_ANGLE_OFFSET = -0.75;
 
 #include <frc/MathUtil.h>
 
@@ -47,11 +47,11 @@ void VisionSpeakerCommand::Initialize() {
 }
 
 void VisionSpeakerCommand::LoadAllianceOffset() {
-	// if (isRedAlliance()) {
-	// 	VisionSpeakerCommand::SetUpperAngleOffset(UPPER_ANGLE_RED_DEFAULT_OFFSET);
-	// } else {
-	// 	VisionSpeakerCommand::SetUpperAngleOffset(UPPER_ANGLE_BLUE_DEFAULT_OFFSET);
-	// }
+	if (isRedAlliance()) {
+		VisionSpeakerCommand::SetUpperAngleOffset(UPPER_ANGLE_RED_DEFAULT_OFFSET);
+	} else {
+		VisionSpeakerCommand::SetUpperAngleOffset(UPPER_ANGLE_BLUE_DEFAULT_OFFSET);
+	}
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -133,13 +133,13 @@ bool VisionSpeakerCommand::IsFinished() {
 
 
 void VisionSpeakerCommand::SetUpperAngleOffset(double offset) {
-	VisionSpeakerCommand::UPPER_ANGLE_OFFSET = offset;
+	UPPER_ANGLE_OFFSET = offset;
 };
 
 double VisionSpeakerCommand::GetUpperAngleOffset() {
-	return VisionSpeakerCommand::UPPER_ANGLE_OFFSET;
+	return UPPER_ANGLE_OFFSET;
 };
 
 void VisionSpeakerCommand::ResetUpperAngleOffset() {
-	VisionSpeakerCommand::UPPER_ANGLE_OFFSET = 0.0;
+	UPPER_ANGLE_OFFSET = 0.0;
 };

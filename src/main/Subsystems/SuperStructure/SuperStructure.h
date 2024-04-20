@@ -74,7 +74,7 @@ private:
 	OverTalonFX upperMotor{ 22, ControllerNeutralMode::Brake, false, "rio" };
 
 	// Encoders
-	OverCANCoder lowerCANCoder{ 28, 0.289307_tr, "rio" };
+	OverCANCoder lowerCANCoder{ 28, 0.314941_tr - 3_deg, "rio" };
 	OverCANCoder upperCANCoder{ 29, 0.082031_tr, "rio" };
 
 	// State
