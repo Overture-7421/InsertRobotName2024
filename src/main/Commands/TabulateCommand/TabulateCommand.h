@@ -6,18 +6,20 @@
 
 #include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
+#include <frc/apriltag/AprilTagFieldLayout.h>
 
-#include "main/Subsystems/SuperStructure/SuperStructure.h"
-#include "main/Subsystems/Shooter/Shooter.h"
-#include "main/Subsystems/Chassis/Chassis.h"
+#include "Subsystems/SuperStructure/SuperStructure.h"
+#include "Subsystems/Shooter/Shooter.h"
+#include "Subsystems/Chassis/Chassis.h"
+#include "Subsystems/Targeting/TargetProvider.h"
 
-#include "main/Commands/UtilityFunctions/UtilityFunctions.h"
-#include "main/Commands/VisionSpeakerCommand/Constants.h"
+#include "Commands/UtilityFunctions/UtilityFunctions.h"
+#include "Commands/VisionSpeakerCommand/Constants.h"
 
 class TabulateCommand
     : public frc2::CommandHelper<frc2::Command, TabulateCommand> {
  public:
-  TabulateCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter);
+  TabulateCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, TargetProvider* targetProvider);
 
   void Initialize() override;
 
@@ -30,6 +32,6 @@ private:
   Chassis* chassis;
   SuperStructure* superStructure;
   Shooter* shooter;
-
+  TargetProvider* targetProvider;
   frc::Translation2d targetLocation;
 };

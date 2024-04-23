@@ -4,10 +4,11 @@
 
 #include "TabulateCommand.h"
 
-TabulateCommand::TabulateCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter) {
+TabulateCommand::TabulateCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, TargetProvider* targetProvider) {
   this->superStructure = superStructure;
   this->shooter = shooter;
   this->chassis = chassis;
+  this->targetProvider = targetProvider;
 
   AddRequirements({superStructure, shooter});
 }
@@ -18,11 +19,7 @@ void TabulateCommand::Initialize() {
   frc::SmartDashboard::PutNumber("Tabulate/UpperAngle", superStructure->getUpperAngle());
   frc::SmartDashboard::PutNumber("Tabulate/ShooterVel", 0.0);
 
-  if(shouldFlip()){
-    targetLocation = pathplanner::GeometryUtil::flipFieldPosition(VisionSpeakerCommandConstants::TargetLocation);
-  }else{
-    targetLocation = VisionSpeakerCommandConstants::TargetLocation;
-  }
+	targetLocation = targetProvider->GetSpeakerLocation();
 
   chassis->setHeadingOverride(true);
 }
@@ -48,12 +45,12 @@ void TabulateCommand::Execute() {
   double targetVel = frc::SmartDashboard::GetNumber("Tabulate/ShooterVel", 0.0);
 
   superStructure->setTargetCoord({lowerAngle, upperAngle});
-  shooter->setVelocityVoltage(targetVel);
+  shooter->setTargetVelocity(targetVel);
 }
 
 // Called once the command ends or is interrupted.
 void TabulateCommand::End(bool interrupted) {
-    shooter->setVelocityVoltage(0.0);
+    shooter->setTargetVelocity(0.0);
     chassis->setHeadingOverride(false);
 }
 

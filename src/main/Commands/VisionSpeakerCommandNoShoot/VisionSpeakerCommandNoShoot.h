@@ -6,17 +6,19 @@
 
 #include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
+#include <frc/apriltag/AprilTagFieldLayout.h>
 
-#include "main/Subsystems/Chassis/Chassis.h"
-#include "main/Subsystems/SuperStructure/SuperStructure.h"
-#include "main/Subsystems/Shooter/Shooter.h"
-#include "main/Commands/VisionSpeakerCommand/Constants.h"
-#include "main/Commands/UtilityFunctions/UtilityFunctions.h"
+#include "Subsystems/Chassis/Chassis.h"
+#include "Subsystems/SuperStructure/SuperStructure.h"
+#include "Subsystems/Shooter/Shooter.h"
+#include "Commands/VisionSpeakerCommand/Constants.h"
+#include "Commands/UtilityFunctions/UtilityFunctions.h"
+#include "Subsystems/Targeting/TargetProvider.h"
 
 class VisionSpeakerCommandNoShoot
 	: public frc2::CommandHelper<frc2::Command, VisionSpeakerCommandNoShoot> {
 public:
-	VisionSpeakerCommandNoShoot(Chassis* chassis, SuperStructure* SuperStructure, Shooter* shooter);
+	VisionSpeakerCommandNoShoot(Chassis* chassis, SuperStructure* SuperStructure, Shooter* shooter, TargetProvider* targetProvider);
 
 	void Initialize() override;
 
@@ -30,7 +32,9 @@ private:
 	SuperStructure* superStructure;
 	Chassis* chassis;
 	Shooter* shooter;
+	TargetProvider* targetProvider;
 	
+
 	frc::Translation2d targetLocation;
 
 	units::meter_t distance = 0.0_m;

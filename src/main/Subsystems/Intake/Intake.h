@@ -6,16 +6,28 @@
 
 #include <frc2/command/SubsystemBase.h>
 
-#include "OvertureLib/MotorControllers/OverTalonFX/OverTalonFX.h"
-#include "OvertureLib/MotorControllers/ControllerNeutralMode/ControllerNeutralMode.h"
+#include "MotorControllers/OverTalonFX/OverTalonFX.h"
+#include "MotorControllers/ControllerNeutralMode/ControllerNeutralMode.h"
 #include "Constants.h"
+
+#include <wpi/DataLog.h>
+#include <frc/DataLogManager.h>
 
 class Intake : public frc2::SubsystemBase {
 public:
 	Intake();
 	void setVoltage(units::volt_t voltage);
+	double getVoltage();
 	void Periodic() override;
+	void shuffleboardPeriodic();
 
 private:
-	OverTalonFX intakeMotor{ 25, ControllerNeutralMode::Brake, true, "rio" };
+	OverTalonFX intakeMotorLeft{ 25, ControllerNeutralMode::Brake, false, "rio" };
+	OverTalonFX intakeMotorRight{ 24, ControllerNeutralMode::Brake, false, "rio" };
+
+
+	wpi::log::DataLog& log = frc::DataLogManager::GetLog();
+	wpi::log::DoubleLogEntry voltage = wpi::log::DoubleLogEntry(log, "/intake/voltage");
+	wpi::log::DoubleLogEntry currentLeft = wpi::log::DoubleLogEntry(log, "/intake/current_left");
+	wpi::log::DoubleLogEntry currentRight = wpi::log::DoubleLogEntry(log, "/intake/current_right");
 };

@@ -10,12 +10,12 @@
 // For more information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 ClosedCommand::ClosedCommand(SuperStructure* superStructure, Intake* intake, Storage* storage, Shooter* shooter) {
-  AddCommands(
-    frc2::InstantCommand([=] {
-      storage->setVoltage(0_V);
-      intake->setVoltage(0_V);
-      shooter->setVelocityVoltage(ShooterConstants::IdleSpeed);
-      superStructure->setTargetCoord(SuperStructureConstants::GroundGrabState);
-    })
-    );
+	AddCommands(
+		frc2::InstantCommand([=] {
+		storage->setVoltage(0_V);
+		intake->setVoltage(0_V);
+		shooter->setTargetVelocity(ShooterConstants::IdleSpeed);
+		superStructure->setTargetCoord(SuperStructureConstants::GroundGrabState);
+	})
+	);
 }

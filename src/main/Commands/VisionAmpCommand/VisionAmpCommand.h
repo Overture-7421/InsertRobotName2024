@@ -8,10 +8,10 @@
 #include <frc2/command/SequentialCommandGroup.h>
 #include <pathplanner/lib/auto/AutoBuilder.h>
 
-#include "main/Commands/UtilityFunctions/UtilityFunctions.h"
-#include "main/Subsystems/SuperStructure/SuperStructure.h"
-#include "main/Subsystems/Shooter/Shooter.h"
-#include "main/Subsystems/Storage/Storage.h"
-#include "main/Commands/StorageCommand/StorageCommand.h"
+#include "Commands/UtilityFunctions/UtilityFunctions.h"
+#include "Subsystems/SuperStructure/SuperStructure.h"
+#include "Subsystems/Shooter/Shooter.h"
+#include "Subsystems/Storage/Storage.h"
+#include "Commands/StorageCommand/StorageCommand.h"
 
 frc2::CommandPtr VisionAmpCommand(SuperStructure* superStucture, Shooter* shooter);

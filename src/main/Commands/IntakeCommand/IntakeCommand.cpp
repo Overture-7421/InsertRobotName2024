@@ -4,7 +4,7 @@
 
 #include "IntakeCommand.h"
 
-#include "main/Commands/IntakeCommand/IntakeCommand.h"
+#include "Commands/IntakeCommand/IntakeCommand.h"
 
 IntakeCommand::IntakeCommand(Intake* intake, units::volt_t voltage) {
     this->intake = intake;

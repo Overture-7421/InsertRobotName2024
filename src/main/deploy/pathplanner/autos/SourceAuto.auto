@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3343493353653375,
-      "y": 3.0547794428922193
+      "x": 1.232749132164931,
+      "y": 3.616967233934468
     },
     "rotation": -63.502733302431885
   },
@@ -103,55 +103,6 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.2
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "VisionSpeakerCommand"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "SourceAuto5"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "GroundGrabCommand"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "SourceAuto6"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.2
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "VisionSpeakerCommand"
           }
         }
       ]

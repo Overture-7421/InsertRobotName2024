@@ -4,7 +4,7 @@
 
 #include "VisionAmpCommand.h"
 #include <frc2/command/ParallelCommandGroup.h>
-#include "main/Commands/AmpCommand/AmpCommand.h"
+#include "Commands/AmpCommand/AmpCommand.h"
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.
 // For more information, see:

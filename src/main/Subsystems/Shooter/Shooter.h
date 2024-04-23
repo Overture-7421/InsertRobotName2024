@@ -8,15 +8,15 @@
 #include <frc2/command/sysid/SysIdRoutine.h>
 #include <frc/controller/SimpleMotorFeedforward.h>
 
-#include "OvertureLib/MotorControllers/OverTalonFX/OverTalonFX.h"
-#include "OvertureLib/MotorControllers/ControllerNeutralMode/ControllerNeutralMode.h"
+#include "MotorControllers/OverTalonFX/OverTalonFX.h"
+#include "MotorControllers/ControllerNeutralMode/ControllerNeutralMode.h"
 #include "Constants.h"
 
 class Shooter : public frc2::SubsystemBase {
 public:
 	Shooter();
-	void setVelocityVoltage(double velocity);
-	void setIndividualVoltage(double upper, double lower);
+	void setTargetVelocity(double velocity);
+	void setVoltage(double voltage);
 	void setEmergencyDisable(bool emergencyDisable);
 	bool isEmergencyDisabled();
 	double getCurrentVelocity();
@@ -32,14 +32,10 @@ public:
 	}
 
 private:
-	double getUpperMotorCurrentVelocity();
-	double getLowerMotorCurrentVelocity();
-	
-	OverTalonFX upperShooterMotor{ 26, ControllerNeutralMode::Coast, false, "rio" };
-	OverTalonFX lowerShooterMotor{ 27, ControllerNeutralMode::Coast, false, "rio" };
+	OverTalonFX leftShooterMotor{ 27, ControllerNeutralMode::Coast, false, "rio" };
+	OverTalonFX rightShooterMotor{ 26, ControllerNeutralMode::Coast, false, "rio" };
 
-	frc::SimpleMotorFeedforward<units::turn> upperFF {0.29396_V, 0.050_V / 1_tps, 0.010231_V / 1_tr_per_s_sq};
-	frc::SimpleMotorFeedforward<units::turn	> lowerFF {0.28612_V, 0.050_V / 1_tps, 0.010231_V / 1_tr_per_s_sq};
+	frc::SimpleMotorFeedforward<units::turn> shooterFF {0.17356_V, 0.067254_V / 1_tps, 0.016758_V / 1_tr_per_s_sq};
 
 	double targetVel = 0.0;
 
@@ -50,21 +46,14 @@ private:
 						std::nullopt},
 	frc2::sysid::Mechanism{
 		[this](units::volt_t driveVoltage) {
-			upperShooterMotor.SetVoltage(driveVoltage);
-			lowerShooterMotor.SetVoltage(driveVoltage);
+			leftShooterMotor.SetVoltage(driveVoltage);
 		},
 		[this](frc::sysid::SysIdRoutineLog* log) {
 
-		log->Motor("ShooterUpper")
-			.voltage(upperShooterMotor.GetMotorVoltage().GetValue())
-			.position(upperShooterMotor.GetPosition().GetValue())
-			.velocity(upperShooterMotor.GetVelocity().GetValue());
-
-		log->Motor("ShooterLower")
-			.voltage(lowerShooterMotor.GetMotorVoltage().GetValue())
-			.position(lowerShooterMotor.GetPosition().GetValue())
-			.velocity(lowerShooterMotor.GetVelocity().GetValue());
-
+		log->Motor("Shooter")
+			.voltage(leftShooterMotor.GetMotorVoltage().GetValue())
+			.position(leftShooterMotor.GetPosition().GetValue())
+			.velocity(leftShooterMotor.GetVelocity().GetValue());
 		},
 		this} };
 };

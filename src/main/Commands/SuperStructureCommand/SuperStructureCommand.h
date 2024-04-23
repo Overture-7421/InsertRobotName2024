@@ -7,12 +7,12 @@
 #include <frc2/command/CommandPtr.h>
 #include <frc2/command/Commands.h>
 
-#include "main/Subsystems/SuperStructure/SuperStructure.h"
-#include "main/Subsystems/Intake/Intake.h"
-#include "main/Subsystems/SupportArms/SupportArms.h"
+#include "Subsystems/SuperStructure/SuperStructure.h"
+#include "Subsystems/Intake/Intake.h"
+#include "Subsystems/SupportArms/SupportArms.h"
 
-#include "main/Subsystems/Storage/Storage.h"
-#include "main/Subsystems/Shooter/Shooter.h"
+#include "Subsystems/Storage/Storage.h"
+#include "Subsystems/Shooter/Shooter.h"
 
 
 class SuperStructureCommand

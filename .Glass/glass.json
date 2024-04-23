@@ -5,14 +5,11 @@
         "FrontRight": {
           "open": true
         },
+        "Storage": {
+          "open": true
+        },
         "SuperStructure": {
-          "ActualTarget": {
-            "open": true
-          },
           "Current": {
-            "open": true
-          },
-          "DesiredTarget": {
             "open": true
           },
           "FalconTarget": {

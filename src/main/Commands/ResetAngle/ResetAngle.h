@@ -8,7 +8,7 @@
 #include <frc2/command/CommandHelper.h>
 #include <frc/DriverStation.h>
 
-#include "OvertureLib/Subsystems/Swerve/SwerveChassis/SwerveChassis.h"
+#include "Subsystems/Swerve/SwerveChassis/SwerveChassis.h"
 
 /**
  * An example command.

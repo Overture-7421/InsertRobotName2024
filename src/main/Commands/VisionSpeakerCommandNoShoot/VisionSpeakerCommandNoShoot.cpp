@@ -3,24 +3,22 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "VisionSpeakerCommandNoShoot.h"
-
+#include "Commands/VisionSpeakerCommand/VisionSpeakerCommand.h"
 #include <frc/MathUtil.h>
 
-VisionSpeakerCommandNoShoot::VisionSpeakerCommandNoShoot(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter) {
+VisionSpeakerCommandNoShoot::VisionSpeakerCommandNoShoot(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, TargetProvider* targetProvider) {
 	// Use addRequirements() here to declare subsystem dependencies.
 	AddRequirements({ superStructure, shooter });
 	this->chassis = chassis;
 	this->superStructure = superStructure;
 	this->shooter = shooter;
+	this->targetProvider = targetProvider;
 }
 
 // Called when the command is initially scheduled.
 void VisionSpeakerCommandNoShoot::Initialize() {
-	if (shouldFlip()) {
-		targetLocation = pathplanner::GeometryUtil::flipFieldPosition(VisionSpeakerCommandConstants::TargetLocation);
-	} else {
-		targetLocation = VisionSpeakerCommandConstants::TargetLocation;
-	}
+
+	targetLocation = targetProvider->GetSpeakerLocation();
 
 	chassis->setHeadingOverride(true);
 }
@@ -37,10 +35,10 @@ void VisionSpeakerCommandNoShoot::Execute() {
 
 	chassis->setTargetHeading(angle);
 	double targetLowerAngle = VisionSpeakerCommandConstants::DistanceToLowerAngleTable[distance];
-	double targetUpperAngle = VisionSpeakerCommandConstants::DistanceToUpperAngleTable[distance];
+	double targetUpperAngle = VisionSpeakerCommandConstants::DistanceToUpperAngleTable[distance] + VisionSpeakerCommand::GetUpperAngleOffset();
 	double targetShooterVelocity = VisionSpeakerCommandConstants::DistanceToVelocityTable[distance];
 	superStructure->setTargetCoord({ targetLowerAngle, targetUpperAngle });
-	shooter->setVelocityVoltage(targetShooterVelocity);
+	shooter->setTargetVelocity(targetShooterVelocity);
 }
 
 // Called once the command ends or is interrupted.

@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "main/Subsystems/Shooter/Shooter.h"
+#include "Subsystems/Shooter/Shooter.h"
 #include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
 

@@ -1,6 +1,6 @@
 #include "UtilityFunctions.h"
 
-bool shouldFlip() {
+bool isRedAlliance() {
 	auto alliance = frc::DriverStation::GetAlliance();
 	if (alliance && alliance.value() == frc::DriverStation::Alliance::kRed) {
 		return true;
@@ -18,7 +18,7 @@ StageLocation findClosestStageLocation(Chassis* chassis) {
 
 	const std::vector<std::pair<StageLocation, frc::Pose2d>>* stageLocations = &blueStageLocations;
 
-	if (shouldFlip()) {
+	if (isRedAlliance()) {
 		stageLocations = &redStageLocations;
 	}
 

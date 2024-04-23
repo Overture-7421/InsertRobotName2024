@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.872201039199766,
-        "y": 6.317334517410571
+        "x": 3.9812630322935063,
+        "y": 6.460709665605378
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.063294389357997,
-        "y": 6.745814994774847
+        "x": 6.914319130963843,
+        "y": 6.441476510859999
       },
       "isLocked": false,
       "linkedName": "AMP 2-3"
     },
     {
       "anchor": {
-        "x": 7.763870521809846,
-        "y": 5.32
+        "x": 8.14524103467238,
+        "y": 5.864481868502625
       },
       "prevControl": {
-        "x": 7.342983151947309,
-        "y": 5.5120073278390604
+        "x": 6.856619666727706,
+        "y": 6.364543891878482
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,23 +30,38 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "Align",
+      "waypointRelativePos": 0.6,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AlignToNote"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
-    "maxVelocity": 4.0,
-    "maxAcceleration": 6.0,
+    "maxVelocity": 5.0,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
-    "rotateFast": false
+    "rotation": -18.103763035065306,
+    "rotateFast": true
   },
   "reversed": false,
   "folder": "AMPAuto",
-  "previewStartingState": {
-    "rotation": 6.16,
-    "velocity": 0
-  },
+  "previewStartingState": null,
   "useDefaultConstraints": false
 }

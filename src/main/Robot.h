@@ -8,8 +8,8 @@
 
 #include <frc2/command/CommandPtr.h>
 
-#include "OvertureLib/Robots/OverRobot/OverRobot.h"
-#include "OvertureLib/Characterization/SysIDRoutineBot.h"
+#include "Robots/OverRobot/OverRobot.h"
+#include "Characterization/SysIDRoutineBot.h"
 
 #include "RobotContainer.h"
 

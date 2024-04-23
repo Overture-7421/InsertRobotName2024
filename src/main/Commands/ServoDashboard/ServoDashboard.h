@@ -6,7 +6,7 @@
 
 #include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
-#include "main/Subsystems/SupportArms/SupportArms.h"
+#include "Subsystems/SupportArms/SupportArms.h"
 
 /**
  * An example command.

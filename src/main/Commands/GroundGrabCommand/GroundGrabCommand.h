@@ -7,8 +7,8 @@
 #include <frc2/command/CommandHelper.h>
 #include <frc2/command/SequentialCommandGroup.h>
 
-#include "main/Commands/SuperStructureCommand/SuperStructureCommand.h"
-#include "main/Commands/StorageCommand/StorageCommand.h"
-#include "main/Commands/IntakeCommand/IntakeCommand.h"
+#include "Commands/SuperStructureCommand/SuperStructureCommand.h"
+#include "Commands/StorageCommand/StorageCommand.h"
+#include "Commands/IntakeCommand/IntakeCommand.h"
 
-frc2::CommandPtr GroundGrabCommand(SuperStructure* superStructure, Storage* storage, Intake* intake);
+frc2::CommandPtr GroundGrabCommand(SuperStructure* superStructure, Storage* storage, Intake* intake, bool ignoreSensor = false);

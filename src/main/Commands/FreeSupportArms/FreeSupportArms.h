@@ -6,7 +6,7 @@
 
 #include <frc2/command/CommandHelper.h>
 #include <frc2/command/InstantCommand.h>
-#include "main/Subsystems/SupportArms/SupportArms.h"
+#include "Subsystems/SupportArms/SupportArms.h"
 
 class FreeSupportArms
     : public frc2::CommandHelper<frc2::InstantCommand,

@@ -4,9 +4,9 @@
 
 #include "TrapShoot.h"
 
-#include "main/Commands/SuperStructureCommand/SuperStructureCommand.h"
-#include "main/Commands/ShooterCommand/ShooterCommand.h"
-#include "main/Commands/StorageCommand/StorageCommand.h"
+#include "Commands/SuperStructureCommand/SuperStructureCommand.h"
+#include "Commands/ShooterCommand/ShooterCommand.h"
+#include "Commands/StorageCommand/StorageCommand.h"
 
 // TODO: Make command that automatically waits for the shooter to fire the note and stops the storage using the sensors.
 

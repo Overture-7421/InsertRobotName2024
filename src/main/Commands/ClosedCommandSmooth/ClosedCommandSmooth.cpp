@@ -14,7 +14,7 @@ ClosedCommandSmooth::ClosedCommandSmooth(SuperStructure* superStructure, Intake*
 		frc2::InstantCommand([=] {
 		storage->setVoltage(0_V);
 		intake->setVoltage(0_V);
-		shooter->setVelocityVoltage(ShooterConstants::IdleSpeed);
+		shooter->setTargetVelocity(ShooterConstants::IdleSpeed);
 	}), frc2::SequentialCommandGroup(
 		frc2::InstantCommand([=] {superStructure->setTargetCoord({ superStructure->getCurrentState().lowerAngle, -7.0 });}),
 		frc2::WaitCommand(0.3_s),

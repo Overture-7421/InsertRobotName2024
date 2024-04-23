@@ -6,11 +6,13 @@
     "AMPAuto",
     "CenterAuto",
     "Climbing",
+    "5 Note Alt",
     "SourceAuto"
   ],
   "autoFolders": [
     "AMPAuto",
     "CenterAuto",
+    "5 Note Alt",
     "SourceAuto"
   ],
   "defaultMaxVel": 1.0,
