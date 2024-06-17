@@ -27,9 +27,6 @@ RobotContainer::RobotContainer() {
 	pathplanner::NamedCommands::registerCommand("ShooterCommand", std::move(ShooterCommand(&shooter, 4.00).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("VisionNoShoot", std::move(VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter, &targetProvider).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("AlignToNote", std::move(AlignToTrackedObject(&chassis, &noteTrackingCamera)));
-	pathplanner::NamedCommands::registerCommand("Shoot", std::move(StorageCommand(&storage, StorageConstants::SpeakerScoreVolts).ToPtr().Repeatedly().WithTimeout(0.2_s)));
-	pathplanner::NamedCommands::registerCommand("Start", std::move(ShooterCommand(&shooter, 115).ToPtr()));
-	pathplanner::NamedCommands::registerCommand("StartV2", std::move(ShooterCommand(&shooter, 70).ToPtr()));
 
 
 	center7NoteAuto = pathplanner::AutoBuilder::buildAuto("CenterAuto-7Notes");
