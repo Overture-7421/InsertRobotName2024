@@ -6,9 +6,10 @@
 
 #include <frc2/command/CommandPtr.h>
 #include <frc2/command/button/Trigger.h>
-#include <frc2/command/button/CommandXboxController.h>
 #include <frc/XboxController.h>
 #include <frc/smartdashboard/SendableChooser.h>
+
+#include "Gamepad/Gamepad.h"
 
 #include <pathplanner/lib/auto/NamedCommands.h>
 
@@ -42,7 +43,6 @@
 #include "Commands/Climbing/Climbing.h"
 #include "Commands/TrapShoot/TrapShoot.h"
 
-#include "Commands/Drive/Drive.h"
 #include "Characterization/SysIDRoutineBot.h"
 #include "Subsystems/LedsManager/LedsManager.h"
 #include "Subsystems/Vision/AprilTags/AprilTags.h"
@@ -82,11 +82,12 @@ private:
 	frc::XboxController driver{ 0 };
 	frc::XboxController opertr{ 1 };
 
+	Gamepad testingPad{ 3, 0.1, 0.5 };
+
 	// frc2::CommandXboxController characterization {5};
 
 	// Driver Commands
 	frc2::Trigger ampV{ [this] {return driver.GetLeftTriggerAxis() > 0.1;} };
-	// frc2::Trigger sourceV{ [this] {return driver.GetRightBumper();} }; // Eliminar creo 
 	frc2::Trigger speakerV{ [this] {return driver.GetRightTriggerAxis() > 0.1;} };
 	frc2::Trigger zeroHeading{ [this] {return driver.GetBackButton();} };
 	frc2::Trigger climbV{ [this] {return driver.GetYButton();} };
@@ -127,8 +128,6 @@ private:
 
 	frc2::CommandPtr ampAutoCenterRace = frc2::cmd::None();
 	frc2::CommandPtr sourceAutoCenterRace = frc2::cmd::None();
-
-	frc2::CommandPtr testingAuto = frc2::cmd::None();
 
 	//Auto Chooser
 	frc::SendableChooser<frc2::Command*> autoChooser;
