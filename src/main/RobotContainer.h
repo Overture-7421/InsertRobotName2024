@@ -57,6 +57,7 @@ public:
 
 private:
 	void ConfigureBindings();
+	void ConfigOperatorBindings();
 
 	// Subsystems
 	Intake intake;

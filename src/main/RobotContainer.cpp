@@ -123,8 +123,53 @@ void RobotContainer::ConfigureBindings() {
 	tabulate.WhileTrue(AlignToTrackedObject(&chassis, &noteTrackingCamera));
 
 	//Operator 
+
+	climbV.WhileTrue(AutoClimb(&chassis, &superStructure, &supportArms, &storage, &shooter, &opertr));
+	climbV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+
+
+
+	// closed.WhileTrue(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+
+	// shooterEmergencyStop.ToggleOnTrue(frc2::cmd::RunOnce([&] {
+	// 	shooter.setEmergencyDisable(!shooter.isEmergencyDisabled());
+	// }));
+
+
+	// tabulate.OnTrue(frc2::cmd::RunOnce([&] {
+	// 	chassis.setHeadingOverride(true);
+	// 	chassis.setTargetHeading({ -90_deg });
+	// }));
+
+	// tabulate.OnFalse(frc2::cmd::RunOnce([&] {
+	// 	chassis.setHeadingOverride(false);
+	// }));
+}
+
+frc2::Command* RobotContainer::GetAutonomousCommand() {
+	return autoChooser.GetSelected();
+}
+
+frc2::CommandPtr RobotContainer::GetTeleopResetCommand() {
+	return frc2::cmd::Deadline(
+		StorageCommand(&storage, 0_V).ToPtr(),
+		ShooterCommand(&shooter, 0).ToPtr(),
+		IntakeCommand(&intake, 0_V).ToPtr()
+	);
+}
+
+void RobotContainer::ConfigOperatorBindings(){
 	ampM.WhileTrue(AmpCommand(&superStructure, &shooter).ToPtr());
 	ampM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+
+	spitM.OnTrue(frc2::cmd::Parallel(
+		StorageCommand(&storage, -5_V).ToPtr(),
+		IntakeCommand(&intake, -8_V).ToPtr()
+	));
+	spitM.OnFalse(frc2::cmd::Parallel(
+		StorageCommand(&storage, 0_V).ToPtr(),
+		IntakeCommand(&intake, 0_V).ToPtr()
+	));
 
 	climbM.WhileTrue(ManualClimb(&chassis, &superStructure, &supportArms, &storage, &shooter, &opertr));
 	climbM.OnFalse(
@@ -136,31 +181,17 @@ void RobotContainer::ConfigureBindings() {
 		)
 	);
 
-	ampM.WhileTrue(AmpCommand(&superStructure, &shooter).ToPtr());
-	ampM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
-
-
-	ampM.WhileTrue(AmpCommand(&superStructure, &shooter).ToPtr());
-	ampM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
-
-	climbV.WhileTrue(AutoClimb(&chassis, &superStructure, &supportArms, &storage, &shooter, &opertr));
-	climbV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
-
 	shootM.WhileTrue(StorageCommand(&storage, StorageConstants::SpeakerScoreVolts).ToPtr());
 	shootM.OnFalse(StorageCommand(&storage, 0_V).ToPtr());
-
-	spitM.OnTrue(frc2::cmd::Parallel(
-		StorageCommand(&storage, -5_V).ToPtr(),
-		IntakeCommand(&intake, -8_V).ToPtr()
-	));
-	spitM.OnFalse(frc2::cmd::Parallel(
-		StorageCommand(&storage, 0_V).ToPtr(),
-		IntakeCommand(&intake, 0_V).ToPtr()
-	));
 
 	speakerM.WhileTrue(SpeakerCommand(&superStructure, &shooter).ToPtr());
 	speakerM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
+	intakeMIgnoreSensor.WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake, true));
+	intakeMIgnoreSensor.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+
+	intakeM.WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake));
+	intakeM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
 	increaseUpperAngleOffset.OnTrue(
 		BlinkEffect(&leds, "all", { 255, 0, 0 }, 0.05_s).WithTimeout(0.2_s)
@@ -191,41 +222,8 @@ void RobotContainer::ConfigureBindings() {
 		)
 	);
 
-	// closed.WhileTrue(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
-
-	// shooterEmergencyStop.ToggleOnTrue(frc2::cmd::RunOnce([&] {
-	// 	shooter.setEmergencyDisable(!shooter.isEmergencyDisabled());
-	// }));
-
 	manualFrontalClimb.OnTrue(SuperStructureCommand(&superStructure, { 90, 0 }).ToPtr());
 	manualFrontalClimb.OnFalse(SuperStructureCommand(&superStructure, SuperStructureConstants::GroundGrabState).ToPtr());
-
-	intakeM.WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake));
-	intakeM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
-
-	intakeMIgnoreSensor.WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake, true));
-	intakeMIgnoreSensor.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
-
-	// tabulate.OnTrue(frc2::cmd::RunOnce([&] {
-	// 	chassis.setHeadingOverride(true);
-	// 	chassis.setTargetHeading({ -90_deg });
-	// }));
-
-	// tabulate.OnFalse(frc2::cmd::RunOnce([&] {
-	// 	chassis.setHeadingOverride(false);
-	// }));
-}
-
-frc2::Command* RobotContainer::GetAutonomousCommand() {
-	return autoChooser.GetSelected();
-}
-
-frc2::CommandPtr RobotContainer::GetTeleopResetCommand() {
-	return frc2::cmd::Deadline(
-		StorageCommand(&storage, 0_V).ToPtr(),
-		ShooterCommand(&shooter, 0).ToPtr(),
-		IntakeCommand(&intake, 0_V).ToPtr()
-	);
 }
 
 
