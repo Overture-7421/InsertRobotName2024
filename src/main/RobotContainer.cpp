@@ -38,8 +38,6 @@ RobotContainer::RobotContainer() {
 	ampAutoCenterRace = AmpAutoCenterRace(&storage);
 	sourceAutoCenterRace = SourceAutoCenterRace(&storage);
 
-	testingAuto = pathplanner::AutoBuilder::buildAuto("Testing");
-
 	autoChooser.SetDefaultOption("None, null, nada", defaultNoneAuto.get());
 	autoChooser.AddOption("CenterAuto-7Notes", center7NoteAuto.get());
 	autoChooser.AddOption("CenterAuto-5Notes", center5NoteAuto.get());
@@ -58,6 +56,25 @@ RobotContainer::RobotContainer() {
 }
 
 void RobotContainer::ConfigureBindings() {
+
+	testingPad.rightStick(0.5).WhileTrue(frc2::cmd::Run([&] {
+		chassis.setDrive(
+			{
+				units::meters_per_second_t{Utils::ApplyAxisFilter(-testingPad.GetLeftY()) * ChassisConstants::MaxModuleSpeed},
+				units::meters_per_second_t{Utils::ApplyAxisFilter(-testingPad.GetLeftX()) * ChassisConstants::MaxModuleSpeed},
+				0_rad_per_s
+			},
+			true,
+			false,
+			testingPad.getRightStickDirection()
+		);
+	}, { &chassis }).BeforeStarting([&] {
+		chassis.setHeadingOverride(true);
+	}).FinallyDo([&] {
+		chassis.setHeadingOverride(false);
+	}));
+
+
 	noteOnStorage.WhileTrue(frc2::cmd::Sequence(
 		BlinkEffect(&leds, "all", { 0, 255, 0 }, 0.25_s).ToPtr().WithTimeout(0.5_s),
 		StaticEffect(&leds, "all", { 0, 255, 0 }).ToPtr()
@@ -101,7 +118,20 @@ void RobotContainer::ConfigureBindings() {
 
 	leds.SetDefaultCommand(BlinkEffect(&leds, "all", { 255, 0, 255 }, 1_s).IgnoringDisable(true));
 
-	chassis.SetDefaultCommand(Drive(ChassisConstants::MaxModuleSpeed, &chassis, &driver));
+	chassis.SetDefaultCommand(frc2::cmd::Run([&] {
+		chassis.setDrive(
+			{
+				units::meters_per_second_t{Utils::ApplyAxisFilter(testingPad.GetLeftY()) * ChassisConstants::MaxModuleSpeed},
+				units::meters_per_second_t{Utils::ApplyAxisFilter(testingPad.GetLeftX()) * ChassisConstants::MaxModuleSpeed},
+				units::radians_per_second_t{Utils::ApplyAxisFilter(-testingPad.getTwist()) * ChassisConstants::MaxAngularSpeed}
+			},
+			true
+		);
+	}, { &chassis }).BeforeStarting([&] {
+		chassis.setAlliance();
+	}));
+
+
 
 	supportArms.SetDefaultCommand(FreeSupportArms(&supportArms, 25.00).Repeatedly()); //Default
 
@@ -191,11 +221,6 @@ void RobotContainer::ConfigureBindings() {
 		)
 	);
 
-	// closed.WhileTrue(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
-
-	// shooterEmergencyStop.ToggleOnTrue(frc2::cmd::RunOnce([&] {
-	// 	shooter.setEmergencyDisable(!shooter.isEmergencyDisabled());
-	// }));
 
 	manualFrontalClimb.OnTrue(SuperStructureCommand(&superStructure, { 90, 0 }).ToPtr());
 	manualFrontalClimb.OnFalse(SuperStructureCommand(&superStructure, SuperStructureConstants::GroundGrabState).ToPtr());
