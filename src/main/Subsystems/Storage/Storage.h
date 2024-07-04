@@ -5,6 +5,7 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
+#include <frc2/command/Commands.h>
 #include <frc/DigitalInput.h>
 #include <frc/DigitalOutput.h>
 #include <units/length.h>
@@ -27,6 +28,10 @@ public:
 	bool isSensorAvailable();
 	void Periodic() override;
 	void shuffleboardPeriodic();
+	frc2::CommandPtr intakeStorage();
+	frc2::CommandPtr stopStorage();
+	frc2::CommandPtr reverseStorage();
+	frc2::CommandPtr shootStorage();
 private:
 	OverTalonFX storageMotor{ 30, ControllerNeutralMode::Brake, false, "rio" };
 	bool isNoteOnStorage = false, beamBreak1Cache = false, beamBreak2Cache = false;

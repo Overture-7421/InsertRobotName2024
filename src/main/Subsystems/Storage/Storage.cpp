@@ -53,6 +53,22 @@ void Storage::Periodic() {
 	isNoteOnStorage = beamBreak1Cache || beamBreak2Cache;
 }
 
+frc2::CommandPtr Storage::intakeStorage(){
+	return frc2::cmd::RunOnce([this] {this->setVoltage(StorageConstants::GroundGrabVolts);});
+};
+
+frc2::CommandPtr Storage::stopStorage(){
+	return frc2::cmd::RunOnce([this] {this->setVoltage(StorageConstants::StopVolts);});
+};
+
+frc2::CommandPtr Storage::reverseStorage(){
+	return frc2::cmd::RunOnce([this] {this->setVoltage(StorageConstants::SpitVolts);});
+};
+
+frc2::CommandPtr Storage::shootStorage(){
+	return frc2::cmd::RunOnce([this] {this->setVoltage(StorageConstants::ScoreVolts);});
+};
+
 void Storage::shuffleboardPeriodic() {
 	noteOnForward.Append(isNoteOnForwardSensor());
 	voltage.Append(storageMotor.GetMotorVoltage().GetValueAsDouble());
