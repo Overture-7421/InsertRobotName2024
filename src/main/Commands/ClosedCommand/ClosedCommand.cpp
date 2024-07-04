@@ -12,8 +12,8 @@
 ClosedCommand::ClosedCommand(SuperStructure* superStructure, Intake* intake, Storage* storage, Shooter* shooter) {
 	AddCommands(
 		frc2::InstantCommand([=] {
-		storage->setVoltage(0_V);
-		intake->setVoltage(0_V);
+		storage->storageCommand(StorageConstants::StopVolts);
+		intake->intakeCommand(IntakeConstants::StopVolts);
 		shooter->setTargetVelocity(ShooterConstants::IdleSpeed);
 		superStructure->setTargetCoord(SuperStructureConstants::GroundGrabState);
 	})

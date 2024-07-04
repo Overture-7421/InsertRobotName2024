@@ -8,8 +8,8 @@
 #include <frc2/command/SequentialCommandGroup.h>
 
 #include "Commands/SuperStructureCommand/SuperStructureCommand.h"
-#include "Commands/IntakeCommand/IntakeCommand.h"
-#include "Commands/StorageCommand/StorageCommand.h"
+#include "Subsystems/Intake/Intake.h"
+#include "Subsystems/Storage/Storage.h"
 #include "Commands/ShooterCommand/ShooterCommand.h"
 
 class ClosedCommand

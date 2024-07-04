@@ -12,16 +12,8 @@ void Intake::setVoltage(units::volt_t voltage) {
 	intakeMotorLeft.setVoltage(voltage, true);
 }
 
-frc2::CommandPtr Intake::startIntake(){
-	return frc2::cmd::RunOnce([this] { this->setVoltage(IntakeConstants::GroundGrabVolts);});
-}
-
-frc2::CommandPtr Intake::stopIntake(){
-	return frc2::cmd::RunOnce([this] { this->setVoltage(IntakeConstants::StopVolts);});
-}
-
-frc2::CommandPtr Intake::reverseIntake(){
-	return frc2::cmd::RunOnce([this] { this->setVoltage(IntakeConstants::ReverseVolts);});
+frc2::CommandPtr Intake::intakeCommand(units::volt_t voltage){
+	return frc2::cmd::RunOnce([this, voltage] {this->setVoltage(voltage);});
 }
 
 double Intake::getVoltage(){

@@ -11,8 +11,8 @@ frc2::CommandPtr GroundGrabCommand(SuperStructure* superStructure, Storage* stor
 		return frc2::cmd::Sequence(
 			SuperStructureCommand(superStructure, SuperStructureConstants::GroundGrabState).ToPtr(),
 			frc2::cmd::Parallel(
-				IntakeCommand(intake, IntakeConstants::GroundGrabVolts).ToPtr(),
-				StorageCommand(storage, StorageConstants::GroundGrabVolts).ToPtr()
+				intake->intakeCommand(IntakeConstants::GroundGrabVolts),
+				storage->storageCommand(StorageConstants::GroundGrabVolts)
 			)
 		);
 	}
@@ -21,8 +21,8 @@ frc2::CommandPtr GroundGrabCommand(SuperStructure* superStructure, Storage* stor
 	return frc2::cmd::Sequence(
 		SuperStructureCommand(superStructure, SuperStructureConstants::GroundGrabState).ToPtr(),
 		frc2::cmd::Parallel(
-			IntakeCommand(intake, IntakeConstants::GroundGrabVolts).ToPtr(),
-			StorageCommand(storage, StorageConstants::GroundGrabVolts).ToPtr()
+			intake->intakeCommand(IntakeConstants::GroundGrabVolts),
+			storage->storageCommand(StorageConstants::GroundGrabVolts)
 		).Repeatedly().Until(
 			[=]() {
 				return storage->isNoteOnForwardSensor();
@@ -33,8 +33,8 @@ frc2::CommandPtr GroundGrabCommand(SuperStructure* superStructure, Storage* stor
 		// )
 		.FinallyDo(
 			[=]() {
-				storage->setVoltage(0.0_V);
-				intake->setVoltage(0.0_V);
+				storage->storageCommand(StorageConstants::StopVolts);
+				intake->intakeCommand(IntakeConstants::StopVolts);
 			}
 		)
 		);

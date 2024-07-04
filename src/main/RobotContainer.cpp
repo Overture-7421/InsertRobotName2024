@@ -23,7 +23,6 @@ RobotContainer::RobotContainer() {
 	)));
 	pathplanner::NamedCommands::registerCommand("VisionShootNoDelay", std::move(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &targetProvider, &storage).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("VisionAmpCommand", std::move(VisionAmpCommand(&superStructure, &shooter)));
-	pathplanner::NamedCommands::registerCommand("StorageCommand", std::move(StorageCommand(&storage, 3_V).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("ShooterCommand", std::move(ShooterCommand(&shooter, 4.00).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("VisionNoShoot", std::move(VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter, &targetProvider).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("AlignToNote", std::move(AlignToTrackedObject(&chassis, &noteTrackingCamera)));
@@ -146,9 +145,9 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
 
 frc2::CommandPtr RobotContainer::GetTeleopResetCommand() {
 	return frc2::cmd::Deadline(
-		StorageCommand(&storage, 0_V).ToPtr(),
+		storage.storageCommand(StorageConstants::StopVolts),
 		ShooterCommand(&shooter, 0).ToPtr(),
-		IntakeCommand(&intake, 0_V).ToPtr()
+		intake.intakeCommand(IntakeConstants::StopVolts)
 	);
 }
 
@@ -189,12 +188,12 @@ void RobotContainer::ConfigOperatorBindings(){
 	ampM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
 	spitM.OnTrue(frc2::cmd::Parallel(
-		StorageCommand(&storage, -5_V).ToPtr(),
-		IntakeCommand(&intake, -8_V).ToPtr()
+		storage.storageCommand(StorageConstants::SpitVolts),
+		intake.intakeCommand(IntakeConstants::ReverseVolts)
 	));
 	spitM.OnFalse(frc2::cmd::Parallel(
-		StorageCommand(&storage, 0_V).ToPtr(),
-		IntakeCommand(&intake, 0_V).ToPtr()
+		storage.storageCommand(StorageConstants::StopVolts),
+		intake.intakeCommand(IntakeConstants::StopVolts)
 	));
 
 	climbM.WhileTrue(ManualClimb(&chassis, &superStructure, &supportArms, &storage, &shooter, &opertr));
@@ -207,8 +206,8 @@ void RobotContainer::ConfigOperatorBindings(){
 		)
 	);
 
-	shootM.WhileTrue(StorageCommand(&storage, StorageConstants::SpeakerScoreVolts).ToPtr());
-	shootM.OnFalse(StorageCommand(&storage, 0_V).ToPtr());
+	shootM.WhileTrue(storage.storageCommand(StorageConstants::ScoreVolts));
+	shootM.OnFalse(storage.storageCommand(StorageConstants::StopVolts));
 
 	speakerM.WhileTrue(SpeakerCommand(&superStructure, &shooter).ToPtr());
 	speakerM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());

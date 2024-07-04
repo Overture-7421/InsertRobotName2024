@@ -101,7 +101,7 @@ void VisionSpeakerCommand::Execute() {
 	if (lowerAngleInTolerance && upperAngleInTolerance && headingInTolerance && shooterSpeedInTolerance) {
 		if (joystick == nullptr) {
 			Timer.Start();
-			storage->setVoltage(StorageConstants::SpeakerScoreVolts);
+			storage->setVoltage(StorageConstants::ScoreVolts);
 		} else {
 			joystick->SetRumble(frc::GenericHID::kBothRumble, 1.0);
 		}

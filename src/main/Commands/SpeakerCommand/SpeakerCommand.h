@@ -9,7 +9,7 @@
 
 #include "Commands/SuperStructureCommand/SuperStructureCommand.h"
 #include "Commands/ShooterCommand/ShooterCommand.h"
-#include "Commands/StorageCommand/StorageCommand.h"
+#include "Subsystems/Storage/Storage.h"
 
 class SpeakerCommand
     : public frc2::CommandHelper<frc2::SequentialCommandGroup,

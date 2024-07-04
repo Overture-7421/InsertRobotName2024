@@ -28,10 +28,8 @@ public:
 	bool isSensorAvailable();
 	void Periodic() override;
 	void shuffleboardPeriodic();
-	frc2::CommandPtr intakeStorage();
-	frc2::CommandPtr stopStorage();
-	frc2::CommandPtr reverseStorage();
-	frc2::CommandPtr shootStorage();
+	frc2::CommandPtr storageCommand(units::volt_t voltage);
+
 private:
 	OverTalonFX storageMotor{ 30, ControllerNeutralMode::Brake, false, "rio" };
 	bool isNoteOnStorage = false, beamBreak1Cache = false, beamBreak2Cache = false;

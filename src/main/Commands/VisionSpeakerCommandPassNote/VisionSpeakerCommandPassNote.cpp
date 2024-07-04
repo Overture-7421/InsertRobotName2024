@@ -65,14 +65,14 @@ void VisionSpeakerCommandPassNote::Execute() {
 
 	if (lowerAngleInTolerance && upperAngleInTolerance && headingInTolerance && shooterSpeedInTolerance) {
 		Timer.Start();
-		storage->setVoltage(StorageConstants::SpeakerScoreVolts);
+		storage->storageCommand(StorageConstants::ScoreVolts);
 	}
 }
 
 // Called once the command ends or is interrupted.
 void VisionSpeakerCommandPassNote::End(bool interrupted) {
 	chassis->setHeadingOverride(false);
-	storage->setVoltage(0_V);
+	storage->storageCommand(StorageConstants::StopVolts);
 }
 
 // Returns true when the command should end.

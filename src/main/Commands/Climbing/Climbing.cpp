@@ -1,5 +1,4 @@
 #include "Climbing.h"
-#include "Commands/StorageCommand/StorageCommand.h"
 #include "Commands/ShooterCommand/ShooterCommand.h"
 #include "Commands/ClosedCommand/ClosedCommand.h"
 #include "Commands/FreeSupportArms/FreeSupportArms.h"
@@ -59,7 +58,7 @@ frc2::CommandPtr ClimbAtLocation(SuperStructure* superStructure, Shooter* shoote
 		SuperStructureCommand(superStructure, { 93, -77 }).ToPtr().WithTimeout(1_s), //87 arm
 		frc2::cmd::RunOnce([=] { shooter->setVoltage(6.0);}),
 		WaitForButton(controller, checkpointButtonId),
-		StorageCommand(storage, 8_V).ToPtr(),
+		storage->storageCommand(StorageConstants::TrapVolts),
 		frc2::cmd::Wait(0.25_s),
 		WaitForButton(controller, checkpointButtonId),
 		SuperStructureCommand(superStructure, SuperStructureConstants::ClimbEndState).ToPtr()
