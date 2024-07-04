@@ -5,6 +5,7 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
+#include <frc2/command/Commands.h>
 
 #include "MotorControllers/OverTalonFX/OverTalonFX.h"
 #include "MotorControllers/ControllerNeutralMode/ControllerNeutralMode.h"
@@ -20,6 +21,9 @@ public:
 	double getVoltage();
 	void Periodic() override;
 	void shuffleboardPeriodic();
+	frc2::CommandPtr startIntake();
+	frc2::CommandPtr stopIntake();
+	frc2::CommandPtr reverseIntake();
 
 private:
 	OverTalonFX intakeMotorLeft{ 25, ControllerNeutralMode::Brake, false, "rio" };
