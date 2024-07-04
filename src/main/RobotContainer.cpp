@@ -131,48 +131,12 @@ void RobotContainer::ConfigureBindings() {
 		chassis.setAlliance();
 	}));
 
-
-
 	supportArms.SetDefaultCommand(FreeSupportArms(&supportArms, 25.00).Repeatedly()); //Default
-
-	zeroHeading.OnTrue(ResetAngle(&chassis).ToPtr());
-
-	//tabulate.ToggleOnTrue(TabulateCommand(&chassis, &superStructure, &shooter, &targetProvider).ToPtr());
-	ampV.WhileTrue(VisionAmpCommand(&superStructure, &shooter));
-	ampV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
-
-	speakerV.WhileTrue(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &targetProvider, &opertr).ToPtr());
-	speakerV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
-
-	passNoteHigh.WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &targetProvider, &storage, PassNote::High).ToPtr());
-	passNoteHigh.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
-
-	passNoteLow.WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &targetProvider, &storage, PassNote::Low).ToPtr());
-	passNoteLow.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
-
-	tabulate.WhileTrue(AlignToTrackedObject(&chassis, &noteTrackingCamera));
-
-	//Operator 
-
-	climbV.WhileTrue(AutoClimb(&chassis, &superStructure, &supportArms, &storage, &shooter, &opertr));
-	climbV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
-
-
 
 	// closed.WhileTrue(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
 	// shooterEmergencyStop.ToggleOnTrue(frc2::cmd::RunOnce([&] {
 	// 	shooter.setEmergencyDisable(!shooter.isEmergencyDisabled());
-	// }));
-
-
-	// tabulate.OnTrue(frc2::cmd::RunOnce([&] {
-	// 	chassis.setHeadingOverride(true);
-	// 	chassis.setTargetHeading({ -90_deg });
-	// }));
-
-	// tabulate.OnFalse(frc2::cmd::RunOnce([&] {
-	// 	chassis.setHeadingOverride(false);
 	// }));
 }
 
@@ -186,6 +150,38 @@ frc2::CommandPtr RobotContainer::GetTeleopResetCommand() {
 		ShooterCommand(&shooter, 0).ToPtr(),
 		IntakeCommand(&intake, 0_V).ToPtr()
 	);
+}
+
+void RobotContainer::ConfigDriverBindings(){
+	ampV.WhileTrue(VisionAmpCommand(&superStructure, &shooter));
+	ampV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+
+	speakerV.WhileTrue(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &targetProvider, &opertr).ToPtr());
+	speakerV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+
+	zeroHeading.OnTrue(ResetAngle(&chassis).ToPtr());
+
+	climbV.WhileTrue(AutoClimb(&chassis, &superStructure, &supportArms, &storage, &shooter, &opertr));
+	climbV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+
+	passNoteHigh.WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &targetProvider, &storage, PassNote::High).ToPtr());
+	passNoteHigh.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+
+	passNoteLow.WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &targetProvider, &storage, PassNote::Low).ToPtr());
+	passNoteLow.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
+
+	tabulate.WhileTrue(AlignToTrackedObject(&chassis, &noteTrackingCamera));
+
+	//tabulate.ToggleOnTrue(TabulateCommand(&chassis, &superStructure, &shooter, &targetProvider).ToPtr());
+
+	// tabulate.OnTrue(frc2::cmd::RunOnce([&] {
+	// 	chassis.setHeadingOverride(true);
+	// 	chassis.setTargetHeading({ -90_deg });
+	// }));
+
+	// tabulate.OnFalse(frc2::cmd::RunOnce([&] {
+	// 	chassis.setHeadingOverride(false);
+	// }));
 }
 
 void RobotContainer::ConfigOperatorBindings(){
