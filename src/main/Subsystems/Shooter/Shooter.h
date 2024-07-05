@@ -6,6 +6,7 @@
 
 #include <frc2/command/SubsystemBase.h>
 #include <frc2/command/sysid/SysIdRoutine.h>
+#include <frc2/command/Commands.h>
 #include <frc/controller/SimpleMotorFeedforward.h>
 
 #include "MotorControllers/OverTalonFX/OverTalonFX.h"
@@ -22,6 +23,8 @@ public:
 	double getCurrentVelocity();
 	void Periodic() override;
 	void shuffleboardPeriodic();
+	bool reachedTargetVelocity(double velocity);
+	frc2::CommandPtr shooterCommand(double velocity);
 
 	frc2::CommandPtr sysIdQuasistatic(frc2::sysid::Direction direction) {
 		return sysIdRoutine.Quasistatic(direction);
@@ -30,6 +33,8 @@ public:
 	frc2::CommandPtr sysIdDynamic(frc2::sysid::Direction direction) {
 		return sysIdRoutine.Dynamic(direction);
 	}
+
+	
 
 private:
 	OverTalonFX leftShooterMotor{ 27, ControllerNeutralMode::Coast, false, "rio" };
