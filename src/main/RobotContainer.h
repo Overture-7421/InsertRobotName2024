@@ -38,7 +38,6 @@
 #include "Commands/AlignToTrackedObject/AlignToTrackedObject.h"
 
 #include "Commands/Climbing/Climbing.h"
-#include "Commands/TrapShoot/TrapShoot.h"
 
 #include "Characterization/SysIDRoutineBot.h"
 #include "Subsystems/LedsManager/LedsManager.h"
