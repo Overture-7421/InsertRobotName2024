@@ -29,12 +29,16 @@
 #include "SuperStructureState.h"
 #include "Robots/OverRobot/RobotConstants.h"
 
+#include <frc2/command/Commands.h>
+
 class SuperStructure : public frc2::SubsystemBase {
 public:
 	SuperStructure();
 	void setTargetCoord(SuperStructureState targetState);
 	double getLowerAngle();
 	double getUpperAngle();
+	frc2::CommandPtr superStructureCommand(SuperStructureState targetState);
+	bool reachedTargetPosition(SuperStructureState targetState);
 
 	frc2::CommandPtr sysIdQuasistaticLower(frc2::sysid::Direction direction) {
 		return sysIdRoutineLower.Quasistatic(direction);
