@@ -158,7 +158,7 @@ void RobotContainer::ConfigDriverBindings(){
 	speakerV.WhileTrue(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &targetProvider, &opertr).ToPtr());
 	speakerV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	zeroHeading.OnTrue(ResetAngle(&chassis).ToPtr());
+	zeroHeading.OnTrue(chassis.resetHeading());
 
 	climbV.WhileTrue(AutoClimb(&chassis, &superStructure, &supportArms, &storage, &shooter, &opertr));
 	climbV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
