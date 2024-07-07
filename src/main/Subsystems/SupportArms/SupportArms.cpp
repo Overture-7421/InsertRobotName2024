@@ -13,3 +13,7 @@ void SupportArms::SetAngle(double angle) {
 
 void SupportArms::Periodic(){
 };
+
+frc2::CommandPtr SupportArms::freeArmsCommand(double angle){
+	return frc2::cmd::RunOnce([this, angle] {this->SetAngle(angle);});
+}

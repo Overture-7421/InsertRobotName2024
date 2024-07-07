@@ -1,7 +1,7 @@
 #include "Climbing.h"
 #include "Commands/ShooterCommand/ShooterCommand.h"
 #include "Commands/ClosedCommand/ClosedCommand.h"
-#include "Commands/FreeSupportArms/FreeSupportArms.h"
+#include "Subsystems/SupportArms/SupportArms.h"
 #include <exception>
 
 pathplanner::PathConstraints pathfindingConstraints = pathplanner::PathConstraints(
@@ -45,7 +45,7 @@ frc2::CommandPtr SetUpJoints(Chassis* chassis, SuperStructure* superStructure, S
 		frc2::cmd::Deadline(
 			pathplanner::AutoBuilder::followPath(pathToFollow),
 			SuperStructureMoveByDistance(superStructure, superStructureProfile, distanceFunction).ToPtr(),
-			FreeSupportArms(supportArms, 130.00).ToPtr().Repeatedly() //Desired
+			supportArms->freeArmsCommand(130.00).Repeatedly()
 		)
 	);
 }
