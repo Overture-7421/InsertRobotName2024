@@ -53,7 +53,7 @@ void Shooter::Periodic() {
 	}
 }
 
-bool Shooter::reachedTargetVelocity(double velocity){
+bool Shooter::reachedTargetVelocity(double velocity) {
 	double error = std::abs(velocity - getCurrentVelocity());
 	if (error < 1) {
 		return true;
@@ -64,12 +64,12 @@ bool Shooter::reachedTargetVelocity(double velocity){
 
 frc2::CommandPtr Shooter::shooterCommand(double velocity) {
 	return frc2::FunctionalCommand(
-			[=]() {setTargetVelocity(velocity);},
-			[=](){},
-			[=](bool interupted) {},
-			[=](){return reachedTargetVelocity(velocity);},
-			{this}
-		).ToPtr();
+		[&]() {setTargetVelocity(velocity);},
+		[&]() {},
+		[&](bool interupted) {},
+		[&]() {return reachedTargetVelocity(velocity);},
+		{ this }
+	).ToPtr();
 }
 
 void Shooter::shuffleboardPeriodic() {

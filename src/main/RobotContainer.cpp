@@ -130,7 +130,7 @@ void RobotContainer::ConfigureBindings() {
 		chassis.setAlliance();
 	}));
 
-	supportArms.SetDefaultCommand(FreeSupportArms(&supportArms, 25.00).Repeatedly()); //Default
+	supportArms.SetDefaultCommand(supportArms.freeArmsCommand(25.00).Repeatedly());
 
 	// closed.WhileTrue(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
@@ -151,7 +151,7 @@ frc2::CommandPtr RobotContainer::GetTeleopResetCommand() {
 	);
 }
 
-void RobotContainer::ConfigDriverBindings(){
+void RobotContainer::ConfigDriverBindings() {
 	ampV.WhileTrue(VisionAmpCommand(&superStructure, &shooter));
 	ampV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
@@ -183,7 +183,7 @@ void RobotContainer::ConfigDriverBindings(){
 	// }));
 }
 
-void RobotContainer::ConfigOperatorBindings(){
+void RobotContainer::ConfigOperatorBindings() {
 	ampM.WhileTrue(AmpCommand(&superStructure, &shooter).ToPtr());
 	ampM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
