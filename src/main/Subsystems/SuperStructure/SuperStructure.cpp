@@ -94,6 +94,27 @@ double SuperStructure::convertAngleToFalconPos(double angle) {
 	return angle / 360.0;
 }
 
+bool SuperStructure::reachedTargetPosition(SuperStructureState targetState) {
+	double lowError = abs(targetState.lowerAngle - getLowerAngle());
+	double upperError = abs(targetState.upperAngle - getUpperAngle());
+
+	if (lowError <= 5 && upperError <= 5) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+frc2::CommandPtr SuperStructure::superStructureCommand(SuperStructureState targetState) {
+	return frc2::FunctionalCommand(
+		[&]() {setTargetCoord(targetState);},
+		[&]() {},
+		[&](bool interupted) {},
+		[&]() {return reachedTargetPosition(targetState);},
+		{ this }
+	).ToPtr();
+}
+
 // This method will be called once per scheduler run
 void SuperStructure::Periodic() {
 	currentState = getCurrentState();
@@ -110,26 +131,6 @@ void SuperStructure::Periodic() {
 	upperMotor.setMotionMagicPosition(convertAngleToFalconPos(actualTarget.upperAngle), 0, true);
 }
 
-bool SuperStructure::reachedTargetPosition(SuperStructureState targetState){
-	double lowError = abs(targetState.lowerAngle - getLowerAngle());
-	double upperError = abs(targetState.upperAngle - getUpperAngle());
-
-	if (lowError <= 5 && upperError <= 5){
-		return true;
-	} else {
-		return false;
-	}
-}
-
-frc2::CommandPtr SuperStructure::superStructureCommand(SuperStructureState targetState){
-		return frc2::FunctionalCommand(
-			[=]() {setTargetCoord(targetState);},
-			[=](){},
-			[=](bool interupted) {},
-			[=](){return reachedTargetPosition(targetState);},
-			{this}
-		).ToPtr();
-	}
 
 void SuperStructure::shuffleboardPeriodic() {
 	frc::SmartDashboard::PutNumber("SuperStructure/Current/Lower", currentState.lowerAngle);
