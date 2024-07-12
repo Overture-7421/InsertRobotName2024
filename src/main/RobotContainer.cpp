@@ -85,16 +85,16 @@ frc2::CommandPtr RobotContainer::GetTeleopResetCommand() {
 
 void RobotContainer::ConfigDriverBindings() {
 
-	testingPad.rightStick(0.5).WhileTrue(frc2::cmd::Run([&] {
+	driverPad.rightStick(0.5).WhileTrue(frc2::cmd::Run([&] {
 		chassis.setDrive(
 			{
-				units::meters_per_second_t{Utils::ApplyAxisFilter(-testingPad.GetLeftY()) * ChassisConstants::MaxModuleSpeed},
-				units::meters_per_second_t{Utils::ApplyAxisFilter(-testingPad.GetLeftX()) * ChassisConstants::MaxModuleSpeed},
+				units::meters_per_second_t{Utils::ApplyAxisFilter(-driverPad.GetLeftY()) * ChassisConstants::MaxModuleSpeed},
+				units::meters_per_second_t{Utils::ApplyAxisFilter(-driverPad.GetLeftX()) * ChassisConstants::MaxModuleSpeed},
 				0_rad_per_s
 			},
 			true,
 			false,
-			testingPad.getRightStickDirection()
+			driverPad.getRightStickDirection()
 		);
 	}, { &chassis }).BeforeStarting([&] {
 		chassis.setHeadingOverride(true);
@@ -119,7 +119,7 @@ void RobotContainer::ConfigDriverBindings() {
 	passNoteLow.WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &targetProvider, &storage, PassNote::Low).ToPtr());
 	passNoteLow.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
-	tabulate.WhileTrue(AlignToTrackedObject(&chassis, &noteTrackingCamera));
+	alignNote.WhileTrue(AlignToTrackedObject(&chassis, &noteTrackingCamera));
 
 	//tabulate.ToggleOnTrue(TabulateCommand(&chassis, &superStructure, &shooter, &targetProvider).ToPtr());
 
@@ -208,9 +208,9 @@ void RobotContainer::ConfigDefaultCommands() {
 	chassis.SetDefaultCommand(frc2::cmd::Run([&] {
 		chassis.setDrive(
 			{
-				units::meters_per_second_t{Utils::ApplyAxisFilter(testingPad.GetLeftY()) * ChassisConstants::MaxModuleSpeed},
-				units::meters_per_second_t{Utils::ApplyAxisFilter(testingPad.GetLeftX()) * ChassisConstants::MaxModuleSpeed},
-				units::radians_per_second_t{Utils::ApplyAxisFilter(-testingPad.getTwist()) * ChassisConstants::MaxAngularSpeed}
+				units::meters_per_second_t{Utils::ApplyAxisFilter(driverPad.GetLeftY()) * ChassisConstants::MaxModuleSpeed},
+				units::meters_per_second_t{Utils::ApplyAxisFilter(driverPad.GetLeftX()) * ChassisConstants::MaxModuleSpeed},
+				units::radians_per_second_t{Utils::ApplyAxisFilter(-driverPad.getTwist()) * ChassisConstants::MaxAngularSpeed}
 			},
 			true
 		);

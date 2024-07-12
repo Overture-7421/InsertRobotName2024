@@ -78,7 +78,7 @@ private:
 	frc::XboxController driver{ 0 };
 	frc::XboxController opertr{ 1 };
 
-	Gamepad testingPad{ 3, 0.1, 0.5 };
+	Gamepad driverPad{ 3, 0.1, 0.2 };
 
 	// Driver Commands
 	frc2::Trigger ampV{ [this] {return driver.GetLeftTriggerAxis() > 0.1;} };
@@ -87,7 +87,7 @@ private:
 	frc2::Trigger climbV{ [this] {return driver.GetYButton();} };
 	frc2::Trigger passNoteHigh{ [this] {return driver.GetXButton();} };
 	frc2::Trigger passNoteLow{ [this] {return driver.GetBButton();} };
-	frc2::Trigger tabulate{ [this] {return driver.GetAButton();} };
+	frc2::Trigger alignNote{ [this] {return driver.GetAButton();} };
 
 	// Mechanism Commands
 	frc2::Trigger ampM{ [this] {return opertr.GetLeftBumper();} };
