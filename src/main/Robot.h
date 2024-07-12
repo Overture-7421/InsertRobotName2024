@@ -9,7 +9,6 @@
 #include <frc2/command/CommandPtr.h>
 
 #include "Robots/OverRobot/OverRobot.h"
-#include "Characterization/SysIDRoutineBot.h"
 
 #include "RobotContainer.h"
 
@@ -36,5 +35,4 @@ private:
 	std::optional<frc2::CommandPtr> m_teleopResetCommand;
 
 	RobotContainer m_container;
-	// SysIDRoutineBot m_container;
 };

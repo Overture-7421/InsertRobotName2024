@@ -51,10 +51,39 @@ RobotContainer::RobotContainer() {
 	frc::SmartDashboard::PutData("Auto Chooser", &autoChooser);
 
 	ConfigureBindings();
-	// ConfigureSysIdBindings(&chassis, &characterization);
 }
 
 void RobotContainer::ConfigureBindings() {
+
+	noteOnStorage.WhileTrue(frc2::cmd::Sequence(
+		BlinkEffect(&leds, "all", { 0, 255, 0 }, 0.25_s).ToPtr().WithTimeout(0.5_s),
+		StaticEffect(&leds, "all", { 0, 255, 0 }).ToPtr()
+	).IgnoringDisable(true));
+
+	storageSensorEmergencyMode.WhileTrue(frc2::cmd::Sequence(
+		BlinkEffect(&leds, "all", { 0, 0, 255 }, 0.25_s).ToPtr().WithTimeout(0.5_s),
+		BlinkEffect(&leds, "all", { 0, 0, 125 }, 0.25_s).ToPtr().WithTimeout(0.5_s)
+	).Repeatedly().IgnoringDisable(true));
+
+
+	intakeMotorActive.WhileTrue(
+		BlinkEffect(&leds, "all", { 255, 0, 255 }, 0.1_s).ToPtr().Repeatedly()
+	);
+}
+
+frc2::Command* RobotContainer::GetAutonomousCommand() {
+	return autoChooser.GetSelected();
+}
+
+frc2::CommandPtr RobotContainer::GetTeleopResetCommand() {
+	return frc2::cmd::Deadline(
+		storage.storageCommand(StorageConstants::StopVolts),
+		ShooterCommand(&shooter, 0).ToPtr(),
+		intake.intakeCommand(IntakeConstants::StopVolts)
+	);
+}
+
+void RobotContainer::ConfigDriverBindings() {
 
 	testingPad.rightStick(0.5).WhileTrue(frc2::cmd::Run([&] {
 		chassis.setDrive(
@@ -73,85 +102,6 @@ void RobotContainer::ConfigureBindings() {
 		chassis.setHeadingOverride(false);
 	}));
 
-
-	noteOnStorage.WhileTrue(frc2::cmd::Sequence(
-		BlinkEffect(&leds, "all", { 0, 255, 0 }, 0.25_s).ToPtr().WithTimeout(0.5_s),
-		StaticEffect(&leds, "all", { 0, 255, 0 }).ToPtr()
-	).IgnoringDisable(true));
-
-	storageSensorEmergencyMode.WhileTrue(frc2::cmd::Sequence(
-		BlinkEffect(&leds, "all", { 0, 0, 255 }, 0.25_s).ToPtr().WithTimeout(0.5_s),
-		BlinkEffect(&leds, "all", { 0, 0, 125 }, 0.25_s).ToPtr().WithTimeout(0.5_s)
-	).Repeatedly().IgnoringDisable(true));
-
-
-	intakeMotorActive.WhileTrue(
-		BlinkEffect(&leds, "all", { 255, 0, 255 }, 0.1_s).ToPtr().Repeatedly()
-	);
-
-	// shooterEmergencyMode.WhileTrue(frc2::cmd::Sequence(
-	// 	BlinkEffect(&leds, "all", { 255, 255, 0 }, 0.25_s).ToPtr().WithTimeout(0.5_s),
-	// 	BlinkEffect(&leds, "all", { 255, 0, 0 }, 0.25_s).ToPtr().WithTimeout(0.5_s)
-	// ).Repeatedly().IgnoringDisable(true));
-
-	// shooterEmergencyMode.OnTrue(frc2::cmd::Sequence(
-	// 	frc2::cmd::RunOnce([&] {
-	// 	driver.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 1.0);
-	// 	opertr.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 1.0);
-	// }),
-	// 	frc2::cmd::Wait(0.25_s),
-	// 	frc2::cmd::RunOnce([&] {
-	// 	driver.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.0);
-	// 	opertr.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.0);
-	// }),
-	// 	frc2::cmd::RunOnce([&] {
-	// 	driver.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 1.0);
-	// 	opertr.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 1.0);
-	// }),
-	// 	frc2::cmd::Wait(0.25_s),
-	// 	frc2::cmd::RunOnce([&] {
-	// 	driver.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.0);
-	// 	opertr.SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.0);
-	// })
-	// ));
-
-	leds.SetDefaultCommand(BlinkEffect(&leds, "all", { 255, 0, 255 }, 1_s).IgnoringDisable(true));
-
-	chassis.SetDefaultCommand(frc2::cmd::Run([&] {
-		chassis.setDrive(
-			{
-				units::meters_per_second_t{Utils::ApplyAxisFilter(testingPad.GetLeftY()) * ChassisConstants::MaxModuleSpeed},
-				units::meters_per_second_t{Utils::ApplyAxisFilter(testingPad.GetLeftX()) * ChassisConstants::MaxModuleSpeed},
-				units::radians_per_second_t{Utils::ApplyAxisFilter(-testingPad.getTwist()) * ChassisConstants::MaxAngularSpeed}
-			},
-			true
-		);
-	}, { &chassis }).BeforeStarting([&] {
-		chassis.setAlliance();
-	}));
-
-	supportArms.SetDefaultCommand(supportArms.freeArmsCommand(25.00).Repeatedly());
-
-	// closed.WhileTrue(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
-
-	// shooterEmergencyStop.ToggleOnTrue(frc2::cmd::RunOnce([&] {
-	// 	shooter.setEmergencyDisable(!shooter.isEmergencyDisabled());
-	// }));
-}
-
-frc2::Command* RobotContainer::GetAutonomousCommand() {
-	return autoChooser.GetSelected();
-}
-
-frc2::CommandPtr RobotContainer::GetTeleopResetCommand() {
-	return frc2::cmd::Deadline(
-		storage.storageCommand(StorageConstants::StopVolts),
-		ShooterCommand(&shooter, 0).ToPtr(),
-		intake.intakeCommand(IntakeConstants::StopVolts)
-	);
-}
-
-void RobotContainer::ConfigDriverBindings() {
 	ampV.WhileTrue(VisionAmpCommand(&superStructure, &shooter));
 	ampV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter).ToPtr());
 
@@ -249,6 +199,26 @@ void RobotContainer::ConfigOperatorBindings() {
 
 	manualFrontalClimb.OnTrue(SuperStructureCommand(&superStructure, { 90, 0 }).ToPtr());
 	manualFrontalClimb.OnFalse(SuperStructureCommand(&superStructure, SuperStructureConstants::GroundGrabState).ToPtr());
+}
+
+void RobotContainer::ConfigDefaultCommands() {
+
+	leds.SetDefaultCommand(BlinkEffect(&leds, "all", { 255, 0, 255 }, 1_s).IgnoringDisable(true));
+
+	chassis.SetDefaultCommand(frc2::cmd::Run([&] {
+		chassis.setDrive(
+			{
+				units::meters_per_second_t{Utils::ApplyAxisFilter(testingPad.GetLeftY()) * ChassisConstants::MaxModuleSpeed},
+				units::meters_per_second_t{Utils::ApplyAxisFilter(testingPad.GetLeftX()) * ChassisConstants::MaxModuleSpeed},
+				units::radians_per_second_t{Utils::ApplyAxisFilter(-testingPad.getTwist()) * ChassisConstants::MaxAngularSpeed}
+			},
+			true
+		);
+	}, { &chassis }).BeforeStarting([&] {
+		chassis.setAlliance();
+	}));
+
+	supportArms.SetDefaultCommand(supportArms.freeArmsCommand(25.00).Repeatedly());
 }
 
 

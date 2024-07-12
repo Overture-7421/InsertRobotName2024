@@ -37,11 +37,11 @@
 
 #include "Commands/Climbing/Climbing.h"
 
-#include "Characterization/SysIDRoutineBot.h"
+#include "Robots/OverContainer/OverContainer.h"
 #include "Subsystems/LedsManager/LedsManager.h"
 #include "Subsystems/Vision/AprilTags/AprilTags.h"
 
-class RobotContainer : public SysIDRoutineBot {
+class RobotContainer : public OverContainer {
 public:
 	RobotContainer();
 
@@ -53,6 +53,7 @@ private:
 	void ConfigureBindings();
 	void ConfigDriverBindings();
 	void ConfigOperatorBindings();
+	void ConfigDefaultCommands();
 
 	// Subsystems
 	Intake intake;
@@ -78,8 +79,6 @@ private:
 	frc::XboxController opertr{ 1 };
 
 	Gamepad testingPad{ 3, 0.1, 0.5 };
-
-	// frc2::CommandXboxController characterization {5};
 
 	// Driver Commands
 	frc2::Trigger ampV{ [this] {return driver.GetLeftTriggerAxis() > 0.1;} };
@@ -109,7 +108,6 @@ private:
 
 	// LED Triggers
 	frc2::Trigger noteOnStorage{ [this] {return storage.isNoteOnForwardSensor();} };
-	// frc2::Trigger shooterEmergencyMode{ [this] {return shooter.isEmergencyDisabled();} };
 	frc2::Trigger storageSensorEmergencyMode{ [this] {return !storage.isSensorAvailable();} };
 	frc2::Trigger intakeMotorActive{ [this] {return intake.getVoltage() != 0.0 && !storage.isNoteOnForwardSensor();} };
 

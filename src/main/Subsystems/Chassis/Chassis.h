@@ -6,13 +6,11 @@
 
 #include <frc/smartdashboard/SmartDashboard.h>
 
-#include <Subsystems/Swerve/SwerveCharacterization/SwerveCharacterization.h>
 #include <Subsystems/Swerve/SwerveChassis/SwerveChassis.h>
 #include <Subsystems/Swerve/SwerveModule/SwerveModule.h>
 
 #include "Constants.h"
 
-// class Chassis : public SwerveCharacterization {
 class Chassis : public SwerveChassis {
 public:
 	Chassis();
