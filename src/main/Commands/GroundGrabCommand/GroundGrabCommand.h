@@ -7,7 +7,7 @@
 #include <frc2/command/CommandHelper.h>
 #include <frc2/command/SequentialCommandGroup.h>
 
-#include "Commands/SuperStructureCommand/SuperStructureCommand.h"
+#include "Subsystems/SuperStructure/SuperStructure.h"
 #include "Subsystems/Storage/Storage.h"
 #include "Subsystems/Intake/Intake.h"
 

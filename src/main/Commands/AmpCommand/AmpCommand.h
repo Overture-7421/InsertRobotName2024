@@ -1,14 +1,9 @@
 #pragma once
 
-#include <frc2/command/CommandHelper.h>
-#include <frc2/command/SequentialCommandGroup.h>
+#include <frc2/command/CommandPtr.h>
+#include <frc2/command/Commands.h>
 
-#include "Commands/SuperStructureCommand/SuperStructureCommand.h"
-#include "Commands/ShooterCommand/ShooterCommand.h"
+#include "Subsystems/Shooter/Shooter.h"
+#include "Subsystems/SuperStructure/SuperStructure.h"
 
-class AmpCommand
-    : public frc2::CommandHelper<frc2::SequentialCommandGroup,
-                                 AmpCommand> {
- public:
-  AmpCommand(SuperStructure* superStucture, Shooter* shooter);
-};
+frc2::CommandPtr AmpCommand(SuperStructure* superStucture, Shooter* shooter);

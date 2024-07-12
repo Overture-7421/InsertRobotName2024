@@ -1,5 +1,4 @@
 #include "Climbing.h"
-#include "Commands/ShooterCommand/ShooterCommand.h"
 #include "Commands/ClosedCommand/ClosedCommand.h"
 #include "Subsystems/SupportArms/SupportArms.h"
 #include <exception>
@@ -19,7 +18,7 @@ units::second_t storageTrapScoreWait = 1_s;
 frc2::CommandPtr GoToClimbingLocationPathFind(SuperStructure* superStructure, std::shared_ptr<pathplanner::PathPlannerPath> pathToFollow) {
 	return frc2::cmd::Deadline(
 		pathplanner::AutoBuilder::pathfindToPoseFlipped(pathToFollow->getStartingDifferentialPose(), pathfindingConstraints),
-		SuperStructureCommand(superStructure, superStructureStartingState).ToPtr()
+		superStructure->superStructureCommand(superStructureStartingState)
 	);
 }
 
@@ -41,7 +40,7 @@ frc2::CommandPtr SetUpJoints(Chassis* chassis, SuperStructure* superStructure, S
 	};
 
 	return frc2::cmd::Sequence(
-		SuperStructureCommand(superStructure, superStructureStartingState).ToPtr(),
+		superStructure->superStructureCommand(superStructureStartingState),
 		frc2::cmd::Deadline(
 			pathplanner::AutoBuilder::followPath(pathToFollow),
 			SuperStructureMoveByDistance(superStructure, superStructureProfile, distanceFunction).ToPtr(),
@@ -53,15 +52,15 @@ frc2::CommandPtr SetUpJoints(Chassis* chassis, SuperStructure* superStructure, S
 
 frc2::CommandPtr ClimbAtLocation(SuperStructure* superStructure, Shooter* shooter, Storage* storage, frc::XboxController* controller) {
 	return frc2::cmd::Sequence(
-		SuperStructureCommand(superStructure, SuperStructureConstants::GroundGrabState).ToPtr().WithTimeout(1_s),
+		superStructure->superStructureCommand(SuperStructureConstants::GroundGrabState).WithTimeout(1_s),
 		WaitForButton(controller, checkpointButtonId),
-		SuperStructureCommand(superStructure, { 93, -77 }).ToPtr().WithTimeout(1_s), //87 arm
+		superStructure->superStructureCommand({ 93, -77 }).WithTimeout(1_s), // 87 arm
 		frc2::cmd::RunOnce([=] { shooter->setVoltage(6.0);}),
 		WaitForButton(controller, checkpointButtonId),
 		storage->storageCommand(StorageConstants::TrapVolts),
 		frc2::cmd::Wait(0.25_s),
 		WaitForButton(controller, checkpointButtonId),
-		SuperStructureCommand(superStructure, SuperStructureConstants::ClimbEndState).ToPtr()
+		superStructure->superStructureCommand(SuperStructureConstants::ClimbEndState)
 		// frc2::cmd::RunOnce([=] { shooter->setVoltage(0.0);})
 	);
 }

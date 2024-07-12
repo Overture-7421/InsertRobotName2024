@@ -3,19 +3,16 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "ClosedCommand.h"
-#include <frc2/command/ParallelDeadlineGroup.h>
-#include <frc2/command/InstantCommand.h>
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.
 // For more information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-ClosedCommand::ClosedCommand(SuperStructure* superStructure, Intake* intake, Storage* storage, Shooter* shooter) {
-	AddCommands(
-		frc2::InstantCommand([=] {
-		storage->storageCommand(StorageConstants::StopVolts);
-		intake->intakeCommand(IntakeConstants::StopVolts);
-		shooter->setTargetVelocity(ShooterConstants::IdleSpeed);
-		superStructure->setTargetCoord(SuperStructureConstants::GroundGrabState);
-	})
+frc2::CommandPtr ClosedCommand(SuperStructure* superStructure, Intake* intake, Storage* storage, Shooter* shooter) {
+
+	return frc2::cmd::Deadline(
+		storage->storageCommand(StorageConstants::StopVolts),
+		intake->intakeCommand(IntakeConstants::StopVolts),
+		shooter->shooterCommand(ShooterConstants::IdleSpeed),
+		superStructure->superStructureCommand(SuperStructureConstants::GroundGrabState)
 	);
 }

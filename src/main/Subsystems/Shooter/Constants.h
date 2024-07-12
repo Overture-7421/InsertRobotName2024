@@ -6,8 +6,9 @@ namespace ShooterConstants {
 	const static double AmpScoreSpeed = 60;
 	const static double SourceGrabSpeed = -22;
 	const static double ManualSpeakerSpeed = 150;
+	const static double StopSpeed = 0;
 
 	const static double MaxSpeed = 150;
-	
+
 	const static double IdleSpeed = 80;
 };

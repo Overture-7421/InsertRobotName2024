@@ -4,17 +4,12 @@
 
 #pragma once
 
-#include <frc2/command/CommandHelper.h>
-#include <frc2/command/SequentialCommandGroup.h>
+#include <frc2/command/CommandPtr.h>
+#include <frc2/command/Commands.h>
 
-#include "Commands/SuperStructureCommand/SuperStructureCommand.h"
+#include "Subsystems/SuperStructure/SuperStructure.h"
+#include "Subsystems/Shooter/Shooter.h"
 #include "Subsystems/Intake/Intake.h"
 #include "Subsystems/Storage/Storage.h"
-#include "Commands/ShooterCommand/ShooterCommand.h"
 
-class ClosedCommand
-    : public frc2::CommandHelper<frc2::SequentialCommandGroup,
-                                 ClosedCommand> {
- public:
-  ClosedCommand(SuperStructure* superStructure, Intake* intake, Storage* storage, Shooter* shooter);
-};
+frc2::CommandPtr ClosedCommand(SuperStructure* superStructure, Intake* intake, Storage* storage, Shooter* shooter);
