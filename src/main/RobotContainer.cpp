@@ -83,16 +83,11 @@ frc2::CommandPtr RobotContainer::GetTeleopResetCommand() {
 }
 
 void RobotContainer::ConfigDriverBindings() {
-	
+
 	driverPad.rightStick(0.5).WhileTrue(frc2::cmd::Run([&] {
-		chassis.setDrive(
-			{
-				units::meters_per_second_t{Utils::ApplyAxisFilter(-driverPad.GetLeftY()) * ChassisConstants::MaxModuleSpeed},
-				units::meters_per_second_t{Utils::ApplyAxisFilter(-driverPad.GetLeftX()) * ChassisConstants::MaxModuleSpeed},
-				0_rad_per_s
-			},
-			true,
-			false,
+		chassis.setClosedLoop(
+			units::meters_per_second_t{ Utils::ApplyAxisFilter(-driverPad.GetLeftY()) * ChassisConstants::MaxModuleSpeed },
+			units::meters_per_second_t{ Utils::ApplyAxisFilter(-driverPad.GetLeftX()) * ChassisConstants::MaxModuleSpeed },
 			driverPad.getRightStickDirection()
 		);
 	}, { &chassis }).BeforeStarting([&] {
@@ -133,7 +128,7 @@ void RobotContainer::ConfigDriverBindings() {
 }
 
 void RobotContainer::ConfigOperatorBindings() {
-	
+
 	operatorPad.leftBumperOnly().WhileTrue(AmpCommand(&superStructure, &shooter));
 	operatorPad.leftBumperOnly().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
@@ -202,13 +197,10 @@ void RobotContainer::ConfigDefaultCommands() {
 	leds.SetDefaultCommand(BlinkEffect(&leds, "all", { 255, 0, 255 }, 1_s).IgnoringDisable(true));
 
 	chassis.SetDefaultCommand(frc2::cmd::Run([&] {
-		chassis.setDrive(
-			{
-				units::meters_per_second_t{Utils::ApplyAxisFilter(driverPad.GetLeftY()) * ChassisConstants::MaxModuleSpeed},
-				units::meters_per_second_t{Utils::ApplyAxisFilter(driverPad.GetLeftX()) * ChassisConstants::MaxModuleSpeed},
-				units::radians_per_second_t{Utils::ApplyAxisFilter(-driverPad.getTwist()) * ChassisConstants::MaxAngularSpeed}
-			},
-			true
+		chassis.setFieldRelative(
+			units::meters_per_second_t{ Utils::ApplyAxisFilter(driverPad.GetLeftY()) * ChassisConstants::MaxModuleSpeed },
+			units::meters_per_second_t{ Utils::ApplyAxisFilter(driverPad.GetLeftX()) * ChassisConstants::MaxModuleSpeed },
+			units::radians_per_second_t{ Utils::ApplyAxisFilter(-driverPad.getTwist()) * ChassisConstants::MaxAngularSpeed }
 		);
 	}, { &chassis }).BeforeStarting([&] {
 		chassis.setAlliance();
