@@ -85,15 +85,17 @@ frc2::CommandPtr RobotContainer::GetTeleopResetCommand() {
 void RobotContainer::ConfigDriverBindings() {
 
 	driverPad.rightStick(0.5).WhileTrue(frc2::cmd::Run([&] {
-		chassis.setClosedLoop(
+		chassis.setRotationClosedLoop(
 			units::meters_per_second_t{ Utils::ApplyAxisFilter(-driverPad.GetLeftY()) * ChassisConstants::MaxModuleSpeed },
 			units::meters_per_second_t{ Utils::ApplyAxisFilter(-driverPad.GetLeftX()) * ChassisConstants::MaxModuleSpeed },
 			driverPad.getRightStickDirection()
 		);
 	}, { &chassis }).BeforeStarting([&] {
 		chassis.setHeadingOverride(true);
+		chassis.headingController.SetConstraints({ 2_rad_per_s, 1.5_rad_per_s_sq });
 	}).FinallyDo([&] {
 		chassis.setHeadingOverride(false);
+		chassis.headingController.SetConstraints({ 18_rad_per_s, 18_rad_per_s_sq * 2 });
 	}));
 
 	driverPad.leftBumperOnly().WhileTrue(VisionAmpCommand(&superStructure, &shooter));
