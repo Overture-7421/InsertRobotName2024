@@ -83,7 +83,7 @@ frc2::CommandPtr RobotContainer::GetTeleopResetCommand() {
 }
 
 void RobotContainer::ConfigDriverBindings() {
-
+	
 	driverPad.rightStick(0.5).WhileTrue(frc2::cmd::Run([&] {
 		chassis.setDrive(
 			{
@@ -101,24 +101,24 @@ void RobotContainer::ConfigDriverBindings() {
 		chassis.setHeadingOverride(false);
 	}));
 
-	ampV.WhileTrue(VisionAmpCommand(&superStructure, &shooter));
-	ampV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
+	driverPad.leftBumperOnly().WhileTrue(VisionAmpCommand(&superStructure, &shooter));
+	driverPad.leftBumperOnly().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
-	speakerV.WhileTrue(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &targetProvider, &opertr).ToPtr());
-	speakerV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
+	driverPad.rightBumperOnly().WhileTrue(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &targetProvider, &operatorPad).ToPtr());
+	driverPad.rightBumperOnly().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
-	zeroHeading.OnTrue(chassis.resetHeading());
+	driverPad.Back().OnTrue(chassis.resetHeading());
 
-	climbV.WhileTrue(AutoClimb(&chassis, &superStructure, &supportArms, &storage, &shooter, &opertr));
-	climbV.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
+	driverPad.Y().WhileTrue(AutoClimb(&chassis, &superStructure, &supportArms, &storage, &shooter, &operatorPad));
+	driverPad.Y().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
-	passNoteHigh.WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &targetProvider, &storage, PassNote::High).ToPtr());
-	passNoteHigh.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
+	driverPad.X().WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &targetProvider, &storage, PassNote::High).ToPtr());
+	driverPad.X().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
-	passNoteLow.WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &targetProvider, &storage, PassNote::Low).ToPtr());
-	passNoteLow.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
+	driverPad.B().WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &targetProvider, &storage, PassNote::Low).ToPtr());
+	driverPad.B().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
-	alignNote.WhileTrue(AlignToTrackedObject(&chassis, &noteTrackingCamera));
+	driverPad.A().WhileTrue(AlignToTrackedObject(&chassis, &noteTrackingCamera));
 
 	//tabulate.ToggleOnTrue(TabulateCommand(&chassis, &superStructure, &shooter, &targetProvider).ToPtr());
 
@@ -133,60 +133,57 @@ void RobotContainer::ConfigDriverBindings() {
 }
 
 void RobotContainer::ConfigOperatorBindings() {
-	ampM.WhileTrue(AmpCommand(&superStructure, &shooter));
-	ampM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
+	
+	operatorPad.leftBumperOnly().WhileTrue(AmpCommand(&superStructure, &shooter));
+	operatorPad.leftBumperOnly().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
-	spitM.OnTrue(frc2::cmd::Parallel(
+	operatorPad.B().OnTrue(frc2::cmd::Parallel(
 		storage.storageCommand(StorageConstants::SpitVolts),
 		intake.intakeCommand(IntakeConstants::ReverseVolts)
 	));
-	spitM.OnFalse(frc2::cmd::Parallel(
-		storage.storageCommand(StorageConstants::StopVolts),
-		intake.intakeCommand(IntakeConstants::StopVolts)
+	operatorPad.B().OnFalse(frc2::cmd::Parallel(
+		storage.storageCommand(StorageConstants::SpitVolts),
+		intake.intakeCommand(IntakeConstants::ReverseVolts)
 	));
 
-	climbM.WhileTrue(ManualClimb(&chassis, &superStructure, &supportArms, &storage, &shooter, &opertr));
-	climbM.OnFalse(
-		frc2::cmd::Parallel(
-			frc2::cmd::RunOnce([&] {
-		chassis.setAcceptingVisionMeasurements(true);
-	}),
-			ClosedCommand(&superStructure, &intake, &storage, &shooter)
-		)
-	);
+	operatorPad.Y().WhileTrue(ManualClimb(&chassis, &superStructure, &supportArms, &storage, &shooter, &operatorPad));
+	operatorPad.Y().OnFalse(frc2::cmd::Parallel(
+		frc2::cmd::RunOnce([&] {chassis.setAcceptingVisionMeasurements(true);}),
+		ClosedCommand(&superStructure, &intake, &storage, &shooter)
+	));
 
-	shootM.WhileTrue(storage.storageCommand(StorageConstants::ScoreVolts));
-	shootM.OnFalse(storage.storageCommand(StorageConstants::StopVolts));
+	operatorPad.leftTriggerOnly().WhileTrue(storage.storageCommand(StorageConstants::ScoreVolts));
+	operatorPad.leftTriggerOnly().OnFalse(storage.storageCommand(StorageConstants::StopVolts));
 
-	speakerM.WhileTrue(SpeakerCommand(&superStructure, &shooter));
-	speakerM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
+	operatorPad.rightBumperOnly().WhileTrue(SpeakerCommand(&superStructure, &shooter));
+	operatorPad.rightBumperOnly().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
-	intakeMIgnoreSensor.WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake, true));
-	intakeMIgnoreSensor.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
-	intakeM.WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake));
-	intakeM.OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
+	operatorPad.A().WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake, true));
+	operatorPad.A().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
+	operatorPad.rightTriggerOnly().WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake, true));
+	operatorPad.rightTriggerOnly().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
-	increaseUpperAngleOffset.OnTrue(
+	operatorPad.upDpad().OnTrue(
 		BlinkEffect(&leds, "all", { 255, 0, 0 }, 0.05_s).WithTimeout(0.2_s)
 	);
 
-	increaseUpperAngleOffset.OnTrue(
+	operatorPad.upDpad().OnTrue(
 		frc2::cmd::RunOnce([] {
 		VisionSpeakerCommand::SetUpperAngleOffset(VisionSpeakerCommand::GetUpperAngleOffset() - 0.5);
 	})
 	);
 
-	decreaseUpperAngleOffset.OnTrue(
+	operatorPad.downDpad().OnTrue(
 		BlinkEffect(&leds, "all", { 0, 255, 255 }, 0.05_s).WithTimeout(0.2_s)
 	);
 
-	decreaseUpperAngleOffset.OnTrue(
+	operatorPad.downDpad().OnTrue(
 		frc2::cmd::RunOnce([] {
 		VisionSpeakerCommand::SetUpperAngleOffset(VisionSpeakerCommand::GetUpperAngleOffset() + 0.5);
 	})
 	);
 
-	resetUpperAngleOffset.OnTrue(
+	operatorPad.leftDpad().OnTrue(
 		frc2::cmd::Parallel(
 			frc2::cmd::RunOnce([] {
 		VisionSpeakerCommand::ResetUpperAngleOffset();
@@ -195,8 +192,8 @@ void RobotContainer::ConfigOperatorBindings() {
 		)
 	);
 
-	manualFrontalClimb.OnTrue(superStructure.superStructureCommand({ 90, 0 }));
-	manualFrontalClimb.OnFalse(superStructure.superStructureCommand(SuperStructureConstants::GroundGrabState));
+	operatorPad.rightDpad().OnTrue(superStructure.superStructureCommand({ 90, 0 }));
+	operatorPad.rightDpad().OnFalse(superStructure.superStructureCommand(SuperStructureConstants::GroundGrabState));
 
 }
 

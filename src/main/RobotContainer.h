@@ -75,36 +75,37 @@ private:
 	} };
 
 	// Controllers
-	frc::XboxController driver{ 0 };
-	frc::XboxController opertr{ 1 };
+	//frc::XboxController driver{ 0 };
+	//frc::XboxController opertr{ 1 };
 
-	Gamepad driverPad{ 3, 0.1, 0.2 };
+	Gamepad driverPad{ 0, 0.1, 0.2 };
+	Gamepad operatorPad{1, 0.1, 0.2};
 
 	// Driver Commands
-	frc2::Trigger ampV{ [this] {return driver.GetLeftTriggerAxis() > 0.1;} };
-	frc2::Trigger speakerV{ [this] {return driver.GetRightTriggerAxis() > 0.1;} };
-	frc2::Trigger zeroHeading{ [this] {return driver.GetBackButton();} };
-	frc2::Trigger climbV{ [this] {return driver.GetYButton();} };
-	frc2::Trigger passNoteHigh{ [this] {return driver.GetXButton();} };
-	frc2::Trigger passNoteLow{ [this] {return driver.GetBButton();} };
-	frc2::Trigger alignNote{ [this] {return driver.GetAButton();} };
+	//frc2::Trigger ampV{ [this] {return driver.GetLeftTriggerAxis() > 0.1;} };
+	//frc2::Trigger speakerV{ [this] {return driver.GetRightTriggerAxis() > 0.1;} };
+	//frc2::Trigger zeroHeading{ [this] {return driver.GetBackButton();} };
+	//frc2::Trigger climbV{ [this] {return driver.GetYButton();} };
+	//frc2::Trigger passNoteHigh{ [this] {return driver.GetXButton();} };
+	//frc2::Trigger passNoteLow{ [this] {return driver.GetBButton();} };
+	//frc2::Trigger alignNote{ [this] {return driver.GetAButton();} };
 
 	// Mechanism Commands
-	frc2::Trigger ampM{ [this] {return opertr.GetLeftBumper();} };
-	frc2::Trigger spitM{ [this] {return opertr.GetBButton();} };
-	frc2::Trigger climbM{ [this] {return opertr.GetYButton();} };
-	frc2::Trigger shootM{ [this] {return opertr.GetLeftTriggerAxis() > 0.1;} };
-	frc2::Trigger speakerM{ [this] {return opertr.GetRightBumper();} };
-	frc2::Trigger intakeMIgnoreSensor{ [this] {return opertr.GetAButton();} };
+	// frc2::Trigger ampM{ [this] {return opertr.GetLeftBumper();} };
+	//frc2::Trigger spitM{ [this] {return opertr.GetBButton();} };
+	// frc2::Trigger climbM{ [this] {return opertr.GetYButton();} };
+	// frc2::Trigger shootM{ [this] {return opertr.GetLeftTriggerAxis() > 0.1;} };
+	// frc2::Trigger speakerM{ [this] {return opertr.GetRightBumper();} };
+	// frc2::Trigger intakeMIgnoreSensor{ [this] {return opertr.GetAButton();} };
 
 
-	frc2::Trigger increaseUpperAngleOffset{ [this] {return opertr.GetPOV() == 0;} };
-	frc2::Trigger decreaseUpperAngleOffset{ [this] {return opertr.GetPOV() == 180;} };
-	frc2::Trigger resetUpperAngleOffset{ [this] {return opertr.GetPOV() == 270;} };
+	// frc2::Trigger increaseUpperAngleOffset{ [this] {return opertr.GetPOV() == 0;} };
+	// frc2::Trigger decreaseUpperAngleOffset{ [this] {return opertr.GetPOV() == 180;} };
+	// frc2::Trigger resetUpperAngleOffset{ [this] {return opertr.GetPOV() == 270;} };
 
-	frc2::Trigger manualFrontalClimb{ [this] {return opertr.GetPOV() == 90;} };
+	// frc2::Trigger manualFrontalClimb{ [this] {return opertr.GetPOV() == 90;} };
 
-	frc2::Trigger intakeM{ [this] {return opertr.GetRightTriggerAxis() > 0.1;} };
+	// frc2::Trigger intakeM{ [this] {return opertr.GetRightTriggerAxis() > 0.1;} };
 
 	// LED Triggers
 	frc2::Trigger noteOnStorage{ [this] {return storage.isNoteOnForwardSensor();} };
