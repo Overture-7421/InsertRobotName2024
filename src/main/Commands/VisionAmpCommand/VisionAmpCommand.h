@@ -10,7 +10,9 @@
 
 #include "Commands/UtilityFunctions/UtilityFunctions.h"
 #include "Subsystems/SuperStructure/SuperStructure.h"
+#include "Subsystems/Chassis/Chassis.h"
 #include "Subsystems/Shooter/Shooter.h"
-#include "Subsystems/Storage/Storage.h"
 
 frc2::CommandPtr VisionAmpCommand(SuperStructure* superStucture, Shooter* shooter);
+
+frc2::CommandPtr VisionAmpCommand(Chassis* chassis);

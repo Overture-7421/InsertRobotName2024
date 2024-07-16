@@ -22,7 +22,6 @@ RobotContainer::RobotContainer() {
 		VisionSpeakerCommand(&chassis, &superStructure, &shooter, &targetProvider, &storage).ToPtr()
 	)));
 	pathplanner::NamedCommands::registerCommand("VisionShootNoDelay", std::move(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &targetProvider, &storage).ToPtr()));
-	pathplanner::NamedCommands::registerCommand("VisionAmpCommand", std::move(VisionAmpCommand(&superStructure, &shooter)));
 	pathplanner::NamedCommands::registerCommand("VisionNoShoot", std::move(VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter, &targetProvider).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("AlignToNote", std::move(AlignToTrackedObject(&chassis, &noteTrackingCamera)));
 
@@ -98,7 +97,7 @@ void RobotContainer::ConfigDriverBindings() {
 		chassis.headingController.SetConstraints({ 18_rad_per_s, 18_rad_per_s_sq * 2 });
 	}));
 
-	driverPad.leftBumperOnly().WhileTrue(VisionAmpCommand(&superStructure, &shooter));
+	driverPad.leftBumperOnly().WhileTrue(VisionAmpCommand(&chassis));
 	driverPad.leftBumperOnly().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
 	driverPad.rightBumperOnly().WhileTrue(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &targetProvider, &operatorPad).ToPtr());
