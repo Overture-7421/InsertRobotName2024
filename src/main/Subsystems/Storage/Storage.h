@@ -10,8 +10,8 @@
 #include <frc/DigitalOutput.h>
 #include <units/length.h>
 
-#include "MotorControllers/OverTalonFX/OverTalonFX.h"
-#include "MotorControllers/ControllerNeutralMode/ControllerNeutralMode.h"
+#include <OvertureLib/MotorControllers/OverTalonFX/OverTalonFX.h>
+#include <OvertureLib/MotorControllers/ControllerNeutralMode/ControllerNeutralMode.h>
 
 #include "Constants.h"
 

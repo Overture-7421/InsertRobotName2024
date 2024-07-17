@@ -5,8 +5,8 @@
 #include "RobotContainer.h"
 
 #include <frc2/command/Commands.h>
-#include "Subsystems/LedsManager/Effects/BlinkEffect/BlinkEffect.h"
-#include "Subsystems/LedsManager/Effects/StaticEffect/StaticEffect.h"
+#include <OvertureLib/Subsystems/LedsManager/Effects/BlinkEffect/BlinkEffect.h>
+#include <OvertureLib/Subsystems/LedsManager/Effects/StaticEffect/StaticEffect.h>
 #include "Commands/ServoDashboard/ServoDashboard.h"
 #include "Autos/AmpAutoCenterRace/AmpAutoCenterRace.h"
 #include "Autos/SourceAutoCenterRace/SourceAutoCenterRace.h"

@@ -13,9 +13,9 @@
 
 #include <frc/Timer.h>
 
-#include "Math/InterpolatingTable/InterpolatingTable.h"
-#include "Math/Utils.h"
-#include "Math/TargetingWhileMoving/TargetingWhileMoving.h"
+#include <Overturelib/Math/InterpolatingTable/InterpolatingTable.h>
+#include <Overturelib/Math/Utils.h>
+#include <Overturelib/Math/TargetingWhileMoving/TargetingWhileMoving.h>
 #include "Subsystems/Chassis/Chassis.h"
 #include "Subsystems/SuperStructure/SuperStructure.h"
 #include "Subsystems/Shooter/Shooter.h"

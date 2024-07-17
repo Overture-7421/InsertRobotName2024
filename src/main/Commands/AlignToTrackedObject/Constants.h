@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Math/InterpolatingTable/InterpolatingTable.h"
+#include <OvertureLib/Math/InterpolatingTable/InterpolatingTable.h>
 #include <frc/geometry/Translation2d.h>
 #include <units/length.h>
 

@@ -9,7 +9,10 @@
 #include <frc/XboxController.h>
 #include <frc/smartdashboard/SendableChooser.h>
 
-#include "Gamepad/Gamepad.h"
+#include <OvertureLib/Gamepad/Gamepad.h>
+#include <OvertureLib/Robots/OverContainer/OverContainer.h>
+#include <OvertureLib/Subsystems/LedsManager/LedsManager.h>
+#include <OvertureLib/Subsystems/Vision/AprilTags/AprilTags.h>
 
 #include <pathplanner/lib/auto/NamedCommands.h>
 
@@ -36,10 +39,6 @@
 #include "Commands/AlignToTrackedObject/AlignToTrackedObject.h"
 
 #include "Commands/Climbing/Climbing.h"
-
-#include "Robots/OverContainer/OverContainer.h"
-#include "Subsystems/LedsManager/LedsManager.h"
-#include "Subsystems/Vision/AprilTags/AprilTags.h"
 
 class RobotContainer : public OverContainer {
 public:
@@ -79,7 +78,7 @@ private:
 	//frc::XboxController opertr{ 1 };
 
 	Gamepad driverPad{ 0, 0.1, 0.2 };
-	Gamepad operatorPad{1, 0.1, 0.2};
+	Gamepad operatorPad{ 1, 0.1, 0.2 };
 
 	// Driver Commands
 	//frc2::Trigger ampV{ [this] {return driver.GetLeftTriggerAxis() > 0.1;} };

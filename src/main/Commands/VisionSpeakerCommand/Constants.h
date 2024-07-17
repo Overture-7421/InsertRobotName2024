@@ -3,13 +3,13 @@
 #include <units/length.h>
 #include <units/time.h>
 #include <frc/geometry/Translation2d.h>
-#include "Math/InterpolatingTable/InterpolatingTable.h"
+#include <OvertureLib/Math/InterpolatingTable/InterpolatingTable.h>
 
 namespace VisionSpeakerCommandConstants {
 	static const InterpolatingTable<units::meter_t, double> DistanceToLowerAngleTable{
 		{1.66_m, -12.0},
 		{1.9_m, -12.0},
-		{2.4_m, -12.0}, 
+		{2.4_m, -12.0},
 		{2.9_m, -12.0},
 		{3.4_m, -12.0},
 		{2.4_m, -12.0},
@@ -23,9 +23,9 @@ namespace VisionSpeakerCommandConstants {
 	// Red Alliance
 	static const InterpolatingTable<units::meter_t, double> DistanceToUpperAngleTable{
 		{1.66_m, -33.0},
-		{1.9_m, -27.0  + 1},
-		{2.4_m, -19.0  + 1},
-		{2.9_m, -14.5  + 1},
+		{1.9_m, -27.0 + 1},
+		{2.4_m, -19.0 + 1},
+		{2.9_m, -14.5 + 1},
 		{3.4_m, -10.75},
 		{3.9_m, -8.0},
 		{4.4_m, -7.0},
@@ -65,9 +65,9 @@ namespace VisionSpeakerCommandConstants {
 	static const InterpolatingTable<units::meter_t, units::second_t> DistanceToShotTimeTable{
 	  {1.66_m, 0.15_s},
 	  {1.9_m, 0.155_s},
-	  {2.4_m, 0.16_s}, 
-	  {2.9_m, 0.16_s}, 
-	  {3.4_m, 0.16_s}, 
+	  {2.4_m, 0.16_s},
+	  {2.9_m, 0.16_s},
+	  {3.4_m, 0.16_s},
 	  {3.9_m, 0.16_s},
 	  {4.4_m, 0.16_s},
 	  {4.9_m, 0.16_s},

@@ -9,10 +9,10 @@
 #include <frc/controller/ProfiledPIDController.h>
 #include <frc/trajectory/TrapezoidProfile.h>
 
-#include <MotorControllers/OverTalonFX/OverTalonFX.h>
-#include <Sensors/OverCANCoder/OverCANCoder.h>
-#include <MotorControllers/ControllerNeutralMode/ControllerNeutralMode.h>
-#include <Sensors/OverDutyCycleEncoder/OverDutyCycleEncoder.h>
+#include <OvertureLib/MotorControllers/OverTalonFX/OverTalonFX.h>
+#include <OvertureLib/Sensors/OverCANCoder/OverCANCoder.h>
+#include <OvertureLib/MotorControllers/ControllerNeutralMode/ControllerNeutralMode.h>
+#include <OvertureLib/Sensors/OverDutyCycleEncoder/OverDutyCycleEncoder.h>
 #include <frc2/command/sysid/SysIdRoutine.h>
 #include <frc2/command/Commands.h>
 #include <units/angular_velocity.h>
@@ -27,7 +27,7 @@
 
 #include "Constants.h"
 #include "SuperStructureState.h"
-#include "Robots/OverRobot/RobotConstants.h"
+#include <OvertureLib/Robots/OverRobot/RobotConstants.h>
 
 #include <frc2/command/Commands.h>
 
