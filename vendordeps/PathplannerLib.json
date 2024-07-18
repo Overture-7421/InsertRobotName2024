@@ -23,7 +23,7 @@
             "version": "2024.2.8",
             "libName": "PathplannerLib",
             "headerClassifier": "headers",
-            "sharedLibrary": false,
+            "sharedLibrary": true,
             "skipInvalidPlatforms": true,
             "binaryPlatforms": [
                 "windowsx86-64",
