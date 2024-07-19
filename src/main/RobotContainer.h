@@ -44,8 +44,8 @@ class RobotContainer : public OverContainer {
 public:
 	RobotContainer();
 
-	frc2::Command* GetAutonomousCommand();
-	frc2::CommandPtr GetTeleopResetCommand();
+	// frc2::Command* GetAutonomousCommand();
+	// frc2::CommandPtr GetTeleopResetCommand();
 	void UpdateTelemetry();
 
 private:
@@ -63,21 +63,25 @@ private:
 	SupportArms supportArms;
 
 	//Vision
-	frc::AprilTagFieldLayout tagLayout{ "/home/lvuser/deploy/tag_layout/7421-field.json" };
+	#ifndef __FRC_ROBORIO__
+		frc::AprilTagFieldLayout tagLayout = frc::AprilTagFieldLayout::LoadField(frc::AprilTagField::k2024Crescendo);
+	#else
+		frc::AprilTagFieldLayout tagLayout{ "/home/lvuser/deploy/tag_layout/7421-field.json" };
+	#endif
 	//AprilTags shooterCamera{ &tagLayout, &chassis, {"Arducam_OV2311_USB_Camera", { {-0.3686515106_m, 0_m, 0.3518230454_m}, {-180_deg, -23_deg, 180_deg} }, 5_m, 9_m, 13_m} };
 	//AprilTags frontRightSwerveModuleCamera{ &tagLayout, &chassis, {"Arducam_OV9281_USB_Camera", { {6.433997_in, -10.746927_in, 8.52786_in}, {0_deg, -28.125_deg, -30_deg} }} };
-	photon::PhotonCamera noteTrackingCamera{ "PSEye" };
-	TargetProvider targetProvider{ &tagLayout };
+	// photon::PhotonCamera noteTrackingCamera{ "PSEye" };
+	// TargetProvider targetProvider{ &tagLayout };
 
-	LedsManager leds{ 0, 240, {
-		{"all", {0, 239}}
-	} };
+	// LedsManager leds{ 0, 240, {
+	// 	{"all", {0, 239}}
+	// } };
 
 	// Controllers
 	//frc::XboxController driver{ 0 };
 	//frc::XboxController opertr{ 1 };
 
-	Gamepad driverPad{ 0, 0.1, 0.2 };
+	// Gamepad driverPad{ 0, 0.1, 0.2 };
 	Gamepad operatorPad{ 1, 0.1, 0.2 };
 
 	// Driver Commands
@@ -107,9 +111,9 @@ private:
 	// frc2::Trigger intakeM{ [this] {return opertr.GetRightTriggerAxis() > 0.1;} };
 
 	// LED Triggers
-	frc2::Trigger noteOnStorage{ [this] {return storage.isNoteOnForwardSensor();} };
-	frc2::Trigger storageSensorEmergencyMode{ [this] {return !storage.isSensorAvailable();} };
-	frc2::Trigger intakeMotorActive{ [this] {return intake.getVoltage() != 0.0 && !storage.isNoteOnForwardSensor();} };
+	// frc2::Trigger noteOnStorage{ [this] {return storage.isNoteOnForwardSensor();} };
+	// frc2::Trigger storageSensorEmergencyMode{ [this] {return !storage.isSensorAvailable();} };
+	// frc2::Trigger intakeMotorActive{ [this] {return intake.getVoltage() != 0.0 && !storage.isNoteOnForwardSensor();} };
 
 	//Autonomous
 	/*frc2::CommandPtr defaultNoneAuto = frc2::cmd::None();
@@ -123,5 +127,5 @@ private:
 	frc2::CommandPtr sourceAutoCenterRace = frc2::cmd::None();*/
 
 	//Auto Chooser
-	frc::SendableChooser<frc2::Command*> autoChooser;
+	// frc::SendableChooser<frc2::Command*> autoChooser;
 };
