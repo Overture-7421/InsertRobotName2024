@@ -16,7 +16,7 @@ void Storage::setVoltage(units::volt_t voltage) {
 }
 
 bool Storage::isNoteOnForwardSensor() {
-	if(isSensorAvailable()) {
+	if (isSensorAvailable()) {
 		return isNoteOnStorage;
 	}
 	return false;
@@ -53,8 +53,8 @@ void Storage::Periodic() {
 	isNoteOnStorage = beamBreak1Cache || beamBreak2Cache;
 }
 
-frc2::CommandPtr Storage::storageCommand(units::volt_t voltage){
-	return frc2::cmd::RunOnce([this, voltage] {this->setVoltage(voltage);});
+frc2::CommandPtr Storage::storageCommand(units::volt_t voltage) {
+	return std::move(frc2::cmd::RunOnce([this, voltage] {this->setVoltage(voltage);}));
 }
 
 void Storage::shuffleboardPeriodic() {

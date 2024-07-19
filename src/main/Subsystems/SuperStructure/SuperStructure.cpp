@@ -115,10 +115,10 @@ bool SuperStructure::reachedTargetPosition(SuperStructureState targetState) {
 
 frc2::CommandPtr SuperStructure::superStructureCommand(SuperStructureState targetState) {
 	return frc2::FunctionalCommand(
-		[&]() {setTargetCoord(targetState);},
+		[&, targetState]() {setTargetCoord(targetState);},
 		[&]() {},
 		[&](bool interupted) {},
-		[&]() {return reachedTargetPosition(targetState);},
+		[&, targetState]() {return reachedTargetPosition(targetState);},
 		{ this }
 	).ToPtr();
 }

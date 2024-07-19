@@ -6,7 +6,7 @@
 
 Chassis::Chassis() : SwerveChassis(ChassisConstants::MaxModuleSpeed, ChassisConstants::DriveBaseRadius) {
 	pigeon = &chassisPigeon;
-	setModulePositions(&modulePos);
+	setModulePositions(modulePos);
 	setModules(&frontLeft, &frontRight, &backLeft, &backRight);
 	setModulesRatios(ChassisConstants::RotationGearRatio, ChassisConstants::DriveGearRatio, ChassisConstants::WheelDiameter.value());
 	setRotatorPID(53, 0, 0);

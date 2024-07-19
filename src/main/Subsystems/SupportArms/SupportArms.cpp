@@ -4,16 +4,14 @@
 
 #include "SupportArms.h"
 
-SupportArms::SupportArms(){
-};
+SupportArms::SupportArms() {};
 
 void SupportArms::SetAngle(double angle) {
-    servo.SetAngle(angle);
+	servo.SetAngle(angle);
 };
 
-void SupportArms::Periodic(){
-};
+void SupportArms::Periodic() {};
 
-frc2::CommandPtr SupportArms::freeArmsCommand(double angle){
-	return frc2::cmd::RunOnce([this, angle] {this->SetAngle(angle);});
+frc2::CommandPtr SupportArms::freeArmsCommand(double angle) {
+	return std::move(frc2::cmd::RunOnce([this, angle] {this->SetAngle(angle);}));
 }

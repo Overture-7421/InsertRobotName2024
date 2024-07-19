@@ -64,10 +64,10 @@ bool Shooter::reachedTargetVelocity(double velocity) {
 
 frc2::CommandPtr Shooter::shooterCommand(double velocity) {
 	return frc2::FunctionalCommand(
-		[&]() {setTargetVelocity(velocity);},
+		[&, velocity]() {setTargetVelocity(velocity);},
 		[&]() {},
 		[&](bool interupted) {},
-		[&]() {return reachedTargetVelocity(velocity);},
+		[&, velocity]() {return reachedTargetVelocity(velocity);},
 		{ this }
 	).ToPtr();
 }

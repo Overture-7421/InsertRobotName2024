@@ -22,6 +22,7 @@ public:
 	void Periodic() override;
 	void shuffleboardPeriodic();
 	frc2::CommandPtr intakeCommand(units::volt_t voltage);
+	double voltageOut = 0.0;
 
 private:
 	OverTalonFX intakeMotorLeft{ 20, ControllerNeutralMode::Brake, false, "rio" };

@@ -139,8 +139,8 @@ void RobotContainer::ConfigOperatorBindings() {
 		intake.intakeCommand(IntakeConstants::ReverseVolts)
 	));
 	operatorPad.B().OnFalse(frc2::cmd::Parallel(
-		storage.storageCommand(StorageConstants::SpitVolts),
-		intake.intakeCommand(IntakeConstants::ReverseVolts)
+		storage.storageCommand(StorageConstants::StopVolts),
+		intake.intakeCommand(IntakeConstants::StopVolts)
 	));
 
 	/*operatorPad.Y().WhileTrue(ManualClimb(&chassis, &superStructure, &supportArms, &storage, &shooter, &operatorPad));
@@ -157,7 +157,7 @@ void RobotContainer::ConfigOperatorBindings() {
 
 	operatorPad.A().WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake, true));
 	operatorPad.A().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
-	operatorPad.rightTriggerOnly().WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake, true));
+	operatorPad.rightTriggerOnly().WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake));
 	operatorPad.rightTriggerOnly().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
 	// operatorPad.upDpad().OnTrue(
