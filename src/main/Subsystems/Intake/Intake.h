@@ -24,7 +24,7 @@ public:
 	frc2::CommandPtr intakeCommand(units::volt_t voltage);
 
 private:
-	OverTalonFX intakeMotorLeft{ 25, ControllerNeutralMode::Brake, false, "rio" };
+	OverTalonFX intakeMotorLeft{ 20, ControllerNeutralMode::Brake, false, "rio" };
 
 
 	wpi::log::DataLog& log = frc::DataLogManager::GetLog();

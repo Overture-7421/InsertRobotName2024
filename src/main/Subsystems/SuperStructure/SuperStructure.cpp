@@ -10,6 +10,14 @@
 #define DEG_TO_RAD M_PI / 180.0
 
 SuperStructure::SuperStructure() {
+	auto lowerConfig = lowerCANCoder.getConfiguration();
+	lowerConfig.MagnetSensor.SensorDirection = SensorDirectionValue::Clockwise_Positive;
+	lowerCANCoder.GetConfigurator().Apply(lowerConfig);
+
+	auto upperConfig = upperCANCoder.getConfiguration();
+	upperConfig.MagnetSensor.SensorDirection = SensorDirectionValue::Clockwise_Positive;
+	upperCANCoder.GetConfigurator().Apply(upperConfig);
+
 	// Configure Motors
 	lowerLeftMotor.setSensorPosition(lowerCANCoder.getSensorAbsolutePosition());
 	upperMotor.setSensorPosition(upperCANCoder.getSensorAbsolutePosition());

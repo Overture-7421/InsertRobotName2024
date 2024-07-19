@@ -37,8 +37,8 @@ public:
 	
 
 private:
-	OverTalonFX leftShooterMotor{ 27, ControllerNeutralMode::Coast, false, "rio" };
-	OverTalonFX rightShooterMotor{ 26, ControllerNeutralMode::Coast, false, "rio" };
+	OverTalonFX leftShooterMotor{ 26, ControllerNeutralMode::Coast, false, "rio" };
+	OverTalonFX rightShooterMotor{ 25, ControllerNeutralMode::Coast, false, "rio" };
 
 	frc::SimpleMotorFeedforward<units::turn> shooterFF {0.17356_V, 0.067254_V / 1_tps, 0.016758_V / 1_tr_per_s_sq};
 

@@ -16,7 +16,7 @@
 
 #include <pathplanner/lib/auto/NamedCommands.h>
 
-#include "Subsystems/Chassis/Chassis.h"
+//#include "Subsystems/Chassis/Chassis.h"
 #include "Subsystems/Targeting/TargetProvider.h"
 #include "Subsystems/Intake/Intake.h"
 #include "Subsystems/SuperStructure/SuperStructure.h"
@@ -59,13 +59,13 @@ private:
 	SuperStructure superStructure;
 	Storage storage;
 	Shooter shooter;
-	Chassis chassis;
+	//Chassis chassis;
 	SupportArms supportArms;
 
 	//Vision
 	frc::AprilTagFieldLayout tagLayout{ "/home/lvuser/deploy/tag_layout/7421-field.json" };
-	AprilTags shooterCamera{ &tagLayout, &chassis, {"Arducam_OV2311_USB_Camera", { {-0.3686515106_m, 0_m, 0.3518230454_m}, {-180_deg, -23_deg, 180_deg} }, 5_m, 9_m, 13_m} };
-	AprilTags frontRightSwerveModuleCamera{ &tagLayout, &chassis, {"Arducam_OV9281_USB_Camera", { {6.433997_in, -10.746927_in, 8.52786_in}, {0_deg, -28.125_deg, -30_deg} }} };
+	//AprilTags shooterCamera{ &tagLayout, &chassis, {"Arducam_OV2311_USB_Camera", { {-0.3686515106_m, 0_m, 0.3518230454_m}, {-180_deg, -23_deg, 180_deg} }, 5_m, 9_m, 13_m} };
+	//AprilTags frontRightSwerveModuleCamera{ &tagLayout, &chassis, {"Arducam_OV9281_USB_Camera", { {6.433997_in, -10.746927_in, 8.52786_in}, {0_deg, -28.125_deg, -30_deg} }} };
 	photon::PhotonCamera noteTrackingCamera{ "PSEye" };
 	TargetProvider targetProvider{ &tagLayout };
 
@@ -112,7 +112,7 @@ private:
 	frc2::Trigger intakeMotorActive{ [this] {return intake.getVoltage() != 0.0 && !storage.isNoteOnForwardSensor();} };
 
 	//Autonomous
-	frc2::CommandPtr defaultNoneAuto = frc2::cmd::None();
+	/*frc2::CommandPtr defaultNoneAuto = frc2::cmd::None();
 	frc2::CommandPtr center4NoteAuto = frc2::cmd::None();
 	frc2::CommandPtr center5NoteAuto = frc2::cmd::None();
 	frc2::CommandPtr center7NoteAuto = frc2::cmd::None();
@@ -120,7 +120,7 @@ private:
 	frc2::CommandPtr sourceAuto = frc2::cmd::None();
 
 	frc2::CommandPtr ampAutoCenterRace = frc2::cmd::None();
-	frc2::CommandPtr sourceAutoCenterRace = frc2::cmd::None();
+	frc2::CommandPtr sourceAutoCenterRace = frc2::cmd::None();*/
 
 	//Auto Chooser
 	frc::SendableChooser<frc2::Command*> autoChooser;

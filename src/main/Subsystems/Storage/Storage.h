@@ -31,7 +31,7 @@ public:
 	frc2::CommandPtr storageCommand(units::volt_t voltage);
 
 private:
-	OverTalonFX storageMotor{ 30, ControllerNeutralMode::Brake, false, "rio" };
+	OverTalonFX storageMotor{ 24, ControllerNeutralMode::Brake, false, "rio" };
 	bool isNoteOnStorage = false, beamBreak1Cache = false, beamBreak2Cache = false;
 
 	frc::DigitalInput beamBreak1{ 7 };

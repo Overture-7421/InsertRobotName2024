@@ -21,11 +21,8 @@
             "skipInvalidPlatforms": true,
             "binaryPlatforms": [
                 "windowsx86-64",
-                "windowsx86",
-                "linuxarm64",
-                "linuxx86-64",
                 "linuxathena",
-                "linuxarm32",
+                "linuxx86-64",
                 "osxuniversal"
             ]
         }
