@@ -16,6 +16,8 @@
 #include <Overturelib/Math/InterpolatingTable/InterpolatingTable.h>
 #include <Overturelib/Math/Utils.h>
 #include <Overturelib/Math/TargetingWhileMoving/TargetingWhileMoving.h>
+#include <OvertureLib/Subsystems/Swerve/SpeedsHelper/HeadingSpeedsHelper/HeadingSpeedsHelper.h>
+
 #include "Subsystems/Chassis/Chassis.h"
 #include "Subsystems/SuperStructure/SuperStructure.h"
 #include "Subsystems/Shooter/Shooter.h"
@@ -70,4 +72,5 @@ private:
 
 	wpi::log::DataLog& log = frc::DataLogManager::GetLog();
 	wpi::log::DoubleLogEntry upperAngleOffsetLog = wpi::log::DoubleLogEntry(log, "/vision_speaker_command/upper_angle_offset");
+	HeadingSpeedsHelper headingHelper;
 };

@@ -9,7 +9,7 @@ bool isRedAlliance() {
 }
 
 units::length::meter_t getDistanceToChassis(Chassis* chassis, frc::Pose2d targetPose) {
-	return chassis->getOdometry().Translation().Distance(targetPose.Translation());
+	return chassis->getEstimatedPose().Translation().Distance(targetPose.Translation());
 }
 
 StageLocation findClosestStageLocation(Chassis* chassis) {

@@ -14,6 +14,8 @@
 #include <OvertureLib/Math/InterpolatingTable/InterpolatingTable.h>
 #include <OvertureLib/Math/Utils.h>
 #include <OvertureLib/Math/TargetingWhileMoving/TargetingWhileMoving.h>
+#include <OvertureLib/Subsystems/Swerve/SpeedsHelper/HeadingSpeedsHelper/HeadingSpeedsHelper.h>
+
 #include "Subsystems/Chassis/Chassis.h"
 #include "Subsystems/SuperStructure/SuperStructure.h"
 #include "Subsystems/Shooter/Shooter.h"
@@ -59,4 +61,6 @@ private:
 	units::meter_t distance = 0.0_m;
 	frc::Rotation2d angle;
 	frc::Translation2d passLocation;
+	HeadingSpeedsHelper headingHelper;
+
 };

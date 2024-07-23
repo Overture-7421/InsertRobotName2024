@@ -8,6 +8,8 @@
 #include <frc2/command/CommandHelper.h>
 #include <frc/apriltag/AprilTagFieldLayout.h>
 
+#include <OvertureLib/Subsystems/Swerve/SpeedsHelper/HeadingSpeedsHelper/HeadingSpeedsHelper.h>
+
 #include "Subsystems/Chassis/Chassis.h"
 #include "Subsystems/SuperStructure/SuperStructure.h"
 #include "Subsystems/Shooter/Shooter.h"
@@ -39,4 +41,5 @@ private:
 
 	units::meter_t distance = 0.0_m;
 	frc::Rotation2d angle;
+	HeadingSpeedsHelper headingHelper;
 };

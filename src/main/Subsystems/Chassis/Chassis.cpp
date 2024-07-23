@@ -4,13 +4,7 @@
 
 #include "Chassis.h"
 
-Chassis::Chassis() : SwerveChassis(ChassisConstants::MaxModuleSpeed, ChassisConstants::DriveBaseRadius) {
-	pigeon = &chassisPigeon;
-	setModulePositions(modulePos);
-	setModules(&frontLeft, &frontRight, &backLeft, &backRight);
-	setModulesRatios(ChassisConstants::RotationGearRatio, ChassisConstants::DriveGearRatio, ChassisConstants::WheelDiameter.value());
-	setRotatorPID(53, 0, 0);
-
+Chassis::Chassis() : SwerveChassis() {
 #ifndef __FRC_ROBORIO__
 	frontLeft.setFFConstants(0.040347_V, 1.93_V, 0.63363_V);
 	frontRight.setFFConstants(0.26831_V, 1.9683_V, 0.1204_V);

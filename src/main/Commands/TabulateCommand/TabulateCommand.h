@@ -15,6 +15,7 @@
 
 #include "Commands/UtilityFunctions/UtilityFunctions.h"
 #include "Commands/VisionSpeakerCommand/Constants.h"
+#include <OvertureLib/Subsystems/Swerve/SpeedsHelper/HeadingSpeedsHelper/HeadingSpeedsHelper.h>
 
 class TabulateCommand
     : public frc2::CommandHelper<frc2::Command, TabulateCommand> {
@@ -34,4 +35,6 @@ private:
   Shooter* shooter;
   TargetProvider* targetProvider;
   frc::Translation2d targetLocation;
+  HeadingSpeedsHelper headingHelper;
+
 };

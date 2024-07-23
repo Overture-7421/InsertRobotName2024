@@ -6,7 +6,7 @@
 
 #include <frc/MathUtil.h>
 
-VisionSpeakerCommandPassNote::VisionSpeakerCommandPassNote(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, TargetProvider* targetProvider, Storage* storage, PassNote upOrDown) {
+VisionSpeakerCommandPassNote::VisionSpeakerCommandPassNote(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, TargetProvider* targetProvider, Storage* storage, PassNote upOrDown) : headingHelper( {11.0, 0.5, 0.35, {18_rad_per_s, 18_rad_per_s_sq * 2} }, chassis){
 	AddRequirements({ superStructure, shooter, storage });
 	this->chassis = chassis;
 	this->superStructure = superStructure;
@@ -18,7 +18,7 @@ VisionSpeakerCommandPassNote::VisionSpeakerCommandPassNote(Chassis* chassis, Sup
 
 // Called when the command is initially scheduled.
 void VisionSpeakerCommandPassNote::Initialize() {
-	chassis->setHeadingOverride(true);
+ 	chassis->enableSpeedHelper(&headingHelper);
 	passLocation = targetProvider->GetPassLocation();
 
 	if(upOrDown == PassNote::High) {
@@ -35,7 +35,7 @@ void VisionSpeakerCommandPassNote::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void VisionSpeakerCommandPassNote::Execute() {
-	frc::Pose2d chassisPose = chassis->getOdometry();
+	frc::Pose2d chassisPose = chassis->getEstimatedPose();
 
 	frc::Translation2d chassisLoc = chassisPose.Translation();
 
@@ -43,7 +43,7 @@ void VisionSpeakerCommandPassNote::Execute() {
 	distance = chassisToTarget.Distance({ 0_m, 0_m });
 	angle = chassisToTarget.Angle().RotateBy({ 180_deg });
 
-	chassis->setTargetHeading(angle);
+	headingHelper.setTargetAngle(angle.Radians());
 	double targetLowerAngle = targetState.lowerAngle;
 	double targetUpperAngle = targetState.upperAngle;
 	superStructure->setTargetCoord({ targetLowerAngle, targetUpperAngle });
@@ -71,7 +71,7 @@ void VisionSpeakerCommandPassNote::Execute() {
 
 // Called once the command ends or is interrupted.
 void VisionSpeakerCommandPassNote::End(bool interrupted) {
-	chassis->setHeadingOverride(false);
+	chassis->disableSpeedHelper();
 	storage->storageCommand(StorageConstants::StopVolts);
 }
 

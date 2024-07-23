@@ -6,7 +6,7 @@
 #include "Commands/VisionSpeakerCommand/VisionSpeakerCommand.h"
 #include <frc/MathUtil.h>
 
-VisionSpeakerCommandNoShoot::VisionSpeakerCommandNoShoot(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, TargetProvider* targetProvider) {
+VisionSpeakerCommandNoShoot::VisionSpeakerCommandNoShoot(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, TargetProvider* targetProvider) : headingHelper( {11.0, 0.5, 0.35, {18_rad_per_s, 18_rad_per_s_sq * 2} }, chassis) {
 	// Use addRequirements() here to declare subsystem dependencies.
 	AddRequirements({ superStructure, shooter });
 	this->chassis = chassis;
@@ -20,12 +20,12 @@ void VisionSpeakerCommandNoShoot::Initialize() {
 
 	targetLocation = targetProvider->GetSpeakerLocation();
 
-	chassis->setHeadingOverride(true);
+	chassis->enableSpeedHelper(&headingHelper);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void VisionSpeakerCommandNoShoot::Execute() {
-	frc::Pose2d chassisPose = chassis->getOdometry();
+	frc::Pose2d chassisPose = chassis->getEstimatedPose();
 	frc::Translation2d chassisLoc = chassisPose.Translation();
 
 	frc::Translation2d chassisToTarget = targetLocation - chassisLoc;
@@ -33,7 +33,7 @@ void VisionSpeakerCommandNoShoot::Execute() {
 	angle = chassisToTarget.Angle().RotateBy({ -180_deg });
 
 
-	chassis->setTargetHeading(angle);
+	headingHelper.setTargetAngle(angle.Radians());
 	double targetLowerAngle = VisionSpeakerCommandConstants::DistanceToLowerAngleTable[distance];
 	double targetUpperAngle = VisionSpeakerCommandConstants::DistanceToUpperAngleTable[distance] + VisionSpeakerCommand::GetUpperAngleOffset();
 	double targetShooterVelocity = VisionSpeakerCommandConstants::DistanceToVelocityTable[distance];
@@ -43,7 +43,7 @@ void VisionSpeakerCommandNoShoot::Execute() {
 
 // Called once the command ends or is interrupted.
 void VisionSpeakerCommandNoShoot::End(bool interrupted) {
-	chassis->setHeadingOverride(false);
+	chassis->disableSpeedHelper();
 }
 
 // Returns true when the command should end.

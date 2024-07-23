@@ -4,7 +4,7 @@
 
 #include "TabulateCommand.h"
 
-TabulateCommand::TabulateCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, TargetProvider* targetProvider) {
+TabulateCommand::TabulateCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, TargetProvider* targetProvider) : headingHelper( {11.0, 0.5, 0.35, {18_rad_per_s, 18_rad_per_s_sq * 2} }, chassis) {
   this->superStructure = superStructure;
   this->shooter = shooter;
   this->chassis = chassis;
@@ -21,13 +21,13 @@ void TabulateCommand::Initialize() {
 
 	targetLocation = targetProvider->GetSpeakerLocation();
 
-  chassis->setHeadingOverride(true);
+  chassis->enableSpeedHelper(&headingHelper);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void TabulateCommand::Execute() {
 
-  frc::Pose2d chassisPose = chassis->getOdometry();
+  frc::Pose2d chassisPose = chassis->getEstimatedPose();
   frc::Translation2d chassisLoc = chassisPose.Translation();
 
   frc::Translation2d chassisToTarget = targetLocation - chassisLoc;
@@ -39,7 +39,7 @@ void TabulateCommand::Execute() {
   frc::SmartDashboard::PutNumber("Tabulate/UpperAngleCurrent", superStructure->getUpperAngle());
   frc::SmartDashboard::PutNumber("Tabulate/ShooterVelCurrent", shooter->getCurrentVelocity());
 
-  chassis->setTargetHeading(angle);
+  headingHelper.setTargetAngle(angle.Radians());
   double lowerAngle = frc::SmartDashboard::GetNumber("Tabulate/LowerAngle", superStructure->getLowerAngle());
   double upperAngle = frc::SmartDashboard::GetNumber("Tabulate/UpperAngle", superStructure->getLowerAngle());
   double targetVel = frc::SmartDashboard::GetNumber("Tabulate/ShooterVel", 0.0);
@@ -51,7 +51,7 @@ void TabulateCommand::Execute() {
 // Called once the command ends or is interrupted.
 void TabulateCommand::End(bool interrupted) {
     shooter->setTargetVelocity(0.0);
-    chassis->setHeadingOverride(false);
+    chassis->disableSpeedHelper();
 }
 
 // Returns true when the command should end.
