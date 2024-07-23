@@ -5,16 +5,16 @@
 frc2::CommandPtr AlignToTrackedObject(Chassis* chassis, photon::PhotonCamera* camera) {
 	AlignRobotRelativeHelper alignHelper;
 
-	return frc2::cmd::RunOnce([chassis] {
+	return frc2::cmd::RunOnce([chassis, &alignHelper] {
 		chassis->disableSpeedHelper();
+		chassis->enableSpeedHelper(&alignHelper);
 	}).AndThen(frc2::cmd::Run([=]() mutable {
 
 		const auto result = camera->GetLatestResult();
 		if (!result.HasTargets()) {
-			chassis->disableSpeedHelper();
+			alignHelper.setCurrentAngle(units::degree_t(0));
 			return;
 		}
-		chassis->enableSpeedHelper(&alignHelper);
 
 		const auto target = result.GetTargets()[0];
 		alignHelper.setCurrentAngle(units::degree_t(target.GetYaw()));
@@ -28,17 +28,18 @@ frc2::CommandPtr AlignToTrackedObjectFieldOriented(Chassis* chassis, photon::Pho
 
 	AlignFieldRelativeHelper alignController{ chassis };
 
-	return frc2::cmd::RunOnce([chassis] {
+	return frc2::cmd::RunOnce([chassis, &alignController] {
 		chassis->disableSpeedHelper();
+		chassis->enableSpeedHelper(&alignController);
 	}).AndThen(frc2::cmd::Run([=]() mutable {
 
 		const auto result = camera->GetLatestResult();
 		if (!result.HasTargets()) {
-			chassis->disableSpeedHelper();
+			alignController.enable(false);
 			return;
 		}
 
-		chassis->enableSpeedHelper(&alignController);
+		alignController.enable(true);
 
 		const auto target = result.GetTargets()[0];
 		auto corners = target.GetDetectedCorners();

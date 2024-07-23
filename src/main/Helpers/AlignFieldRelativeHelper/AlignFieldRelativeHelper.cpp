@@ -12,7 +12,15 @@ void AlignFieldRelativeHelper::setTargetPosition(units::meter_t xPosition, units
 	m_yPosition = yPosition;
 }
 
+void AlignFieldRelativeHelper::enable(bool isEnabled) {
+	m_isEnabled = isEnabled;
+}
+
 void AlignFieldRelativeHelper::alterSpeed(frc::ChassisSpeeds& inputSpeed) {
+	if (!m_isEnabled) {
+		return;
+	}
+
 	double xOut = xController.Calculate(m_chassis->getEstimatedPose().Translation().X(), m_xPosition);
 	double yOut = yController.Calculate(m_chassis->getEstimatedPose().Translation().Y(), m_yPosition);
 

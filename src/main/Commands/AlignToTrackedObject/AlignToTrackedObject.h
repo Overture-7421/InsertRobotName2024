@@ -7,8 +7,8 @@
 #include <units/angular_acceleration.h>
 
 #include "Subsystems/Chassis/Chassis.h"
-#include "Subsystems/Chassis/Helpers/AlignRobotRelativeHelper/AlignRobotRelativeHelper.h"
-#include "Subsystems/Chassis/Helpers/AlignFieldRelativeHelper/AlignFieldRelativeHelper.h"
+#include "Helpers/AlignRobotRelativeHelper/AlignRobotRelativeHelper.h"
+#include "Helpers/AlignFieldRelativeHelper/AlignFieldRelativeHelper.h"
 #include "Constants.h"
 
 frc2::CommandPtr AlignToTrackedObject(Chassis* chassis, photon::PhotonCamera* camera);

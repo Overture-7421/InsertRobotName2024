@@ -14,6 +14,7 @@ class AlignFieldRelativeHelper : public SpeedsHelper {
 public:
 	AlignFieldRelativeHelper(SwerveChassis* chassis);
 	void setTargetPosition(units::meter_t xPosition, units::meter_t yPosition);
+	void enable(bool isEnabled);
 	void alterSpeed(frc::ChassisSpeeds& inputSpeed) override;
 
 private:
@@ -22,4 +23,5 @@ private:
 	SwerveChassis* m_chassis = nullptr;
 	units::meter_t m_xPosition;
 	units::meter_t m_yPosition;
+	bool m_isEnabled = false;
 };
