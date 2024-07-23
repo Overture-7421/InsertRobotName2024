@@ -98,26 +98,26 @@ void RobotContainer::ConfigDriverBindings() {
 		chassis.headingController.SetConstraints({ 18_rad_per_s, 18_rad_per_s_sq * 2 });
 	}));*/
 
-	//driverPad.leftBumperOnly().WhileTrue(VisionAmpCommand(&chassis));
+	// driverPad.leftBumperOnly().WhileTrue(VisionAmpCommand(&superStructure, &shooter).ToPtr());
 	// driverPad.leftBumperOnly().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
-	// //driverPad.rightBumperOnly().WhileTrue(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &targetProvider, &operatorPad).ToPtr());
+	// driverPad.rightBumperOnly().WhileTrue(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &targetProvider, &operatorPad).ToPtr());
 	// driverPad.rightBumperOnly().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
-	// //driverPad.Back().OnTrue(chassis.resetHeading());
+	// driverPad.Back().OnTrue(chassis.resetHeading());
 
-	// //driverPad.Y().WhileTrue(AutoClimb(&chassis, &superStructure, &supportArms, &storage, &shooter, &operatorPad));
+	// driverPad.Y().WhileTrue(AutoClimb(&chassis, &superStructure, &supportArms, &storage, &shooter, &operatorPad));
 	// driverPad.Y().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
-	// //driverPad.X().WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &targetProvider, &storage, PassNote::High).ToPtr());
+	// driverPad.X().WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &targetProvider, &storage, PassNote::High).ToPtr());
 	// driverPad.X().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
-	// //driverPad.B().WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &targetProvider, &storage, PassNote::Low).ToPtr());
+	// driverPad.B().WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &targetProvider, &storage, PassNote::Low).ToPtr());
 	// driverPad.B().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
-	//driverPad.A().WhileTrue(AlignToTrackedObject(&chassis, &noteTrackingCamera));
+	// driverPad.A().WhileTrue(AlignToTrackedObject(&chassis, &noteTrackingCamera));
 
-	//tabulate.ToggleOnTrue(TabulateCommand(&chassis, &superStructure, &shooter, &targetProvider).ToPtr());
+	// tabulate.ToggleOnTrue(TabulateCommand(&chassis, &superStructure, &shooter, &targetProvider).ToPtr());
 
 	// tabulate.OnTrue(frc2::cmd::RunOnce([&] {
 	// 	chassis.setHeadingOverride(true);

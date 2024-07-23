@@ -3,53 +3,42 @@
 // TODO: Implement Helpers
 
 frc2::CommandPtr AlignToTrackedObject(Chassis* chassis, photon::PhotonCamera* camera) {
-
-	frc::ProfiledPIDController<units::degree> alignController{ 0.1, 0.0, 0.0, {120_deg_per_s, 360_deg_per_s_sq}, RobotConstants::LoopTime };
-	frc::SlewRateLimiter<units::meters_per_second> vyLimiter{ 15.0_mps_sq };
-	
+	AlignRobotRelativeHelper alignHelper;
 
 	return frc2::cmd::RunOnce([chassis] {
-		// chassis->setVyOverride(false);
+		chassis->disableSpeedHelper();
 	}).AndThen(frc2::cmd::Run([=]() mutable {
 
 		const auto result = camera->GetLatestResult();
 		if (!result.HasTargets()) {
-			// chassis->setVyOverride(false);
-			// chassis->setVyTarget(vyLimiter.Calculate(units::meters_per_second_t(0)));
+			chassis->disableSpeedHelper();
 			return;
 		}
-		// chassis->setVyOverride(true);
+		chassis->enableSpeedHelper(&alignHelper);
 
 		const auto target = result.GetTargets()[0];
-		double targetVy = alignController.Calculate(units::degree_t(target.GetYaw()), units::degree_t(0));
+		alignHelper.setCurrentAngle(units::degree_t(target.GetYaw()));
 
-		// frc::SmartDashboard::PutNumber("AlignToVisionTarget/TargetVy", targetVy);
-		// chassis->setVyTarget(vyLimiter.Calculate(units::meters_per_second_t(targetVy)));
 	})).FinallyDo([=] {
-		// chassis->setVyOverride(false);
-		// chassis->setVyTarget(units::meters_per_second_t(0));
+		chassis->disableSpeedHelper();
 	});
 }
 
 frc2::CommandPtr AlignToTrackedObjectFieldOriented(Chassis* chassis, photon::PhotonCamera* camera) {
 
-	frc::ProfiledPIDController<units::meter> alignXController{ 0.1, 0.0, 0.0, {2_mps, 5_mps_sq}, RobotConstants::LoopTime };
-	frc::ProfiledPIDController<units::meter> alignYController{ 0.1, 0.0, 0.0, {2_mps, 5_mps_sq}, RobotConstants::LoopTime };
-
-	frc::SlewRateLimiter<units::meters_per_second> vyLimiter{ 5.0_mps_sq };
-	frc::SlewRateLimiter<units::meters_per_second> vxLimiter{ 5.0_mps_sq };
+	AlignFieldRelativeHelper alignController{ chassis };
 
 	return frc2::cmd::RunOnce([chassis] {
-		// chassis->setPositionAssist(false);
+		chassis->disableSpeedHelper();
 	}).AndThen(frc2::cmd::Run([=]() mutable {
 
 		const auto result = camera->GetLatestResult();
 		if (!result.HasTargets()) {
-			// chassis->setVyOverride(false);
-			// chassis->setPositionTarget(vyLimiter.Calculate(units::meters_per_second_t(0)), vxLimiter.Calculate(units::meters_per_second_t(0)));
+			chassis->disableSpeedHelper();
 			return;
 		}
-		// chassis->setVyOverride(true);
+
+		chassis->enableSpeedHelper(&alignController);
 
 		const auto target = result.GetTargets()[0];
 		auto corners = target.GetDetectedCorners();
@@ -70,15 +59,10 @@ frc2::CommandPtr AlignToTrackedObjectFieldOriented(Chassis* chassis, photon::Pho
 		frc::Pose2d currentRobotPose = chassis->getEstimatedPose();
 		targetPose = targetPose.RelativeTo(AllignToNoteConstants::CameraOffset).RelativeTo(currentRobotPose);
 
-		double targetVy = alignYController.Calculate(currentRobotPose.Translation().Y(), targetPose.Translation().Y());
-		double targetVx = alignXController.Calculate(currentRobotPose.Translation().X(), targetPose.Translation().X());
+		alignController.setTargetPosition(targetPose.X(), targetPose.Y());
 
-		targetVy = std::clamp(targetVy, AllignToNoteConstants::maxOutput, -AllignToNoteConstants::maxOutput);
-		targetVx = std::clamp(targetVx, AllignToNoteConstants::maxOutput, -AllignToNoteConstants::maxOutput);
 
-		// chassis->setPositionTarget(vyLimiter.Calculate(units::meters_per_second_t(targetVy)), vxLimiter.Calculate(units::meters_per_second_t(targetVx)));
 	})).FinallyDo([=] {
-		// chassis->setPositionAssist(false);
-		// chassis->setPositionTarget(units::meters_per_second_t(0), units::meters_per_second_t(0));
+		chassis->disableSpeedHelper();
 	});
 }
