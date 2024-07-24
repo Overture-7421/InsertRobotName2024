@@ -84,19 +84,13 @@ void RobotContainer::ConfigureBindings() {
 
 void RobotContainer::ConfigDriverBindings() {
 
-	/*driverPad.rightStick(0.5).WhileTrue(frc2::cmd::Run([&] {
-		chassis.setRotationClosedLoop(
-			units::meters_per_second_t{ Utils::ApplyAxisFilter(-driverPad.GetLeftY()) * ChassisConstants::MaxModuleSpeed },
-			units::meters_per_second_t{ Utils::ApplyAxisFilter(-driverPad.GetLeftX()) * ChassisConstants::MaxModuleSpeed },
-			driverPad.getRightStickDirection()
-		);
-	}, { &chassis }).BeforeStarting([&] {
-		chassis.setHeadingOverride(true);
-		chassis.headingController.SetConstraints({ 2_rad_per_s, 1.5_rad_per_s_sq });
+	driverPad.rightStick(0.2).WhileTrue(frc2::cmd::Run([&] {
+		chassis.enableSpeedHelper(&rotationHelper);
+	}).BeforeStarting([&] {
+		rotationHelper.setCurrentAngle(chassis.getEstimatedPose().Rotation().Degrees());
 	}).FinallyDo([&] {
-		chassis.setHeadingOverride(false);
-		chassis.headingController.SetConstraints({ 18_rad_per_s, 18_rad_per_s_sq * 2 });
-	}));*/
+		chassis.disableSpeedHelper();
+	}));
 
 	// driverPad.leftBumperOnly().WhileTrue(VisionAmpCommand(&superStructure, &shooter).ToPtr());
 	// driverPad.leftBumperOnly().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
@@ -198,15 +192,17 @@ void RobotContainer::ConfigDefaultCommands() {
 
 	// leds.SetDefaultCommand(BlinkEffect(&leds, "all", { 255, 0, 255 }, 1_s).IgnoringDisable(true));
 
-	/*chassis.SetDefaultCommand(frc2::cmd::Run([&] {
-		chassis.setFieldRelative(
-			units::meters_per_second_t{ Utils::ApplyAxisFilter(driverPad.GetLeftY()) * ChassisConstants::MaxModuleSpeed },
-			units::meters_per_second_t{ Utils::ApplyAxisFilter(driverPad.GetLeftX()) * ChassisConstants::MaxModuleSpeed },
-			units::radians_per_second_t{ Utils::ApplyAxisFilter(-driverPad.getTwist()) * ChassisConstants::MaxAngularSpeed }
+	chassis.SetDefaultCommand(frc2::cmd::Run([&] {
+		chassis.driveFieldRelative(
+			{
+				units::meters_per_second_t{ Utils::ApplyAxisFilter(driverPad.GetLeftY()) * ChassisConstants::MaxModuleSpeed },
+				units::meters_per_second_t{ Utils::ApplyAxisFilter(driverPad.GetLeftX()) * ChassisConstants::MaxModuleSpeed },
+				units::radians_per_second_t{ Utils::ApplyAxisFilter(-driverPad.getTwist()) * ChassisConstants::MaxAngularSpeed }
+			}
 		);
 	}, { &chassis }).BeforeStarting([&] {
-		chassis.setAlliance();
-	}));*/
+
+	}));
 
 	// supportArms.SetDefaultCommand(supportArms.freeArmsCommand(25.00).Repeatedly());
 }
