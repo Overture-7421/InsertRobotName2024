@@ -16,10 +16,10 @@ void Storage::setVoltage(units::volt_t voltage) {
 }
 
 bool Storage::isNoteOnForwardSensor() {
-	if (isSensorAvailable()) {
-		return isNoteOnStorage;
-	}
-	return false;
+	// if (isSensorAvailable()) {
+	return isNoteOnStorage;
+	// }
+	// return false;
 }
 
 bool Storage::isSensorAvailable() {

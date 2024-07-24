@@ -58,8 +58,8 @@ private:
 	SuperStructure superStructure;
 	Storage storage;
 	Shooter shooter;
-	Chassis chassis;
-	SupportArms supportArms;
+	// Chassis chassis;
+	// SupportArms supportArms;
 
 	// Helpers
 	ClosedLoopRotationHelper rotationHelper;
@@ -70,8 +70,8 @@ private:
 #else
 	frc::AprilTagFieldLayout tagLayout{ "/home/lvuser/deploy/tag_layout/7421-field.json" };
 #endif
-	//AprilTags shooterCamera{ &tagLayout, &chassis, {"Arducam_OV2311_USB_Camera", { {-0.3686515106_m, 0_m, 0.3518230454_m}, {-180_deg, -23_deg, 180_deg} }, 5_m, 9_m, 13_m} };
-	//AprilTags frontRightSwerveModuleCamera{ &tagLayout, &chassis, {"Arducam_OV9281_USB_Camera", { {6.433997_in, -10.746927_in, 8.52786_in}, {0_deg, -28.125_deg, -30_deg} }} };
+	//AprilTags shooterCamera{ &tagLayout, &chassis, {"Arducam_OV2311_USB_Camera", { {-14.950771_in, 0_m, 14.034697_m}, {-180_deg, -30_deg, 180_deg} }, 5_m, 9_m, 13_m} };
+	// AprilTags frontRightSwerveModuleCamera{ &tagLayout, &chassis, {"Arducam_OV9281_USB_Camera", { {6.388283_in, -10.648092_in, 8.358231_in}, {0_deg, -28.125_deg, -30_deg} }} };
 	// photon::PhotonCamera noteTrackingCamera{ "PSEye" };
 	// TargetProvider targetProvider{ &tagLayout };
 

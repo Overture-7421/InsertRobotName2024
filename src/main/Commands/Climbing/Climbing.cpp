@@ -52,7 +52,7 @@ frc2::CommandPtr SetUpJoints(Chassis* chassis, SuperStructure* superStructure, S
 
 frc2::CommandPtr ClimbAtLocation(SuperStructure* superStructure, Shooter* shooter, Storage* storage, frc::XboxController* controller) {
 	return frc2::cmd::Sequence(
-		superStructure->superStructureCommand(SuperStructureConstants::GroundGrabState).WithTimeout(1_s),
+		superStructure->superStructureCommand(SuperStructureConstants::ClosedState).WithTimeout(1_s),
 		WaitForButton(controller, checkpointButtonId),
 		superStructure->superStructureCommand({ 93, -77 }).WithTimeout(1_s), // 87 arm
 		frc2::cmd::RunOnce([=] { shooter->setVoltage(6.0);}),

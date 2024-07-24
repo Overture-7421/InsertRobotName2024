@@ -15,7 +15,6 @@ void Intake::setVoltage(units::volt_t voltage) {
 frc2::CommandPtr Intake::intakeCommand(units::volt_t voltage) {
 	return std::move(frc2::cmd::RunOnce([this, voltage] {
 		this->setVoltage(voltage);
-		voltageOut = voltage.value();
 	}));
 }
 
@@ -31,5 +30,5 @@ void Intake::shuffleboardPeriodic() {
 	voltage.Append(intakeMotorLeft.GetMotorVoltage().GetValueAsDouble());
 	currentLeft.Append(intakeMotorLeft.GetSupplyCurrent().GetValueAsDouble());
 
-	frc::SmartDashboard::PutNumber("Intake/CurrentLeft", voltageOut);
+	frc::SmartDashboard::PutNumber("Intake/CurrentLeft", intakeMotorLeft.GetSupplyCurrent().GetValueAsDouble());
 }
