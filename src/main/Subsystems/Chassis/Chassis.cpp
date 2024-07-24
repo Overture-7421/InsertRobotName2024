@@ -16,5 +16,5 @@ Chassis::Chassis() : SwerveChassis() {
 	backLeft.setFFConstants(0.22436_V, 2.0254_V, 0.2019_V);
 	backRight.setFFConstants(0.22436_V, 2.0254_V, 0.2019_V);
 #endif
-
+	configureSwerveBase();
 }
