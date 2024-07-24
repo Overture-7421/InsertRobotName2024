@@ -18,3 +18,26 @@ Chassis::Chassis() : SwerveChassis() {
 #endif
 	configureSwerveBase();
 }
+
+void Chassis::setAllianceColor() {
+	if (frc::DriverStation::GetAlliance() == frc::DriverStation::Alliance::kRed) {
+		m_AllianceColor = -1;
+	} else {
+		m_AllianceColor = 1;
+	}
+}
+
+void Chassis::driveFieldRelative(frc::ChassisSpeeds speeds) {
+	setTargetSpeeds(
+		frc::ChassisSpeeds::Discretize(
+			frc::ChassisSpeeds::FromFieldRelativeSpeeds(
+				{
+					speeds.vx * m_AllianceColor,
+					speeds.vy * m_AllianceColor,
+					speeds.omega
+				},
+				getEstimatedPose().Rotation()
+			), RobotConstants::LoopTime
+		)
+	);
+}

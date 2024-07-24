@@ -2,8 +2,8 @@
 #include <units/voltage.h>
 
 namespace StorageConstants {
-	const static units::volt_t GroundGrabVolts = 5_V;
-	const static units::volt_t SpitVolts = -5_V;
+	const static units::volt_t GroundGrabVolts = 4_V;
+	const static units::volt_t SpitVolts = -4_V;
 	const static units::volt_t ScoreVolts = 12_V;
 	const static units::volt_t StopVolts = 0_V;
 	const static units::volt_t TrapVolts = 8_V;

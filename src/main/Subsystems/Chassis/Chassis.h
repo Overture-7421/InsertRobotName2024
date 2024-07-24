@@ -15,7 +15,9 @@
 class Chassis : public SwerveChassis {
 public:
 	Chassis();
-	
+	void setAllianceColor();
+	void driveFieldRelative(frc::ChassisSpeeds speeds);
+
 	frc::Rotation2d getRotation2d() override {
 		return chassisPigeon.GetRotation2d();
 	}
@@ -35,7 +37,7 @@ protected:
 	frc::SwerveDriveKinematics<4>& getKinematics() override {
 		return kinematics;
 	}
- 
+
 	SwerveModule& getFrontRightModule() override {
 		return frontRight;
 	}
@@ -68,7 +70,7 @@ protected:
 		return poseLog;
 	}
 
-	wpi::log::StructLogEntry<frc::Pose2d>& getVisionPoseLog(){
+	wpi::log::StructLogEntry<frc::Pose2d>& getVisionPoseLog() {
 		return visionPoseLog;
 	}
 
@@ -95,10 +97,12 @@ private:
 	wpi::log::StructLogEntry<frc::Pose2d> poseLog = wpi::log::StructLogEntry<frc::Pose2d>(log, "/swerve/pose");
 	wpi::log::StructLogEntry<frc::Pose2d> visionPoseLog = wpi::log::StructLogEntry<frc::Pose2d>(log, "/swerve/vision_pose");
 
-	frc::SwerveDriveKinematics<4> kinematics {
+	frc::SwerveDriveKinematics<4> kinematics{
 		ChassisConstants::FrontLeftModuleTranslation,   //Front Left
 		ChassisConstants::FrontRightModuleTranslation,   //Front Right
 		ChassisConstants::BackRightModuleTranslation,   //Back Right
 		ChassisConstants::BackLeftModuleTranslation,   //Back Left
 	};
+
+	int m_AllianceColor = 0;
 };

@@ -19,23 +19,20 @@ frc2::CommandPtr GroundGrabCommand(SuperStructure* superStructure, Storage* stor
 
 
 	return frc2::cmd::Sequence(
-		superStructure->superStructureCommand(SuperStructureConstants::GroundGrabState),
-		frc2::cmd::Parallel(
+		superStructure->superStructureCommand(SuperStructureConstants::GroundGrabState).Unless([=]() { return storage->isNoteOnForwardSensor(); }),
+		frc2::cmd::RepeatingSequence(
 			intake->intakeCommand(IntakeConstants::GroundGrabVolts),
 			storage->storageCommand(StorageConstants::GroundGrabVolts)
-		).Repeatedly().Until(
-			[=]() {
-		return storage->isNoteOnForwardSensor();
-	}
-		)
-		// .AndThen(
-		// 	frc2::cmd::WaitUntil(0.02_s)
-		// )
-		.FinallyDo(
-			[=]() {
-		storage->storageCommand(StorageConstants::StopVolts);
-		intake->intakeCommand(IntakeConstants::StopVolts);
-	}
+		).Until(
+			[=]() { return storage->isNoteOnForwardSensor(); }
+		).AndThen(
+			frc2::cmd::Sequence(
+				frc2::cmd::Wait(0.05_s),
+				frc2::cmd::Parallel(
+					superStructure->superStructureCommand(SuperStructureConstants::ClosedState),
+					storage->storageCommand(StorageConstants::StopVolts),
+					intake->intakeCommand(IntakeConstants::StopVolts)
+				))
 		)
 	);
 }

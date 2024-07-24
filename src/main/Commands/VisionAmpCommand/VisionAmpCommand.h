@@ -15,4 +15,4 @@
 
 frc2::CommandPtr VisionAmpCommand(SuperStructure* superStucture, Shooter* shooter);
 
-frc2::CommandPtr VisionAmpCommand(Chassis* chassis);
+// frc2::CommandPtr VisionAmpCommand(Chassis* chassis);

@@ -84,40 +84,34 @@ void RobotContainer::ConfigureBindings() {
 
 void RobotContainer::ConfigDriverBindings() {
 
-	/*driverPad.rightStick(0.5).WhileTrue(frc2::cmd::Run([&] {
-		chassis.setRotationClosedLoop(
-			units::meters_per_second_t{ Utils::ApplyAxisFilter(-driverPad.GetLeftY()) * ChassisConstants::MaxModuleSpeed },
-			units::meters_per_second_t{ Utils::ApplyAxisFilter(-driverPad.GetLeftX()) * ChassisConstants::MaxModuleSpeed },
-			driverPad.getRightStickDirection()
-		);
-	}, { &chassis }).BeforeStarting([&] {
-		chassis.setHeadingOverride(true);
-		chassis.headingController.SetConstraints({ 2_rad_per_s, 1.5_rad_per_s_sq });
-	}).FinallyDo([&] {
-		chassis.setHeadingOverride(false);
-		chassis.headingController.SetConstraints({ 18_rad_per_s, 18_rad_per_s_sq * 2 });
-	}));*/
+	// driverPad.rightStick(0.2).WhileTrue(frc2::cmd::Run([&] {
+	// 	chassis.enableSpeedHelper(&rotationHelper);
+	// }).BeforeStarting([&] {
+	// 	rotationHelper.setCurrentAngle(chassis.getEstimatedPose().Rotation().Degrees());
+	// }).FinallyDo([&] {
+	// 	chassis.disableSpeedHelper();
+	// }));
 
-	//driverPad.leftBumperOnly().WhileTrue(VisionAmpCommand(&chassis));
+	// driverPad.leftBumperOnly().WhileTrue(VisionAmpCommand(&superStructure, &shooter).ToPtr());
 	// driverPad.leftBumperOnly().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
-	// //driverPad.rightBumperOnly().WhileTrue(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &targetProvider, &operatorPad).ToPtr());
+	// driverPad.rightBumperOnly().WhileTrue(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &targetProvider, &operatorPad).ToPtr());
 	// driverPad.rightBumperOnly().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
-	// //driverPad.Back().OnTrue(chassis.resetHeading());
+	// driverPad.Back().OnTrue(chassis.resetHeading());
 
-	// //driverPad.Y().WhileTrue(AutoClimb(&chassis, &superStructure, &supportArms, &storage, &shooter, &operatorPad));
+	// driverPad.Y().WhileTrue(AutoClimb(&chassis, &superStructure, &supportArms, &storage, &shooter, &operatorPad));
 	// driverPad.Y().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
-	// //driverPad.X().WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &targetProvider, &storage, PassNote::High).ToPtr());
+	// driverPad.X().WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &targetProvider, &storage, PassNote::High).ToPtr());
 	// driverPad.X().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
-	// //driverPad.B().WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &targetProvider, &storage, PassNote::Low).ToPtr());
+	// driverPad.B().WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &targetProvider, &storage, PassNote::Low).ToPtr());
 	// driverPad.B().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
-	//driverPad.A().WhileTrue(AlignToTrackedObject(&chassis, &noteTrackingCamera));
+	// driverPad.A().WhileTrue(AlignToTrackedObject(&chassis, &noteTrackingCamera));
 
-	//tabulate.ToggleOnTrue(TabulateCommand(&chassis, &superStructure, &shooter, &targetProvider).ToPtr());
+	// tabulate.ToggleOnTrue(TabulateCommand(&chassis, &superStructure, &shooter, &targetProvider).ToPtr());
 
 	// tabulate.OnTrue(frc2::cmd::RunOnce([&] {
 	// 	chassis.setHeadingOverride(true);
@@ -131,14 +125,16 @@ void RobotContainer::ConfigDriverBindings() {
 
 void RobotContainer::ConfigOperatorBindings() {
 
-	operatorPad.leftBumperOnly().WhileTrue(AmpCommand(&superStructure, &shooter));
-	operatorPad.leftBumperOnly().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
+	// operatorPad.leftBumperOnly().WhileTrue(AmpCommand(&superStructure, &shooter));
+	// operatorPad.leftBumperOnly().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
-	operatorPad.B().OnTrue(frc2::cmd::Parallel(
+	operatorPad.B().OnTrue(frc2::cmd::Sequence(
+		superStructure.superStructureCommand(SuperStructureConstants::GroundGrabState),
 		storage.storageCommand(StorageConstants::SpitVolts),
 		intake.intakeCommand(IntakeConstants::ReverseVolts)
 	));
-	operatorPad.B().OnFalse(frc2::cmd::Parallel(
+	operatorPad.B().OnFalse(frc2::cmd::Sequence(
+		superStructure.superStructureCommand(SuperStructureConstants::ClosedState),
 		storage.storageCommand(StorageConstants::StopVolts),
 		intake.intakeCommand(IntakeConstants::StopVolts)
 	));
@@ -152,8 +148,8 @@ void RobotContainer::ConfigOperatorBindings() {
 	operatorPad.leftTriggerOnly().WhileTrue(storage.storageCommand(StorageConstants::ScoreVolts));
 	operatorPad.leftTriggerOnly().OnFalse(storage.storageCommand(StorageConstants::StopVolts));
 
-	operatorPad.rightBumperOnly().WhileTrue(SpeakerCommand(&superStructure, &shooter));
-	operatorPad.rightBumperOnly().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
+	// operatorPad.rightBumperOnly().WhileTrue(SpeakerCommand(&superStructure, &shooter));
+	// operatorPad.rightBumperOnly().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
 	operatorPad.A().WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake, true));
 	operatorPad.A().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
@@ -190,7 +186,7 @@ void RobotContainer::ConfigOperatorBindings() {
 	// );
 
 	operatorPad.rightDpad().OnTrue(superStructure.superStructureCommand({ 90, 0 }));
-	operatorPad.rightDpad().OnFalse(superStructure.superStructureCommand(SuperStructureConstants::GroundGrabState));
+	operatorPad.rightDpad().OnFalse(superStructure.superStructureCommand(SuperStructureConstants::ClosedState));
 
 }
 
@@ -198,15 +194,15 @@ void RobotContainer::ConfigDefaultCommands() {
 
 	// leds.SetDefaultCommand(BlinkEffect(&leds, "all", { 255, 0, 255 }, 1_s).IgnoringDisable(true));
 
-	/*chassis.SetDefaultCommand(frc2::cmd::Run([&] {
-		chassis.setFieldRelative(
-			units::meters_per_second_t{ Utils::ApplyAxisFilter(driverPad.GetLeftY()) * ChassisConstants::MaxModuleSpeed },
-			units::meters_per_second_t{ Utils::ApplyAxisFilter(driverPad.GetLeftX()) * ChassisConstants::MaxModuleSpeed },
-			units::radians_per_second_t{ Utils::ApplyAxisFilter(-driverPad.getTwist()) * ChassisConstants::MaxAngularSpeed }
-		);
-	}, { &chassis }).BeforeStarting([&] {
-		chassis.setAlliance();
-	}));*/
+	// chassis.SetDefaultCommand(frc2::cmd::Run([&] {
+	// 	chassis.driveFieldRelative(
+	// 		{
+	// 			units::meters_per_second_t{ Utils::ApplyAxisFilter(driverPad.GetLeftY()) * ChassisConstants::MaxModuleSpeed },
+	// 			units::meters_per_second_t{ Utils::ApplyAxisFilter(driverPad.GetLeftX()) * ChassisConstants::MaxModuleSpeed },
+	// 			units::radians_per_second_t{ Utils::ApplyAxisFilter(-driverPad.getTwist()) * ChassisConstants::MaxAngularSpeed }
+	// 		}
+	// 	);
+	// };
 
 	// supportArms.SetDefaultCommand(supportArms.freeArmsCommand(25.00).Repeatedly());
 }
@@ -215,7 +211,7 @@ void RobotContainer::ConfigDefaultCommands() {
 void RobotContainer::UpdateTelemetry() {
 	superStructure.shuffleboardPeriodic();
 	// //chassis.shuffleboardPeriodic();
-	// storage.shuffleboardPeriodic();
-	// intake.shuffleboardPeriodic();
+	storage.shuffleboardPeriodic();
+	intake.shuffleboardPeriodic();
 	// shooter.shuffleboardPeriodic();
 }
