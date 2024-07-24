@@ -6,7 +6,7 @@
 
 ClosedLoopRotationHelper::ClosedLoopRotationHelper() {
 	controller.EnableContinuousInput(-180_deg, 180_deg);
-	controller.SetTolerance(2_deg, 2_deg);
+	controller.SetTolerance(2_deg);
 };
 
 void ClosedLoopRotationHelper::setCurrentAngle(units::degree_t position) {

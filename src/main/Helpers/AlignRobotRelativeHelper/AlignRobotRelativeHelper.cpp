@@ -5,7 +5,7 @@
 #include "AlignRobotRelativeHelper.h"
 
 AlignRobotRelativeHelper::AlignRobotRelativeHelper() {
-	controller.SetTolerance(1_deg, 1_deg);
+	controller.SetTolerance(1_deg);
 };
 
 void AlignRobotRelativeHelper::setCurrentAngle(units::degree_t position) {
