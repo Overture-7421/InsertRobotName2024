@@ -58,7 +58,7 @@ frc2::CommandPtr AlignToTrackedObjectFieldOriented(Chassis* chassis, photon::Pho
 		double yaw = target.GetYaw();
 		frc::Pose2d targetPose{ distance * std::cos(yaw), distance * std::sin(yaw), 0_deg };
 		frc::Pose2d currentRobotPose = chassis->getEstimatedPose();
-		targetPose = targetPose.RelativeTo(AllignToNoteConstants::CameraOffset).RelativeTo(currentRobotPose);
+		targetPose = targetPose.RelativeTo(AllignToNoteConstants::CameraOffset.ToPose2d()).RelativeTo(currentRobotPose);
 
 		alignController.setTargetPosition(targetPose.X(), targetPose.Y());
 

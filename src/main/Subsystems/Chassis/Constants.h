@@ -12,8 +12,8 @@ namespace ChassisConstants {
 	const static units::meter_t DriveBaseRadius = 0.3732276_m;
 	const static units::meter_t WheelDiameter = 0.1016_m * 0.92875809000609675765430314087843;
 
-	const static frc::Translation2d FrontLeftModuleTranslation = { 7.506890_in, 10.375_in };
-	const static frc::Translation2d FrontRightModuleTranslation = { 7.506890_in, -10.375_in };
-	const static frc::Translation2d BackLeftModuleTranslation = { -13.243110_in, 10.375_in };
-	const static frc::Translation2d BackRightModuleTranslation = { -13.243110_in, -10.375_in };
+	const static frc::Translation2d FrontLeftModuleTranslation = { 7.625_in, 10.375_in };
+	const static frc::Translation2d FrontRightModuleTranslation = { 7.625_in, -10.375_in };
+	const static frc::Translation2d BackLeftModuleTranslation = { -13.125_in, 10.375_in };
+	const static frc::Translation2d BackRightModuleTranslation = { -13.125_in, -10.375_in };
 };
