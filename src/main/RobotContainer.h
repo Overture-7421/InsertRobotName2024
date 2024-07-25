@@ -59,7 +59,7 @@ private:
 	SuperStructure superStructure;
 	Storage storage;
 	Shooter shooter;
-	// Chassis chassis;
+	Chassis chassis;
 	// SupportArms supportArms;
 
 	// Helpers
