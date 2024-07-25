@@ -27,6 +27,7 @@ class SupportArms : public frc2::SubsystemBase {
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
-  frc::Servo servo {9};
+  frc::Servo leftServo {9};
+  frc::Servo rightServo {10};
 
 };

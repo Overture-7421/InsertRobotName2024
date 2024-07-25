@@ -7,7 +7,8 @@
 SupportArms::SupportArms() {};
 
 void SupportArms::SetAngle(double angle) {
-	servo.SetAngle(angle);
+	leftServo.SetAngle(angle);
+	rightServo.SetAngle(angle);
 };
 
 void SupportArms::Periodic() {};
