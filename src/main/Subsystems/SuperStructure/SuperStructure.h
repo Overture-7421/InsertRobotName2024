@@ -94,14 +94,14 @@ private:
 							std::nullopt},
 		frc2::sysid::Mechanism{
 			[this](units::volt_t driveVoltage) {
-				lowerRightMotor.SetVoltage(driveVoltage);
+				lowerLeftMotor.SetVoltage(driveVoltage);
 			},
 			[this](frc::sysid::SysIdRoutineLog* log) {
 
 			log->Motor("SuperStructureLower")
-				.voltage(lowerRightMotor.GetMotorVoltage().GetValue())
-				.position(lowerRightMotor.GetPosition().GetValue())
-				.velocity(lowerRightMotor.GetVelocity().GetValue());
+				.voltage(lowerLeftMotor.GetMotorVoltage().GetValue())
+				.position(lowerLeftMotor.GetPosition().GetValue())
+				.velocity(lowerLeftMotor.GetVelocity().GetValue());
 			},
 			this} };
 
