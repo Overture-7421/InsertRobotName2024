@@ -76,10 +76,10 @@ protected:
 
 private:
 #ifndef __FRC_ROBORIO__
-	SwerveModule backRight{ 5, 6, 11, -90_deg, "BackRightModule", "OverCANivore" };
-	SwerveModule backLeft{ 7, 8, 12, -90_deg, "BackLeftModule", "OverCANivore" };
-	SwerveModule frontLeft{ 1, 2, 9, -90_deg, "FrontLeftModule", "OverCANivore" };
-	SwerveModule frontRight{ 3, 4, 10, -90_deg, "FrontRightModule", "OverCANivore" };
+	SwerveModule backRight{ 1, 2, 9, 0_deg, "BackRightModule", "OverCANivore" };
+	SwerveModule backLeft{ 3, 4, 10, 0_deg, "BackLeftModule", "OverCANivore" };
+	SwerveModule frontLeft{ 5, 6, 11, 0_deg, "FrontLeftModule", "OverCANivore" };
+	SwerveModule frontRight{ 7, 8, 12, 0_deg, "FrontRightModule", "OverCANivore" };
 #else
 	SwerveModule backRight{ 1, 2, 9, 	-152.578125_deg + 180_deg, "BackRightModule", "OverCANivore" };
 	SwerveModule backLeft{ 3, 4, 10, 	-163.4765625_deg + 180_deg, "BackLeftModule", "OverCANivore" };
