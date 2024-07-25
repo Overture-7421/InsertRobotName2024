@@ -52,6 +52,7 @@ private:
 	void ConfigDriverBindings();
 	void ConfigOperatorBindings();
 	void ConfigDefaultCommands();
+	void ConfigCharacterizationBindings();
 
 	// Subsystems
 	Intake intake;
@@ -85,6 +86,7 @@ private:
 
 	Gamepad driverPad{ 0, 0.1, 0.2 };
 	Gamepad operatorPad{ 1, 0.1, 0.2 };
+	Gamepad characterizationPad{ 2, 0.1, 0.2 };
 
 	// LED Triggers
 	// frc2::Trigger noteOnStorage{ [this] {return storage.isNoteOnForwardSensor();} };

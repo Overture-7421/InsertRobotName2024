@@ -29,6 +29,4 @@ void Intake::Periodic() {}
 void Intake::shuffleboardPeriodic() {
 	voltage.Append(intakeMotorLeft.GetMotorVoltage().GetValueAsDouble());
 	currentLeft.Append(intakeMotorLeft.GetSupplyCurrent().GetValueAsDouble());
-
-	frc::SmartDashboard::PutNumber("Intake/CurrentLeft", intakeMotorLeft.GetSupplyCurrent().GetValueAsDouble());
 }

@@ -49,7 +49,8 @@ RobotContainer::RobotContainer() {
 	// frc::SmartDashboard::PutData("Auto Chooser", &autoChooser);
 
 	// ConfigureBindings();
-	ConfigOperatorBindings();
+	// ConfigOperatorBindings();
+	ConfigCharacterizationBindings();
 }
 
 void RobotContainer::ConfigureBindings() {
@@ -163,8 +164,7 @@ void RobotContainer::ConfigOperatorBindings() {
 	operatorPad.upDpad().OnTrue(
 		frc2::cmd::RunOnce([] {
 		VisionSpeakerCommand::SetUpperAngleOffset(VisionSpeakerCommand::GetUpperAngleOffset() - 0.5);
-	})
-	);
+	}));
 
 	// operatorPad.downDpad().OnTrue(
 	// 	BlinkEffect(&leds, "all", { 0, 255, 255 }, 0.05_s).WithTimeout(0.2_s)
@@ -173,8 +173,7 @@ void RobotContainer::ConfigOperatorBindings() {
 	operatorPad.downDpad().OnTrue(
 		frc2::cmd::RunOnce([] {
 		VisionSpeakerCommand::SetUpperAngleOffset(VisionSpeakerCommand::GetUpperAngleOffset() + 0.5);
-	})
-	);
+	}));
 
 	// operatorPad.leftDpad().OnTrue(
 	// 	frc2::cmd::Parallel(
@@ -207,11 +206,18 @@ void RobotContainer::ConfigDefaultCommands() {
 	// supportArms.SetDefaultCommand(supportArms.freeArmsCommand(25.00).Repeatedly());
 }
 
+void RobotContainer::ConfigCharacterizationBindings() {
+	characterizationPad.A().WhileTrue(shooter.sysIdQuasistatic(frc2::sysid::Direction::kForward));
+	characterizationPad.B().WhileTrue(shooter.sysIdQuasistatic(frc2::sysid::Direction::kReverse));
+	characterizationPad.X().WhileTrue(shooter.sysIdDynamic(frc2::sysid::Direction::kForward));
+	characterizationPad.Y().WhileTrue(shooter.sysIdDynamic(frc2::sysid::Direction::kReverse));
+}
+
 
 void RobotContainer::UpdateTelemetry() {
-	superStructure.shuffleboardPeriodic();
+	// superStructure.shuffleboardPeriodic();
 	// //chassis.shuffleboardPeriodic();
-	storage.shuffleboardPeriodic();
-	intake.shuffleboardPeriodic();
-	// shooter.shuffleboardPeriodic();
+	// storage.shuffleboardPeriodic();
+	// intake.shuffleboardPeriodic();
+	shooter.shuffleboardPeriodic();
 }

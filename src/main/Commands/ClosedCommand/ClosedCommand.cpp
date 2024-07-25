@@ -9,10 +9,10 @@
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 frc2::CommandPtr ClosedCommand(SuperStructure* superStructure, Intake* intake, Storage* storage, Shooter* shooter) {
 
-	return frc2::cmd::Deadline(
+	return frc2::cmd::Parallel(
 		storage->storageCommand(StorageConstants::StopVolts),
 		intake->intakeCommand(IntakeConstants::StopVolts),
 		shooter->shooterCommand(ShooterConstants::IdleSpeed),
-		superStructure->superStructureCommand(SuperStructureConstants::GroundGrabState)
+		superStructure->superStructureCommand(SuperStructureConstants::ClosedState)
 	);
 }
