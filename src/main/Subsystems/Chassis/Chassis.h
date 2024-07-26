@@ -81,10 +81,10 @@ private:
 	SwerveModule frontLeft{ 5, 6, 11, 0_deg, "FrontLeftModule", "OverCANivore" };
 	SwerveModule frontRight{ 7, 8, 12, 0_deg, "FrontRightModule", "OverCANivore" };
 #else
-	SwerveModule backRight{ 1, 2, 9, 	-152.578125_deg + 180_deg, "BackRightModule", "OverCANivore" };
-	SwerveModule backLeft{ 3, 4, 10, 	-163.4765625_deg + 180_deg, "BackLeftModule", "OverCANivore" };
-	SwerveModule frontLeft{ 5, 6, 11, 	-159.345703125_deg, "FrontLeftModule", "OverCANivore" };
-	SwerveModule frontRight{ 7, 8, 12, 	133.2421875_deg + 180_deg, "FrontRightModule", "OverCANivore" };
+	SwerveModule backRight{ 1, 2, 9, 0.078857421875_tr, "BackRightModule", "OverCANivore" };
+	SwerveModule backLeft{ 3, 4, 10, 0.060546875_tr, "BackLeftModule", "OverCANivore" };
+	SwerveModule frontLeft{ 5, 6, 11, -0.4482421875_tr, "FrontLeftModule", "OverCANivore" };
+	SwerveModule frontRight{ 7, 8, 12, -0.133544921875_tr, "FrontRightModule", "OverCANivore" };
 #endif
 
 	OverPigeon chassisPigeon{ 13, "OverCANivore" };
