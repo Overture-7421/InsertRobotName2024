@@ -6,6 +6,8 @@
 
 Chassis::Chassis() : SwerveChassis() {
 	configureSwerveBase();
+
+	resetHeading();
 }
 
 void Chassis::setAllianceColor() {

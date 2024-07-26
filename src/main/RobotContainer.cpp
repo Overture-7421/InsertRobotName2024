@@ -212,10 +212,10 @@ void RobotContainer::ConfigDefaultCommands() {
 }
 
 void RobotContainer::ConfigCharacterizationBindings() {
-	characterizationPad.A().WhileTrue(superStructure.sysIdQuasistaticLower(frc2::sysid::Direction::kForward));
-	characterizationPad.B().WhileTrue(superStructure.sysIdQuasistaticLower(frc2::sysid::Direction::kReverse));
-	characterizationPad.X().WhileTrue(superStructure.sysIdDynamicLower(frc2::sysid::Direction::kForward));
-	characterizationPad.Y().WhileTrue(superStructure.sysIdDynamicLower(frc2::sysid::Direction::kReverse));
+	characterizationPad.A().WhileTrue(chassis.SysIdQuadstatic(frc2::sysid::Direction::kForward));
+	characterizationPad.B().WhileTrue(chassis.SysIdQuadstatic(frc2::sysid::Direction::kReverse));
+	characterizationPad.X().WhileTrue(chassis.SysIdDinamic(frc2::sysid::Direction::kForward));
+	characterizationPad.Y().WhileTrue(chassis.SysIdDinamic(frc2::sysid::Direction::kReverse));
 }
 
 void RobotContainer::UpdateTelemetry() {

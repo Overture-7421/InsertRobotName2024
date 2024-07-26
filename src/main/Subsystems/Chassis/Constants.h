@@ -22,7 +22,7 @@ namespace ChassisConstants {
 
 	static ModuleConfig GetFrontLeftModuleConfig() {
 		static ModuleConfig config{
-			{0.22436_V, 2.0254_V / 1_mps, 0.2019_V / 1_mps_sq}
+			{0.079568_V, 2.1328_V / 1_mps, 0.18437_V / 1_mps_sq}
 		};
 
 		config.DrivedId = 6;
@@ -43,7 +43,7 @@ namespace ChassisConstants {
 
 	static ModuleConfig GetFrontRightModuleConfig() {
 		static ModuleConfig config{
-			{0.22436_V, 2.0254_V / 1_mps, 0.2019_V / 1_mps_sq}
+			{0.059944_V, 2.2414_V / 1_mps, 0.16932_V / 1_mps_sq}
 		};
 
 		config.DrivedId = 8;
@@ -64,7 +64,7 @@ namespace ChassisConstants {
 
 	static ModuleConfig GetBackLeftModuleConfig() {
 		static ModuleConfig config{
-			{0.22436_V, 2.0254_V / 1_mps, 0.2019_V / 1_mps_sq}
+			{0.010764_V, 2.0759_V / 1_mps, 0.45385_V / 1_mps_sq}
 		};
 
 		config.DrivedId = 4;
@@ -85,7 +85,7 @@ namespace ChassisConstants {
 
 	static ModuleConfig GetBackRightModuleConfig() {
 		static ModuleConfig config{
-			{0.22436_V, 2.0254_V / 1_mps, 0.2019_V / 1_mps_sq}
+			{0.20934_V, 2.0879_V / 1_mps, 0.098433_V / 1_mps_sq}
 		};
 
 		config.DrivedId = 2;
