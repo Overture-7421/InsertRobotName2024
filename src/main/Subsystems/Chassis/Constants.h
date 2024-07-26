@@ -25,17 +25,17 @@ namespace ChassisConstants {
 			{0.22436_V, 2.0254_V / 1_mps, 0.2019_V / 1_mps_sq}
 		};
 
-		config.DrivedId = 5;
-		config.TurnId = 6;
+		config.DrivedId = 6;
+		config.TurnId = 5;
 		config.CanCoderId = 11;
 		config.Offset = 0_deg;
 		config.ModuleName = "FrontLeftModule";
 		config.CanBus = ChassisConstants::CanBus;
 		config.DriveNeutralMode = ControllerNeutralMode::Brake;
 		config.TurnNeutralMode = ControllerNeutralMode::Coast;
-		config.DriveGearRatio =  ChassisConstants::DriveGearRatio;
-		config.TurnGearRatio =  ChassisConstants::TurnGearRatio;
-		config.WheelDiameter =  ChassisConstants::WheelDiameter;
+		config.DriveGearRatio = ChassisConstants::DriveGearRatio;
+		config.TurnGearRatio = ChassisConstants::TurnGearRatio;
+		config.WheelDiameter = ChassisConstants::WheelDiameter;
 		config.kP = 53.0;
 
 		return config;
@@ -46,17 +46,17 @@ namespace ChassisConstants {
 			{0.22436_V, 2.0254_V / 1_mps, 0.2019_V / 1_mps_sq}
 		};
 
-		config.DrivedId = 7;
-		config.TurnId = 8;
+		config.DrivedId = 8;
+		config.TurnId = 7;
 		config.CanCoderId = 12;
 		config.Offset = 0_deg;
 		config.ModuleName = "FrontRightModule";
 		config.CanBus = ChassisConstants::CanBus;
 		config.DriveNeutralMode = ControllerNeutralMode::Brake;
 		config.TurnNeutralMode = ControllerNeutralMode::Coast;
-		config.DriveGearRatio =  ChassisConstants::DriveGearRatio;
-		config.TurnGearRatio =  ChassisConstants::TurnGearRatio;
-		config.WheelDiameter =  ChassisConstants::WheelDiameter;
+		config.DriveGearRatio = ChassisConstants::DriveGearRatio;
+		config.TurnGearRatio = ChassisConstants::TurnGearRatio;
+		config.WheelDiameter = ChassisConstants::WheelDiameter;
 		config.kP = 53.0;
 
 		return config;
@@ -67,17 +67,17 @@ namespace ChassisConstants {
 			{0.22436_V, 2.0254_V / 1_mps, 0.2019_V / 1_mps_sq}
 		};
 
-		config.DrivedId = 3;
-		config.TurnId = 4;
+		config.DrivedId = 4;
+		config.TurnId = 3;
 		config.CanCoderId = 10;
 		config.Offset = 0_deg;
 		config.ModuleName = "BackLeftModule";
 		config.CanBus = ChassisConstants::CanBus;
 		config.DriveNeutralMode = ControllerNeutralMode::Brake;
 		config.TurnNeutralMode = ControllerNeutralMode::Coast;
-		config.DriveGearRatio =  ChassisConstants::DriveGearRatio;
-		config.TurnGearRatio =  ChassisConstants::TurnGearRatio;
-		config.WheelDiameter =  ChassisConstants::WheelDiameter;
+		config.DriveGearRatio = ChassisConstants::DriveGearRatio;
+		config.TurnGearRatio = ChassisConstants::TurnGearRatio;
+		config.WheelDiameter = ChassisConstants::WheelDiameter;
 		config.kP = 53.0;
 
 		return config;
@@ -88,17 +88,17 @@ namespace ChassisConstants {
 			{0.22436_V, 2.0254_V / 1_mps, 0.2019_V / 1_mps_sq}
 		};
 
-		config.DrivedId = 1;
-		config.TurnId = 2;
+		config.DrivedId = 2;
+		config.TurnId = 1;
 		config.CanCoderId = 9;
 		config.Offset = 0_deg;
 		config.ModuleName = "BackRightModule";
 		config.CanBus = ChassisConstants::CanBus;
 		config.DriveNeutralMode = ControllerNeutralMode::Brake;
 		config.TurnNeutralMode = ControllerNeutralMode::Coast;
-		config.DriveGearRatio =  ChassisConstants::DriveGearRatio;
-		config.TurnGearRatio =  ChassisConstants::TurnGearRatio;
-		config.WheelDiameter =  ChassisConstants::WheelDiameter;
+		config.DriveGearRatio = ChassisConstants::DriveGearRatio;
+		config.TurnGearRatio = ChassisConstants::TurnGearRatio;
+		config.WheelDiameter = ChassisConstants::WheelDiameter;
 		config.kP = 53.0;
 
 		return config;

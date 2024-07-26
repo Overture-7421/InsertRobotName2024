@@ -198,12 +198,15 @@ void RobotContainer::ConfigDefaultCommands() {
 	chassis.SetDefaultCommand(frc2::cmd::Run([&] {
 		chassis.driveFieldRelative(
 			{
-				units::meters_per_second_t{ Utils::ApplyAxisFilter(driverPad.GetLeftY()) * ChassisConstants::MaxModuleSpeed },
-				units::meters_per_second_t{ Utils::ApplyAxisFilter(driverPad.GetLeftX()) * ChassisConstants::MaxModuleSpeed },
-				units::radians_per_second_t{ Utils::ApplyAxisFilter(-driverPad.getTwist()) * ChassisConstants::MaxAngularSpeed }
+				units::meters_per_second_t{ Utils::ApplyAxisFilter(driverPad.GetLeftY()) * ChassisConstants::MaxModuleSpeed.value() },
+				units::meters_per_second_t{ Utils::ApplyAxisFilter(driverPad.GetLeftX()) * ChassisConstants::MaxModuleSpeed.value() },
+				units::radians_per_second_t{ Utils::ApplyAxisFilter(-driverPad.getTwist()) * ChassisConstants::MaxAngularSpeed.value() }
 			}
 		);
-	}, { &chassis }));
+	}, { &chassis }).BeforeStarting(
+		frc2::cmd::RunOnce([&] {
+		chassis.setAllianceColor();
+	})));
 
 	// supportArms.SetDefaultCommand(supportArms.freeArmsCommand(25.00).Repeatedly());
 }
@@ -216,7 +219,7 @@ void RobotContainer::ConfigCharacterizationBindings() {
 }
 
 void RobotContainer::UpdateTelemetry() {
-	superStructure.shuffleboardPeriodic();
+	// superStructure.shuffleboardPeriodic();
 	chassis.shuffleboardPeriodic();
 	// storage.shuffleboardPeriodic();
 	// intake.shuffleboardPeriodic();
