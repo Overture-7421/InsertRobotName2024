@@ -11,7 +11,7 @@ namespace ChassisConstants {
 	const static units::meters_per_second_t MaxModuleSpeed = 5.39_mps;
 	const static units::radians_per_second_t MaxAngularSpeed = 1.5_tps;
 	const static units::meter_t DriveBaseRadius = 0.3732276_m;
-	const static units::meter_t WheelDiameter = 0.1016_m * 0.92875809000609675765430314087843;
+	const static units::meter_t WheelDiameter = 4_in;
 
 	const static frc::Translation2d FrontLeftModuleTranslation = { 7.625_in, 10.375_in };
 	const static frc::Translation2d FrontRightModuleTranslation = { 7.625_in, -10.375_in };
