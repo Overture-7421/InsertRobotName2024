@@ -16,15 +16,15 @@ void Robot::RobotInit() {
 
 #ifndef __FRC_ROBORIO__
 	simMotorManager->Init({
-	  {1, "Sample Robot/motors/back_right_drive"},
-	  {3, "Sample Robot/motors/back_left_drive"},
-	  {5, "Sample Robot/motors/front_left_drive"},
-	  {7, "Sample Robot/motors/front_right_drive"},
+	  {2, "Sample Robot/motors/back_right_drive"},
+	  {4, "Sample Robot/motors/back_left_drive"},
+	  {6, "Sample Robot/motors/front_left_drive"},
+	  {8, "Sample Robot/motors/front_right_drive"},
 
-	  {2, "Sample Robot/motors/back_right_rotation"},
-	  {4, "Sample Robot/motors/back_left_rotation"},
-	  {6, "Sample Robot/motors/front_left_rotation"},
-	  {8, "Sample Robot/motors/front_right_rotation"},
+	  {1, "Sample Robot/motors/back_right_rotation"},
+	  {3, "Sample Robot/motors/back_left_rotation"},
+	  {5, "Sample Robot/motors/front_left_rotation"},
+	  {7, "Sample Robot/motors/front_right_rotation"},
 
 	});
 
