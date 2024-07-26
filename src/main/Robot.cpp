@@ -48,7 +48,7 @@ void Robot::RobotInit() {
 }
 
 void Robot::RobotPeriodic() {
-	// m_container.UpdateTelemetry();
+	m_container.UpdateTelemetry();
 }
 
 void Robot::DisabledInit() {

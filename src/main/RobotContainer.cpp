@@ -49,7 +49,7 @@ RobotContainer::RobotContainer() {
 	// frc::SmartDashboard::PutData("Auto Chooser", &autoChooser);
 
 	// ConfigureBindings();
-	// ConfigDriverBindings();
+	ConfigDriverBindings();
 	// ConfigOperatorBindings();
 	ConfigDefaultCommands();
 	ConfigCharacterizationBindings();
@@ -101,7 +101,7 @@ void RobotContainer::ConfigDriverBindings() {
 	// driverPad.rightBumperOnly().WhileTrue(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &targetProvider, &operatorPad).ToPtr());
 	// driverPad.rightBumperOnly().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
-	// driverPad.Back().OnTrue(chassis.resetHeading());
+	driverPad.Back().OnTrue(frc2::cmd::RunOnce([&] { chassis.resetHeading(); }));
 
 	// driverPad.Y().WhileTrue(AutoClimb(&chassis, &superStructure, &supportArms, &storage, &shooter, &operatorPad));
 	// driverPad.Y().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
@@ -198,9 +198,9 @@ void RobotContainer::ConfigDefaultCommands() {
 	chassis.SetDefaultCommand(frc2::cmd::Run([&] {
 		chassis.driveFieldRelative(
 			{
-				units::meters_per_second_t{ Utils::ApplyAxisFilter(driverPad.GetLeftY()) * ChassisConstants::MaxModuleSpeed.value() },
-				units::meters_per_second_t{ Utils::ApplyAxisFilter(driverPad.GetLeftX()) * ChassisConstants::MaxModuleSpeed.value() },
-				units::radians_per_second_t{ Utils::ApplyAxisFilter(-driverPad.getTwist()) * ChassisConstants::MaxAngularSpeed.value() }
+				units::meters_per_second_t{ Utils::ApplyAxisFilter(-driverPad.GetLeftY()) * ChassisConstants::MaxModuleSpeed.value() },
+				units::meters_per_second_t{ Utils::ApplyAxisFilter(-driverPad.GetLeftX()) * ChassisConstants::MaxModuleSpeed.value() },
+				units::radians_per_second_t{ Utils::ApplyAxisFilter(driverPad.getTwist()) * ChassisConstants::MaxAngularSpeed.value() }
 			}
 		);
 	}, { &chassis }).BeforeStarting(
@@ -224,4 +224,6 @@ void RobotContainer::UpdateTelemetry() {
 	// storage.shuffleboardPeriodic();
 	// intake.shuffleboardPeriodic();
 	// shooter.shuffleboardPeriodic();
+
+	frc::SmartDashboard::PutNumber("Debug/Heading", chassis.getEstimatedPose().Rotation().Degrees().value());
 }
