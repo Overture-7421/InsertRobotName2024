@@ -75,17 +75,10 @@ protected:
 	}
 
 private:
-#ifndef __FRC_ROBORIO__
-	SwerveModule backRight{ 1, 2, 9, 0_deg, "BackRightModule", "OverCANivore" };
-	SwerveModule backLeft{ 3, 4, 10, 0_deg, "BackLeftModule", "OverCANivore" };
-	SwerveModule frontLeft{ 5, 6, 11, 0_deg, "FrontLeftModule", "OverCANivore" };
-	SwerveModule frontRight{ 7, 8, 12, 0_deg, "FrontRightModule", "OverCANivore" };
-#else
-	SwerveModule backRight{ 1, 2, 9, 0.078857421875_tr, "BackRightModule", "OverCANivore" };
-	SwerveModule backLeft{ 3, 4, 10, 0.060546875_tr, "BackLeftModule", "OverCANivore" };
-	SwerveModule frontLeft{ 5, 6, 11, -0.4482421875_tr, "FrontLeftModule", "OverCANivore" };
-	SwerveModule frontRight{ 7, 8, 12, -0.133544921875_tr, "FrontRightModule", "OverCANivore" };
-#endif
+	SwerveModule frontLeft{ChassisConstants::GetFrontLeftModuleConfig()};
+	SwerveModule frontRight{ChassisConstants::GetFrontRightModuleConfig()};
+	SwerveModule backLeft{ChassisConstants::GetBackLeftModuleConfig()};
+	SwerveModule backRight{ChassisConstants::GetBackRightModuleConfig()};
 
 	OverPigeon chassisPigeon{ 13, "OverCANivore" };
 
