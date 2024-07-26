@@ -21,10 +21,10 @@ void Robot::RobotInit() {
 	  {5, "Sample Robot/motors/front_left_drive"},
 	  {7, "Sample Robot/motors/front_right_drive"},
 
-	  {2, "Sample Robot/motors/back_right"},
-	  {4, "Sample Robot/motors/back_left"},
-	  {6, "Sample Robot/motors/front_left"},
-	  {8, "Sample Robot/motors/front_right"},
+	  {2, "Sample Robot/motors/back_right_rotation"},
+	  {4, "Sample Robot/motors/back_left_rotation"},
+	  {6, "Sample Robot/motors/front_left_rotation"},
+	  {8, "Sample Robot/motors/front_right_rotation"},
 
 	});
 
