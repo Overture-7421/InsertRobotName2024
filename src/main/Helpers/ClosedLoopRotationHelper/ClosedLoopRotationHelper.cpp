@@ -6,7 +6,7 @@
 
 ClosedLoopRotationHelper::ClosedLoopRotationHelper() {
 	controller.EnableContinuousInput(-180_deg, 180_deg);
-	controller.SetTolerance(2_deg);
+	controller.SetTolerance(3_deg);
 	controller.SetIZone(3);
 };
 
@@ -17,6 +17,11 @@ void ClosedLoopRotationHelper::setTargetAngle(units::radian_t goal, units::radia
 }
 
 void ClosedLoopRotationHelper::alterSpeed(frc::ChassisSpeeds& inputSpeed) {
+
+	if (frc::DriverStation::GetAlliance() == frc::DriverStation::Alliance::kRed) {
+		m_TargetAngle -= 180_deg;
+	}
+
 	double out = controller.Calculate(m_CurrentAnlge, m_TargetAngle);
 
 	if (controller.AtGoal()) {

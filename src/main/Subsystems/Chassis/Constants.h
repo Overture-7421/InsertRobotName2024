@@ -33,7 +33,7 @@ namespace ChassisConstants {
 #ifndef __FRC_ROBORIO__
 		config.Offset = -90_deg;
 #else
-		config.Offset = 0.057373046875_tr;
+		config.Offset = -0.451416015625_tr;
 #endif
 
 		config.CanBus = ChassisConstants::CanBus;
@@ -60,7 +60,7 @@ namespace ChassisConstants {
 #ifndef __FRC_ROBORIO__
 		config.Offset = -90_deg;
 #else
-	config.Offset = 0.377197265625_tr;
+		config.Offset = -0.126953125_tr;
 #endif
 
 		config.CanBus = ChassisConstants::CanBus;
@@ -87,7 +87,7 @@ namespace ChassisConstants {
 #ifndef __FRC_ROBORIO__
 		config.Offset = -90_deg;
 #else
-		config.Offset =  -0.451171875_tr;
+		config.Offset = 0.04443359375_tr;
 #endif
 
 		config.CanBus = ChassisConstants::CanBus;
@@ -113,7 +113,7 @@ namespace ChassisConstants {
 #ifndef __FRC_ROBORIO__
 		config.Offset = -90_deg;
 #else
-		config.Offset = -0.42041015625_tr;
+		config.Offset = 0.081787109375_tr;
 #endif
 
 		config.ModuleName = "BackRightModule";

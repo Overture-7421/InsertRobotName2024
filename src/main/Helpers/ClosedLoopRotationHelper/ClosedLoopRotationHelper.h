@@ -10,6 +10,7 @@
 #include <OvertureLib/Robots/OverRobot/RobotConstants.h>
 #include <units/angular_acceleration.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/DriverStation.h>
 
 class ClosedLoopRotationHelper : public SpeedsHelper {
 public:
