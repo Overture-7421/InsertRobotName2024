@@ -28,8 +28,14 @@ namespace ChassisConstants {
 		config.DrivedId = 6;
 		config.TurnId = 5;
 		config.CanCoderId = 11;
-		config.Offset = 0.057373046875_tr;
 		config.ModuleName = "FrontLeftModule";
+
+#ifndef __FRC_ROBORIO__
+		config.Offset = -90_deg;
+#else
+		config.Offset = 0.057373046875_tr;
+#endif
+
 		config.CanBus = ChassisConstants::CanBus;
 		config.DriveNeutralMode = ControllerNeutralMode::Brake;
 		config.TurnNeutralMode = ControllerNeutralMode::Coast;
@@ -49,8 +55,14 @@ namespace ChassisConstants {
 		config.DrivedId = 8;
 		config.TurnId = 7;
 		config.CanCoderId = 12;
-		config.Offset = 0.377197265625_tr;
 		config.ModuleName = "FrontRightModule";
+
+#ifndef __FRC_ROBORIO__
+		config.Offset = -90_deg;
+#else
+	config.Offset = 0.377197265625_tr;
+#endif
+
 		config.CanBus = ChassisConstants::CanBus;
 		config.DriveNeutralMode = ControllerNeutralMode::Brake;
 		config.TurnNeutralMode = ControllerNeutralMode::Coast;
@@ -70,8 +82,14 @@ namespace ChassisConstants {
 		config.DrivedId = 4;
 		config.TurnId = 3;
 		config.CanCoderId = 10;
-		config.Offset = -0.451171875_tr;
 		config.ModuleName = "BackLeftModule";
+
+#ifndef __FRC_ROBORIO__
+		config.Offset = -90_deg;
+#else
+		config.Offset =  -0.451171875_tr;
+#endif
+
 		config.CanBus = ChassisConstants::CanBus;
 		config.DriveNeutralMode = ControllerNeutralMode::Brake;
 		config.TurnNeutralMode = ControllerNeutralMode::Coast;
@@ -91,7 +109,13 @@ namespace ChassisConstants {
 		config.DrivedId = 2;
 		config.TurnId = 1;
 		config.CanCoderId = 9;
+
+#ifndef __FRC_ROBORIO__
+		config.Offset = -90_deg;
+#else
 		config.Offset = -0.42041015625_tr;
+#endif
+
 		config.ModuleName = "BackRightModule";
 		config.CanBus = ChassisConstants::CanBus;
 		config.DriveNeutralMode = ControllerNeutralMode::Brake;
