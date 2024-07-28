@@ -13,6 +13,7 @@
 #include <OvertureLib/Robots/OverContainer/OverContainer.h>
 #include <OvertureLib/Subsystems/LedsManager/LedsManager.h>
 #include <OvertureLib/Subsystems/Vision/AprilTags/AprilTags.h>
+#include <OvertureLib/Subsystems/Swerve/SpeedsHelper/HeadingSpeedsHelper/HeadingSpeedsHelper.h>
 
 #include <pathplanner/lib/auto/NamedCommands.h>
 
@@ -36,8 +37,6 @@
 #include "Commands/TabulateCommand/TabulateCommand.h"
 #include "Commands/AlignToTrackedObject/AlignToTrackedObject.h"
 #include "Commands/Climbing/Climbing.h"
-
-#include "Helpers/ClosedLoopRotationHelper/ClosedLoopRotationHelper.h"
 
 class RobotContainer : public OverContainer {
 public:
@@ -63,7 +62,7 @@ private:
 	// SupportArms supportArms;
 
 	// Helpers
-	ClosedLoopRotationHelper rotationHelper;
+	HeadingSpeedsHelper rotationHelper {{ 7, 0, 0, {18_rad_per_s , 12_rad_per_s_sq }, RobotConstants::LoopTime }, &chassis};
 
 	//Vision
 #ifndef __FRC_ROBORIO__

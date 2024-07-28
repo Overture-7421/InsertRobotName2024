@@ -8,12 +8,6 @@ Chassis::Chassis() : SwerveChassis() {
 	configureSwerveBase();
 
 	chassisPigeon.SetYaw(0_deg);
-
-	if (frc::DriverStation::GetAlliance() == frc::DriverStation::Alliance::kRed) {
-		resetHeading(180);
-		return;
-	}
-
 	resetHeading();
 }
 

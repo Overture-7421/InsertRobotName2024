@@ -31,7 +31,7 @@ namespace ChassisConstants {
 		config.ModuleName = "FrontLeftModule";
 
 #ifndef __FRC_ROBORIO__
-		config.Offset = -90_deg;
+		config.Offset = 0_deg;
 #else
 		config.Offset = -0.451416015625_tr;
 #endif
@@ -58,7 +58,7 @@ namespace ChassisConstants {
 		config.ModuleName = "FrontRightModule";
 
 #ifndef __FRC_ROBORIO__
-		config.Offset = -90_deg;
+		config.Offset = 0_deg;
 #else
 		config.Offset = -0.126953125_tr;
 #endif
@@ -85,7 +85,7 @@ namespace ChassisConstants {
 		config.ModuleName = "BackLeftModule";
 
 #ifndef __FRC_ROBORIO__
-		config.Offset = -90_deg;
+		config.Offset = 0_deg;
 #else
 		config.Offset = 0.04443359375_tr;
 #endif
@@ -111,7 +111,7 @@ namespace ChassisConstants {
 		config.CanCoderId = 9;
 
 #ifndef __FRC_ROBORIO__
-		config.Offset = -90_deg;
+		config.Offset = 0_deg;
 #else
 		config.Offset = 0.081787109375_tr;
 #endif
