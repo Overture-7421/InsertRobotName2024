@@ -9,15 +9,17 @@
 #include <OvertureLib/Subsystems/Swerve/SpeedsHelper/SpeedsHelper.h>
 #include <OvertureLib/Robots/OverRobot/RobotConstants.h>
 #include <units/angular_acceleration.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 
 class ClosedLoopRotationHelper : public SpeedsHelper {
 public:
 	ClosedLoopRotationHelper();
-	void setCurrentAngle(units::degree_t position);
+	void setTargetAngle(units::radian_t goal, units::radian_t current);
 	void alterSpeed(frc::ChassisSpeeds& inputSpeed) override;
 
 private:
 
-	frc::ProfiledPIDController<units::degree> controller{ 0.1, 0.0, 0.0, {20_deg_per_s, 40_deg_per_s_sq}, RobotConstants::LoopTime };
-	units::degree_t m_currentAngle;
+	frc::ProfiledPIDController<units::radian> controller{ 7, 0, 0, {18_rad_per_s , 12_rad_per_s_sq }, RobotConstants::LoopTime };
+	units::radian_t m_TargetAngle;
+	units::radian_t m_CurrentAnlge;
 };

@@ -84,7 +84,7 @@ private:
 	//frc::XboxController driver{ 0 };
 	//frc::XboxController opertr{ 1 };
 
-	Gamepad driverPad{ 0, 0.1, 0.2 };
+	Gamepad driverPad{ 0, 0.1, 0.1 };
 	Gamepad operatorPad{ 1, 0.1, 0.2 };
 	Gamepad characterizationPad{ 2, 0.1, 0.2 };
 

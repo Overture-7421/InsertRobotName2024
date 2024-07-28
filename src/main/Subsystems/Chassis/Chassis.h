@@ -22,7 +22,7 @@ public:
 		return chassisPigeon.GetRotation2d();
 	}
 	frc::Rotation3d getRotation3d() override {
-		return chassisPigeon.GetRotation3d();
+		return -chassisPigeon.GetRotation3d();
 	}
 
 	units::velocity::meters_per_second_t getMaxModuleSpeed() override {
@@ -75,10 +75,10 @@ protected:
 	}
 
 private:
-	SwerveModule frontLeft{ChassisConstants::GetFrontLeftModuleConfig()};
-	SwerveModule frontRight{ChassisConstants::GetFrontRightModuleConfig()};
-	SwerveModule backLeft{ChassisConstants::GetBackLeftModuleConfig()};
-	SwerveModule backRight{ChassisConstants::GetBackRightModuleConfig()};
+	SwerveModule frontLeft{ ChassisConstants::GetFrontLeftModuleConfig() };
+	SwerveModule frontRight{ ChassisConstants::GetFrontRightModuleConfig() };
+	SwerveModule backLeft{ ChassisConstants::GetBackLeftModuleConfig() };
+	SwerveModule backRight{ ChassisConstants::GetBackRightModuleConfig() };
 
 	OverPigeon chassisPigeon{ 13, "OverCANivore" };
 

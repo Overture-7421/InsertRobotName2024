@@ -7,14 +7,17 @@
 ClosedLoopRotationHelper::ClosedLoopRotationHelper() {
 	controller.EnableContinuousInput(-180_deg, 180_deg);
 	controller.SetTolerance(2_deg);
+	controller.SetIZone(3);
 };
 
-void ClosedLoopRotationHelper::setCurrentAngle(units::degree_t position) {
-	m_currentAngle = position;
+void ClosedLoopRotationHelper::setTargetAngle(units::radian_t goal, units::radian_t current) {
+	m_TargetAngle = goal;
+	m_CurrentAnlge = current;
+
 }
 
 void ClosedLoopRotationHelper::alterSpeed(frc::ChassisSpeeds& inputSpeed) {
-	double out = controller.Calculate(units::degree_t(m_currentAngle), units::degree_t(0));
+	double out = controller.Calculate(m_CurrentAnlge, m_TargetAngle);
 
 	if (controller.AtGoal()) {
 		out = 0;
