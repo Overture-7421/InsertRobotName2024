@@ -87,7 +87,9 @@ void RobotContainer::ConfigureBindings() {
 
 void RobotContainer::ConfigDriverBindings() {
 	driverPad.rightStick(0.2).WhileTrue(frc2::cmd::Run([&] {
-		rotationHelper.setTargetAngle(driverPad.getRightStickDirection());
+		rotationHelper.setTargetAngle(
+			frc::DriverStation::GetAlliance() == frc::DriverStation::Alliance::kRed ? driverPad.getRightStickDirection().RotateBy({ 180_deg }) : driverPad.getRightStickDirection()
+		);
 	}).BeforeStarting([&] {
 		chassis.enableSpeedHelper(&rotationHelper);
 	}).FinallyDo([&] {
