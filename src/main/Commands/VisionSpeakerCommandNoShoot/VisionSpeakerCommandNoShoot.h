@@ -31,11 +31,10 @@ public:
 	bool IsFinished() override;
 
 private:
-	SuperStructure* superStructure;
-	Chassis* chassis;
-	Shooter* shooter;
-	TargetProvider* targetProvider;
-	
+	SuperStructure* superStructure = nullptr;
+	Chassis* chassis = nullptr;
+	Shooter* shooter = nullptr;
+	TargetProvider* targetProvider = nullptr;
 
 	frc::Translation2d targetLocation;
 

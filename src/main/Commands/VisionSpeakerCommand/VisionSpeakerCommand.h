@@ -51,12 +51,12 @@ public:
 private:
 	frc::Timer Timer;
 
-	SuperStructure* superStructure;
-	Chassis* chassis;
-	Shooter* shooter;
+	SuperStructure* superStructure = nullptr;
+	Chassis* chassis = nullptr;
+	Shooter* shooter = nullptr;
 	frc::XboxController* joystick = nullptr;
-	Storage* storage;
-	TargetProvider* targetProvider;
+	Storage* storage = nullptr;
+	TargetProvider* targetProvider = nullptr;
 
 	bool lowerAngleInTolerance;
 	bool upperAngleInTolerance;

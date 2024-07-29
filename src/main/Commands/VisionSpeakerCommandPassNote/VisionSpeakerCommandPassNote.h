@@ -42,12 +42,12 @@ public:
 private:
 	frc::Timer Timer;
 
-	SuperStructure* superStructure;
-	Chassis* chassis;
-	Shooter* shooter;
-	Storage* storage;
+	SuperStructure* superStructure = nullptr;
+	Chassis* chassis = nullptr;
+	Shooter* shooter = nullptr;
+	Storage* storage = nullptr;
 
-	TargetProvider* targetProvider;
+	TargetProvider* targetProvider = nullptr;
 
 	bool lowerAngleInTolerance;
 	bool upperAngleInTolerance;
