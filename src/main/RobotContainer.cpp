@@ -51,7 +51,7 @@ RobotContainer::RobotContainer() {
 	ConfigDriverBindings();
 	ConfigOperatorBindings();
 	ConfigDefaultCommands();
-	// ConfigCharacterizationBindings();
+	ConfigCharacterizationBindings();
 }
 
 void RobotContainer::ConfigureBindings() {
@@ -118,7 +118,8 @@ void RobotContainer::ConfigDriverBindings() {
 
 	driverPad.A().WhileTrue(AlignToTrackedObject(&chassis, &noteTrackingCamera, &alignHelper));
 
-	// tabulate.ToggleOnTrue(TabulateCommand(&chassis, &superStructure, &shooter, &targetProvider).ToPtr());
+	//driverPad.Y().ToggleOnTrue(TabulateCommand(&chassis, &superStructure, &shooter, &targetProvider).ToPtr());
+
 }
 
 void RobotContainer::ConfigOperatorBindings() {
@@ -209,10 +210,7 @@ void RobotContainer::ConfigDefaultCommands() {
 }
 
 void RobotContainer::ConfigCharacterizationBindings() {
-	characterizationPad.A().WhileTrue(chassis.SysIdQuadstatic(frc2::sysid::Direction::kForward));
-	characterizationPad.B().WhileTrue(chassis.SysIdQuadstatic(frc2::sysid::Direction::kReverse));
-	characterizationPad.X().WhileTrue(chassis.SysIdDinamic(frc2::sysid::Direction::kForward));
-	characterizationPad.Y().WhileTrue(chassis.SysIdDinamic(frc2::sysid::Direction::kReverse));
+	//characterizationPad.A().ToggleOnTrue(TabulateCommand(&chassis, &superStructure, &shooter, &targetProvider).ToPtr());
 }
 
 void RobotContainer::UpdateTelemetry() {

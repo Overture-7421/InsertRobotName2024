@@ -56,11 +56,11 @@ SuperStructure::SuperStructure() {
 	setTargetCoord({ lowerCANCoder.getSensorAbsolutePosition() * 360.0, upperCANCoder.getSensorAbsolutePosition() * 360.0 });
 
 	// Configure Motion Magic and PID
-	lowerLeftMotor.setPIDValues(200.0, 70.0, 0.0, 0.0, 0.0);
-	lowerLeftMotor.configureMotionMagic(1.0, 6.0, 0.0);
+	lowerLeftMotor.setPIDValues(180.0, 50.0, 0.0, 0.0, 0.0);
+	lowerLeftMotor.configureMotionMagic(1.0, 4.0, 0.0);
 
-	upperMotor.setPIDValues(220.0, 70.0, 0.0, 0.0, 0.0);
-	upperMotor.configureMotionMagic(1.0, 6.0, 0.0);
+	upperMotor.setPIDValues(180.0, 70.0, 0.0, 0.0, 0.0);
+	upperMotor.configureMotionMagic(1.0, 4.0, 0.0);
 }
 
 void SuperStructure::setTargetCoord(SuperStructureState targetState) {
