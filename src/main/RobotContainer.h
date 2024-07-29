@@ -62,8 +62,7 @@ private:
 	// SupportArms supportArms;
 
 	// Helpers
-	HeadingSpeedsHelper rotationHelper{ { 7, 0, 0, {18_rad_per_s , 12_rad_per_s_sq }, RobotConstants::LoopTime }, &chassis };
-	HeadingSpeedsHelper speakerHelper{ {11.0, 0.5, 0.35, {18_rad_per_s, 18_rad_per_s_sq * 2} }, &chassis };
+	HeadingSpeedsHelper rotationHelper{ { 7, 0, 0.35, {18_rad_per_s , 18_rad_per_s_sq }, RobotConstants::LoopTime }, &chassis };
 	AlignRobotRelativeHelper alignHelper;
 	AlignFieldRelativeHelper alignController{ &chassis };
 
