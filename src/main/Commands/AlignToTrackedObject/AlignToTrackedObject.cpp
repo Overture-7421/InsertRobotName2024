@@ -2,44 +2,40 @@
 
 // TODO: Implement Helpers
 
-frc2::CommandPtr AlignToTrackedObject(Chassis* chassis, photon::PhotonCamera* camera) {
-	AlignRobotRelativeHelper alignHelper;
+frc2::CommandPtr AlignToTrackedObject(Chassis* chassis, photon::PhotonCamera* camera, AlignRobotRelativeHelper* alignHelper) {
 
-	return frc2::cmd::RunOnce([chassis, &alignHelper] {
-		chassis->disableSpeedHelper();
-		chassis->enableSpeedHelper(&alignHelper);
+	return frc2::cmd::RunOnce([chassis, alignHelper] {
+		chassis->enableSpeedHelper(alignHelper);
 	}).AndThen(frc2::cmd::Run([=]() mutable {
 
 		const auto result = camera->GetLatestResult();
 		if (!result.HasTargets()) {
-			alignHelper.setCurrentAngle(units::degree_t(0));
+			alignHelper->setCurrentAngle(units::degree_t(0));
 			return;
 		}
 
 		const auto target = result.GetTargets()[0];
-		alignHelper.setCurrentAngle(units::degree_t(target.GetYaw()));
+		alignHelper->setCurrentAngle(units::degree_t(target.GetYaw()));
 
 	})).FinallyDo([=] {
 		chassis->disableSpeedHelper();
 	});
 }
 
-frc2::CommandPtr AlignToTrackedObjectFieldOriented(Chassis* chassis, photon::PhotonCamera* camera) {
+frc2::CommandPtr AlignToTrackedObjectFieldOriented(Chassis* chassis, photon::PhotonCamera* camera, AlignFieldRelativeHelper* alignController) {
 
-	AlignFieldRelativeHelper alignController{ chassis };
 
-	return frc2::cmd::RunOnce([chassis, &alignController] {
-		chassis->disableSpeedHelper();
-		chassis->enableSpeedHelper(&alignController);
+	return frc2::cmd::RunOnce([chassis, alignController] {
+		chassis->enableSpeedHelper(alignController);
 	}).AndThen(frc2::cmd::Run([=]() mutable {
 
 		const auto result = camera->GetLatestResult();
 		if (!result.HasTargets()) {
-			alignController.enable(false);
+			alignController->enable(false);
 			return;
 		}
 
-		alignController.enable(true);
+		alignController->enable(true);
 
 		const auto target = result.GetTargets()[0];
 		auto corners = target.GetDetectedCorners();
@@ -60,7 +56,7 @@ frc2::CommandPtr AlignToTrackedObjectFieldOriented(Chassis* chassis, photon::Pho
 		frc::Pose2d currentRobotPose = chassis->getEstimatedPose();
 		targetPose = targetPose.RelativeTo(AllignToNoteConstants::CameraOffset.ToPose2d()).RelativeTo(currentRobotPose);
 
-		alignController.setTargetPosition(targetPose.X(), targetPose.Y());
+		alignController->setTargetPosition(targetPose.X(), targetPose.Y());
 
 
 	})).FinallyDo([=] {

@@ -11,6 +11,6 @@
 #include "Helpers/AlignFieldRelativeHelper/AlignFieldRelativeHelper.h"
 #include "Constants.h"
 
-frc2::CommandPtr AlignToTrackedObject(Chassis* chassis, photon::PhotonCamera* camera);
+frc2::CommandPtr AlignToTrackedObject(Chassis* chassis, photon::PhotonCamera* camera, AlignRobotRelativeHelper* alignHelper);
 
-frc2::CommandPtr AlignToTrackedObjectFieldOriented(Chassis* chassis, photon::PhotonCamera* camera);
+frc2::CommandPtr AlignToTrackedObjectFieldOriented(Chassis* chassis, photon::PhotonCamera* camera, AlignFieldRelativeHelper* alignController);

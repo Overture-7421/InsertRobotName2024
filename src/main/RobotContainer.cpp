@@ -23,7 +23,7 @@ RobotContainer::RobotContainer() {
 	// )));
 	//pathplanner::NamedCommands::registerCommand("VisionShootNoDelay", std::move(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &targetProvider, &storage).ToPtr()));
 	//pathplanner::NamedCommands::registerCommand("VisionNoShoot", std::move(VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter, &targetProvider).ToPtr()));
-	//pathplanner::NamedCommands::registerCommand("AlignToNote", std::move(AlignToTrackedObject(&chassis, &noteTrackingCamera)));
+	//pathplanner::NamedCommands::registerCommand("AlignToNote", std::move(AlignToTrackedObject(&chassis, &noteTrackingCamera, &alignHelper)));
 
 
 	/*center7NoteAuto = pathplanner::AutoBuilder::buildAuto("CenterAuto-7Notes");
@@ -115,7 +115,7 @@ void RobotContainer::ConfigDriverBindings() {
 	// driverPad.B().WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &targetProvider, &storage, PassNote::Low).ToPtr());
 	// driverPad.B().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
-	// driverPad.A().WhileTrue(AlignToTrackedObject(&chassis, &noteTrackingCamera));
+	driverPad.A().WhileTrue(AlignToTrackedObject(&chassis, &noteTrackingCamera, &alignHelper));
 
 	// tabulate.ToggleOnTrue(TabulateCommand(&chassis, &superStructure, &shooter, &targetProvider).ToPtr());
 
