@@ -12,9 +12,9 @@
 #include "Autos/SourceAutoCenterRace/SourceAutoCenterRace.h"
 
 RobotContainer::RobotContainer() {
-	pathplanner::NamedCommands::registerCommand("GroundGrabCommand", GroundGrabCommand(&superStructure, &storage, &intake).WithTimeout(3_s));
-	pathplanner::NamedCommands::registerCommand("GroundGrabCommandLT", GroundGrabCommand(&superStructure, &storage, &intake).WithTimeout(5_s));
-	pathplanner::NamedCommands::registerCommand("GroundGrabCommandNT", GroundGrabCommand(&superStructure, &storage, &intake));
+	pathplanner::NamedCommands::registerCommand("GroundGrabCommand", std::move(GroundGrabCommand(&superStructure, &storage, &intake).WithTimeout(3_s)));
+	pathplanner::NamedCommands::registerCommand("GroundGrabCommandLT", std::move(GroundGrabCommand(&superStructure, &storage, &intake).WithTimeout(5_s)));
+	pathplanner::NamedCommands::registerCommand("GroundGrabCommandNT", std::move(GroundGrabCommand(&superStructure, &storage, &intake)));
 
 	pathplanner::NamedCommands::registerCommand("ClosedCommand", std::move(ClosedCommand(&superStructure, &intake, &storage, &shooter)));
 	pathplanner::NamedCommands::registerCommand("VisionSpeakerCommand", std::move(frc2::cmd::Sequence(
@@ -56,20 +56,20 @@ RobotContainer::RobotContainer() {
 
 void RobotContainer::ConfigureBindings() {
 
-	// noteOnStorage.WhileTrue(frc2::cmd::Sequence(
-	// 	BlinkEffect(&leds, "all", { 0, 255, 0 }, 0.25_s).ToPtr().WithTimeout(0.5_s),
-	// 	StaticEffect(&leds, "all", { 0, 255, 0 }).ToPtr()
-	// ).IgnoringDisable(true));
+	noteOnStorage.WhileTrue(frc2::cmd::Sequence(
+		BlinkEffect(&leds, "all", { 0, 255, 0 }, 0.25_s).ToPtr().WithTimeout(0.5_s),
+		StaticEffect(&leds, "all", { 0, 255, 0 }).ToPtr()
+	).IgnoringDisable(true));
 
-	// storageSensorEmergencyMode.WhileTrue(frc2::cmd::Sequence(
-	// 	BlinkEffect(&leds, "all", { 0, 0, 255 }, 0.25_s).ToPtr().WithTimeout(0.5_s),
-	// 	BlinkEffect(&leds, "all", { 0, 0, 125 }, 0.25_s).ToPtr().WithTimeout(0.5_s)
-	// ).Repeatedly().IgnoringDisable(true));
+	storageSensorEmergencyMode.WhileTrue(frc2::cmd::Sequence(
+		BlinkEffect(&leds, "all", { 0, 0, 255 }, 0.25_s).ToPtr().WithTimeout(0.5_s),
+		BlinkEffect(&leds, "all", { 0, 0, 125 }, 0.25_s).ToPtr().WithTimeout(0.5_s)
+	).Repeatedly().IgnoringDisable(true));
 
 
-	// intakeMotorActive.WhileTrue(
-	// 	BlinkEffect(&leds, "all", { 255, 0, 255 }, 0.1_s).ToPtr().Repeatedly()
-	// );
+	intakeMotorActive.WhileTrue(
+		BlinkEffect(&leds, "all", { 255, 0, 255 }, 0.1_s).ToPtr().Repeatedly()
+	);
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

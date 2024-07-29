@@ -59,7 +59,7 @@ private:
 	Storage storage;
 	Shooter shooter;
 	Chassis chassis;
-	// SupportArms supportArms;
+	SupportArms supportArms;
 
 	// Helpers
 	HeadingSpeedsHelper rotationHelper{ { 7, 0, 0.35, {18_rad_per_s , 18_rad_per_s_sq }, RobotConstants::LoopTime }, &chassis };
@@ -77,9 +77,9 @@ private:
 	photon::PhotonCamera noteTrackingCamera{ "Arducam_OV9782_USB_Camera" };
 	TargetProvider targetProvider{ &tagLayout };
 
-	// LedsManager leds{ 0, 240, {
-	// 	{"all", {0, 239}}
-	// } };
+	LedsManager leds{ 0, 240, {
+		{"all", {0, 239}}
+	} };
 
 
 	Gamepad driverPad{ 0, 0.1, 0.1 };
@@ -87,9 +87,9 @@ private:
 	Gamepad characterizationPad{ 2, 0.1, 0.2 };
 
 	// LED Triggers
-	// frc2::Trigger noteOnStorage{ [this] {return storage.isNoteOnForwardSensor();} };
-	// frc2::Trigger storageSensorEmergencyMode{ [this] {return !storage.isSensorAvailable();} };
-	// frc2::Trigger intakeMotorActive{ [this] {return intake.getVoltage() != 0.0 && !storage.isNoteOnForwardSensor();} };
+	frc2::Trigger noteOnStorage{ [this] {return storage.isNoteOnForwardSensor();} };
+	frc2::Trigger storageSensorEmergencyMode{ [this] {return !storage.isSensorAvailable();} };
+	frc2::Trigger intakeMotorActive{ [this] {return intake.getVoltage() != 0.0 && !storage.isNoteOnForwardSensor();} };
 
 	//Autonomous
 	frc2::CommandPtr defaultNoneAuto = frc2::cmd::None();

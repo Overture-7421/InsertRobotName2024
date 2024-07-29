@@ -17,7 +17,7 @@
             "version": "2024.1.10",
             "libName": "OvertureLib",
             "headerClassifier": "headers",
-            "sharedLibrary": true,
+            "sharedLibrary": false,
             "skipInvalidPlatforms": true,
             "binaryPlatforms": [
                 "windowsx86-64",
