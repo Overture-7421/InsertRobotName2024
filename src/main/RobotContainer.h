@@ -42,8 +42,8 @@ class RobotContainer : public OverContainer {
 public:
 	RobotContainer();
 
-	// frc2::Command* GetAutonomousCommand();
-	// frc2::CommandPtr GetTeleopResetCommand();
+	frc2::Command* GetAutonomousCommand();
+	frc2::CommandPtr GetTeleopResetCommand();
 	void UpdateTelemetry();
 
 private:
@@ -63,6 +63,7 @@ private:
 
 	// Helpers
 	HeadingSpeedsHelper rotationHelper{ { 7, 0, 0, {18_rad_per_s , 12_rad_per_s_sq }, RobotConstants::LoopTime }, &chassis };
+	HeadingSpeedsHelper speakerHelper{ {11.0, 0.5, 0.35, {18_rad_per_s, 18_rad_per_s_sq * 2} }, &chassis };
 	AlignRobotRelativeHelper alignHelper;
 	AlignFieldRelativeHelper alignController{ &chassis };
 
@@ -72,18 +73,15 @@ private:
 #else
 	frc::AprilTagFieldLayout tagLayout{ "/home/lvuser/deploy/tag_layout/7421-field.json" };
 #endif
-	//AprilTags shooterCamera{ &tagLayout, &chassis, {"Arducam_OV2311_USB_Camera", { {-14.950771_in, 0_m, 14.034697_m}, {-180_deg, -30_deg, 180_deg} }, 5_m, 9_m, 13_m} };
-	// AprilTags frontRightSwerveModuleCamera{ &tagLayout, &chassis, {"Arducam_OV9281_USB_Camera", { {6.388283_in, -10.648092_in, 8.358231_in}, {0_deg, -28.125_deg, -30_deg} }} };
+	AprilTags shooterCamera{ &tagLayout, &chassis, {"Arducam_OV2311_USB_Camera", { {-14.950771_in, 0_m, 14.034697_in}, {-180_deg, -30_deg, 180_deg} }, 5_m, 9_m, 13_m} };
+	AprilTags frontRightSwerveModuleCamera{ &tagLayout, &chassis, {"Arducam_OV9281_USB_Camera", { {6.388283_in, -10.648092_in, 8.358231_in}, {0_deg, -28.125_deg, -30_deg} }} };
 	photon::PhotonCamera noteTrackingCamera{ "Arducam_OV9782_USB_Camera" };
-	// TargetProvider targetProvider{ &tagLayout };
+	TargetProvider targetProvider{ &tagLayout };
 
 	// LedsManager leds{ 0, 240, {
 	// 	{"all", {0, 239}}
 	// } };
 
-	// Controllers
-	//frc::XboxController driver{ 0 };
-	//frc::XboxController opertr{ 1 };
 
 	Gamepad driverPad{ 0, 0.1, 0.1 };
 	Gamepad operatorPad{ 1, 0.1, 0.2 };
@@ -95,7 +93,7 @@ private:
 	// frc2::Trigger intakeMotorActive{ [this] {return intake.getVoltage() != 0.0 && !storage.isNoteOnForwardSensor();} };
 
 	//Autonomous
-	/*frc2::CommandPtr defaultNoneAuto = frc2::cmd::None();
+	frc2::CommandPtr defaultNoneAuto = frc2::cmd::None();
 	frc2::CommandPtr center4NoteAuto = frc2::cmd::None();
 	frc2::CommandPtr center5NoteAuto = frc2::cmd::None();
 	frc2::CommandPtr center7NoteAuto = frc2::cmd::None();
@@ -103,8 +101,8 @@ private:
 	frc2::CommandPtr sourceAuto = frc2::cmd::None();
 
 	frc2::CommandPtr ampAutoCenterRace = frc2::cmd::None();
-	frc2::CommandPtr sourceAutoCenterRace = frc2::cmd::None();*/
+	frc2::CommandPtr sourceAutoCenterRace = frc2::cmd::None();
 
 	//Auto Chooser
-	// frc::SendableChooser<frc2::Command*> autoChooser;
+	frc::SendableChooser<frc2::Command*> autoChooser;
 };

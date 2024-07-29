@@ -12,21 +12,21 @@
 #include "Autos/SourceAutoCenterRace/SourceAutoCenterRace.h"
 
 RobotContainer::RobotContainer() {
-	// pathplanner::NamedCommands::registerCommand("GroundGrabCommand", GroundGrabCommand(&superStructure, &storage, &intake).WithTimeout(3_s));
-	// pathplanner::NamedCommands::registerCommand("GroundGrabCommandLT", GroundGrabCommand(&superStructure, &storage, &intake).WithTimeout(5_s));
-	// pathplanner::NamedCommands::registerCommand("GroundGrabCommandNT", GroundGrabCommand(&superStructure, &storage, &intake));
+	pathplanner::NamedCommands::registerCommand("GroundGrabCommand", GroundGrabCommand(&superStructure, &storage, &intake).WithTimeout(3_s));
+	pathplanner::NamedCommands::registerCommand("GroundGrabCommandLT", GroundGrabCommand(&superStructure, &storage, &intake).WithTimeout(5_s));
+	pathplanner::NamedCommands::registerCommand("GroundGrabCommandNT", GroundGrabCommand(&superStructure, &storage, &intake));
 
-	// pathplanner::NamedCommands::registerCommand("ClosedCommand", std::move(ClosedCommand(&superStructure, &intake, &storage, &shooter)));
-	// pathplanner::NamedCommands::registerCommand("VisionSpeakerCommand", std::move(frc2::cmd::Sequence(
-	// //	VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter, &targetProvider).ToPtr().WithTimeout(0.35_s),
-	// //	VisionSpeakerCommand(&chassis, &superStructure, &shooter, &targetProvider, &storage).ToPtr()
-	// )));
-	//pathplanner::NamedCommands::registerCommand("VisionShootNoDelay", std::move(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &targetProvider, &storage).ToPtr()));
-	//pathplanner::NamedCommands::registerCommand("VisionNoShoot", std::move(VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter, &targetProvider).ToPtr()));
-	//pathplanner::NamedCommands::registerCommand("AlignToNote", std::move(AlignToTrackedObject(&chassis, &noteTrackingCamera, &alignHelper)));
+	pathplanner::NamedCommands::registerCommand("ClosedCommand", std::move(ClosedCommand(&superStructure, &intake, &storage, &shooter)));
+	pathplanner::NamedCommands::registerCommand("VisionSpeakerCommand", std::move(frc2::cmd::Sequence(
+		VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter, &targetProvider).ToPtr().WithTimeout(0.35_s),
+		VisionSpeakerCommand(&chassis, &superStructure, &shooter, &targetProvider, &storage).ToPtr()
+	)));
+	pathplanner::NamedCommands::registerCommand("VisionShootNoDelay", std::move(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &targetProvider, &storage).ToPtr()));
+	pathplanner::NamedCommands::registerCommand("VisionNoShoot", std::move(VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter, &targetProvider).ToPtr()));
+	pathplanner::NamedCommands::registerCommand("AlignToNote", std::move(AlignToTrackedObject(&chassis, &noteTrackingCamera, &alignHelper)));
 
 
-	/*center7NoteAuto = pathplanner::AutoBuilder::buildAuto("CenterAuto-7Notes");
+	center7NoteAuto = pathplanner::AutoBuilder::buildAuto("CenterAuto-7Notes");
 	center5NoteAuto = pathplanner::AutoBuilder::buildAuto("CenterAuto-5Notes");
 	center4NoteAuto = pathplanner::AutoBuilder::buildAuto("CenterAuto-4Notes");
 	ampAuto = pathplanner::AutoBuilder::buildAuto("AMPAuto");
@@ -35,24 +35,23 @@ RobotContainer::RobotContainer() {
 	ampAutoCenterRace = AmpAutoCenterRace(&storage);
 	sourceAutoCenterRace = SourceAutoCenterRace(&storage);
 
-	autoChooser.SetDefaultOption("None, null, nada", defaultNoneAuto.get());*/
-	/*autoChooser.AddOption("CenterAuto-7Notes", center7NoteAuto.get());
+	autoChooser.SetDefaultOption("None, null, nada", defaultNoneAuto.get());
+	autoChooser.AddOption("CenterAuto-7Notes", center7NoteAuto.get());
 	autoChooser.AddOption("CenterAuto-5Notes", center5NoteAuto.get());
-	// autoChooser.AddOption("CenterAuto-4Notes", center4NoteAuto.get());
-	// autoChooser.AddOption("AMPAuto", ampAuto.get());
+	autoChooser.AddOption("CenterAuto-4Notes", center4NoteAuto.get());
+	autoChooser.AddOption("AMPAuto", ampAuto.get());
 	autoChooser.AddOption("AMPAuto-Race", ampAutoCenterRace.get());
-	// autoChooser.AddOption("SourceAuto", sourceAuto.get());
+	autoChooser.AddOption("SourceAuto", sourceAuto.get());
 	autoChooser.AddOption("SourceAuto-Race", sourceAutoCenterRace.get());
-	// autoChooser.AddOption("Testing", testingAuto.get());*/
 
 
 	// frc::SmartDashboard::PutData("Auto Chooser", &autoChooser);
 
-	// ConfigureBindings();
+	ConfigureBindings();
 	ConfigDriverBindings();
-	// ConfigOperatorBindings();
+	ConfigOperatorBindings();
 	ConfigDefaultCommands();
-	ConfigCharacterizationBindings();
+	// ConfigCharacterizationBindings();
 }
 
 void RobotContainer::ConfigureBindings() {
@@ -73,17 +72,17 @@ void RobotContainer::ConfigureBindings() {
 	// );
 }
 
-// frc2::Command* RobotContainer::GetAutonomousCommand() {
-// 	return autoChooser.GetSelected();
-// }
+frc2::Command* RobotContainer::GetAutonomousCommand() {
+	return autoChooser.GetSelected();
+}
 
-// frc2::CommandPtr RobotContainer::GetTeleopResetCommand() {
-// 	return frc2::cmd::Deadline(
-// 		storage.storageCommand(StorageConstants::StopVolts),
-// 		shooter.shooterCommand(ShooterConstants::StopSpeed),
-// 		intake.intakeCommand(IntakeConstants::StopVolts)
-// 	);
-// }
+frc2::CommandPtr RobotContainer::GetTeleopResetCommand() {
+	return frc2::cmd::Deadline(
+		storage.storageCommand(StorageConstants::StopVolts),
+		shooter.shooterCommand(ShooterConstants::StopSpeed),
+		intake.intakeCommand(IntakeConstants::StopVolts)
+	);
+}
 
 void RobotContainer::ConfigDriverBindings() {
 	driverPad.rightStick(0.2).WhileTrue(frc2::cmd::Run([&] {
@@ -96,11 +95,11 @@ void RobotContainer::ConfigDriverBindings() {
 		chassis.disableSpeedHelper();
 	}));
 
-	// driverPad.leftBumperOnly().WhileTrue(VisionAmpCommand(&superStructure, &shooter).ToPtr());
-	// driverPad.leftBumperOnly().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
+	driverPad.leftBumperOnly().WhileTrue(VisionAmpCommand(&superStructure, &shooter));
+	driverPad.leftBumperOnly().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
-	// driverPad.rightBumperOnly().WhileTrue(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &targetProvider, &operatorPad).ToPtr());
-	// driverPad.rightBumperOnly().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
+	driverPad.rightBumperOnly().WhileTrue(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &targetProvider, &operatorPad).ToPtr());
+	driverPad.rightBumperOnly().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
 	driverPad.Back().OnTrue(frc2::cmd::Either(
 		frc2::cmd::RunOnce([&] { chassis.resetHeading(180); }),
@@ -111,30 +110,21 @@ void RobotContainer::ConfigDriverBindings() {
 	// driverPad.Y().WhileTrue(AutoClimb(&chassis, &superStructure, &supportArms, &storage, &shooter, &operatorPad));
 	// driverPad.Y().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
-	// driverPad.X().WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &targetProvider, &storage, PassNote::High).ToPtr());
-	// driverPad.X().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
+	driverPad.X().WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &targetProvider, &storage, PassNote::High).ToPtr());
+	driverPad.X().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
-	// driverPad.B().WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &targetProvider, &storage, PassNote::Low).ToPtr());
-	// driverPad.B().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
+	driverPad.B().WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &targetProvider, &storage, PassNote::Low).ToPtr());
+	driverPad.B().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
 	driverPad.A().WhileTrue(AlignToTrackedObject(&chassis, &noteTrackingCamera, &alignHelper));
 
 	// tabulate.ToggleOnTrue(TabulateCommand(&chassis, &superStructure, &shooter, &targetProvider).ToPtr());
-
-	// tabulate.OnTrue(frc2::cmd::RunOnce([&] {
-	// 	chassis.setHeadingOverride(true);
-	// 	chassis.setTargetHeading({ -90_deg });
-	// }));
-
-	// tabulate.OnFalse(frc2::cmd::RunOnce([&] {
-	// 	chassis.setHeadingOverride(false);
-	// }));
 }
 
 void RobotContainer::ConfigOperatorBindings() {
 
-	// operatorPad.leftBumperOnly().WhileTrue(AmpCommand(&superStructure, &shooter));
-	// operatorPad.leftBumperOnly().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
+	operatorPad.leftBumperOnly().WhileTrue(AmpCommand(&superStructure, &shooter));
+	operatorPad.leftBumperOnly().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
 	operatorPad.B().OnTrue(frc2::cmd::Sequence(
 		superStructure.superStructureCommand(SuperStructureConstants::GroundGrabState),
@@ -147,17 +137,17 @@ void RobotContainer::ConfigOperatorBindings() {
 		intake.intakeCommand(IntakeConstants::StopVolts)
 	));
 
-	/*operatorPad.Y().WhileTrue(ManualClimb(&chassis, &superStructure, &supportArms, &storage, &shooter, &operatorPad));
-	operatorPad.Y().OnFalse(frc2::cmd::Parallel(
-		frc2::cmd::RunOnce([&] {chassis.setAcceptingVisionMeasurements(true);}),
-		ClosedCommand(&superStructure, &intake, &storage, &shooter)
-	));*/
+	// operatorPad.Y().WhileTrue(ManualClimb(&chassis, &superStructure, &supportArms, &storage, &shooter, &operatorPad));
+	// operatorPad.Y().OnFalse(frc2::cmd::Parallel(
+	// 	frc2::cmd::RunOnce([&] {chassis.setAcceptingVisionMeasurements(true);}),
+	// 	ClosedCommand(&superStructure, &intake, &storage, &shooter)
+	// ));
 
 	operatorPad.leftTriggerOnly().WhileTrue(storage.storageCommand(StorageConstants::ScoreVolts));
 	operatorPad.leftTriggerOnly().OnFalse(storage.storageCommand(StorageConstants::StopVolts));
 
-	// operatorPad.rightBumperOnly().WhileTrue(SpeakerCommand(&superStructure, &shooter));
-	// operatorPad.rightBumperOnly().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
+	operatorPad.rightBumperOnly().WhileTrue(SpeakerCommand(&superStructure, &shooter));
+	operatorPad.rightBumperOnly().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
 	operatorPad.A().WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake, true));
 	operatorPad.A().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
@@ -197,6 +187,8 @@ void RobotContainer::ConfigOperatorBindings() {
 }
 
 void RobotContainer::ConfigDefaultCommands() {
+
+	chassis.setAcceptingVisionMeasurements(true);
 
 	// leds.SetDefaultCommand(BlinkEffect(&leds, "all", { 255, 0, 255 }, 1_s).IgnoringDisable(true));
 
