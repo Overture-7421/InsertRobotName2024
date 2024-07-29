@@ -35,7 +35,7 @@ void Robot::RobotInit() {
 	simDutyCycleEncoderManager.Init({});
 	#endif
 
-	// m_teleopResetCommand = m_container.GetTeleopResetCommand();
+	m_teleopResetCommand = m_container.GetTeleopResetCommand();
 	AddPeriodic([&] {
 		frc2::CommandScheduler::GetInstance().Run();
 	}, RobotConstants::LoopTime, RobotConstants::TimingOffset);
@@ -57,13 +57,13 @@ void Robot::DisabledPeriodic() {}
 void Robot::DisabledExit() {}
 
 void Robot::AutonomousInit() {
-	// m_autonomousCommand = m_container.GetAutonomousCommand();
+	m_autonomousCommand = m_container.GetAutonomousCommand();
 
-	// if (m_autonomousCommand) {
-	// 	m_autonomousCommand->Schedule();
-	// }
+	if (m_autonomousCommand) {
+		m_autonomousCommand->Schedule();
+	}
 
-	// VisionSpeakerCommand::LoadAllianceOffset();
+	VisionSpeakerCommand::LoadAllianceOffset();
 }
 
 void Robot::AutonomousPeriodic() {}
@@ -71,10 +71,12 @@ void Robot::AutonomousPeriodic() {}
 void Robot::AutonomousExit() {}
 
 void Robot::TeleopInit() {
-	// if (m_autonomousCommand) {
-	// 	m_autonomousCommand->Cancel();
-	// }
-	// m_teleopResetCommand->Schedule();
+	if (m_autonomousCommand) {
+		m_autonomousCommand->Cancel();
+	}
+	m_teleopResetCommand->Schedule();
+	
+	VisionSpeakerCommand::LoadAllianceOffset();
 }
 
 void Robot::TeleopPeriodic() {
