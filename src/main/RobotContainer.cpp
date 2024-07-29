@@ -155,43 +155,38 @@ void RobotContainer::ConfigOperatorBindings() {
 	operatorPad.rightTriggerOnly().WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake));
 	operatorPad.rightTriggerOnly().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
-	// operatorPad.upDpad().OnTrue(
-	// 	BlinkEffect(&leds, "all", { 255, 0, 0 }, 0.05_s).WithTimeout(0.2_s)
-	// );
-
-	operatorPad.upDpad().OnTrue(
+	operatorPad.upDpad().OnTrue(frc2::cmd::Parallel(
 		frc2::cmd::RunOnce([] {
 		VisionSpeakerCommand::SetUpperAngleOffset(VisionSpeakerCommand::GetUpperAngleOffset() - 0.5);
-	}));
+	}),
+		BlinkEffect(&leds, "all", { 0, 255, 255 }, 0.05_s).WithTimeout(0.2_s)
+	));
 
-	// operatorPad.downDpad().OnTrue(
-	// 	BlinkEffect(&leds, "all", { 0, 255, 255 }, 0.05_s).WithTimeout(0.2_s)
-	// );
-
-	operatorPad.downDpad().OnTrue(
+	operatorPad.downDpad().OnTrue(frc2::cmd::Parallel(
 		frc2::cmd::RunOnce([] {
 		VisionSpeakerCommand::SetUpperAngleOffset(VisionSpeakerCommand::GetUpperAngleOffset() + 0.5);
-	}));
+	}),
+		BlinkEffect(&leds, "all", { 255, 0, 0 }, 0.05_s).WithTimeout(0.2_s)
+	));
 
-	// operatorPad.leftDpad().OnTrue(
-	// 	frc2::cmd::Parallel(
-	// 		frc2::cmd::RunOnce([] {
-	// 	VisionSpeakerCommand::ResetUpperAngleOffset();
-	// }),
-	// 		BlinkEffect(&leds, "all", { 255, 255, 255 }, 0.05_s).WithTimeout(0.2_s)
-	// 	)
-	// );
+	operatorPad.leftDpad().OnTrue(
+		frc2::cmd::Parallel(
+			frc2::cmd::RunOnce([] {
+		VisionSpeakerCommand::ResetUpperAngleOffset();
+	}),
+			BlinkEffect(&leds, "all", { 255, 255, 255 }, 0.05_s).WithTimeout(0.2_s)
+		)
+	);
 
 	operatorPad.rightDpad().OnTrue(superStructure.superStructureCommand({ 90, 0 }));
 	operatorPad.rightDpad().OnFalse(superStructure.superStructureCommand(SuperStructureConstants::ClosedState));
-
 }
 
 void RobotContainer::ConfigDefaultCommands() {
 
 	chassis.setAcceptingVisionMeasurements(true);
 
-	// leds.SetDefaultCommand(BlinkEffect(&leds, "all", { 255, 0, 255 }, 1_s).IgnoringDisable(true));
+	leds.SetDefaultCommand(BlinkEffect(&leds, "all", { 255, 0, 255 }, 1_s).IgnoringDisable(true));
 
 	chassis.SetDefaultCommand(frc2::cmd::Run([&] {
 		chassis.driveFieldRelative(
@@ -214,12 +209,9 @@ void RobotContainer::ConfigCharacterizationBindings() {
 }
 
 void RobotContainer::UpdateTelemetry() {
-	// superStructure.shuffleboardPeriodic();
+	superStructure.shuffleboardPeriodic();
 	chassis.shuffleboardPeriodic();
-	// storage.shuffleboardPeriodic();
-	// intake.shuffleboardPeriodic();
-	// shooter.shuffleboardPeriodic();
-
-	frc::SmartDashboard::PutNumber("Debug/Heading", chassis.getEstimatedPose().Rotation().Degrees().value());
-	frc::SmartDashboard::PutNumber("Debug/Pigeon", chassis.getRotation2d().Degrees().value());
+	storage.shuffleboardPeriodic();
+	intake.shuffleboardPeriodic();
+	shooter.shuffleboardPeriodic();
 }
