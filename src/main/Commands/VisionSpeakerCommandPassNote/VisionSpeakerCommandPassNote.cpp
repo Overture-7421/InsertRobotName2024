@@ -6,7 +6,7 @@
 
 #include <frc/MathUtil.h>
 
-VisionSpeakerCommandPassNote::VisionSpeakerCommandPassNote(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, TargetProvider* targetProvider, Storage* storage, PassNote upOrDown) : headingHelper( {11.0, 0.5, 0.35, {18_rad_per_s, 18_rad_per_s_sq * 2} }, chassis){
+VisionSpeakerCommandPassNote::VisionSpeakerCommandPassNote(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, TargetProvider* targetProvider, Storage* storage, PassNote upOrDown) : headingHelper({ 11.0, 0.5, 0.6, {13_rad_per_s, 18_rad_per_s_sq * 2} }, chassis) {
 	AddRequirements({ superStructure, shooter, storage });
 	this->chassis = chassis;
 	this->superStructure = superStructure;
@@ -18,13 +18,13 @@ VisionSpeakerCommandPassNote::VisionSpeakerCommandPassNote(Chassis* chassis, Sup
 
 // Called when the command is initially scheduled.
 void VisionSpeakerCommandPassNote::Initialize() {
- 	chassis->enableSpeedHelper(&headingHelper);
+	chassis->enableSpeedHelper(&headingHelper);
 	passLocation = targetProvider->GetPassLocation();
 
-	if(upOrDown == PassNote::High) {
+	if (upOrDown == PassNote::High) {
 		targetState = SuperStructureConstants::HighPassingState;
 		targetShooterVelocity = 60.0;
-	}else{
+	} else {
 		targetState = SuperStructureConstants::LowPassingState;
 		targetShooterVelocity = 100.0;
 	}
