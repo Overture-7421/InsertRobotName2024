@@ -10,6 +10,7 @@
 #include "Commands/ServoDashboard/ServoDashboard.h"
 #include "Autos/AmpAutoCenterRace/AmpAutoCenterRace.h"
 #include "Autos/SourceAutoCenterRace/SourceAutoCenterRace.h"
+#include "Subsystems/SupportArms/Constants.h"
 
 RobotContainer::RobotContainer() {
 	pathplanner::NamedCommands::registerCommand("GroundGrabCommand", std::move(GroundGrabCommand(&superStructure, &storage, &intake).WithTimeout(3_s)));
@@ -43,9 +44,10 @@ RobotContainer::RobotContainer() {
 	autoChooser.AddOption("AMPAuto-Race", ampAutoCenterRace.get());
 	autoChooser.AddOption("SourceAuto", sourceAuto.get());
 	autoChooser.AddOption("SourceAuto-Race", sourceAutoCenterRace.get());
+	
+	frc::SmartDashboard::PutData("Auto Chooser", &autoChooser);
 
-
-	// frc::SmartDashboard::PutData("Auto Chooser", &autoChooser);
+	chassis.setAcceptingVisionMeasurements(true);
 
 	ConfigureBindings();
 	ConfigDriverBindings();
@@ -107,9 +109,6 @@ void RobotContainer::ConfigDriverBindings() {
 		[&] {return frc::DriverStation::GetAlliance() == frc::DriverStation::Alliance::kRed;}
 	));
 
-	//driverPad.Y().WhileTrue(AutoClimb(&chassis, &superStructure, &supportArms, &storage, &shooter, &operatorPad));
-	//driverPad.Y().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
-
 	driverPad.X().WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &targetProvider, &storage, PassNote::High).ToPtr());
 	driverPad.X().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
@@ -117,6 +116,9 @@ void RobotContainer::ConfigDriverBindings() {
 	driverPad.B().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
 	driverPad.A().WhileTrue(AlignToTrackedObject(&chassis, &noteTrackingCamera, &alignHelper));
+
+	driverPad.Y().WhileTrue(AutoClimb(&chassis, &superStructure, &supportArms, &storage, &shooter, &operatorPad));
+	driverPad.Y().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
 	//driverPad.Y().ToggleOnTrue(TabulateCommand(&chassis, &superStructure, &shooter, &targetProvider).ToPtr());
 
@@ -183,9 +185,6 @@ void RobotContainer::ConfigOperatorBindings() {
 }
 
 void RobotContainer::ConfigDefaultCommands() {
-
-	chassis.setAcceptingVisionMeasurements(true);
-
 	leds.SetDefaultCommand(BlinkEffect(&leds, "all", { 255, 0, 255 }, 1_s).IgnoringDisable(true));
 
 	chassis.SetDefaultCommand(frc2::cmd::Run([&] {
@@ -201,7 +200,7 @@ void RobotContainer::ConfigDefaultCommands() {
 		chassis.setAllianceColor();
 	})));
 
-	supportArms.SetDefaultCommand(supportArms.freeArmsCommand(25.00).Repeatedly());
+	supportArms.SetDefaultCommand(supportArms.freeArmsCommand(SupportArmsConstants::IdleAngle).Repeatedly());
 	//supportArms.SetDefaultCommand(ServoDashboard(&supportArms));
 
 }

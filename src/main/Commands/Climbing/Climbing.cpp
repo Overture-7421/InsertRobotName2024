@@ -2,6 +2,7 @@
 #include "Commands/ClosedCommand/ClosedCommand.h"
 #include "Subsystems/SupportArms/SupportArms.h"
 #include <exception>
+#include "Subsystems/SupportArms/Constants.h"
 
 pathplanner::PathConstraints pathfindingConstraints = pathplanner::PathConstraints(
 	2.5_mps, 3.5_mps_sq,
@@ -45,7 +46,7 @@ frc2::CommandPtr SetUpJoints(Chassis* chassis, SuperStructure* superStructure, S
 		frc2::cmd::Deadline(
 			pathplanner::AutoBuilder::followPath(pathToFollow),
 			SuperStructureMoveByDistance(superStructure, superStructureProfile, distanceFunction).ToPtr(),
-			supportArms->freeArmsCommand(150.00).Repeatedly()
+			supportArms->freeArmsCommand(SupportArmsConstants::ReleaseArmsAngle).Repeatedly()
 		)
 	);
 }
