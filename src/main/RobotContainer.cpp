@@ -44,7 +44,7 @@ RobotContainer::RobotContainer() {
 	autoChooser.AddOption("AMPAuto-Race", ampAutoCenterRace.get());
 	autoChooser.AddOption("SourceAuto", sourceAuto.get());
 	autoChooser.AddOption("SourceAuto-Race", sourceAutoCenterRace.get());
-	
+
 	frc::SmartDashboard::PutData("Auto Chooser", &autoChooser);
 
 	chassis.setAcceptingVisionMeasurements(true);
@@ -142,8 +142,8 @@ void RobotContainer::ConfigOperatorBindings() {
 
 	operatorPad.Y().WhileTrue(ManualClimb(&chassis, &superStructure, &supportArms, &storage, &shooter, &operatorPad));
 	operatorPad.Y().OnFalse(frc2::cmd::Parallel(
-	frc2::cmd::RunOnce([&] {chassis.setAcceptingVisionMeasurements(true);}),
-	ClosedCommand(&superStructure, &intake, &storage, &shooter)
+		frc2::cmd::RunOnce([&] {chassis.setAcceptingVisionMeasurements(true);}),
+		ClosedCommand(&superStructure, &intake, &storage, &shooter)
 	));
 
 	operatorPad.leftTriggerOnly().WhileTrue(storage.storageCommand(StorageConstants::ScoreVolts));
@@ -155,7 +155,12 @@ void RobotContainer::ConfigOperatorBindings() {
 	operatorPad.A().WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake, true));
 	operatorPad.A().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 	operatorPad.rightTriggerOnly().WhileTrue(GroundGrabCommand(&superStructure, &storage, &intake));
-	operatorPad.rightTriggerOnly().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
+	operatorPad.rightTriggerOnly().OnFalse(
+		frc2::cmd::Parallel(
+			storage.storageCommand(StorageConstants::StopVolts),
+			intake.intakeCommand(IntakeConstants::StopVolts)
+		)
+	);
 
 	operatorPad.upDpad().OnTrue(frc2::cmd::Parallel(
 		frc2::cmd::RunOnce([] {

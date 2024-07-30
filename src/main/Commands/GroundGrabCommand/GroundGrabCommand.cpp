@@ -29,7 +29,7 @@ frc2::CommandPtr GroundGrabCommand(SuperStructure* superStructure, Storage* stor
 			frc2::cmd::Sequence(
 				frc2::cmd::Wait(0.045_s),
 				frc2::cmd::Parallel(
-					superStructure->superStructureCommand(SuperStructureConstants::ClosedState),
+					// superStructure->superStructureCommand(SuperStructureConstants::ClosedState),
 					storage->storageCommand(StorageConstants::StopVolts),
 					intake->intakeCommand(IntakeConstants::StopVolts)
 				))
