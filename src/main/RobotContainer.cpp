@@ -107,8 +107,8 @@ void RobotContainer::ConfigDriverBindings() {
 		[&] {return frc::DriverStation::GetAlliance() == frc::DriverStation::Alliance::kRed;}
 	));
 
-	// driverPad.Y().WhileTrue(AutoClimb(&chassis, &superStructure, &supportArms, &storage, &shooter, &operatorPad));
-	// driverPad.Y().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
+	//driverPad.Y().WhileTrue(AutoClimb(&chassis, &superStructure, &supportArms, &storage, &shooter, &operatorPad));
+	//driverPad.Y().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
 
 	driverPad.X().WhileTrue(VisionSpeakerCommandPassNote(&chassis, &superStructure, &shooter, &targetProvider, &storage, PassNote::High).ToPtr());
 	driverPad.X().OnFalse(ClosedCommand(&superStructure, &intake, &storage, &shooter));
@@ -138,11 +138,11 @@ void RobotContainer::ConfigOperatorBindings() {
 		intake.intakeCommand(IntakeConstants::StopVolts)
 	));
 
-	// operatorPad.Y().WhileTrue(ManualClimb(&chassis, &superStructure, &supportArms, &storage, &shooter, &operatorPad));
-	// operatorPad.Y().OnFalse(frc2::cmd::Parallel(
-	// 	frc2::cmd::RunOnce([&] {chassis.setAcceptingVisionMeasurements(true);}),
-	// 	ClosedCommand(&superStructure, &intake, &storage, &shooter)
-	// ));
+	operatorPad.Y().WhileTrue(ManualClimb(&chassis, &superStructure, &supportArms, &storage, &shooter, &operatorPad));
+	operatorPad.Y().OnFalse(frc2::cmd::Parallel(
+	frc2::cmd::RunOnce([&] {chassis.setAcceptingVisionMeasurements(true);}),
+	ClosedCommand(&superStructure, &intake, &storage, &shooter)
+	));
 
 	operatorPad.leftTriggerOnly().WhileTrue(storage.storageCommand(StorageConstants::ScoreVolts));
 	operatorPad.leftTriggerOnly().OnFalse(storage.storageCommand(StorageConstants::StopVolts));
@@ -201,7 +201,9 @@ void RobotContainer::ConfigDefaultCommands() {
 		chassis.setAllianceColor();
 	})));
 
-	// supportArms.SetDefaultCommand(supportArms.freeArmsCommand(25.00).Repeatedly());
+	supportArms.SetDefaultCommand(supportArms.freeArmsCommand(25.00).Repeatedly());
+	//supportArms.SetDefaultCommand(ServoDashboard(&supportArms));
+
 }
 
 void RobotContainer::ConfigCharacterizationBindings() {

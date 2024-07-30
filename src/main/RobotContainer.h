@@ -77,7 +77,7 @@ private:
 	photon::PhotonCamera noteTrackingCamera{ "Arducam_OV9782_USB_Camera" };
 	TargetProvider targetProvider{ &tagLayout };
 
-	LedsManager leds{ 0, 240, {
+	LedsManager leds{ 8, 240, {
 		{"all", {0, 239}}
 	} };
 
