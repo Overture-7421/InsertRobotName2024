@@ -195,8 +195,8 @@ void RobotContainer::ConfigDefaultCommands() {
 	chassis.SetDefaultCommand(frc2::cmd::Run([&] {
 		chassis.driveFieldRelative(
 			{
-				units::meters_per_second_t{ Utils::ApplyAxisFilter(-driverPad.GetLeftY()) * ChassisConstants::MaxModuleSpeed.value() },
-				units::meters_per_second_t{ Utils::ApplyAxisFilter(-driverPad.GetLeftX()) * ChassisConstants::MaxModuleSpeed.value() },
+				filterX.Calculate(units::meters_per_second_t{ Utils::ApplyAxisFilter(-driverPad.GetLeftY()) * ChassisConstants::MaxModuleSpeed.value() }),
+				filterY.Calculate(units::meters_per_second_t{ Utils::ApplyAxisFilter(-driverPad.GetLeftX()) * ChassisConstants::MaxModuleSpeed.value() }),
 				units::radians_per_second_t{ Utils::ApplyAxisFilter(-driverPad.getTwist()) * ChassisConstants::MaxAngularSpeed.value() }
 			}
 		);

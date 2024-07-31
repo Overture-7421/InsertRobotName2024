@@ -102,6 +102,10 @@ private:
 	frc2::CommandPtr ampAutoCenterRace = frc2::cmd::None();
 	frc2::CommandPtr sourceAutoCenterRace = frc2::cmd::None();
 
+	frc::SlewRateLimiter<units::meters_per_second>filterX{16.0_mps_sq};
+	frc::SlewRateLimiter<units::meters_per_second>filterY{16.0_mps_sq};
+
+
 	//Auto Chooser
 	frc::SendableChooser<frc2::Command*> autoChooser;
 };
