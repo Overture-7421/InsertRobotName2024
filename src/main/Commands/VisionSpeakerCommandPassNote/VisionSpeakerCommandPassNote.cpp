@@ -26,7 +26,7 @@ void VisionSpeakerCommandPassNote::Initialize() {
 		targetShooterVelocity = 60.0;
 	} else {
 		targetState = SuperStructureConstants::LowPassingState;
-		targetShooterVelocity = 100.0;
+		targetShooterVelocity = 120.0;
 	}
 
 	Timer.Reset();
@@ -53,19 +53,19 @@ void VisionSpeakerCommandPassNote::Execute() {
 	units::degree_t headingError = units::math::abs(frc::InputModulus(angle.Degrees() - chassisPose.Rotation().Degrees(), -180_deg, 180_deg));
 
 	bool lowerAngleInTolerance = std::abs(targetLowerAngle - superStructure->getLowerAngle()) < 1.0;
-	bool upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 1.0;
+	bool upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 2.0;
 	bool headingInTolerance = headingError < headingTolerance;
-	bool shooterSpeedInTolerance = (targetShooterVelocity - 2.0) < shooter->getCurrentVelocity();
+	bool shooterSpeedInTolerance = (targetShooterVelocity - 5.0) < shooter->getCurrentVelocity();
 
-	frc::SmartDashboard::PutBoolean("VisionSpeakerCommandPassNote/LowerAngleReached", lowerAngleInTolerance);
-	frc::SmartDashboard::PutNumber("VisionSpeakerCommandPassNote/Distance", distance.value());
-	frc::SmartDashboard::PutBoolean("VisionSpeakerCommandPassNote/UpperAngleReached", upperAngleInTolerance);
-	frc::SmartDashboard::PutBoolean("VisionSpeakerCommandPassNote/HeadingReached", headingInTolerance);
-	frc::SmartDashboard::PutBoolean("VisionSpeakerCommandPassNote/ShooterReached", shooterSpeedInTolerance);
+	frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/LowerAngleReached", lowerAngleInTolerance);
+	frc::SmartDashboard::PutNumber("VisionSpeakerCommand/Distance", distance.value());
+	frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/UpperAngleReached", upperAngleInTolerance);
+	frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/HeadingReached", headingInTolerance);
+	frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/ShooterReached", shooterSpeedInTolerance);
 
 	if (lowerAngleInTolerance && upperAngleInTolerance && headingInTolerance && shooterSpeedInTolerance) {
 		Timer.Start();
-		storage->storageCommand(StorageConstants::ScoreVolts);
+		storage->setVoltage(StorageConstants::ScoreVolts);
 	}
 }
 

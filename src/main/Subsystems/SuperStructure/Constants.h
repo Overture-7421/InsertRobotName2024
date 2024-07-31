@@ -22,5 +22,5 @@ namespace SuperStructureConstants {
 	const static SuperStructureState AmpState = { 58.0,  -27.0 };
 	const static SuperStructureState SmoothCloseState = { -26.0, -7.0 };
 	const static SuperStructureState HighPassingState = { -12.0, -38.0 };
-	const static SuperStructureState LowPassingState = { -4.0, -5.0 };
+	const static SuperStructureState LowPassingState = { 5.0, -5.0 };
 };
