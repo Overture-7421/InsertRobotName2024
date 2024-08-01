@@ -62,16 +62,18 @@ namespace VisionSpeakerCommandConstants {
 		{5.9_m, 140.0}
 	};
 
+	static const double multiplier = 0.8; 
+	
 	static const InterpolatingTable<units::meter_t, units::second_t> DistanceToShotTimeTable{
-	  {1.66_m, 0.15_s},
-	  {1.9_m, 0.155_s},
-	  {2.4_m, 0.16_s},
-	  {2.9_m, 0.16_s},
-	  {3.4_m, 0.16_s},
-	  {3.9_m, 0.16_s},
-	  {4.4_m, 0.16_s},
-	  {4.9_m, 0.16_s},
-	  {5.4_m, 0.16_s},
-	  {5.9_m, 0.16_s}
+	  {1.66_m, 0.15_s * multiplier},
+	  {1.9_m, 0.155_s * multiplier},
+	  {2.4_m, 0.16_s * multiplier},
+	  {2.9_m, 0.16_s * multiplier},
+	  {3.4_m, 0.16_s * multiplier},
+	  {3.9_m, 0.16_s * multiplier},
+	  {4.4_m, 0.16_s * multiplier},
+	  {4.9_m, 0.16_s * multiplier},
+	  {5.4_m, 0.16_s * multiplier},
+	  {5.9_m, 0.16_s * multiplier}
 	};
 };

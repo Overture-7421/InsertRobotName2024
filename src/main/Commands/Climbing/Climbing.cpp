@@ -42,7 +42,7 @@ frc2::CommandPtr SetUpJoints(Chassis* chassis, SuperStructure* superStructure, S
 
 	return frc2::cmd::Sequence(
 		superStructure->superStructureCommand(superStructureStartingState),
-			WaitForButton(controller, checkpointButtonId),
+		WaitForButton(controller, checkpointButtonId),
 		frc2::cmd::Deadline(
 			pathplanner::AutoBuilder::followPath(pathToFollow),
 			SuperStructureMoveByDistance(superStructure, superStructureProfile, distanceFunction).ToPtr(),
@@ -74,14 +74,14 @@ frc2::CommandPtr AutoClimb(Chassis* chassis, SuperStructure* superStructure, Sup
 
 	return frc2::cmd::Select<StageLocation>([chassis]() {return findClosestStageLocation(chassis);},
 		std::pair{ StageLocation::Left, frc2::cmd::Sequence(
-			GoToClimbingLocationPathFind(superStructure, climbPathLeft),
+			GoToClimbingLocationPathFind(superStructure, climbPathLeft).AndThen([=] { chassis->setAcceptingVisionMeasurements(false);}),
 			WaitForButton(controller, checkpointButtonId),
 			SetUpJoints(chassis, superStructure, supportArms, climbPathLeft, controller),
 			WaitForButton(controller, checkpointButtonId),
 			ClimbAtLocation(superStructure, shooter, storage, controller)
 		) },
 		std::pair{ StageLocation::Right, frc2::cmd::Sequence(
-			GoToClimbingLocationPathFind(superStructure, climbPathRight),
+			GoToClimbingLocationPathFind(superStructure, climbPathRight).AndThen([=] { chassis->setAcceptingVisionMeasurements(false);}),
 			WaitForButton(controller, checkpointButtonId),
 			SetUpJoints(chassis, superStructure, supportArms, climbPathRight, controller),
 			WaitForButton(controller, checkpointButtonId),
@@ -91,7 +91,7 @@ frc2::CommandPtr AutoClimb(Chassis* chassis, SuperStructure* superStructure, Sup
 			frc2::cmd::RunOnce([=]() {
 				chassis->setAcceptingVisionMeasurements(false);
 			}),
-			GoToClimbingLocationPathFind(superStructure, climbPathBack),
+			GoToClimbingLocationPathFind(superStructure, climbPathBack).AndThen([=] { chassis->setAcceptingVisionMeasurements(false);}),
 			WaitForButton(controller, checkpointButtonId),
 			SetUpJoints(chassis, superStructure, supportArms, climbPathBack, controller),
 			WaitForButton(controller, checkpointButtonId),

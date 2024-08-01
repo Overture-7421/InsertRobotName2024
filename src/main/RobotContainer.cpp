@@ -26,9 +26,19 @@ RobotContainer::RobotContainer() {
 	pathplanner::NamedCommands::registerCommand("VisionNoShoot", std::move(VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter, &targetProvider).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("AlignToNote", std::move(AlignToTrackedObject(&chassis, &noteTrackingCamera, &alignHelper)));
 
+	// Testing
+	pathplanner::NamedCommands::registerCommand("StageShoot", std::move(frc2::cmd::Sequence(
+		shooter.shooterCommand(57).WithTimeout(0.2_s),
+		storage.storageCommand(StorageConstants::ScoreVolts).Repeatedly().WithTimeout(0.2_s)
+	)));
+	pathplanner::NamedCommands::registerCommand("StageShootV2", std::move(frc2::cmd::Sequence(
+		shooter.shooterCommand(60).WithTimeout(0.2_s),
+		storage.storageCommand(StorageConstants::ScoreVolts).Repeatedly().WithTimeout(0.2_s)
+	)));
+	pathplanner::NamedCommands::registerCommand("NearShoot", std::move(superStructure.superStructureCommand(SuperStructureConstants::NearShoot)));
 
 	center7NoteAuto = pathplanner::AutoBuilder::buildAuto("CenterAuto-7Notes");
-	center5NoteAuto = pathplanner::AutoBuilder::buildAuto("CenterAuto-5Notes");
+	center5NoteAuto = pathplanner::AutoBuilder::buildAuto("Testing");
 	center4NoteAuto = pathplanner::AutoBuilder::buildAuto("CenterAuto-4Notes");
 	ampAuto = pathplanner::AutoBuilder::buildAuto("AMPAuto");
 	sourceAuto = pathplanner::AutoBuilder::buildAuto("SourceAuto");
@@ -53,7 +63,7 @@ RobotContainer::RobotContainer() {
 	ConfigDriverBindings();
 	ConfigOperatorBindings();
 	ConfigDefaultCommands();
-	ConfigCharacterizationBindings();
+	//ConfigCharacterizationBindings();
 }
 
 void RobotContainer::ConfigureBindings() {
@@ -166,14 +176,14 @@ void RobotContainer::ConfigOperatorBindings() {
 		frc2::cmd::RunOnce([] {
 		VisionSpeakerCommand::SetUpperAngleOffset(VisionSpeakerCommand::GetUpperAngleOffset() - 0.5);
 	}),
-		BlinkEffect(&leds, "all", { 0, 255, 255 }, 0.05_s).WithTimeout(0.2_s)
+		BlinkEffect(&leds, "all", { 255, 0, 0 }, 0.05_s).WithTimeout(0.2_s)
 	));
 
 	operatorPad.downDpad().OnTrue(frc2::cmd::Parallel(
 		frc2::cmd::RunOnce([] {
 		VisionSpeakerCommand::SetUpperAngleOffset(VisionSpeakerCommand::GetUpperAngleOffset() + 0.5);
 	}),
-		BlinkEffect(&leds, "all", { 255, 0, 0 }, 0.05_s).WithTimeout(0.2_s)
+		BlinkEffect(&leds, "all", { 0, 255, 255 }, 0.05_s).WithTimeout(0.2_s)
 	));
 
 	operatorPad.leftDpad().OnTrue(
@@ -212,6 +222,13 @@ void RobotContainer::ConfigDefaultCommands() {
 
 void RobotContainer::ConfigCharacterizationBindings() {
 	//characterizationPad.A().ToggleOnTrue(TabulateCommand(&chassis, &superStructure, &shooter, &targetProvider).ToPtr());
+	/*
+	characterizationPad.A().WhileTrue(superStructure.sysIdQuasistaticUpper(frc2::sysid::Direction::kForward));
+	characterizationPad.B().WhileTrue(superStructure.sysIdQuasistaticUpper(frc2::sysid::Direction::kReverse));
+
+	characterizationPad.X().WhileTrue(superStructure.sysIdDynamicUpper(frc2::sysid::Direction::kForward));
+	characterizationPad.Y().WhileTrue(superStructure.sysIdDynamicUpper(frc2::sysid::Direction::kReverse));
+	*/
 }
 
 void RobotContainer::UpdateTelemetry() {

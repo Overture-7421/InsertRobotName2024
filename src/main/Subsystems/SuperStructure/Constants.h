@@ -15,6 +15,7 @@ namespace SuperStructureConstants {
 	const static double UpperAngleSafetyLimit = -23;
 
 	const static SuperStructureState GroundGrabState = { LowerAngleLowerLimit, -22.0 };
+	const static SuperStructureState NearShoot = { LowerAngleLowerLimit, -14.0 };
 	const static SuperStructureState ClosedState = { LowerAngleLowerLimit, UpperAngleUpperLimit };
 	const static SuperStructureState ClimbEndState = { 0, UpperAngleUpperLimit };
 	const static SuperStructureState SourceGrabState = { LowerAngleLowerLimit, -0.35 };

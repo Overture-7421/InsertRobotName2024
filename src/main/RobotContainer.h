@@ -62,23 +62,24 @@ private:
 	Chassis chassis;
 	SupportArms supportArms;
 
-	ChassisAccelToStructureFF accelFFSuperStructure {&chassis, &superStructure};
+	ChassisAccelToStructureFF accelFFSuperStructure{ &chassis, &superStructure };
 
 	// Helpers
 	HeadingSpeedsHelper rotationHelper{ { 7, 0, 0.35, {18_rad_per_s , 18_rad_per_s_sq }, RobotConstants::LoopTime }, &chassis };
 	AlignRobotRelativeHelper alignHelper;
 	AlignFieldRelativeHelper alignController{ &chassis };
-	
+
 
 	//Vision
 #ifndef __FRC_ROBORIO__
 	frc::AprilTagFieldLayout tagLayout = frc::AprilTagFieldLayout::LoadField(frc::AprilTagField::k2024Crescendo);
 #else
 	frc::AprilTagFieldLayout tagLayout{ "/home/lvuser/deploy/tag_layout/7421-field.json" };
+
 #endif
 	AprilTags shooterCamera{ &tagLayout, &chassis, {"Arducam_OV2311_USB_Camera", { {-14.950771_in, 0_m, 14.034697_in}, {-180_deg, -30_deg, 180_deg} }, 5_m, 9_m, 13_m} };
 	AprilTags frontRightSwerveModuleCamera{ &tagLayout, &chassis, {"Arducam_OV9281_USB_Camera", { {6.388283_in, -10.648092_in, 8.358231_in}, {0_deg, -28.125_deg, -30_deg} }} };
-	photon::PhotonCamera noteTrackingCamera{ "GENERAL_WEBCAM" };
+	photon::PhotonCamera noteTrackingCamera{ "PSEye" };
 	TargetProvider targetProvider{ &tagLayout };
 
 	LedsManager leds{ 8, 240, {

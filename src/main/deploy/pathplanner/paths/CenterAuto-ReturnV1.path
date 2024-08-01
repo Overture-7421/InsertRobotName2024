@@ -3,47 +3,47 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.010112764411576,
-        "y": 6.470326242978067
+        "x": 1.4,
+        "y": 5.531293435066112
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.933676332468945,
-        "y": 6.66265779043186
+        "x": 1.5827002124986396,
+        "y": 5.524947674606733
       },
       "isLocked": false,
-      "linkedName": "AMP 4-5"
+      "linkedName": "Return1"
     },
     {
       "anchor": {
-        "x": 8.35,
-        "y": 4.11
+        "x": 2.573413830101682,
+        "y": 4.284804773642762
       },
       "prevControl": {
-        "x": 8.10958556568276,
-        "y": 4.321564702199171
+        "x": 2.363263360499897,
+        "y": 4.285758412769576
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Center 8-9"
+      "linkedName": "Center 1-2"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 5.0,
-    "maxAcceleration": 3.5,
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": -43.98258880405276,
+    "velocity": 0.0,
+    "rotation": -30.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "AMPAuto",
+  "folder": "CenterAuto",
   "previewStartingState": {
     "rotation": 0.0,
     "velocity": 0

@@ -9,7 +9,7 @@
 #include <iostream>
 
 void Robot::RobotInit() {
-	#ifndef __FRC_ROBORIO__
+#ifndef __FRC_ROBORIO__
 	simMotorManager.Init({
 	  {2, "Sample Robot/motors/back_right_drive"},
 	  {4, "Sample Robot/motors/back_left_drive"},
@@ -21,7 +21,7 @@ void Robot::RobotInit() {
 	  {5, "Sample Robot/motors/front_left_rotation"},
 	  {7, "Sample Robot/motors/front_right_rotation"},
 
-	});
+		});
 
 	simPigeonManager.Init("Sample Robot/imu");
 
@@ -30,10 +30,10 @@ void Robot::RobotInit() {
 	  {10, "Sample Robot/cancoders/back_left_cancoder"},
 	  {11, "Sample Robot/cancoders/front_left_cancoder"},
 	  {12, "Sample Robot/cancoders/front_right_cancoder"}
-	});
+		});
 
 	simDutyCycleEncoderManager.Init({});
-	#endif
+#endif
 
 	m_teleopResetCommand = m_container.GetTeleopResetCommand();
 	AddPeriodic([&] {
@@ -75,12 +75,11 @@ void Robot::TeleopInit() {
 		m_autonomousCommand->Cancel();
 	}
 	m_teleopResetCommand->Schedule();
-	
+
 	VisionSpeakerCommand::LoadAllianceOffset();
 }
 
-void Robot::TeleopPeriodic() {
-}
+void Robot::TeleopPeriodic() {}
 
 void Robot::TeleopExit() {}
 

@@ -4,10 +4,10 @@
 
 #include "VisionSpeakerCommand.h"
 
-const double UPPER_ANGLE_BLUE_DEFAULT_OFFSET = -1.75;
-const double UPPER_ANGLE_RED_DEFAULT_OFFSET = -0.75;
+const double UPPER_ANGLE_BLUE_DEFAULT_OFFSET = -1.0;
+const double UPPER_ANGLE_RED_DEFAULT_OFFSET = 0;
 
-double UPPER_ANGLE_OFFSET = -0.75;
+double UPPER_ANGLE_OFFSET = 0;
 
 #include <frc/MathUtil.h>
 
@@ -62,6 +62,7 @@ void VisionSpeakerCommand::Execute() {
 	frc::ChassisSpeeds fieldRelativeSpeeds = frc::ChassisSpeeds::FromRobotRelativeSpeeds(robotRelativeSpeeds, chassisPose.Rotation());
 	ChassisAccels fieldRelativeAccels = ChassisAccels::FromRobotRelativeAccels(robotRelativeAccels, chassisPose.Rotation());
 
+	//frc::Translation2d speakerLoc = dynamicTarget.getMovingTarget(chassisPose, fieldRelativeSpeeds, fieldRelativeAccels);
 	frc::Translation2d speakerLoc = dynamicTarget.getMovingTarget(chassisPose, fieldRelativeSpeeds, fieldRelativeAccels);
 
 	frc::Translation2d chassisLoc = chassisPose.Translation();

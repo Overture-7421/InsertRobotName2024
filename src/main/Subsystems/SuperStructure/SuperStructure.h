@@ -31,6 +31,9 @@
 
 #include <frc2/command/Commands.h>
 
+//Offset Lower  -0.32608
+//Offset Upper -0.21753
+
 class SuperStructure : public frc2::SubsystemBase {
 public:
 	SuperStructure();
@@ -88,11 +91,11 @@ private:
 	SuperStructureState currentState;
 
 	//Feed Forward
-	frc::ArmFeedforward lowerFF{ 0.61794_V, 0.50143_V, 18.063_V / 1_tps, 1.4638_V / 1_tr_per_s_sq };
-	frc::ArmFeedforward upperFF{ 0.6_V, 0.25_V, 7.5_V / 1_tps, 0.97016_V / 1_tr_per_s_sq };
+	frc::ArmFeedforward lowerFF{ 1.1646_V, 1.9026_V, 4.1593_V / 1_tps, 3.5982_V / 1_tr_per_s_sq };
+	frc::ArmFeedforward upperFF{ 3.2822_V, 0.17171_V, 18.086_V / 1_tps, 3.3682_V / 1_tr_per_s_sq };
 
 	frc2::sysid::SysIdRoutine sysIdRoutineLower{
-		frc2::sysid::Config{2_V / 1_s, 7_V, 10_s,
+		frc2::sysid::Config{0.5_V / 1_s, 7_V, 10_s,
 							std::nullopt},
 		frc2::sysid::Mechanism{
 			[this](units::volt_t driveVoltage) {
@@ -108,7 +111,7 @@ private:
 			this} };
 
 	frc2::sysid::SysIdRoutine sysIdRoutineUpper{
-		frc2::sysid::Config{0.75_V / 1_s, 4_V, 10_s,
+		frc2::sysid::Config{0.25_V / 1_s, 4_V, 10_s,
 							std::nullopt},
 		frc2::sysid::Mechanism{
 			[this](units::volt_t driveVoltage) {
