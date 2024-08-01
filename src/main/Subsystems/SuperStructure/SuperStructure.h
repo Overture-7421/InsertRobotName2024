@@ -40,6 +40,8 @@ public:
 	bool reachedTargetPosition(SuperStructureState targetState);
 	frc2::CommandPtr superStructureCommand(SuperStructureState targetState);
 
+	void setArbitraryFeedForwardUpper(units::volt_t feedforward);
+
 	frc2::CommandPtr sysIdQuasistaticLower(frc2::sysid::Direction direction) {
 		return sysIdRoutineLower.Quasistatic(direction);
 	}
@@ -69,7 +71,7 @@ public:
 private:
 	double convertAngleToFalconPos(double angle);
 
-
+	units::volt_t arbitraryFeedForwardUpper = 0_V;
 	// LowerMotors
 	OverTalonFX lowerRightMotor{ 21, ControllerNeutralMode::Brake, false, "rio" };
 	OverTalonFX lowerLeftMotor{ 22, ControllerNeutralMode::Brake, true, "rio" };

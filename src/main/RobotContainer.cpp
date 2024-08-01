@@ -216,6 +216,7 @@ void RobotContainer::ConfigCharacterizationBindings() {
 
 void RobotContainer::UpdateTelemetry() {
 	superStructure.shuffleboardPeriodic();
+	accelFFSuperStructure.shuffleboardPeriodic();
 	chassis.shuffleboardPeriodic();
 	storage.shuffleboardPeriodic();
 	intake.shuffleboardPeriodic();

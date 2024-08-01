@@ -123,6 +123,10 @@ frc2::CommandPtr SuperStructure::superStructureCommand(SuperStructureState targe
 	).ToPtr();
 }
 
+void SuperStructure::setArbitraryFeedForwardUpper(units::volt_t feedforward) {
+	this->arbitraryFeedForwardUpper = feedforward;
+}
+
 // This method will be called once per scheduler run
 void SuperStructure::Periodic() {
 	currentState = getCurrentState();
@@ -135,10 +139,9 @@ void SuperStructure::Periodic() {
 		actualTarget.upperAngle = SuperStructureConstants::UpperAngleSafetyLimit;
 	}
 
-	lowerLeftMotor.setMotionMagicPosition(convertAngleToFalconPos(actualTarget.lowerAngle), 0, true);
-	upperMotor.setMotionMagicPosition(convertAngleToFalconPos(actualTarget.upperAngle), 0, true);
+	lowerLeftMotor.setMotionMagicPosition(convertAngleToFalconPos(actualTarget.lowerAngle), arbitraryFeedForwardUpper.value(), true);
+	upperMotor.setMotionMagicPosition(convertAngleToFalconPos(actualTarget.upperAngle), arbitraryFeedForwardUpper.value(), true);
 }
-
 
 void SuperStructure::shuffleboardPeriodic() {
 	frc::SmartDashboard::PutNumber("SuperStructure/Current/Lower", currentState.lowerAngle);

@@ -21,6 +21,7 @@
 #include "Subsystems/Targeting/TargetProvider.h"
 #include "Subsystems/Intake/Intake.h"
 #include "Subsystems/SuperStructure/SuperStructure.h"
+#include "Subsystems/SuperStructure/ChassisAccelToStructureFF/ChassisAccelToStructureFF.h"
 #include "Subsystems/Storage/Storage.h"
 #include "Subsystems/Shooter/Shooter.h"
 #include "Subsystems/SupportArms/SupportArms.h"
@@ -61,10 +62,13 @@ private:
 	Chassis chassis;
 	SupportArms supportArms;
 
+	ChassisAccelToStructureFF accelFFSuperStructure {&chassis, &superStructure};
+
 	// Helpers
 	HeadingSpeedsHelper rotationHelper{ { 7, 0, 0.35, {18_rad_per_s , 18_rad_per_s_sq }, RobotConstants::LoopTime }, &chassis };
 	AlignRobotRelativeHelper alignHelper;
 	AlignFieldRelativeHelper alignController{ &chassis };
+	
 
 	//Vision
 #ifndef __FRC_ROBORIO__
