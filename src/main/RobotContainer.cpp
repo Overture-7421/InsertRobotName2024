@@ -103,6 +103,7 @@ void RobotContainer::ConfigDriverBindings() {
 		);
 	}).BeforeStarting([&] {
 		chassis.enableSpeedHelper(&rotationHelper);
+		rotationHelper.resetController();
 	}).FinallyDo([&] {
 		chassis.disableSpeedHelper();
 	}));
