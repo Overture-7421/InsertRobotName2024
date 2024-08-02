@@ -28,12 +28,12 @@ RobotContainer::RobotContainer() {
 
 	// Testing
 	pathplanner::NamedCommands::registerCommand("StageShoot", std::move(frc2::cmd::Sequence(
-		shooter.shooterCommand(57).WithTimeout(0.2_s),
-		storage.storageCommand(StorageConstants::ScoreVolts).Repeatedly().WithTimeout(0.2_s)
+		shooter.shooterCommand(57).WithTimeout(0.15_s),
+		storage.storageCommand(StorageConstants::ScoreVolts).Repeatedly().WithTimeout(0.15_s)
 	)));
 	pathplanner::NamedCommands::registerCommand("StageShootV2", std::move(frc2::cmd::Sequence(
-		shooter.shooterCommand(60).WithTimeout(0.2_s),
-		storage.storageCommand(StorageConstants::ScoreVolts).Repeatedly().WithTimeout(0.2_s)
+		shooter.shooterCommand(60).WithTimeout(0.17_s),
+		storage.storageCommand(StorageConstants::ScoreVolts).Repeatedly().WithTimeout(0.1_s)
 	)));
 	pathplanner::NamedCommands::registerCommand("NearShoot", std::move(superStructure.superStructureCommand(SuperStructureConstants::NearShoot)));
 

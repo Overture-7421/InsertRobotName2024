@@ -19,7 +19,7 @@ public:
 	void setNoteDetected(units::degree_t initialPosition);
 	void setNoteLost();
 private:
-	frc::ProfiledPIDController<units::degree> controller{ 0.1, 0.0, 0.0, {120_deg_per_s, 360_deg_per_s_sq}, RobotConstants::LoopTime };
+	frc::ProfiledPIDController<units::degree> controller{ 0.09, 0.0, 0.0, {120_deg_per_s, 360_deg_per_s_sq}, RobotConstants::LoopTime };
 	units::degree_t m_currentAngle;
 	bool noteDetected = false;
 };
