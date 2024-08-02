@@ -10,13 +10,19 @@ frc2::CommandPtr AlignToTrackedObject(Chassis* chassis, photon::PhotonCamera* ca
 
 		const auto result = camera->GetLatestResult();
 		if (!result.HasTargets()) {
-			alignHelper->setCurrentAngle(units::degree_t(0));
+			alignHelper->setNoteLost();
 			return;
 		}
 
-		const auto target = result.GetTargets()[0];
-		alignHelper->setCurrentAngle(units::degree_t(target.GetYaw()));
 
+		const auto target = result.GetTargets()[0];
+		const auto targetYaw = units::degree_t(target.GetYaw());
+
+		if(!alignHelper->isNoteDetected()) {
+			alignHelper->setNoteDetected(targetYaw);
+		}else{
+			alignHelper->setCurrentAngle(targetYaw);
+		}
 	})).FinallyDo([=] {
 		chassis->disableSpeedHelper();
 	});
