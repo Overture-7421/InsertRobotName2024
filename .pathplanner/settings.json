@@ -6,11 +6,13 @@
     "AMPAuto",
     "CenterAuto",
     "Climbing",
+    "SpeakerShootAuto",
     "SourceAuto"
   ],
   "autoFolders": [
     "AMPAuto",
     "CenterAuto",
+    "SpeakerShootAuto",
     "SourceAuto"
   ],
   "defaultMaxVel": 1.0,

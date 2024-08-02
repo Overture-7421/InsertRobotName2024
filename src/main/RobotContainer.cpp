@@ -38,7 +38,7 @@ RobotContainer::RobotContainer() {
 	pathplanner::NamedCommands::registerCommand("NearShoot", std::move(superStructure.superStructureCommand(SuperStructureConstants::NearShoot)));
 
 	center7NoteAuto = pathplanner::AutoBuilder::buildAuto("CenterAuto-7Notes");
-	center5NoteAuto = pathplanner::AutoBuilder::buildAuto("Testing");
+	center5NoteAuto = pathplanner::AutoBuilder::buildAuto("SpeakerShootAuto");
 	center4NoteAuto = pathplanner::AutoBuilder::buildAuto("CenterAuto-4Notes");
 	ampAuto = pathplanner::AutoBuilder::buildAuto("AMPAuto");
 	sourceAuto = pathplanner::AutoBuilder::buildAuto("SourceAuto");

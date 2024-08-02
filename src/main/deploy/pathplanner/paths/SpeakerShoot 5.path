@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.058598655394227,
-        "y": 5.599460783737701
+        "x": 2.1307349633691834,
+        "y": 5.538796742333369
       },
       "isLocked": false,
       "linkedName": "New1"
@@ -61,7 +61,7 @@
     "rotateFast": true
   },
   "reversed": false,
-  "folder": "CenterAuto",
+  "folder": "SpeakerShootAuto",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

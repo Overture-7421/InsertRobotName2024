@@ -24,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "CenterAuto1-Alt"
+                  "pathName": "SpeakerShoot 1"
                 }
               },
               {
@@ -43,7 +43,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "CenterAuto-ReturnV2"
+                  "pathName": "SpeakerShoot 2"
                 }
               },
               {
@@ -68,7 +68,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "CenterAuto-ReturnV1"
+                  "pathName": "SpeakerShoot 3"
                 }
               },
               {
@@ -91,7 +91,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "CenterAuto2 V2"
+                        "pathName": "SpeakerShoot 4"
                       }
                     },
                     {
@@ -116,7 +116,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "CenterAuto2 V3"
+                        "pathName": "SpeakerShoot 5"
                       }
                     },
                     {
@@ -142,7 +142,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "CenterAuto3 V2"
+                        "pathName": "SpeakerShoot 6"
                       }
                     },
                     {
@@ -173,7 +173,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": " CenterAuto3 V3"
+                        "pathName": "SpeakerShoot 7"
                       }
                     }
                   ]
@@ -193,7 +193,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "CenterAuto3 V4"
+                        "pathName": "SpeakerShoot 8"
                       }
                     },
                     {
@@ -217,6 +217,6 @@
       ]
     }
   },
-  "folder": "CenterAuto",
+  "folder": "SpeakerShootAuto",
   "choreoAuto": false
 }
