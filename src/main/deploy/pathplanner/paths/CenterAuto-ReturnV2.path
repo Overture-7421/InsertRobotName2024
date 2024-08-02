@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.35,
-        "y": 4.11
+        "x": 8.24,
+        "y": 4.12
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.381865529256498,
-        "y": 4.15592541757599
+        "x": 7.271865529256498,
+        "y": 4.165925417575989
       },
       "isLocked": false,
-      "linkedName": "Center 8-9"
+      "linkedName": "CenterAuto-Alt"
     },
     {
       "anchor": {
@@ -48,11 +48,11 @@
     },
     {
       "anchor": {
-        "x": 1.4,
+        "x": 1.45,
         "y": 5.531293435066112
       },
       "prevControl": {
-        "x": 1.9063860187032355,
+        "x": 1.9563860187032356,
         "y": 5.1709803063734245
       },
       "nextControl": null,
