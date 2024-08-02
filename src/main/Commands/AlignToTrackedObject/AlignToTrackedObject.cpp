@@ -6,23 +6,18 @@ frc2::CommandPtr AlignToTrackedObject(Chassis* chassis, photon::PhotonCamera* ca
 
 	return frc2::cmd::RunOnce([chassis, alignHelper] {
 		chassis->enableSpeedHelper(alignHelper);
+		alignHelper->setNoteDetected(0_deg);
 	}).AndThen(frc2::cmd::Run([=]() mutable {
 
 		const auto result = camera->GetLatestResult();
 		if (!result.HasTargets()) {
-			alignHelper->setNoteLost();
+			alignHelper->setCurrentAngle(units::degree_t(0));
 			return;
 		}
 
-
 		const auto target = result.GetTargets()[0];
-		const auto targetYaw = units::degree_t(target.GetYaw());
+		alignHelper->setCurrentAngle(units::degree_t(target.GetYaw()));
 
-		if(!alignHelper->isNoteDetected()) {
-			alignHelper->setNoteDetected(targetYaw);
-		}else{
-			alignHelper->setCurrentAngle(targetYaw);
-		}
 	})).FinallyDo([=] {
 		chassis->disableSpeedHelper();
 	});

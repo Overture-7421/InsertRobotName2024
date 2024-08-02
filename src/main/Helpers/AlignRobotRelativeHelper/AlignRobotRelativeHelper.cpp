@@ -23,7 +23,7 @@ void AlignRobotRelativeHelper::alterSpeed(frc::ChassisSpeeds& inputSpeed) {
 		out = 0;
 	}
 
-	inputSpeed.vy = units::meters_per_second_t(out);
+	inputSpeed.vy += units::meters_per_second_t(out);
 }
 
 bool AlignRobotRelativeHelper::isNoteDetected() {
