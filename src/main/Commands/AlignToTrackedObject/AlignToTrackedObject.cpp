@@ -1,5 +1,5 @@
 #include "AlignToTrackedObject.h"
-
+#include <photon/PhotonUtils.h>
 // TODO: Implement Helpers
 
 frc2::CommandPtr AlignToTrackedObject(Chassis* chassis, photon::PhotonCamera* camera, AlignRobotRelativeHelper* alignHelper) {
@@ -16,7 +16,16 @@ frc2::CommandPtr AlignToTrackedObject(Chassis* chassis, photon::PhotonCamera* ca
 		}
 
 		const auto target = result.GetTargets()[0];
-		alignHelper->setCurrentAngle(units::degree_t(target.GetYaw()));
+
+
+		units::meter_t distanceToTarget = photon::PhotonUtils::CalculateDistanceToTarget(0.25_m, 0.045_m, 20_deg, units::degree_t(target.GetPitch()));
+		frc::Translation2d targetTranslation = photon::PhotonUtils::EstimateCameraToTargetTranslation(distanceToTarget, frc::Rotation2d(units::degree_t(target.GetYaw())));
+
+		frc::SmartDashboard::PutNumber("Target Y:", targetTranslation.Y().value());
+		frc::SmartDashboard::PutNumber("Target X:", targetTranslation.X().value());
+
+
+		//alignHelper->setCurrentAngle(units::degree_t(targetTranslation.Y().value()));
 
 	})).FinallyDo([=] {
 		chassis->disableSpeedHelper();
