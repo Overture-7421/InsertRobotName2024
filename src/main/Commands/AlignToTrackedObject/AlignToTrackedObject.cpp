@@ -25,7 +25,7 @@ frc2::CommandPtr AlignToTrackedObject(Chassis* chassis, photon::PhotonCamera* ca
 		frc::SmartDashboard::PutNumber("Target X:", targetTranslation.X().value());
 
 
-		//alignHelper->setCurrentAngle(units::degree_t(targetTranslation.Y().value()));
+		alignHelper->setCurrentAngle(units::degree_t(-targetTranslation.Y().value()));
 
 	})).FinallyDo([=] {
 		chassis->disableSpeedHelper();

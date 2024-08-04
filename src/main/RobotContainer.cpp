@@ -24,15 +24,18 @@ RobotContainer::RobotContainer() {
 	)));
 	pathplanner::NamedCommands::registerCommand("VisionShootNoDelay", std::move(VisionSpeakerCommand(&chassis, &superStructure, &shooter, &targetProvider, &storage).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("VisionNoShoot", std::move(VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter, &targetProvider).ToPtr()));
-	pathplanner::NamedCommands::registerCommand("AlignToNote", std::move(AlignToTrackedObject(&chassis, &noteTrackingCamera, &alignHelper)));
+	pathplanner::NamedCommands::registerCommand("AlignToNote", std::move(AlignToTrackedObject(&chassis, &noteTrackingCamera, &alignHelper).Until([=]() { return storage.isNoteOnForwardSensor(); })));
 
 	// Testing
 	pathplanner::NamedCommands::registerCommand("StageShoot", std::move(frc2::cmd::Sequence(
-		shooter.shooterCommand(57).WithTimeout(0.15_s),
+		frc2::cmd::Parallel(
+			shooter.shooterCommand(60).WithTimeout(0.17_s),
+			superStructure.superStructureCommand(SuperStructureConstants::NearShoot)
+		),
 		storage.storageCommand(StorageConstants::ScoreVolts).Repeatedly().WithTimeout(0.15_s)
 	)));
 	pathplanner::NamedCommands::registerCommand("StageShootV2", std::move(frc2::cmd::Sequence(
-		shooter.shooterCommand(60).WithTimeout(0.17_s),
+		shooter.shooterCommand(80).WithTimeout(0.10_s),
 		storage.storageCommand(StorageConstants::ScoreVolts).Repeatedly().WithTimeout(0.1_s)
 	)));
 	pathplanner::NamedCommands::registerCommand("NearShoot", std::move(superStructure.superStructureCommand(SuperStructureConstants::NearShoot)));

@@ -32,16 +32,16 @@
     },
     {
       "anchor": {
-        "x": 7.870990641150915,
-        "y": 4.119255498297474
+        "x": 8.1,
+        "y": 4.12
       },
       "prevControl": {
-        "x": 5.621968241887218,
-        "y": 4.126034725147227
+        "x": 5.850977600736302,
+        "y": 4.126779226849753
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Align"
     }
   ],
   "rotationTargets": [],
@@ -49,7 +49,7 @@
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 1.6,
+      "waypointRelativePos": 1.55,
       "command": {
         "type": "sequential",
         "data": {

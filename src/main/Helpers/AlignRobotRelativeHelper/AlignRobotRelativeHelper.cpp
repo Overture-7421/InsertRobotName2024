@@ -5,7 +5,7 @@
 #include "AlignRobotRelativeHelper.h"
 
 AlignRobotRelativeHelper::AlignRobotRelativeHelper() {
-	controller.SetTolerance(1_deg);
+	controller.SetTolerance(0.01_deg);
 };
 
 void AlignRobotRelativeHelper::setCurrentAngle(units::degree_t position) {
@@ -13,14 +13,10 @@ void AlignRobotRelativeHelper::setCurrentAngle(units::degree_t position) {
 }
 
 void AlignRobotRelativeHelper::alterSpeed(frc::ChassisSpeeds& inputSpeed) {
-	if(!noteDetected) {
-		return;
-	}
-
 	double out = controller.Calculate(m_currentAngle, units::degree_t(0));
 
-	if (controller.AtGoal()) {
-		out = 0;
+	if (controller.AtGoal() || !noteDetected) {
+		return;
 	}
 
 	inputSpeed.vy = units::meters_per_second_t(out);
