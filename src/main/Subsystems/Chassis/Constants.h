@@ -30,6 +30,14 @@ namespace ChassisConstants {
 		config.CanCoderId = 11;
 		config.ModuleName = "FrontLeftModule";
 
+		config.DriveCurrentLimit = 30;
+		config.DriveTriggerThreshold = 50;
+		config.DriveTriggerThresholdTime = 0.5;
+		config.TurnCurrentLimit = 40;
+		config.TurnTriggerThreshold = 60;
+		config.TurnTriggerThresholdTime = 0.1;
+
+
 #ifndef __FRC_ROBORIO__
 		config.Offset = 0_deg;
 #else
@@ -56,6 +64,13 @@ namespace ChassisConstants {
 		config.TurnId = 7;
 		config.CanCoderId = 12;
 		config.ModuleName = "FrontRightModule";
+
+		config.DriveCurrentLimit = 30;
+		config.DriveTriggerThreshold = 50;
+		config.DriveTriggerThresholdTime = 0.5;
+		config.TurnCurrentLimit = 40;
+		config.TurnTriggerThreshold = 60;
+		config.TurnTriggerThresholdTime = 0.1;
 
 #ifndef __FRC_ROBORIO__
 		config.Offset = 0_deg;
@@ -84,6 +99,13 @@ namespace ChassisConstants {
 		config.CanCoderId = 10;
 		config.ModuleName = "BackLeftModule";
 
+		config.DriveCurrentLimit = 30;
+		config.DriveTriggerThreshold = 50;
+		config.DriveTriggerThresholdTime = 0.5;
+		config.TurnCurrentLimit = 40;
+		config.TurnTriggerThreshold = 60;
+		config.TurnTriggerThresholdTime = 0.1;
+
 #ifndef __FRC_ROBORIO__
 		config.Offset = 0_deg;
 #else
@@ -109,6 +131,13 @@ namespace ChassisConstants {
 		config.DrivedId = 2;
 		config.TurnId = 1;
 		config.CanCoderId = 9;
+
+		config.DriveCurrentLimit = 30;
+		config.DriveTriggerThreshold = 50;
+		config.DriveTriggerThresholdTime = 0.5;
+		config.TurnCurrentLimit = 40;
+		config.TurnTriggerThreshold = 60;
+		config.TurnTriggerThresholdTime = 0.1;
 
 #ifndef __FRC_ROBORIO__
 		config.Offset = 0_deg;

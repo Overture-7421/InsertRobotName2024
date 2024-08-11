@@ -1,7 +1,7 @@
 {
     "fileName": "OvertureLib.json",
     "name": "OvertureLib",
-    "version": "2024.1.11",
+    "version": "2024.1.12",
     "frcYear": "2024",
     "uuid": "f5b78b8e-1696-4920-b6a1-154fa9a48d06",
     "mavenUrls": [
@@ -14,7 +14,7 @@
         {
             "groupId": "com.overture.lib",
             "artifactId": "OvertureLib-cpp",
-            "version": "2024.1.11",
+            "version": "2024.1.12",
             "libName": "OvertureLib",
             "headerClassifier": "headers",
             "sharedLibrary": true,
