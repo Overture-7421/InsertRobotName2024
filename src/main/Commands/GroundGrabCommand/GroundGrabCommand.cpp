@@ -27,7 +27,7 @@ frc2::CommandPtr GroundGrabCommand(SuperStructure* superStructure, Storage* stor
 			[=]() { return storage->isNoteOnForwardSensor(); }
 		).AndThen(
 			frc2::cmd::Sequence(
-				frc2::cmd::Wait(0.045_s),
+				frc2::cmd::Wait(0.025_s),
 				frc2::cmd::Parallel(
 					// superStructure->superStructureCommand(SuperStructureConstants::ClosedState),
 					storage->storageCommand(StorageConstants::StopVolts),

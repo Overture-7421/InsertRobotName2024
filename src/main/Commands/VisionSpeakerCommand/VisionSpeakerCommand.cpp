@@ -22,7 +22,7 @@ VisionSpeakerCommand::VisionSpeakerCommand(Chassis* chassis, SuperStructure* sup
 	this->targetProvider = targetProvider;
 }
 
-VisionSpeakerCommand::VisionSpeakerCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, TargetProvider* targetProvider, Storage* storage) : headingHelper({ 11.0, 0.5, 0.6, {13_rad_per_s, 18_rad_per_s_sq * 2} }, chassis) {
+VisionSpeakerCommand::VisionSpeakerCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, TargetProvider* targetProvider, Storage* storage) : headingHelper({ 18.0, 0.5, 0.0, {13_rad_per_s, 18_rad_per_s_sq * 2} }, chassis) {
 	// Use addRequirements() here to declare subsystem dependencies.
 	AddRequirements({ superStructure, shooter, storage });
 	this->chassis = chassis;
@@ -88,7 +88,7 @@ void VisionSpeakerCommand::Execute() {
 	bool upperAngleInTolerance = false;
 
 	if (joystick == nullptr) {
-		upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 0.75;
+		upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 1.0;
 	} else {
 		upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 3;
 	}

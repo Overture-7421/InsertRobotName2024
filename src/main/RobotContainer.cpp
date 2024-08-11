@@ -29,7 +29,8 @@ RobotContainer::RobotContainer() {
 	// Testing
 	pathplanner::NamedCommands::registerCommand("StageShoot", std::move(frc2::cmd::Sequence(
 		frc2::cmd::Parallel(
-			shooter.shooterCommand(60).WithTimeout(0.17_s),
+			//superStructure.superStructureCommand(SuperStructureConstants::GroundGrabState),
+			shooter.shooterCommand(70).WithTimeout(0.17_s),
 			superStructure.superStructureCommand(SuperStructureConstants::NearShoot)
 		),
 		storage.storageCommand(StorageConstants::ScoreVolts).Repeatedly().WithTimeout(0.15_s)
@@ -236,9 +237,9 @@ void RobotContainer::ConfigCharacterizationBindings() {
 
 void RobotContainer::UpdateTelemetry() {
 	superStructure.shuffleboardPeriodic();
-	accelFFSuperStructure.shuffleboardPeriodic();
+	//accelFFSuperStructure.shuffleboardPeriodic();
 	chassis.shuffleboardPeriodic();
 	storage.shuffleboardPeriodic();
-	intake.shuffleboardPeriodic();
-	shooter.shuffleboardPeriodic();
+	//intake.shuffleboardPeriodic();
+	//shooter.shuffleboardPeriodic();
 }
