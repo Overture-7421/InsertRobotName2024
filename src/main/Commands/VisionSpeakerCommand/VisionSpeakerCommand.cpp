@@ -83,18 +83,18 @@ void VisionSpeakerCommand::Execute() {
 	units::degree_t headingTolerance = 2_deg + units::degree_t(std::clamp(1 - distance.value() / 6.0, 0.0, 1.0) * 8.0); // Heading tolerance extra of X deg when close, more precise when further back;
 	units::degree_t headingError = units::math::abs(frc::InputModulus(angle.Degrees() - chassisPose.Rotation().Degrees(), -180_deg, 180_deg));
 
-	bool lowerAngleInTolerance = std::abs(targetLowerAngle - superStructure->getLowerAngle()) < 1.0;
+	bool lowerAngleInTolerance = std::abs(targetLowerAngle - superStructure->getLowerAngle()) < 1.5;
 
 	bool upperAngleInTolerance = false;
 
 	if (joystick == nullptr) {
-		upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 1.0;
+		upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 1.5;
 	} else {
 		upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 3;
 	}
 
 	bool headingInTolerance = headingError < headingTolerance;
-	bool shooterSpeedInTolerance = (targetShooterVelocity - 2.0) < shooter->getCurrentVelocity();
+	bool shooterSpeedInTolerance = (targetShooterVelocity - 5.0) < shooter->getCurrentVelocity();
 
 	frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/LowerAngleReached", lowerAngleInTolerance);
 	frc::SmartDashboard::PutNumber("VisionSpeakerCommand/Distance", distance.value());
