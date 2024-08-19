@@ -11,9 +11,11 @@
 
 #include <frc/Timer.h>
 
-#include "Math/InterpolatingTable/InterpolatingTable.h"
-#include "Math/Utils.h"
-#include "Math/TargetingWhileMoving/TargetingWhileMoving.h"
+#include <OvertureLib/Math/InterpolatingTable/InterpolatingTable.h>
+#include <OvertureLib/Math/Utils.h>
+#include <OvertureLib/Math/TargetingWhileMoving/TargetingWhileMoving.h>
+#include <OvertureLib/Subsystems/Swerve/SpeedsHelper/HeadingSpeedsHelper/HeadingSpeedsHelper.h>
+
 #include "Subsystems/Chassis/Chassis.h"
 #include "Subsystems/SuperStructure/SuperStructure.h"
 #include "Subsystems/Shooter/Shooter.h"
@@ -21,7 +23,6 @@
 #include "Subsystems/Targeting/TargetProvider.h"
 
 #include "Commands/UtilityFunctions/UtilityFunctions.h"
-#include "Commands/StorageCommand/StorageCommand.h"
 
 #include "Enums/PassNote.h"
 
@@ -41,12 +42,12 @@ public:
 private:
 	frc::Timer Timer;
 
-	SuperStructure* superStructure;
-	Chassis* chassis;
-	Shooter* shooter;
-	Storage* storage;
+	SuperStructure* superStructure = nullptr;
+	Chassis* chassis = nullptr;
+	Shooter* shooter = nullptr;
+	Storage* storage = nullptr;
 
-	TargetProvider* targetProvider;
+	TargetProvider* targetProvider = nullptr;
 
 	bool lowerAngleInTolerance;
 	bool upperAngleInTolerance;
@@ -60,4 +61,6 @@ private:
 	units::meter_t distance = 0.0_m;
 	frc::Rotation2d angle;
 	frc::Translation2d passLocation;
+	HeadingSpeedsHelper headingHelper;
+
 };

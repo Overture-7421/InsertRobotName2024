@@ -6,15 +6,19 @@
 
 Intake::Intake() {
 	intakeMotorLeft.setSupplyCurrentLimit(true, 20, 30, 0.5);
-	intakeMotorRight.setSupplyCurrentLimit(true, 20, 30, 0.5);
-	intakeMotorRight.setFollow(25, false);
 }
 
 void Intake::setVoltage(units::volt_t voltage) {
 	intakeMotorLeft.setVoltage(voltage, true);
 }
 
-double Intake::getVoltage(){
+frc2::CommandPtr Intake::intakeCommand(units::volt_t voltage) {
+	return std::move(frc2::cmd::RunOnce([this, voltage] {
+		this->setVoltage(voltage);
+	}));
+}
+
+double Intake::getVoltage() {
 	return intakeMotorLeft.GetMotorVoltage().GetValueAsDouble();
 }
 
@@ -25,9 +29,4 @@ void Intake::Periodic() {}
 void Intake::shuffleboardPeriodic() {
 	voltage.Append(intakeMotorLeft.GetMotorVoltage().GetValueAsDouble());
 	currentLeft.Append(intakeMotorLeft.GetSupplyCurrent().GetValueAsDouble());
-	currentRight.Append(intakeMotorRight.GetSupplyCurrent().GetValueAsDouble());
-
-	frc::SmartDashboard::PutNumber("Intake/CurrentLeft", intakeMotorLeft.GetSupplyCurrent().GetValueAsDouble());
-	frc::SmartDashboard::PutNumber("Intake/CurrentRight", intakeMotorRight.GetSupplyCurrent().GetValueAsDouble());
-	
 }

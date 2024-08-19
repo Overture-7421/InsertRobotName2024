@@ -6,9 +6,14 @@
 
 #include <frc2/command/CommandPtr.h>
 #include <frc2/command/button/Trigger.h>
-#include <frc2/command/button/CommandXboxController.h>
 #include <frc/XboxController.h>
 #include <frc/smartdashboard/SendableChooser.h>
+
+#include <OvertureLib/Gamepad/Gamepad.h>
+#include <OvertureLib/Robots/OverContainer/OverContainer.h>
+#include <OvertureLib/Subsystems/LedsManager/LedsManager.h>
+#include <OvertureLib/Subsystems/Vision/AprilTags/AprilTags.h>
+#include <OvertureLib/Subsystems/Swerve/SpeedsHelper/HeadingSpeedsHelper/HeadingSpeedsHelper.h>
 
 #include <pathplanner/lib/auto/NamedCommands.h>
 
@@ -16,39 +21,25 @@
 #include "Subsystems/Targeting/TargetProvider.h"
 #include "Subsystems/Intake/Intake.h"
 #include "Subsystems/SuperStructure/SuperStructure.h"
+#include "Subsystems/SuperStructure/ChassisAccelToStructureFF/ChassisAccelToStructureFF.h"
 #include "Subsystems/Storage/Storage.h"
 #include "Subsystems/Shooter/Shooter.h"
 #include "Subsystems/SupportArms/SupportArms.h"
-#include "Commands/ResetAngle/ResetAngle.h"
 
 #include "Commands/SuperStructureMoveByDistance/SuperStructureMoveByDistance.h"
-
 #include "Commands/GroundGrabCommand/GroundGrabCommand.h"
 #include "Commands/AmpCommand/AmpCommand.h"
 #include "Commands/ClosedCommand/ClosedCommand.h"
-#include "Commands/ClosedCommandSmooth/ClosedCommandSmooth.h"
 #include "Commands/SpeakerCommand/SpeakerCommand.h"
 #include "Commands/VisionAmpCommand/VisionAmpCommand.h"
 #include "Commands/VisionSpeakerCommand/VisionSpeakerCommand.h"
 #include "Commands/VisionSpeakerCommandNoShoot/VisionSpeakerCommandNoShoot.h"
-#include "Commands/ResetAngle/ResetAngle.h"
-#include "Commands/ShooterDefaultCommand/ShooterDefaultCommand.h"
-#include "Commands/FreeSupportArms/FreeSupportArms.h"
 #include "Commands/VisionSpeakerCommandPassNote/VisionSpeakerCommandPassNote.h"
-
 #include "Commands/TabulateCommand/TabulateCommand.h"
 #include "Commands/AlignToTrackedObject/AlignToTrackedObject.h"
-
-
 #include "Commands/Climbing/Climbing.h"
-#include "Commands/TrapShoot/TrapShoot.h"
 
-#include "Commands/Drive/Drive.h"
-#include "Characterization/SysIDRoutineBot.h"
-#include "Subsystems/LedsManager/LedsManager.h"
-#include "Subsystems/Vision/AprilTags/AprilTags.h"
-
-class RobotContainer : public SysIDRoutineBot {
+class RobotContainer : public OverContainer {
 public:
 	RobotContainer();
 
@@ -58,6 +49,10 @@ public:
 
 private:
 	void ConfigureBindings();
+	void ConfigDriverBindings();
+	void ConfigOperatorBindings();
+	void ConfigDefaultCommands();
+	void ConfigCharacterizationBindings();
 
 	// Subsystems
 	Intake intake;
@@ -67,53 +62,37 @@ private:
 	Chassis chassis;
 	SupportArms supportArms;
 
+	ChassisAccelToStructureFF accelFFSuperStructure{ &chassis, &superStructure };
+
+	// Helpers
+	HeadingSpeedsHelper rotationHelper{ { 7, 0, 0.35, {18_rad_per_s , 18_rad_per_s_sq }, RobotConstants::LoopTime }, &chassis };
+	AlignRobotRelativeHelper alignHelper;
+	AlignFieldRelativeHelper alignController{ &chassis };
+
+
 	//Vision
+#ifndef __FRC_ROBORIO__
+	frc::AprilTagFieldLayout tagLayout = frc::AprilTagFieldLayout::LoadField(frc::AprilTagField::k2024Crescendo);
+#else
 	frc::AprilTagFieldLayout tagLayout{ "/home/lvuser/deploy/tag_layout/7421-field.json" };
-	AprilTags shooterCamera{ &tagLayout, &chassis, {"Arducam_OV2311_USB_Camera", { {-0.3686515106_m, 0_m, 0.3518230454_m}, {-180_deg, -23_deg, 180_deg} }, 5_m, 9_m, 13_m} };
-	AprilTags frontRightSwerveModuleCamera{ &tagLayout, &chassis, {"Arducam_OV9281_USB_Camera", { {6.433997_in, -10.746927_in, 8.52786_in}, {0_deg, -28.125_deg, -30_deg} }} };
+
+#endif
+	AprilTags shooterCamera{ &tagLayout, &chassis, {"Arducam_OV2311_USB_Camera", { {-14.950771_in, 0_m, 14.034697_in}, {-180_deg, -30_deg, 180_deg} }, 5_m, 9_m, 13_m} };
+	AprilTags frontRightSwerveModuleCamera{ &tagLayout, &chassis, {"Arducam_OV9281_USB_Camera", { {6.388283_in, -10.648092_in, 8.358231_in}, {0_deg, -28.125_deg, -30_deg} }} };
 	photon::PhotonCamera noteTrackingCamera{ "PSEye" };
 	TargetProvider targetProvider{ &tagLayout };
 
-	LedsManager leds{ 0, 240, {
+	LedsManager leds{ 8, 240, {
 		{"all", {0, 239}}
 	} };
 
-	// Controllers
-	frc::XboxController driver{ 0 };
-	frc::XboxController opertr{ 1 };
 
-	// frc2::CommandXboxController characterization {5};
-
-	// Driver Commands
-	frc2::Trigger ampV{ [this] {return driver.GetLeftTriggerAxis() > 0.1;} };
-	frc2::Trigger sourceV{ [this] {return driver.GetRightBumper();} };
-	frc2::Trigger speakerV{ [this] {return driver.GetRightTriggerAxis() > 0.1;} };	// TO GET TESTED
-	frc2::Trigger zeroHeading{ [this] {return driver.GetBackButton();} };
-	frc2::Trigger climbV{ [this] {return driver.GetYButton();} };
-	frc2::Trigger passNoteHigh{ [this] {return driver.GetXButton();} };
-	frc2::Trigger passNoteLow{ [this] {return driver.GetBButton();} };
-	frc2::Trigger tabulate{ [this] {return driver.GetAButton();} };
-
-	// Mechanism Commands
-	frc2::Trigger ampM{ [this] {return opertr.GetLeftBumper();} };
-	frc2::Trigger spitM{ [this] {return opertr.GetBButton();} };
-	frc2::Trigger climbM{ [this] {return opertr.GetYButton();} };
-	frc2::Trigger shootM{ [this] {return opertr.GetLeftTriggerAxis() > 0.1;} };
-	frc2::Trigger speakerM{ [this] {return opertr.GetRightBumper();} };
-	frc2::Trigger intakeMIgnoreSensor{ [this] {return opertr.GetAButton();} };
-
-
-	frc2::Trigger increaseUpperAngleOffset{ [this] {return opertr.GetPOV() == 0;} };
-	frc2::Trigger decreaseUpperAngleOffset{ [this] {return opertr.GetPOV() == 180;} };
-	frc2::Trigger resetUpperAngleOffset{ [this] {return opertr.GetPOV() == 270;} };
-
-	frc2::Trigger manualFrontalClimb{ [this] {return opertr.GetPOV() == 90;} };
-
-	frc2::Trigger intakeM{ [this] {return opertr.GetRightTriggerAxis() > 0.1;} };
+	Gamepad driverPad{ 0, 0.1, 0.1 };
+	Gamepad operatorPad{ 1, 0.1, 0.2 };
+	Gamepad characterizationPad{ 2, 0.1, 0.2 };
 
 	// LED Triggers
 	frc2::Trigger noteOnStorage{ [this] {return storage.isNoteOnForwardSensor();} };
-	// frc2::Trigger shooterEmergencyMode{ [this] {return shooter.isEmergencyDisabled();} };
 	frc2::Trigger storageSensorEmergencyMode{ [this] {return !storage.isSensorAvailable();} };
 	frc2::Trigger intakeMotorActive{ [this] {return intake.getVoltage() != 0.0 && !storage.isNoteOnForwardSensor();} };
 
@@ -128,7 +107,9 @@ private:
 	frc2::CommandPtr ampAutoCenterRace = frc2::cmd::None();
 	frc2::CommandPtr sourceAutoCenterRace = frc2::cmd::None();
 
-	frc2::CommandPtr testingAuto = frc2::cmd::None();
+	frc::SlewRateLimiter<units::meters_per_second>filterX{ 16.0_mps_sq };
+	frc::SlewRateLimiter<units::meters_per_second>filterY{ 16.0_mps_sq };
+
 
 	//Auto Chooser
 	frc::SendableChooser<frc2::Command*> autoChooser;

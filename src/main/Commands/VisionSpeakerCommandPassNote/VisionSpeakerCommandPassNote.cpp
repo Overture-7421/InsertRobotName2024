@@ -6,7 +6,7 @@
 
 #include <frc/MathUtil.h>
 
-VisionSpeakerCommandPassNote::VisionSpeakerCommandPassNote(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, TargetProvider* targetProvider, Storage* storage, PassNote upOrDown) {
+VisionSpeakerCommandPassNote::VisionSpeakerCommandPassNote(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, TargetProvider* targetProvider, Storage* storage, PassNote upOrDown) : headingHelper({ 11.0, 0.5, 0.6, {13_rad_per_s, 18_rad_per_s_sq * 2} }, chassis) {
 	AddRequirements({ superStructure, shooter, storage });
 	this->chassis = chassis;
 	this->superStructure = superStructure;
@@ -18,15 +18,15 @@ VisionSpeakerCommandPassNote::VisionSpeakerCommandPassNote(Chassis* chassis, Sup
 
 // Called when the command is initially scheduled.
 void VisionSpeakerCommandPassNote::Initialize() {
-	chassis->setHeadingOverride(true);
+	chassis->enableSpeedHelper(&headingHelper);
 	passLocation = targetProvider->GetPassLocation();
 
-	if(upOrDown == PassNote::High) {
+	if (upOrDown == PassNote::High) {
 		targetState = SuperStructureConstants::HighPassingState;
-		targetShooterVelocity = 60.0;
-	}else{
+		targetShooterVelocity = 70.0;
+	} else {
 		targetState = SuperStructureConstants::LowPassingState;
-		targetShooterVelocity = 100.0;
+		targetShooterVelocity = 120.0;
 	}
 
 	Timer.Reset();
@@ -35,7 +35,7 @@ void VisionSpeakerCommandPassNote::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void VisionSpeakerCommandPassNote::Execute() {
-	frc::Pose2d chassisPose = chassis->getOdometry();
+	frc::Pose2d chassisPose = chassis->getEstimatedPose();
 
 	frc::Translation2d chassisLoc = chassisPose.Translation();
 
@@ -43,7 +43,7 @@ void VisionSpeakerCommandPassNote::Execute() {
 	distance = chassisToTarget.Distance({ 0_m, 0_m });
 	angle = chassisToTarget.Angle().RotateBy({ 180_deg });
 
-	chassis->setTargetHeading(angle);
+	headingHelper.setTargetAngle(angle.Radians());
 	double targetLowerAngle = targetState.lowerAngle;
 	double targetUpperAngle = targetState.upperAngle;
 	superStructure->setTargetCoord({ targetLowerAngle, targetUpperAngle });
@@ -53,26 +53,26 @@ void VisionSpeakerCommandPassNote::Execute() {
 	units::degree_t headingError = units::math::abs(frc::InputModulus(angle.Degrees() - chassisPose.Rotation().Degrees(), -180_deg, 180_deg));
 
 	bool lowerAngleInTolerance = std::abs(targetLowerAngle - superStructure->getLowerAngle()) < 1.0;
-	bool upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 1.0;
+	bool upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 2.0;
 	bool headingInTolerance = headingError < headingTolerance;
-	bool shooterSpeedInTolerance = (targetShooterVelocity - 2.0) < shooter->getCurrentVelocity();
+	bool shooterSpeedInTolerance = (targetShooterVelocity - 5.0) < shooter->getCurrentVelocity();
 
-	frc::SmartDashboard::PutBoolean("VisionSpeakerCommandPassNote/LowerAngleReached", lowerAngleInTolerance);
-	frc::SmartDashboard::PutNumber("VisionSpeakerCommandPassNote/Distance", distance.value());
-	frc::SmartDashboard::PutBoolean("VisionSpeakerCommandPassNote/UpperAngleReached", upperAngleInTolerance);
-	frc::SmartDashboard::PutBoolean("VisionSpeakerCommandPassNote/HeadingReached", headingInTolerance);
-	frc::SmartDashboard::PutBoolean("VisionSpeakerCommandPassNote/ShooterReached", shooterSpeedInTolerance);
+	frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/LowerAngleReached", lowerAngleInTolerance);
+	frc::SmartDashboard::PutNumber("VisionSpeakerCommand/Distance", distance.value());
+	frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/UpperAngleReached", upperAngleInTolerance);
+	frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/HeadingReached", headingInTolerance);
+	frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/ShooterReached", shooterSpeedInTolerance);
 
 	if (lowerAngleInTolerance && upperAngleInTolerance && headingInTolerance && shooterSpeedInTolerance) {
 		Timer.Start();
-		storage->setVoltage(StorageConstants::SpeakerScoreVolts);
+		storage->setVoltage(StorageConstants::ScoreVolts);
 	}
 }
 
 // Called once the command ends or is interrupted.
 void VisionSpeakerCommandPassNote::End(bool interrupted) {
-	chassis->setHeadingOverride(false);
-	storage->setVoltage(0_V);
+	chassis->disableSpeedHelper();
+	storage->storageCommand(StorageConstants::StopVolts);
 }
 
 // Returns true when the command should end.

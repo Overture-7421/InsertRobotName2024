@@ -10,6 +10,14 @@
 #define DEG_TO_RAD M_PI / 180.0
 
 SuperStructure::SuperStructure() {
+	auto lowerConfig = lowerCANCoder.getConfiguration();
+	lowerConfig.MagnetSensor.SensorDirection = SensorDirectionValue::Clockwise_Positive;
+	lowerCANCoder.GetConfigurator().Apply(lowerConfig);
+
+	auto upperConfig = upperCANCoder.getConfiguration();
+	upperConfig.MagnetSensor.SensorDirection = SensorDirectionValue::Clockwise_Positive;
+	upperCANCoder.GetConfigurator().Apply(upperConfig);
+
 	// Configure Motors
 	lowerLeftMotor.setSensorPosition(lowerCANCoder.getSensorAbsolutePosition());
 	upperMotor.setSensorPosition(upperCANCoder.getSensorAbsolutePosition());
@@ -48,11 +56,16 @@ SuperStructure::SuperStructure() {
 	setTargetCoord({ lowerCANCoder.getSensorAbsolutePosition() * 360.0, upperCANCoder.getSensorAbsolutePosition() * 360.0 });
 
 	// Configure Motion Magic and PID
-	lowerLeftMotor.setPIDValues(200.0, 70.0, 0.0, 0.0, 0.0);
-	lowerLeftMotor.configureMotionMagic(1.0, 6.0, 0.0);
+	lowerLeftMotor.setPIDValues(240.0, 50.0, 0.0, 0.0, 0.0);
+	lowerLeftMotor.configureMotionMagic(1.0, 4.0, 0.0);
 
-	upperMotor.setPIDValues(220.0, 70.0, 0.0, 0.0, 0.0);
-	upperMotor.configureMotionMagic(1.0, 6.0, 0.0);
+	upperMotor.setPIDValues(140.0, 40.0, 0.0, 0.0, 0.0);
+	upperMotor.configureMotionMagic(1.0, 4.0, 0.0);
+
+	lowerLeftMotor.setStatorCurrentLimit(true, 40);
+	lowerRightMotor.setStatorCurrentLimit(true, 40);
+	upperMotor.setStatorCurrentLimit(true, 40);
+
 }
 
 void SuperStructure::setTargetCoord(SuperStructureState targetState) {
@@ -94,6 +107,31 @@ double SuperStructure::convertAngleToFalconPos(double angle) {
 	return angle / 360.0;
 }
 
+bool SuperStructure::reachedTargetPosition(SuperStructureState targetState) {
+	double lowError = abs(targetState.lowerAngle - getLowerAngle());
+	double upperError = abs(targetState.upperAngle - getUpperAngle());
+
+	if (lowError <= 5 && upperError <= 5) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+frc2::CommandPtr SuperStructure::superStructureCommand(SuperStructureState targetState) {
+	return frc2::FunctionalCommand(
+		[&, targetState]() {setTargetCoord(targetState);},
+		[&]() {},
+		[&](bool interupted) {},
+		[&, targetState]() {return reachedTargetPosition(targetState);},
+		{ this }
+	).ToPtr();
+}
+
+void SuperStructure::setArbitraryFeedForwardUpper(units::volt_t feedforward) {
+	this->arbitraryFeedForwardUpper = feedforward;
+}
+
 // This method will be called once per scheduler run
 void SuperStructure::Periodic() {
 	currentState = getCurrentState();
@@ -106,8 +144,8 @@ void SuperStructure::Periodic() {
 		actualTarget.upperAngle = SuperStructureConstants::UpperAngleSafetyLimit;
 	}
 
-	lowerLeftMotor.setMotionMagicPosition(convertAngleToFalconPos(actualTarget.lowerAngle), 0, true);
-	upperMotor.setMotionMagicPosition(convertAngleToFalconPos(actualTarget.upperAngle), 0, true);
+	lowerLeftMotor.setMotionMagicPosition(convertAngleToFalconPos(actualTarget.lowerAngle), lowerFF.Calculate(units::radian_t(actualTarget.lowerAngle), units::radians_per_second_t(0)).value(), true);
+	upperMotor.setMotionMagicPosition(convertAngleToFalconPos(actualTarget.upperAngle), upperFF.Calculate(units::radian_t(actualTarget.upperAngle), units::radians_per_second_t(0)).value(), true);
 }
 
 void SuperStructure::shuffleboardPeriodic() {
@@ -118,15 +156,19 @@ void SuperStructure::shuffleboardPeriodic() {
 	frc::SmartDashboard::PutNumber("SuperStructure/Current/LowerMotorPosition", lowerLeftMotor.GetPosition().GetValue().value());
 	frc::SmartDashboard::PutNumber("SuperStructure/Current/RawUpper", upperCANCoder.getSensorAbsolutePosition());
 	frc::SmartDashboard::PutNumber("SuperStructure/Current/UpperMotorPosition", upperMotor.GetPosition().GetValue().value());
+	frc::SmartDashboard::PutNumber("SuperStructure/Current/RawLower", lowerCANCoder.getSensorAbsolutePosition());
+	frc::SmartDashboard::PutNumber("SuperStructure/Current/LowerMotorPosition", lowerLeftMotor.GetPosition().GetValue().value());
+	frc::SmartDashboard::PutNumber("SuperStructure/Current/RawUpper", upperCANCoder.getSensorAbsolutePosition());
+	frc::SmartDashboard::PutNumber("SuperStructure/Current/UpperMotorPosition", upperMotor.GetPosition().GetValue().value());
 
 
 	//frc::SmartDashboard::PutNumber("SuperStructure/DesiredTarget/Lower", targetState.lowerAngle);
 	//frc::SmartDashboard::PutNumber("SuperStructure/DesiredTarget/Upper", targetState.upperAngle);
 
-	//frc::SmartDashboard::PutNumber("SuperStructure/ActualTarget/Lower", actualTarget.lowerAngle);
-	//frc::SmartDashboard::PutNumber("SuperStructure/ActualTarget/LowerMotor", convertAngleToFalconPos(actualTarget.lowerAngle));
+	frc::SmartDashboard::PutNumber("SuperStructure/ActualTarget/Lower", actualTarget.lowerAngle);
+	frc::SmartDashboard::PutNumber("SuperStructure/ActualTarget/LowerMotor", convertAngleToFalconPos(actualTarget.lowerAngle));
 
-	//frc::SmartDashboard::PutNumber("SuperStructure/ActualTarget/Upper", actualTarget.upperAngle);
-	//frc::SmartDashboard::PutNumber("SuperStructure/ActualTarget/UpperMotor", convertAngleToFalconPos(actualTarget.upperAngle));
+	frc::SmartDashboard::PutNumber("SuperStructure/ActualTarget/Upper", actualTarget.upperAngle);
+	frc::SmartDashboard::PutNumber("SuperStructure/ActualTarget/UpperMotor", convertAngleToFalconPos(actualTarget.upperAngle));
 
 }

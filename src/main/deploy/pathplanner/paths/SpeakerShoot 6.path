@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.8168686467859296,
+        "y": 5.511817049731372
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.222838894070714,
+        "y": 5.511817049735627
+      },
+      "isLocked": false,
+      "linkedName": "Center 2-3"
+    },
+    {
+      "anchor": {
+        "x": 1.5,
+        "y": 5.5410316277334815
+      },
+      "prevControl": {
+        "x": 2.1719352940485237,
+        "y": 5.531293435066112
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "New1"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0.0,
+    "rotation": 0.0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "SpeakerShootAuto",
+  "previewStartingState": {
+    "rotation": 0.0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}

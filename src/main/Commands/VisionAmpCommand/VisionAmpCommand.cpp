@@ -6,10 +6,7 @@
 #include <frc2/command/ParallelCommandGroup.h>
 #include "Commands/AmpCommand/AmpCommand.h"
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.
-// For more information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-
+// TODO: Implement Helpers
 frc2::CommandPtr VisionAmpCommand(SuperStructure* superStucture, Shooter* shooter) {
 
 	pathplanner::PathConstraints constraints = pathplanner::PathConstraints(
@@ -19,9 +16,31 @@ frc2::CommandPtr VisionAmpCommand(SuperStructure* superStucture, Shooter* shoote
 	return frc2::cmd::Sequence(
 		frc2::cmd::Deadline(
 			pathplanner::AutoBuilder::pathfindToPoseFlipped({ 1.80_m, 7.59_m, {-90_deg} }, constraints),
-			SuperStructureCommand(superStucture, SuperStructureConstants::AmpState).ToPtr(),
-			ShooterCommand(shooter, ShooterConstants::AmpScoreSpeed).ToPtr()
+			superStucture->superStructureCommand(SuperStructureConstants::AmpState),
+			shooter->shooterCommand(ShooterConstants::AmpScoreSpeed)
 		),
-		AmpCommand(superStucture, shooter).ToPtr()
+		AmpCommand(superStucture, shooter)
 	);
 };
+
+// frc2::CommandPtr VisionAmpCommand(Chassis* chassis) {
+// 	frc::ProfiledPIDController<units::meter> alignXController{ 0.1, 0.0, 0.0, {2_mps, 5_mps_sq}, RobotConstants::LoopTime };
+// 	frc::SlewRateLimiter<units::meters_per_second> vxLimiter{ 5.0_mps_sq };
+
+// 	double maxOutput = 0.5;
+
+// 	return frc2::cmd::Run([&] {
+// 		double output = alignXController.Calculate(chassis->getEstimatedPose().Translation().X(), pathplanner::GeometryUtil::flipFieldPosition({ 1.80_m, 7.59_m }).X());
+// 		output = std::clamp(output, -maxOutput, maxOutput);
+
+// 		// chassis->setPositionTarget(vxLimiter.Calculate(units::meters_per_second_t(0)), units::meters_per_second_t(output));
+// 	}).BeforeStarting([=] {
+// 		// chassis->setPositionAssist(true);
+// 		// chassis->setHeadingOverride(true);
+// 		// chassis->setTargetHeading({ -90_deg });
+
+// 	}).AndThen([&] {
+// 		// chassis->setPositionAssist(false);
+// 		// chassis->setHeadingOverride(false);
+// 	});
+// };

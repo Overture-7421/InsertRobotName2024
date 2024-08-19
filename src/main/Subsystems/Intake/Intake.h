@@ -5,9 +5,10 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
+#include <frc2/command/Commands.h>
 
-#include "MotorControllers/OverTalonFX/OverTalonFX.h"
-#include "MotorControllers/ControllerNeutralMode/ControllerNeutralMode.h"
+#include <OvertureLib/MotorControllers/OverTalonFX/OverTalonFX.h>
+#include <OvertureLib/MotorControllers/ControllerNeutralMode/ControllerNeutralMode.h>
 #include "Constants.h"
 
 #include <wpi/DataLog.h>
@@ -20,14 +21,14 @@ public:
 	double getVoltage();
 	void Periodic() override;
 	void shuffleboardPeriodic();
+	frc2::CommandPtr intakeCommand(units::volt_t voltage);
+	double voltageOut = 0.0;
 
 private:
-	OverTalonFX intakeMotorLeft{ 25, ControllerNeutralMode::Brake, false, "rio" };
-	OverTalonFX intakeMotorRight{ 24, ControllerNeutralMode::Brake, false, "rio" };
+	OverTalonFX intakeMotorLeft{ 20, ControllerNeutralMode::Brake, false, "rio" };
 
 
 	wpi::log::DataLog& log = frc::DataLogManager::GetLog();
 	wpi::log::DoubleLogEntry voltage = wpi::log::DoubleLogEntry(log, "/intake/voltage");
 	wpi::log::DoubleLogEntry currentLeft = wpi::log::DoubleLogEntry(log, "/intake/current_left");
-	wpi::log::DoubleLogEntry currentRight = wpi::log::DoubleLogEntry(log, "/intake/current_right");
 };

@@ -13,9 +13,11 @@
 
 #include <frc/Timer.h>
 
-#include "Math/InterpolatingTable/InterpolatingTable.h"
-#include "Math/Utils.h"
-#include "Math/TargetingWhileMoving/TargetingWhileMoving.h"
+#include <Overturelib/Math/InterpolatingTable/InterpolatingTable.h>
+#include <Overturelib/Math/Utils.h>
+#include <Overturelib/Math/TargetingWhileMoving/TargetingWhileMoving.h>
+#include <OvertureLib/Subsystems/Swerve/SpeedsHelper/HeadingSpeedsHelper/HeadingSpeedsHelper.h>
+
 #include "Subsystems/Chassis/Chassis.h"
 #include "Subsystems/SuperStructure/SuperStructure.h"
 #include "Subsystems/Shooter/Shooter.h"
@@ -23,7 +25,6 @@
 #include "Subsystems/Targeting/TargetProvider.h"
 
 #include "Commands/UtilityFunctions/UtilityFunctions.h"
-#include "Commands/StorageCommand/StorageCommand.h"
 #include "Constants.h"
 
 class VisionSpeakerCommand
@@ -50,12 +51,12 @@ public:
 private:
 	frc::Timer Timer;
 
-	SuperStructure* superStructure;
-	Chassis* chassis;
-	Shooter* shooter;
+	SuperStructure* superStructure = nullptr;
+	Chassis* chassis = nullptr;
+	Shooter* shooter = nullptr;
 	frc::XboxController* joystick = nullptr;
-	Storage* storage;
-	TargetProvider* targetProvider;
+	Storage* storage = nullptr;
+	TargetProvider* targetProvider = nullptr;
 
 	bool lowerAngleInTolerance;
 	bool upperAngleInTolerance;
@@ -71,4 +72,5 @@ private:
 
 	wpi::log::DataLog& log = frc::DataLogManager::GetLog();
 	wpi::log::DoubleLogEntry upperAngleOffsetLog = wpi::log::DoubleLogEntry(log, "/vision_speaker_command/upper_angle_offset");
+	HeadingSpeedsHelper headingHelper;
 };

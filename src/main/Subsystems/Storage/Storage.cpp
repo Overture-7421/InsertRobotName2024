@@ -9,6 +9,8 @@ Storage::Storage() {
 	storageMotor.setSupplyCurrentLimit(true, 20, 30, 0.5);
 	// distanceSensorL.SetAutomaticMode(true);
 	// distanceSensorR.SetAutomaticMode(true);
+
+	storageMotor.setStatorCurrentLimit(true, 40);
 }
 
 void Storage::setVoltage(units::volt_t voltage) {
@@ -16,10 +18,10 @@ void Storage::setVoltage(units::volt_t voltage) {
 }
 
 bool Storage::isNoteOnForwardSensor() {
-	if(isSensorAvailable()) {
-		return isNoteOnStorage;
-	}
-	return false;
+	// if (isSensorAvailable()) {
+	return isNoteOnStorage;
+	// }
+	// return false;
 }
 
 bool Storage::isSensorAvailable() {
@@ -51,6 +53,10 @@ void Storage::Periodic() {
 	beamBreak1Cache = !beamBreak1.Get();
 	beamBreak2Cache = !beamBreak2.Get();
 	isNoteOnStorage = beamBreak1Cache || beamBreak2Cache;
+}
+
+frc2::CommandPtr Storage::storageCommand(units::volt_t voltage) {
+	return std::move(frc2::cmd::RunOnce([this, voltage] {this->setVoltage(voltage);}));
 }
 
 void Storage::shuffleboardPeriodic() {

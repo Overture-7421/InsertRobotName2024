@@ -7,9 +7,9 @@
 #include "Subsystems/Storage/Storage.h"
 #include "Subsystems/SuperStructure/SuperStructure.h"
 #include "Subsystems/Shooter/Shooter.h"
+#include "Subsystems/SupportArms/SupportArms.h"
 #include "Commands/UtilityFunctions/UtilityFunctions.h"
 #include "Commands/WaitForCheckPoint/WaitForCheckPoint.h"
-#include "Commands/SuperStructureCommand/SuperStructureCommand.h"
 #include "Commands/SuperStructureMoveByDistance/SuperStructureMoveByDistance.h"
 #include "Enums/StageLocation.h"
 

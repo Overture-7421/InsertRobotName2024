@@ -6,10 +6,11 @@
 
 #include <frc2/command/SubsystemBase.h>
 #include <frc2/command/sysid/SysIdRoutine.h>
+#include <frc2/command/Commands.h>
 #include <frc/controller/SimpleMotorFeedforward.h>
 
-#include "MotorControllers/OverTalonFX/OverTalonFX.h"
-#include "MotorControllers/ControllerNeutralMode/ControllerNeutralMode.h"
+#include <OvertureLib/MotorControllers/OverTalonFX/OverTalonFX.h>
+#include <OvertureLib/MotorControllers/ControllerNeutralMode/ControllerNeutralMode.h>
 #include "Constants.h"
 
 class Shooter : public frc2::SubsystemBase {
@@ -22,6 +23,8 @@ public:
 	double getCurrentVelocity();
 	void Periodic() override;
 	void shuffleboardPeriodic();
+	bool reachedTargetVelocity(double velocity);
+	frc2::CommandPtr shooterCommand(double velocity);
 
 	frc2::CommandPtr sysIdQuasistatic(frc2::sysid::Direction direction) {
 		return sysIdRoutine.Quasistatic(direction);
@@ -32,10 +35,10 @@ public:
 	}
 
 private:
-	OverTalonFX leftShooterMotor{ 27, ControllerNeutralMode::Coast, false, "rio" };
-	OverTalonFX rightShooterMotor{ 26, ControllerNeutralMode::Coast, false, "rio" };
+	OverTalonFX leftShooterMotor{ 26, ControllerNeutralMode::Coast, false, "rio" };
+	OverTalonFX rightShooterMotor{ 25, ControllerNeutralMode::Coast, false, "rio" };
 
-	frc::SimpleMotorFeedforward<units::turn> shooterFF {0.17356_V, 0.067254_V / 1_tps, 0.016758_V / 1_tr_per_s_sq};
+	frc::SimpleMotorFeedforward<units::turn> shooterFF{ 0.10469_V, 0.063365_V / 1_tps, 0.013876_V / 1_tr_per_s_sq };
 
 	double targetVel = 0.0;
 

@@ -6,6 +6,7 @@
 
 #include <frc2/command/SubsystemBase.h>
 #include <frc/Servo.h>
+#include <frc2/command/Commands.h>
 
 
 class SupportArms : public frc2::SubsystemBase {
@@ -20,10 +21,13 @@ class SupportArms : public frc2::SubsystemBase {
 
   void 	SetAngle (double angle);
 
+  frc2::CommandPtr freeArmsCommand(double angle);
+
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
-  frc::Servo servo {9};
+  frc::Servo leftServo {7};
+  frc::Servo rightServo {6};
 
 };

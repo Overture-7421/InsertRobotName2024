@@ -2,11 +2,11 @@
 #include <units/voltage.h>
 
 namespace StorageConstants {
-	const static units::volt_t GroundGrabVolts = 5_V;
-	const static units::volt_t SpitVolts = -6_V;
-	const static units::volt_t SourceGrabVolts = -3_V;
-	const static units::volt_t AmpScoreVolts = 3_V;
-	const static units::volt_t SpeakerScoreVolts = 12_V;
+	const static units::volt_t GroundGrabVolts = 4_V;
+	const static units::volt_t SpitVolts = -4_V;
+	const static units::volt_t ScoreVolts = 12_V;
+	const static units::volt_t StopVolts = 0_V;
+	const static units::volt_t TrapVolts = 8_V;
 	// const static double IRActivationThreshold = 20;
 	const static units::millimeter_t DistanceSensorActivationThreshold = 15_cm;
 	const static units::second_t DistanceSensorAvailableTimeTolerance = 1_s;

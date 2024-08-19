@@ -4,14 +4,14 @@
 
 #include "VisionSpeakerCommand.h"
 
-const double UPPER_ANGLE_BLUE_DEFAULT_OFFSET = -1.75;
-const double UPPER_ANGLE_RED_DEFAULT_OFFSET = -0.75;
+const double UPPER_ANGLE_BLUE_DEFAULT_OFFSET = 0.0;
+const double UPPER_ANGLE_RED_DEFAULT_OFFSET = 0;
 
-double UPPER_ANGLE_OFFSET = -0.75;
+double UPPER_ANGLE_OFFSET = 0;
 
 #include <frc/MathUtil.h>
 
-VisionSpeakerCommand::VisionSpeakerCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, TargetProvider* targetProvider, frc::XboxController* joystick) {
+VisionSpeakerCommand::VisionSpeakerCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, TargetProvider* targetProvider, frc::XboxController* joystick) : headingHelper({ 11.0, 0.5, 0.6, {13_rad_per_s, 18_rad_per_s_sq * 2} }, chassis) {
 	// Use addRequirements() here to declare subsystem dependencies.
 	AddRequirements({ superStructure, shooter });
 
@@ -22,7 +22,7 @@ VisionSpeakerCommand::VisionSpeakerCommand(Chassis* chassis, SuperStructure* sup
 	this->targetProvider = targetProvider;
 }
 
-VisionSpeakerCommand::VisionSpeakerCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, TargetProvider* targetProvider, Storage* storage) {
+VisionSpeakerCommand::VisionSpeakerCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, TargetProvider* targetProvider, Storage* storage) : headingHelper({ 18.0, 0.5, 0.0, {13_rad_per_s, 18_rad_per_s_sq * 2} }, chassis) {
 	// Use addRequirements() here to declare subsystem dependencies.
 	AddRequirements({ superStructure, shooter, storage });
 	this->chassis = chassis;
@@ -34,7 +34,7 @@ VisionSpeakerCommand::VisionSpeakerCommand(Chassis* chassis, SuperStructure* sup
 
 // Called when the command is initially scheduled.
 void VisionSpeakerCommand::Initialize() {
-	chassis->setHeadingOverride(true);
+	chassis->enableSpeedHelper(&headingHelper);
 
 	dynamicTarget.setTargetLocation(targetProvider->GetSpeakerLocation());
 
@@ -56,8 +56,14 @@ void VisionSpeakerCommand::LoadAllianceOffset() {
 
 // Called repeatedly when this Command is scheduled to run
 void VisionSpeakerCommand::Execute() {
-	frc::Pose2d chassisPose = chassis->getOdometry();
-	frc::Translation2d speakerLoc = dynamicTarget.getMovingTarget(chassisPose, chassis->getFieldRelativeSpeeds(), chassis->getFieldRelativeAccels());
+	frc::Pose2d chassisPose = chassis->getEstimatedPose();
+	frc::ChassisSpeeds robotRelativeSpeeds = chassis->getCurrentSpeeds();
+	ChassisAccels robotRelativeAccels = chassis->getCurrentAccels();
+	frc::ChassisSpeeds fieldRelativeSpeeds = frc::ChassisSpeeds::FromRobotRelativeSpeeds(robotRelativeSpeeds, chassisPose.Rotation());
+	ChassisAccels fieldRelativeAccels = ChassisAccels::FromRobotRelativeAccels(robotRelativeAccels, chassisPose.Rotation());
+
+	//frc::Translation2d speakerLoc = dynamicTarget.getMovingTarget(chassisPose, fieldRelativeSpeeds, fieldRelativeAccels);
+	frc::Translation2d speakerLoc = dynamicTarget.getMovingTarget(chassisPose, fieldRelativeSpeeds, fieldRelativeAccels);
 
 	frc::Translation2d chassisLoc = chassisPose.Translation();
 
@@ -67,7 +73,7 @@ void VisionSpeakerCommand::Execute() {
 
 	double upperAngleOffset = GetUpperAngleOffset();
 
-	chassis->setTargetHeading(angle);
+	headingHelper.setTargetAngle(angle.Radians());
 	double targetLowerAngle = VisionSpeakerCommandConstants::DistanceToLowerAngleTable[distance];
 	double targetUpperAngle = VisionSpeakerCommandConstants::DistanceToUpperAngleTable[distance] + upperAngleOffset;
 	double targetShooterVelocity = VisionSpeakerCommandConstants::DistanceToVelocityTable[distance];
@@ -77,18 +83,18 @@ void VisionSpeakerCommand::Execute() {
 	units::degree_t headingTolerance = 2_deg + units::degree_t(std::clamp(1 - distance.value() / 6.0, 0.0, 1.0) * 8.0); // Heading tolerance extra of X deg when close, more precise when further back;
 	units::degree_t headingError = units::math::abs(frc::InputModulus(angle.Degrees() - chassisPose.Rotation().Degrees(), -180_deg, 180_deg));
 
-	bool lowerAngleInTolerance = std::abs(targetLowerAngle - superStructure->getLowerAngle()) < 1.0;
+	bool lowerAngleInTolerance = std::abs(targetLowerAngle - superStructure->getLowerAngle()) < 1.5;
 
 	bool upperAngleInTolerance = false;
 
 	if (joystick == nullptr) {
-		upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 0.75;
+		upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 1.5;
 	} else {
 		upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 3;
 	}
 
 	bool headingInTolerance = headingError < headingTolerance;
-	bool shooterSpeedInTolerance = (targetShooterVelocity - 2.0) < shooter->getCurrentVelocity();
+	bool shooterSpeedInTolerance = (targetShooterVelocity - 5.0) < shooter->getCurrentVelocity();
 
 	frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/LowerAngleReached", lowerAngleInTolerance);
 	frc::SmartDashboard::PutNumber("VisionSpeakerCommand/Distance", distance.value());
@@ -101,7 +107,7 @@ void VisionSpeakerCommand::Execute() {
 	if (lowerAngleInTolerance && upperAngleInTolerance && headingInTolerance && shooterSpeedInTolerance) {
 		if (joystick == nullptr) {
 			Timer.Start();
-			storage->setVoltage(StorageConstants::SpeakerScoreVolts);
+			storage->setVoltage(StorageConstants::ScoreVolts);
 		} else {
 			joystick->SetRumble(frc::GenericHID::kBothRumble, 1.0);
 		}
@@ -114,7 +120,7 @@ void VisionSpeakerCommand::Execute() {
 
 // Called once the command ends or is interrupted.
 void VisionSpeakerCommand::End(bool interrupted) {
-	chassis->setHeadingOverride(false);
+	chassis->disableSpeedHelper();
 	if (joystick == nullptr) {
 		storage->setVoltage(0_V);
 	} else {

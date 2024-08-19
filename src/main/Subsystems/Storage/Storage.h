@@ -5,12 +5,13 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
+#include <frc2/command/Commands.h>
 #include <frc/DigitalInput.h>
 #include <frc/DigitalOutput.h>
 #include <units/length.h>
 
-#include "MotorControllers/OverTalonFX/OverTalonFX.h"
-#include "MotorControllers/ControllerNeutralMode/ControllerNeutralMode.h"
+#include <OvertureLib/MotorControllers/OverTalonFX/OverTalonFX.h>
+#include <OvertureLib/MotorControllers/ControllerNeutralMode/ControllerNeutralMode.h>
 
 #include "Constants.h"
 
@@ -27,8 +28,10 @@ public:
 	bool isSensorAvailable();
 	void Periodic() override;
 	void shuffleboardPeriodic();
+	frc2::CommandPtr storageCommand(units::volt_t voltage);
+
 private:
-	OverTalonFX storageMotor{ 30, ControllerNeutralMode::Brake, false, "rio" };
+	OverTalonFX storageMotor{ 24, ControllerNeutralMode::Brake, false, "rio" };
 	bool isNoteOnStorage = false, beamBreak1Cache = false, beamBreak2Cache = false;
 
 	frc::DigitalInput beamBreak1{ 7 };
