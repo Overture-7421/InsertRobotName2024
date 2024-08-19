@@ -73,18 +73,18 @@ RobotContainer::RobotContainer() {
 void RobotContainer::ConfigureBindings() {
 
 	noteOnStorage.WhileTrue(frc2::cmd::Sequence(
-		BlinkEffect(&leds, "all", { 0, 255 * 0.7, 0 }, 0.25_s).ToPtr().WithTimeout(0.5_s),
-		StaticEffect(&leds, "all", { 0, 255 * 0.7, 0 }).ToPtr()
+		BlinkEffect(&leds, "all", { 0, int(255 * 0.7), 0 }, 0.25_s).ToPtr().WithTimeout(0.5_s),
+		StaticEffect(&leds, "all", { 0, int(255 * 0.7), 0 }).ToPtr()
 	).IgnoringDisable(true));
 
 	storageSensorEmergencyMode.WhileTrue(frc2::cmd::Sequence(
-		BlinkEffect(&leds, "all", { 0, 0, 255 * 0.7 }, 0.25_s).ToPtr().WithTimeout(0.5_s),
-		BlinkEffect(&leds, "all", { 0, 0, 125 * 0.7 }, 0.25_s).ToPtr().WithTimeout(0.5_s)
+		BlinkEffect(&leds, "all", { 0, 0, int(255 * 0.7) }, 0.25_s).ToPtr().WithTimeout(0.5_s),
+		BlinkEffect(&leds, "all", { 0, 0, int(125 * 0.7) }, 0.25_s).ToPtr().WithTimeout(0.5_s)
 	).Repeatedly().IgnoringDisable(true));
 
 
 	intakeMotorActive.WhileTrue(
-		BlinkEffect(&leds, "all", { 255 * 0.7, 0, 255 * 0.7 }, 0.1_s).ToPtr().Repeatedly()
+		BlinkEffect(&leds, "all", { int(255 * 0.7), 0, int(255 * 0.7) }, 0.1_s).ToPtr().Repeatedly()
 	);
 }
 
@@ -180,14 +180,14 @@ void RobotContainer::ConfigOperatorBindings() {
 		frc2::cmd::RunOnce([] {
 		VisionSpeakerCommand::SetUpperAngleOffset(VisionSpeakerCommand::GetUpperAngleOffset() - 0.5);
 	}),
-		BlinkEffect(&leds, "all", { 255 * 0.7, 0, 0 }, 0.05_s).WithTimeout(0.2_s)
+		BlinkEffect(&leds, "all", { int(255 * 0.7), 0, 0 }, 0.05_s).WithTimeout(0.2_s)
 	));
 
 	operatorPad.downDpad().OnTrue(frc2::cmd::Parallel(
 		frc2::cmd::RunOnce([] {
 		VisionSpeakerCommand::SetUpperAngleOffset(VisionSpeakerCommand::GetUpperAngleOffset() + 0.5);
 	}),
-		BlinkEffect(&leds, "all", { 0, 255 * 0.7, 255 * 0.7 }, 0.05_s).WithTimeout(0.2_s)
+		BlinkEffect(&leds, "all", { 0, int(255 * 0.7), int(255 * 0.7) }, 0.05_s).WithTimeout(0.2_s)
 	));
 
 	operatorPad.leftDpad().OnTrue(
@@ -195,7 +195,7 @@ void RobotContainer::ConfigOperatorBindings() {
 			frc2::cmd::RunOnce([] {
 		VisionSpeakerCommand::ResetUpperAngleOffset();
 	}),
-			BlinkEffect(&leds, "all", { 255 * 0.7, 255 * 0.7, 255 * 0.7 }, 0.05_s).WithTimeout(0.2_s)
+			BlinkEffect(&leds, "all", { int(255 * 0.7), int(255 * 0.7), int(255 * 0.7) }, 0.05_s).WithTimeout(0.2_s)
 		)
 	);
 
@@ -204,7 +204,7 @@ void RobotContainer::ConfigOperatorBindings() {
 }
 
 void RobotContainer::ConfigDefaultCommands() {
-	leds.SetDefaultCommand(BlinkEffect(&leds, "all", { 255 * 0.7, 0, 255 * 0.7 }, 1_s).IgnoringDisable(true));
+	leds.SetDefaultCommand(BlinkEffect(&leds, "all", { int(255 * 0.7), 0, int(255 * 0.7) }, 1_s).IgnoringDisable(true));
 
 	chassis.SetDefaultCommand(frc2::cmd::Run([&] {
 		chassis.driveFieldRelative(
