@@ -34,7 +34,7 @@ namespace ChassisConstants {
 		config.DriveCurrentLimit = 60;
 		config.DriveTriggerThresholdTime = 0.5;
 		config.DriveRampRate = 0.25;
-		
+
 		config.TurnStatorCurrentLimit = 80;
 		config.TurnCurrentLimit = 60;
 		config.TurnTriggerThresholdTime = 0.2;
@@ -71,7 +71,7 @@ namespace ChassisConstants {
 		config.DriveCurrentLimit = 60;
 		config.DriveTriggerThresholdTime = 0.5;
 		config.DriveRampRate = 0.25;
-		
+
 		config.TurnStatorCurrentLimit = 80;
 		config.TurnCurrentLimit = 60;
 		config.TurnTriggerThresholdTime = 0.2;
@@ -107,7 +107,7 @@ namespace ChassisConstants {
 		config.DriveCurrentLimit = 60;
 		config.DriveTriggerThresholdTime = 0.5;
 		config.DriveRampRate = 0.25;
-		
+
 		config.TurnStatorCurrentLimit = 80;
 		config.TurnCurrentLimit = 60;
 		config.TurnTriggerThresholdTime = 0.2;
@@ -142,7 +142,7 @@ namespace ChassisConstants {
 		config.DriveCurrentLimit = 60;
 		config.DriveTriggerThresholdTime = 0.5;
 		config.DriveRampRate = 0.25;
-		
+
 		config.TurnStatorCurrentLimit = 80;
 		config.TurnCurrentLimit = 60;
 		config.TurnTriggerThresholdTime = 0.2;

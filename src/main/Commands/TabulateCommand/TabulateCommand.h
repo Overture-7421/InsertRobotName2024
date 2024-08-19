@@ -18,23 +18,23 @@
 #include <OvertureLib/Subsystems/Swerve/SpeedsHelper/HeadingSpeedsHelper/HeadingSpeedsHelper.h>
 
 class TabulateCommand
-    : public frc2::CommandHelper<frc2::Command, TabulateCommand> {
- public:
-  TabulateCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, TargetProvider* targetProvider);
+	: public frc2::CommandHelper<frc2::Command, TabulateCommand> {
+public:
+	TabulateCommand(Chassis* chassis, SuperStructure* superStructure, Shooter* shooter, TargetProvider* targetProvider);
 
-  void Initialize() override;
+	void Initialize() override;
 
-  void Execute() override;
+	void Execute() override;
 
-  void End(bool interrupted) override;
+	void End(bool interrupted) override;
 
-  bool IsFinished() override;
+	bool IsFinished() override;
 private:
-  Chassis* chassis;
-  SuperStructure* superStructure;
-  Shooter* shooter;
-  TargetProvider* targetProvider;
-  frc::Translation2d targetLocation;
-  HeadingSpeedsHelper headingHelper;
+	Chassis* chassis;
+	SuperStructure* superStructure;
+	Shooter* shooter;
+	TargetProvider* targetProvider;
+	frc::Translation2d targetLocation;
+	HeadingSpeedsHelper headingHelper;
 
 };
