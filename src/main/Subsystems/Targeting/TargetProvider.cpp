@@ -6,7 +6,7 @@
 
 #include <pathplanner/lib/util/GeometryUtil.h>
 
-const frc::Translation2d PassLocation{ 1.37_m, 6.12_m };
+const frc::Translation2d PassLocation{ 1.03_m, 7.31_m };
 const frc::Translation2d SpeakerTargetOffset{ 0_m, 0_m };
 
 TargetProvider::TargetProvider(frc::AprilTagFieldLayout* tagLayout) {
