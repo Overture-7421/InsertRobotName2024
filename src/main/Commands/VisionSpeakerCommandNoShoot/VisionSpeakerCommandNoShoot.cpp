@@ -34,8 +34,8 @@ void VisionSpeakerCommandNoShoot::Execute() {
 
 
 	headingHelper.setTargetAngle(angle.Radians());
-	double targetLowerAngle = VisionSpeakerCommandConstants::DistanceToLowerAngleTable[distance];
-	double targetUpperAngle = VisionSpeakerCommandConstants::DistanceToUpperAngleTable[distance] + VisionSpeakerCommand::GetUpperAngleOffset();
+	units::degree_t targetLowerAngle = VisionSpeakerCommandConstants::DistanceToLowerAngleTable[distance];
+	units::degree_t targetUpperAngle = VisionSpeakerCommandConstants::DistanceToUpperAngleTable[distance] + VisionSpeakerCommand::GetUpperAngleOffset();
 	double targetShooterVelocity = VisionSpeakerCommandConstants::DistanceToVelocityTable[distance];
 	superStructure->setTargetCoord({ targetLowerAngle, targetUpperAngle });
 	shooter->setTargetVelocity(targetShooterVelocity);

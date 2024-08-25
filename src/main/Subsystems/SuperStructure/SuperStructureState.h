@@ -1,6 +1,6 @@
 #pragma once 
 
 struct SuperStructureState {
-	double lowerAngle;
-	double upperAngle;
+	units::degree_t lowerAngle;
+	units::degree_t upperAngle;
 };

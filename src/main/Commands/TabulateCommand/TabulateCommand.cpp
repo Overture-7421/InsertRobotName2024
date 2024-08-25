@@ -15,8 +15,8 @@ TabulateCommand::TabulateCommand(Chassis* chassis, SuperStructure* superStructur
 
 // Called when the command is initially scheduled.
 void TabulateCommand::Initialize() {
-	frc::SmartDashboard::PutNumber("Tabulate/LowerAngle", superStructure->getLowerAngle());
-	frc::SmartDashboard::PutNumber("Tabulate/UpperAngle", superStructure->getUpperAngle());
+	frc::SmartDashboard::PutNumber("Tabulate/LowerAngle", superStructure->getLowerAngle().value());
+	frc::SmartDashboard::PutNumber("Tabulate/UpperAngle", superStructure->getUpperAngle().value());
 	frc::SmartDashboard::PutNumber("Tabulate/ShooterVel", 0.0);
 
 	targetLocation = targetProvider->GetSpeakerLocation();
@@ -35,13 +35,13 @@ void TabulateCommand::Execute() {
 	auto angle = chassisToTarget.Angle().RotateBy({ 180_deg });
 
 	frc::SmartDashboard::PutNumber("Tabulate/Distance", distance.value());
-	frc::SmartDashboard::PutNumber("Tabulate/LowerAngleCurrent", superStructure->getLowerAngle());
-	frc::SmartDashboard::PutNumber("Tabulate/UpperAngleCurrent", superStructure->getUpperAngle());
+	frc::SmartDashboard::PutNumber("Tabulate/LowerAngleCurrent", superStructure->getLowerAngle().value());
+	frc::SmartDashboard::PutNumber("Tabulate/UpperAngleCurrent", superStructure->getUpperAngle().value());
 	frc::SmartDashboard::PutNumber("Tabulate/ShooterVelCurrent", shooter->getCurrentVelocity());
 
 	headingHelper.setTargetAngle(angle.Radians());
-	double lowerAngle = frc::SmartDashboard::GetNumber("Tabulate/LowerAngle", superStructure->getLowerAngle());
-	double upperAngle = frc::SmartDashboard::GetNumber("Tabulate/UpperAngle", superStructure->getLowerAngle());
+	units::degree_t lowerAngle{ frc::SmartDashboard::GetNumber("Tabulate/LowerAngle", superStructure->getLowerAngle().value()) };
+	units::degree_t upperAngle{ frc::SmartDashboard::GetNumber("Tabulate/UpperAngle", superStructure->getLowerAngle().value()) };
 	double targetVel = frc::SmartDashboard::GetNumber("Tabulate/ShooterVel", 0.0);
 
 	superStructure->setTargetCoord({ lowerAngle, upperAngle });

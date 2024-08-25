@@ -4,10 +4,10 @@
 
 #include "VisionSpeakerCommand.h"
 
-const double UPPER_ANGLE_BLUE_DEFAULT_OFFSET = 0.0;
-const double UPPER_ANGLE_RED_DEFAULT_OFFSET = 0;
+const units::degree_t UPPER_ANGLE_BLUE_DEFAULT_OFFSET = 0.0_deg;
+const units::degree_t UPPER_ANGLE_RED_DEFAULT_OFFSET = 0.0_deg;
 
-double UPPER_ANGLE_OFFSET = 0;
+units::degree_t UPPER_ANGLE_OFFSET = 0_deg;
 
 #include <frc/MathUtil.h>
 
@@ -71,11 +71,11 @@ void VisionSpeakerCommand::Execute() {
 	distance = chassisToTarget.Distance({ 0_m, 0_m });
 	angle = chassisToTarget.Angle().RotateBy({ 180_deg });
 
-	double upperAngleOffset = GetUpperAngleOffset();
+	units::degree_t upperAngleOffset = GetUpperAngleOffset();
 
 	headingHelper.setTargetAngle(angle.Radians());
-	double targetLowerAngle = VisionSpeakerCommandConstants::DistanceToLowerAngleTable[distance];
-	double targetUpperAngle = VisionSpeakerCommandConstants::DistanceToUpperAngleTable[distance] + upperAngleOffset;
+	units::degree_t targetLowerAngle = VisionSpeakerCommandConstants::DistanceToLowerAngleTable[distance];
+	units::degree_t targetUpperAngle = VisionSpeakerCommandConstants::DistanceToUpperAngleTable[distance] + upperAngleOffset;
 	double targetShooterVelocity = VisionSpeakerCommandConstants::DistanceToVelocityTable[distance];
 	superStructure->setTargetCoord({ targetLowerAngle, targetUpperAngle });
 	shooter->setTargetVelocity(targetShooterVelocity);
@@ -83,14 +83,14 @@ void VisionSpeakerCommand::Execute() {
 	units::degree_t headingTolerance = 2_deg + units::degree_t(std::clamp(1 - distance.value() / 6.0, 0.0, 1.0) * 8.0); // Heading tolerance extra of X deg when close, more precise when further back;
 	units::degree_t headingError = units::math::abs(frc::InputModulus(angle.Degrees() - chassisPose.Rotation().Degrees(), -180_deg, 180_deg));
 
-	bool lowerAngleInTolerance = std::abs(targetLowerAngle - superStructure->getLowerAngle()) < 1.5;
+	bool lowerAngleInTolerance = std::abs((targetLowerAngle - superStructure->getLowerAngle()).value()) < 1.5;
 
 	bool upperAngleInTolerance = false;
 
 	if (joystick == nullptr) {
-		upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 1.5;
+		upperAngleInTolerance = std::abs((targetUpperAngle - superStructure->getUpperAngle()).value()) < 1;
 	} else {
-		upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 3;
+		upperAngleInTolerance = std::abs((targetUpperAngle - superStructure->getUpperAngle()).value()) < 3;
 	}
 
 	bool headingInTolerance = headingError < headingTolerance;
@@ -99,10 +99,10 @@ void VisionSpeakerCommand::Execute() {
 	frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/LowerAngleReached", lowerAngleInTolerance);
 	frc::SmartDashboard::PutNumber("VisionSpeakerCommand/Distance", distance.value());
 	frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/UpperAngleReached", upperAngleInTolerance);
-	frc::SmartDashboard::PutNumber("VisionSpeakerCommand/UpperAngleOffset", upperAngleOffset);
+	frc::SmartDashboard::PutNumber("VisionSpeakerCommand/UpperAngleOffset", upperAngleOffset.value());
 	frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/HeadingReached", headingInTolerance);
 	frc::SmartDashboard::PutBoolean("VisionSpeakerCommand/ShooterReached", shooterSpeedInTolerance);
-	upperAngleOffsetLog.Append(upperAngleOffset);
+	upperAngleOffsetLog.Append(upperAngleOffset.value());
 
 	if (lowerAngleInTolerance && upperAngleInTolerance && headingInTolerance && shooterSpeedInTolerance) {
 		if (joystick == nullptr) {
@@ -138,14 +138,14 @@ bool VisionSpeakerCommand::IsFinished() {
 }
 
 
-void VisionSpeakerCommand::SetUpperAngleOffset(double offset) {
+void VisionSpeakerCommand::SetUpperAngleOffset(units::degree_t offset) {
 	UPPER_ANGLE_OFFSET = offset;
 };
 
-double VisionSpeakerCommand::GetUpperAngleOffset() {
+units::degree_t VisionSpeakerCommand::GetUpperAngleOffset() {
 	return UPPER_ANGLE_OFFSET;
 };
 
 void VisionSpeakerCommand::ResetUpperAngleOffset() {
-	UPPER_ANGLE_OFFSET = 0.0;
+	UPPER_ANGLE_OFFSET = 0.0_deg;
 };

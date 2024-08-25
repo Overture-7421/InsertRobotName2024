@@ -35,8 +35,8 @@ void SuperStructureMoveByDistance::Execute() {
 		targetState.upperAngle = profile.startingState.upperAngle + upperAngleTravel * inverseNormalizedDistance;
 		targetState.lowerAngle = profile.startingState.lowerAngle + lowerAngleTravel * inverseNormalizedDistance;
 
-		frc::SmartDashboard::PutNumber("SuperStructureMoveByDistance/TargetLower", targetState.lowerAngle);
-		frc::SmartDashboard::PutNumber("SuperStructureMoveByDistance/TargetUpper", targetState.upperAngle);
+		frc::SmartDashboard::PutNumber("SuperStructureMoveByDistance/TargetLower", targetState.lowerAngle.value());
+		frc::SmartDashboard::PutNumber("SuperStructureMoveByDistance/TargetUpper", targetState.upperAngle.value());
 
 		superStructure->setTargetCoord(targetState);
 	}

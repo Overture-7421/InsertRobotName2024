@@ -44,16 +44,16 @@ void VisionSpeakerCommandPassNote::Execute() {
 	angle = chassisToTarget.Angle().RotateBy({ 180_deg });
 
 	headingHelper.setTargetAngle(angle.Radians());
-	double targetLowerAngle = targetState.lowerAngle;
-	double targetUpperAngle = targetState.upperAngle;
+	units::degree_t targetLowerAngle = targetState.lowerAngle;
+	units::degree_t targetUpperAngle = targetState.upperAngle;
 	superStructure->setTargetCoord({ targetLowerAngle, targetUpperAngle });
 	shooter->setTargetVelocity(targetShooterVelocity);
 
 	units::degree_t headingTolerance = 2_deg + units::degree_t(std::clamp(1 - distance.value() / 6.0, 0.0, 1.0) * 8.0); // Heading tolerance extra of X deg when close, more precise when further back;
 	units::degree_t headingError = units::math::abs(frc::InputModulus(angle.Degrees() - chassisPose.Rotation().Degrees(), -180_deg, 180_deg));
 
-	bool lowerAngleInTolerance = std::abs(targetLowerAngle - superStructure->getLowerAngle()) < 1.0;
-	bool upperAngleInTolerance = std::abs(targetUpperAngle - superStructure->getUpperAngle()) < 2.0;
+	bool lowerAngleInTolerance = std::abs((targetLowerAngle - superStructure->getLowerAngle()).value()) < 1.0;
+	bool upperAngleInTolerance = std::abs((targetUpperAngle - superStructure->getUpperAngle()).value()) < 2.0;
 	bool headingInTolerance = headingError < headingTolerance;
 	bool shooterSpeedInTolerance = (targetShooterVelocity - 5.0) < shooter->getCurrentVelocity();
 
