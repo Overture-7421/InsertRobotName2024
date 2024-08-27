@@ -3,36 +3,36 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.14524103467238,
-        "y": 5.864481868502625
+        "x": 8.0,
+        "y": 7.436381206571257
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.567859041711477,
-        "y": 6.767217149655276
+        "x": 6.334974273032768,
+        "y": 6.864672162797297
       },
       "isLocked": false,
-      "linkedName": "Center 6-7"
+      "linkedName": "Center 4-5"
     },
     {
       "anchor": {
-        "x": 5.08586753828312,
-        "y": 6.427207160464143
+        "x": 5.124820308952599,
+        "y": 6.4758981238009925
       },
       "prevControl": {
-        "x": 5.809131746114667,
-        "y": 6.63513372379274
+        "x": 6.079163190354851,
+        "y": 6.836211252493681
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Center 7-8"
+      "linkedName": "Center 5-6"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 5.0,
+    "maxVelocity": 4.5,
     "maxAcceleration": 7.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
@@ -43,7 +43,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "CenterAuto",
+  "folder": "6 Note Auto",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

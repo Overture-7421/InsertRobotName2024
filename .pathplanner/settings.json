@@ -4,14 +4,15 @@
   "holonomicMode": true,
   "pathFolders": [
     "AMPAuto",
-    "CenterAuto",
+    "6 Note Auto",
     "Climbing",
     "SourceAuto"
   ],
   "autoFolders": [
+    "4 Note Auto (Choreo)",
+    "5 Note Auto (Choreo)",
+    "6 Note Auto",
     "AMPAuto",
-    "CenterAuto",
-    "SpeakerShootAuto",
     "SourceAuto"
   ],
   "defaultMaxVel": 1.0,
