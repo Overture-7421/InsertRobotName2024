@@ -21,7 +21,6 @@
 #include "Subsystems/Targeting/TargetProvider.h"
 #include "Subsystems/Intake/Intake.h"
 #include "Subsystems/SuperStructure/SuperStructure.h"
-#include "Subsystems/SuperStructure/ChassisAccelToStructureFF/ChassisAccelToStructureFF.h"
 #include "Subsystems/Storage/Storage.h"
 #include "Subsystems/Shooter/Shooter.h"
 #include "Subsystems/SupportArms/SupportArms.h"
@@ -35,6 +34,7 @@
 #include "Commands/VisionSpeakerCommand/VisionSpeakerCommand.h"
 #include "Commands/VisionSpeakerCommandNoShoot/VisionSpeakerCommandNoShoot.h"
 #include "Commands/VisionSpeakerCommandPassNote/VisionSpeakerCommandPassNote.h"
+#include "Commands/LowShoot/LowShoot.h"
 #include "Commands/TabulateCommand/TabulateCommand.h"
 #include "Commands/AlignToTrackedObject/AlignToTrackedObject.h"
 #include "Commands/Climbing/Climbing.h"
@@ -61,8 +61,6 @@ private:
 	Shooter shooter;
 	Chassis chassis;
 	SupportArms supportArms;
-
-	ChassisAccelToStructureFF accelFFSuperStructure{ &chassis, &superStructure };
 
 	// Helpers
 	HeadingSpeedsHelper rotationHelper{ { 7, 0, 0.35, {18_rad_per_s , 18_rad_per_s_sq }, RobotConstants::LoopTime }, &chassis };
@@ -100,9 +98,7 @@ private:
 	frc2::CommandPtr defaultNoneAuto = frc2::cmd::None();
 	frc2::CommandPtr center4NoteAuto = frc2::cmd::None();
 	frc2::CommandPtr center5NoteAuto = frc2::cmd::None();
-	frc2::CommandPtr center7NoteAuto = frc2::cmd::None();
-	frc2::CommandPtr ampAuto = frc2::cmd::None();
-	frc2::CommandPtr sourceAuto = frc2::cmd::None();
+	frc2::CommandPtr center6NoteAuto = frc2::cmd::None();
 
 	frc2::CommandPtr ampAutoCenterRace = frc2::cmd::None();
 	frc2::CommandPtr sourceAutoCenterRace = frc2::cmd::None();

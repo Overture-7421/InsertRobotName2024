@@ -26,37 +26,29 @@ RobotContainer::RobotContainer() {
 	pathplanner::NamedCommands::registerCommand("VisionNoShoot", std::move(VisionSpeakerCommandNoShoot(&chassis, &superStructure, &shooter, &targetProvider).ToPtr()));
 	pathplanner::NamedCommands::registerCommand("AlignToNote", std::move(AlignToTrackedObject(&chassis, &noteTrackingCamera, &alignHelper).Until([&]() { return storage.isNoteOnForwardSensor(); })));
 
-	// Testing
+	pathplanner::NamedCommands::registerCommand("LowShoot", std::move(frc2::cmd::Sequence(
+		LowShoot(&chassis, &superStructure, &shooter, &targetProvider).ToPtr().WithTimeout(0.20_s),
+		LowShoot(&chassis, &superStructure, &shooter, &targetProvider, &storage).ToPtr()))
+	);
+	pathplanner::NamedCommands::registerCommand("LowNoShoot", std::move(LowShoot(&chassis, &superStructure, &shooter, &targetProvider).ToPtr().WithTimeout(0.35_s)));
 	pathplanner::NamedCommands::registerCommand("StageShoot", std::move(frc2::cmd::Sequence(
-		frc2::cmd::Parallel(
-			//superStructure.superStructureCommand(SuperStructureConstants::GroundGrabState),
-			shooter.shooterCommand(70).WithTimeout(0.17_s),
-			superStructure.superStructureCommand(SuperStructureConstants::NearShoot)
-		),
-		storage.storageCommand(StorageConstants::ScoreVolts).Repeatedly().WithTimeout(0.15_s)
-	)));
-	pathplanner::NamedCommands::registerCommand("StageShootV2", std::move(frc2::cmd::Sequence(
 		shooter.shooterCommand(80).WithTimeout(0.10_s),
-		storage.storageCommand(StorageConstants::ScoreVolts).Repeatedly().WithTimeout(0.1_s)
+		storage.storageCommand(StorageConstants::ScoreVolts).Repeatedly().WithTimeout(0.10_s)
 	)));
-	pathplanner::NamedCommands::registerCommand("NearShoot", std::move(superStructure.superStructureCommand(SuperStructureConstants::NearShoot)));
 
-	center7NoteAuto = pathplanner::AutoBuilder::buildAuto("CenterAuto-7Notes");
-	center5NoteAuto = pathplanner::AutoBuilder::buildAuto("SpeakerShootAuto");
-	center4NoteAuto = pathplanner::AutoBuilder::buildAuto("CenterAuto-4Notes");
-	ampAuto = pathplanner::AutoBuilder::buildAuto("AMPAuto");
-	sourceAuto = pathplanner::AutoBuilder::buildAuto("SourceAuto");
+
+	center6NoteAuto = pathplanner::AutoBuilder::buildAuto("6 Note Auto");
+	center5NoteAuto = pathplanner::AutoBuilder::buildAuto("5 Note Auto");
+	center4NoteAuto = pathplanner::AutoBuilder::buildAuto("4 Note Auto");
 
 	ampAutoCenterRace = AmpAutoCenterRace(&storage);
 	sourceAutoCenterRace = SourceAutoCenterRace(&storage);
 
 	autoChooser.SetDefaultOption("None, null, nada", defaultNoneAuto.get());
-	autoChooser.AddOption("CenterAuto-7Notes", center7NoteAuto.get());
-	autoChooser.AddOption("CenterAuto-5Notes", center5NoteAuto.get());
-	autoChooser.AddOption("CenterAuto-4Notes", center4NoteAuto.get());
-	autoChooser.AddOption("AMPAuto", ampAuto.get());
+	autoChooser.AddOption("6 Note Auto", center6NoteAuto.get());
+	autoChooser.AddOption("5 Note Auto", center5NoteAuto.get());
+	autoChooser.AddOption("4 Note Auto", center4NoteAuto.get());
 	autoChooser.AddOption("AMPAuto-Race", ampAutoCenterRace.get());
-	autoChooser.AddOption("SourceAuto", sourceAuto.get());
 	autoChooser.AddOption("SourceAuto-Race", sourceAutoCenterRace.get());
 
 	frc::SmartDashboard::PutData("Auto Chooser", &autoChooser);
@@ -178,14 +170,14 @@ void RobotContainer::ConfigOperatorBindings() {
 
 	operatorPad.upDpad().OnTrue(frc2::cmd::Parallel(
 		frc2::cmd::RunOnce([] {
-		VisionSpeakerCommand::SetUpperAngleOffset(VisionSpeakerCommand::GetUpperAngleOffset() - 0.5);
+		VisionSpeakerCommand::SetUpperAngleOffset(VisionSpeakerCommand::GetUpperAngleOffset() - 0.5_deg);
 	}),
 		BlinkEffect(&leds, "all", { int(255 * 0.7), 0, 0 }, 0.05_s).WithTimeout(0.2_s)
 	));
 
 	operatorPad.downDpad().OnTrue(frc2::cmd::Parallel(
 		frc2::cmd::RunOnce([] {
-		VisionSpeakerCommand::SetUpperAngleOffset(VisionSpeakerCommand::GetUpperAngleOffset() + 0.5);
+		VisionSpeakerCommand::SetUpperAngleOffset(VisionSpeakerCommand::GetUpperAngleOffset() + 0.5_deg);
 	}),
 		BlinkEffect(&leds, "all", { 0, int(255 * 0.7), int(255 * 0.7) }, 0.05_s).WithTimeout(0.2_s)
 	));
@@ -199,7 +191,7 @@ void RobotContainer::ConfigOperatorBindings() {
 		)
 	);
 
-	operatorPad.rightDpad().OnTrue(superStructure.superStructureCommand({ 90, 0 }));
+	operatorPad.rightDpad().OnTrue(superStructure.superStructureCommand({ 90_deg, 90_deg }));
 	operatorPad.rightDpad().OnFalse(superStructure.superStructureCommand(SuperStructureConstants::ClosedState));
 }
 
@@ -241,5 +233,5 @@ void RobotContainer::UpdateTelemetry() {
 	chassis.shuffleboardPeriodic();
 	storage.shuffleboardPeriodic();
 	//intake.shuffleboardPeriodic();
-	//shooter.shuffleboardPeriodic();
+	shooter.shuffleboardPeriodic();
 }

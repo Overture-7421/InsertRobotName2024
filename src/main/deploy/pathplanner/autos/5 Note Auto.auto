@@ -5,7 +5,7 @@
       "x": 1.4112259149551392,
       "y": 5.5475969314575195
     },
-    "rotation": 2.644639716973634e-25
+    "rotation": 3.659607900568545e-26
   },
   "command": {
     "type": "sequential",
@@ -45,14 +45,7 @@
                 "data": {
                   "name": "LowShoot"
                 }
-              }
-            ]
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
+              },
               {
                 "type": "parallel",
                 "data": {
@@ -66,7 +59,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "GroundGrabCommandLT"
+                        "name": "GroundGrabCommand"
                       }
                     }
                   ]

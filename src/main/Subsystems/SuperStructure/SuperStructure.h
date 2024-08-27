@@ -38,8 +38,8 @@ class SuperStructure : public frc2::SubsystemBase {
 public:
 	SuperStructure();
 	void setTargetCoord(SuperStructureState targetState);
-	double getLowerAngle();
-	double getUpperAngle();
+	units::degree_t getLowerAngle();
+	units::degree_t getUpperAngle();
 	bool reachedTargetPosition(SuperStructureState targetState);
 	frc2::CommandPtr superStructureCommand(SuperStructureState targetState);
 
@@ -55,14 +55,14 @@ public:
 
 	frc2::CommandPtr sysIdQuasistaticUpper(frc2::sysid::Direction direction) {
 		return frc2::cmd::Sequence(
-			frc2::cmd::Run([this] {setTargetCoord({ 0, 0 });}).WithTimeout(1.5_s),
+			frc2::cmd::Run([this] {setTargetCoord({ 0_deg, 0_deg });}).WithTimeout(1.5_s),
 			sysIdRoutineUpper.Quasistatic(direction)
 		);
 	}
 
 	frc2::CommandPtr sysIdDynamicUpper(frc2::sysid::Direction direction) {
 		return frc2::cmd::Sequence(
-			frc2::cmd::Run([this] {setTargetCoord({ 0, 0 });}).WithTimeout(1.5_s),
+			frc2::cmd::Run([this] {setTargetCoord({ 0_deg, 0_deg });}).WithTimeout(1.5_s),
 			sysIdRoutineUpper.Dynamic(direction)
 		);
 	}
@@ -72,7 +72,6 @@ public:
 	void shuffleboardPeriodic();
 
 private:
-	double convertAngleToFalconPos(double angle);
 
 	units::volt_t arbitraryFeedForwardUpper = 0_V;
 	// LowerMotors
@@ -84,15 +83,15 @@ private:
 
 	// Encoders
 	OverCANCoder lowerCANCoder{ 28, -0.3132_tr, "rio" };
-	OverCANCoder upperCANCoder{ 27, 0.2553_tr + 0.0085_tr , "rio" };
+	OverCANCoder upperCANCoder{ 27, 183.779297_deg , "rio" };
 
 	// State
 	SuperStructureState targetState, actualTarget;
 	SuperStructureState currentState;
 
 	//Feed Forward
-	frc::ArmFeedforward lowerFF{ 1.1646_V, 1.9026_V, 4.1593_V / 1_tps, 3.5982_V / 1_tr_per_s_sq };
-	frc::ArmFeedforward upperFF{ 3.2822_V, 0.17171_V, 18.086_V / 1_tps, 3.3682_V / 1_tr_per_s_sq };
+	frc::ArmFeedforward lowerFeedForward{ 0.3_V, 0.385_V, 0.44488_V / 1_tps, 6.753_V / 1_tr_per_s_sq };
+	frc::ArmFeedforward upperFeedForward{ 0.7_V, 0.9_V, 0.6_V / 1_tps, 4_V / 1_tr_per_s_sq };
 
 	frc2::sysid::SysIdRoutine sysIdRoutineLower{
 		frc2::sysid::Config{0.5_V / 1_s, 7_V, 10_s,
