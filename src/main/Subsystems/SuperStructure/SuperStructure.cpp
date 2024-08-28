@@ -63,10 +63,6 @@ SuperStructure::SuperStructure() {
 	upperMotor.setPIDValues(100.0, 60.0, 0.0, 0.0, 0.0);
 	upperMotor.configureMotionMagic(0.5, 2, 0.0);
 
-	// lowerLeftMotor.setStatorCurrentLimit(true, 40);
-	// lowerRightMotor.setStatorCurrentLimit(true, 40);
-	// upperMotor.setStatorCurrentLimit(true, 40);
-
 }
 
 void SuperStructure::setTargetCoord(SuperStructureState targetState) {
@@ -74,13 +70,11 @@ void SuperStructure::setTargetCoord(SuperStructureState targetState) {
 }
 
 units::degree_t SuperStructure::getLowerAngle() {
-	units::turn_t position = lowerLeftMotor.GetPosition().GetValue(); // Goes from 0 to 1
-	return frc::InputModulus(position, -0.5_tr, 0.5_tr);
+	return lowerLeftMotor.GetPosition().GetValue();
 }
 
 units::degree_t SuperStructure::getUpperAngle() {
-	units::turn_t position = upperMotor.GetPosition().GetValue();
-	return frc::InputModulus(position, -0.5_tr, 0.5_tr);
+	return upperMotor.GetPosition().GetValue();
 }
 
 SuperStructureState SuperStructure::getCurrentState() {

@@ -5,15 +5,15 @@
 #include "Shooter.h"
 
 Shooter::Shooter() {
-	leftShooterMotor.setSupplyCurrentLimit(true, 20, 25, 0.5);
+	leftShooterMotor.setSupplyCurrentLimit(true, 40, 60, 0.25);
 	leftShooterMotor.setSensorToMechanism(ShooterConstants::GearboxReduction);
 	leftShooterMotor.setClosedLoopVoltageRamp(0.1);
 
-	rightShooterMotor.setSupplyCurrentLimit(true, 20, 25, 0.5);
+	rightShooterMotor.setSupplyCurrentLimit(true, 40, 60, 0.255);
 
 	rightShooterMotor.setFollow(leftShooterMotor.GetDeviceID(), true);
 
-	leftShooterMotor.setPIDValues(0.10397, 0.0, 0.0, shooterFF.kS.value(), shooterFF.kV.value());
+	leftShooterMotor.setPIDValues(0.1, 0, 0, 0, 0.065);
 }
 
 void Shooter::setTargetVelocity(double velocity) {
