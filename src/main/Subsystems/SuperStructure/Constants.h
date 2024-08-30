@@ -5,23 +5,22 @@ namespace SuperStructureConstants {
 	const static double LowerAngleGearRatio = 172.8;
 	const static double UpperAngleGearRatio = 144.0;
 
-	const static double LowerAngleLowerLimit = -31.5;
-	const static double LowerAngleUpperLimit = 90;
+	const static units::degree_t LowerAngleLowerLimit = -31.5_deg;
+	const static units::degree_t LowerAngleUpperLimit = 90_deg;
 
-	const static double UpperAngleLowerLimit = -130;
-	const static double UpperAngleUpperLimit = -0.2;
+	const static units::degree_t UpperAngleLowerLimit = -40_deg;
+	const static units::degree_t UpperAngleUpperLimit = 90_deg;
 
-	const static double LowerAngleSafetyThreshold = -30;
-	const static double UpperAngleSafetyLimit = -23;
+	const static units::degree_t LowerAngleSafetyThreshold = -30_deg;
+	const static units::degree_t UpperAngleSafetyLimit = 67_deg;
 
-	const static SuperStructureState GroundGrabState = { LowerAngleLowerLimit, -22.0 };
-	const static SuperStructureState NearShoot = { LowerAngleLowerLimit, -18.0 };
+	const static SuperStructureState GroundGrabState = { LowerAngleLowerLimit, 68.0_deg };
+	const static SuperStructureState NearShoot = { -31.5_deg, 68.0_deg };
 	const static SuperStructureState ClosedState = { LowerAngleLowerLimit, UpperAngleUpperLimit };
-	const static SuperStructureState ClimbEndState = { 0, UpperAngleUpperLimit };
-	const static SuperStructureState SourceGrabState = { LowerAngleLowerLimit, -0.35 };
-	const static SuperStructureState ManualSpeakerState = { -12.0, -35.0 };
-	const static SuperStructureState AmpState = { 58.0,  -27.0 };
-	const static SuperStructureState SmoothCloseState = { -26.0, -7.0 };
-	const static SuperStructureState HighPassingState = { -12.0, -39.0 };
-	const static SuperStructureState LowPassingState = { 7.0, -5.0 };
+	const static SuperStructureState ClimbEndState = { 0_deg, UpperAngleUpperLimit };
+	const static SuperStructureState SourceGrabState = { LowerAngleLowerLimit, 89.65_deg };
+	const static SuperStructureState ManualSpeakerState = { -12.0_deg, 55.0_deg };
+	const static SuperStructureState AmpState = { 58.0_deg,  63.0_deg };
+	const static SuperStructureState HighPassingState = { -12.0_deg, 51.0_deg };
+	const static SuperStructureState LowPassingState = { 7.0_deg, 85.0_deg };
 };

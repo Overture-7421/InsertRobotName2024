@@ -2,19 +2,95 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.1969112668610487,
-      "y": 7.096766946743594
+      "x": 1.4112259149551392,
+      "y": 5.5475969314575195
     },
-    "rotation": 35.0
+    "rotation": 3.659607900568545e-26
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "StageShoot"
+                }
+              },
+              {
+                "type": "parallel",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "5 Note - 1.1"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "GroundGrabCommand"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "LowShoot"
+                }
+              },
+              {
+                "type": "parallel",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "5 Note - 1.2"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "GroundGrabCommand"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "5 Note - 2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "LowNoShoot"
+                }
+              }
+            ]
+          }
+        },
+        {
           "type": "named",
           "data": {
-            "name": "VisionSpeakerCommand"
+            "name": "LowShoot"
           }
         },
         {
@@ -24,7 +100,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AMPAuto1"
+                  "pathName": "5 Note - 3.1"
                 }
               },
               {
@@ -43,13 +119,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AMPAuto2"
+                  "pathName": "5 Note - 3.2"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "VisionNoShoot"
+                  "name": "LowNoShoot"
                 }
               }
             ]
@@ -58,7 +134,7 @@
         {
           "type": "named",
           "data": {
-            "name": "VisionSpeakerCommand"
+            "name": "LowShoot"
           }
         },
         {
@@ -68,7 +144,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AMPAuto3"
+                  "pathName": "5 Note - 4.1"
                 }
               },
               {
@@ -87,13 +163,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AMPAuto4"
+                  "pathName": "5 Note - 4.2"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "VisionNoShoot"
+                  "name": "LowNoShoot"
                 }
               }
             ]
@@ -102,56 +178,12 @@
         {
           "type": "named",
           "data": {
-            "name": "VisionSpeakerCommand"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "AMPAuto5"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "GroundGrabCommand"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "AMPAuto6"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "VisionNoShoot"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "VisionSpeakerCommand"
+            "name": "LowShoot"
           }
         }
       ]
     }
   },
-  "folder": "AMPAuto",
-  "choreoAuto": false
+  "folder": "5 Note Auto (Choreo)",
+  "choreoAuto": true
 }

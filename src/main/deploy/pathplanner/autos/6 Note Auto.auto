@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.1969112668610487,
-      "y": 7.096766946743594
+      "x": 1.3756161320151827,
+      "y": 5.511817049731372
     },
-    "rotation": 35.0
+    "rotation": 0.0
   },
   "command": {
     "type": "sequential",
@@ -24,13 +24,116 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AMPAuto1"
+                  "pathName": "6 Note 1"
                 }
               },
               {
-                "type": "named",
+                "type": "parallel",
                 "data": {
-                  "name": "GroundGrabCommand"
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "GroundGrabCommand"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "VisionSpeakerCommand"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "6 Note 2"
+                }
+              },
+              {
+                "type": "parallel",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "GroundGrabCommand"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "VisionSpeakerCommand"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "6 Note 3"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "GroundGrabCommand"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "VisionSpeakerCommand"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "6 Note 4"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "GroundGrabCommand"
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -43,7 +146,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AMPAuto2"
+                  "pathName": "6 Note 5"
                 }
               },
               {
@@ -68,7 +171,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AMPAuto3"
+                  "pathName": "6 Note 6"
                 }
               },
               {
@@ -87,51 +190,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AMPAuto4"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "VisionNoShoot"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "VisionSpeakerCommand"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "AMPAuto5"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "GroundGrabCommand"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "AMPAuto6"
+                  "pathName": "6 Note 7"
                 }
               },
               {
@@ -152,6 +211,6 @@
       ]
     }
   },
-  "folder": "AMPAuto",
+  "folder": "6 Note Auto",
   "choreoAuto": false
 }

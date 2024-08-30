@@ -1,0 +1,70 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.6123666007711623,
+        "y": 4.245852002973283
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.2349664863711096,
+        "y": 4.182241183823659
+      },
+      "isLocked": false,
+      "linkedName": "Center 1-2"
+    },
+    {
+      "anchor": {
+        "x": 2.8168686467859296,
+        "y": 5.511817049731372
+      },
+      "prevControl": {
+        "x": 1.9696458847247476,
+        "y": 5.404696930390302
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Center 2-3"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "Align",
+      "waypointRelativePos": 0.55,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "AlignToNote"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 25.0,
+    "rotateFast": true
+  },
+  "reversed": false,
+  "folder": "6 Note Auto",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}

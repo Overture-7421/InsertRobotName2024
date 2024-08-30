@@ -42,8 +42,8 @@ public:
 	bool IsFinished() override;
 
 
-	static void SetUpperAngleOffset(double offset);
-	static double GetUpperAngleOffset();
+	static void SetUpperAngleOffset(units::degree_t offset);
+	static units::degree_t GetUpperAngleOffset();
 	static void ResetUpperAngleOffset();
 
 	static void LoadAllianceOffset();

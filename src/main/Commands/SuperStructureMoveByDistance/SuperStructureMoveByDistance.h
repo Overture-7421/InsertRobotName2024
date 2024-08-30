@@ -36,8 +36,8 @@ private:
   std::function<units::meter_t()> distanceToTargetProvider;
   units::meter_t distanceToTarget;
 
-  double upperAngleTravel = 0;
-  double lowerAngleTravel = 0;
+  units::degree_t upperAngleTravel = 0_deg;
+  units::degree_t lowerAngleTravel = 0_deg;
   
   Profile profile;
 };
