@@ -82,8 +82,8 @@ private:
 
 	OverPigeon chassisPigeon{ 13, "OverCANivore" };
 
-	frc::SlewRateLimiter<units::meters_per_second> xLimiter{ 15.0_mps_sq };
-	frc::SlewRateLimiter<units::meters_per_second> yLimiter{ 15.0_mps_sq };
+	frc::SlewRateLimiter<units::meters_per_second> xLimiter{ 18.0_mps_sq };
+	frc::SlewRateLimiter<units::meters_per_second> yLimiter{ 18.0_mps_sq };
 	frc::SlewRateLimiter<units::radians_per_second> rLimiter{ 18_tr_per_s_sq };
 
 	wpi::log::DataLog& log = frc::DataLogManager::GetLog();

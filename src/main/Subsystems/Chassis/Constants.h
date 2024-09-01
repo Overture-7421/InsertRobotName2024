@@ -30,10 +30,10 @@ namespace ChassisConstants {
 		config.CanCoderId = 11;
 		config.ModuleName = "FrontLeftModule";
 
-		config.DriveStatorCurrentLimit = 110;
+		config.DriveStatorCurrentLimit = 180;
 		config.DriveCurrentLimit = 60;
 		config.DriveTriggerThresholdTime = 0.5;
-		config.DriveRampRate = 0.25;
+		config.DriveRampRate = 0.1;
 
 		config.TurnStatorCurrentLimit = 80;
 		config.TurnCurrentLimit = 60;
@@ -67,10 +67,10 @@ namespace ChassisConstants {
 		config.CanCoderId = 12;
 		config.ModuleName = "FrontRightModule";
 
-		config.DriveStatorCurrentLimit = 110;
+		config.DriveStatorCurrentLimit = 180;
 		config.DriveCurrentLimit = 60;
 		config.DriveTriggerThresholdTime = 0.5;
-		config.DriveRampRate = 0.25;
+		config.DriveRampRate = 0.1;
 
 		config.TurnStatorCurrentLimit = 80;
 		config.TurnCurrentLimit = 60;
@@ -103,10 +103,10 @@ namespace ChassisConstants {
 		config.CanCoderId = 10;
 		config.ModuleName = "BackLeftModule";
 
-		config.DriveStatorCurrentLimit = 110;
+		config.DriveStatorCurrentLimit = 180;
 		config.DriveCurrentLimit = 60;
 		config.DriveTriggerThresholdTime = 0.5;
-		config.DriveRampRate = 0.25;
+		config.DriveRampRate = 0.1;
 
 		config.TurnStatorCurrentLimit = 80;
 		config.TurnCurrentLimit = 60;
@@ -138,10 +138,10 @@ namespace ChassisConstants {
 		config.TurnId = 1;
 		config.CanCoderId = 9;
 
-		config.DriveStatorCurrentLimit = 110;
+		config.DriveStatorCurrentLimit = 180;
 		config.DriveCurrentLimit = 60;
 		config.DriveTriggerThresholdTime = 0.5;
-		config.DriveRampRate = 0.25;
+		config.DriveRampRate = 0.1;
 
 		config.TurnStatorCurrentLimit = 80;
 		config.TurnCurrentLimit = 60;

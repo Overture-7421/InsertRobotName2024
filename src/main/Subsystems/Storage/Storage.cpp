@@ -9,12 +9,10 @@ Storage::Storage() {
 	storageMotor.setSupplyCurrentLimit(true, 20, 30, 0.5);
 	// distanceSensorL.SetAutomaticMode(true);
 	// distanceSensorR.SetAutomaticMode(true);
-
-	storageMotor.setStatorCurrentLimit(true, 40);
 }
 
 void Storage::setVoltage(units::volt_t voltage) {
-	storageMotor.setVoltage(voltage, true);
+	storageMotor.setVoltage(voltage, false);
 }
 
 bool Storage::isNoteOnForwardSensor() {

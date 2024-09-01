@@ -77,7 +77,7 @@ private:
 #endif
 	AprilTags shooterCamera{ &tagLayout, &chassis, {"Arducam_OV2311_USB_Camera", { {-14.950771_in, 0_m, 14.034697_in}, {-180_deg, -30_deg, 180_deg} }, 5_m, 9_m, 13_m} };
 	AprilTags frontRightSwerveModuleCamera{ &tagLayout, &chassis, {"Arducam_OV9281_USB_Camera", { {6.388283_in, -10.648092_in, 8.358231_in}, {0_deg, -28.125_deg, -30_deg} }} };
-	photon::PhotonCamera noteTrackingCamera{ "PSEye" };
+	photon::PhotonCamera noteTrackingCamera{ "Arducam_OV9782_USB_Camera" };
 	TargetProvider targetProvider{ &tagLayout };
 
 	LedsManager leds{ 8, 240, {
@@ -103,8 +103,8 @@ private:
 	frc2::CommandPtr ampAutoCenterRace = frc2::cmd::None();
 	frc2::CommandPtr sourceAutoCenterRace = frc2::cmd::None();
 
-	frc::SlewRateLimiter<units::meters_per_second>filterX{ 16.0_mps_sq };
-	frc::SlewRateLimiter<units::meters_per_second>filterY{ 16.0_mps_sq };
+	frc::SlewRateLimiter<units::meters_per_second>filterX{ 10.0_mps_sq };
+	frc::SlewRateLimiter<units::meters_per_second>filterY{ 10.0_mps_sq };
 
 
 	//Auto Chooser
